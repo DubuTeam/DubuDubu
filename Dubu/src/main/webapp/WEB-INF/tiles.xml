@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"
+       "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+
+<tiles-definitions>
+	<!-- template이 먼저이고 extends는 나중임 -->
+	<!-- 구조를 잡아줌 -->
+	<!-- template : 템플릿이 적용되는 레이아웃 -->
+	<!-- template="/WEB-INF/views/tiles/layout.jsp" 얘를 기반으로 템플릿을 만들겠다라는말 -->
+	<definition name="mainTemplate" template="/WEB-INF/views/tiles/layout.jsp">
+		<put-attribute name="header" value="/WEB-INF/views/tiles/header.jsp"/>
+		<put-attribute name="main" value="/WEB-INF/views/tiles/content.jsp"/>
+		<put-attribute name="footer" value="/WEB-INF/views/tiles/footer.jsp"/>
+	</definition>
+	
+	<definition name="home" extends="mainTemplate">
+		<put-attribute name="main" value="/WEB-INF/views/home.jsp" />
+	</definition>
+	
+	<!-- 위의 정의된 템플릿을 기반으로해서 main을 어떻게 정의할것인지 -->
+	<definition name="*/*" extends="mainTemplate">
+		<put-attribute name="main" value="/WEB-INF/views/{1}/{2}.jsp"></put-attribute>
+	</definition>
+	
+</tiles-definitions>
