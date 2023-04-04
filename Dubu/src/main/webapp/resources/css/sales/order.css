@@ -1,0 +1,88 @@
+/* ↓↓↓ 거래처명/제품명/주문일자 폼 */
+
+/* form {
+    width: 700px;
+    margin: 0 auto;
+} */
+
+
+ul {
+    list-style-type: none;
+}
+
+li {
+    margin-bottom: 20px;
+}
+
+li label {
+    width: 100px;
+    float: left;
+    font-size: 12px;
+    font-weight: bold;
+    color: black;
+    line-height: 25px;
+}
+
+/* ↑↑↑ 거래처명/제품명/주문일자 폼 */
+
+/* ↓↓↓ 조회버튼, 초기화버튼 */
+#submitResetBtn {
+    padding-bottom: 10px;
+    border-bottom: 2px solid #08095e;
+}
+
+input[type="submit"], input[type="reset"] {
+    color: white;
+    border: none;
+    background-color: lightslategray;
+    padding: 5px 10px;
+    border-radius: 10px;
+}
+
+input[type="submit"]:hover, input[type="reset"]:hover {
+    color: white;
+    border: none;
+    background-color: blue;
+    padding: 5px 10px;
+    border-radius: 10px;
+}
+
+/* ↑↑↑ 조회버튼, 초기화버튼 */
+
+
+/* ↓↓↓ 추가/저장/삭제 버튼 */
+#searchBtnSet {
+    position: absolute;
+    left: 0;
+}
+
+#btnSet button {
+    color: white;
+    border: none;
+    background-color: lightslategray;
+    padding: 5px 10px;
+    border-radius: 10px;
+    margin-bottom: 10px;
+}
+
+#btnSet button:hover {
+    color: white;
+    border: none;
+    background-color: blue;
+    padding: 5px 10px;
+    border-radius: 10px;
+    margin-bottom: 10px;
+}
+
+/* ↑↑↑ 추가/저장/삭제 버튼 */
+
+
+form {
+    border: 1px solid gray;
+    padding: 15px;
+    margin-bottom: 30px;
+}
+
+.table table {
+    width: 100%;
+}
