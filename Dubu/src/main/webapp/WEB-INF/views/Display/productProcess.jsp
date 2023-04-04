@@ -23,7 +23,7 @@
        </div>
         </div><br>
         
-       <form>
+       <form class= p.Process1>
         <div id="list-body">
           <table id="datatablesSimple" class="table">
             <thead >
@@ -41,7 +41,7 @@
        </form>
        
        
-	<form style="float: right;">
+	<form class= p.Process2 style="float: right;">
 	<button onclick="exam()">Try it</button>
 		<div id="ex">
 			This is my DIV element.

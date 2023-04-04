@@ -35,8 +35,13 @@ button {
 }
 
 
-form {
+#p.Process1 {
 	border: 2px solid gray;
 	width: 50%;
+}
+
+#p.Process2{
+	float:right;
+	width: 45%;
 }
 
