@@ -2,6 +2,11 @@
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page session="false" %>
+<!-- fontawesome 사용! -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+                integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+                crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link href="${pageContext.request.contextPath}/resources/css/test.css" rel="stylesheet" type="text/css">
 
 <link href="${pageContext.request.contextPath}/resources/css/test.css" rel="stylesheet" type="text/css">
 
@@ -10,6 +15,9 @@
 
      <!-- Page Heading -->
      <h1 class="h3 mb-4 text-gray-800">BOM관리</h1>
+      <div>
+          <i class="fa fa-home" aria-hidden="true"></i> 기준정보관리 > BOM 관리
+      </div>
       <div id="btn-bom" style="float: right;">
             <button>초기화</button>
             <button>저장</button>
