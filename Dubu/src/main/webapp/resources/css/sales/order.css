@@ -29,6 +29,9 @@ li label {
 #submitResetBtn {
     padding-bottom: 10px;
     border-bottom: 2px solid #08095e;
+
+    display: flex;
+    justify-content: flex-end;
 }
 
 input[type="submit"], input[type="reset"] {
@@ -37,6 +40,7 @@ input[type="submit"], input[type="reset"] {
     background-color: lightslategray;
     padding: 5px 10px;
     border-radius: 10px;
+    margin: 0px 3px;
 }
 
 input[type="submit"]:hover, input[type="reset"]:hover {
@@ -51,10 +55,6 @@ input[type="submit"]:hover, input[type="reset"]:hover {
 
 
 /* ↓↓↓ 추가/저장/삭제 버튼 */
-#searchBtnSet {
-    position: absolute;
-    left: 0;
-}
 
 #btnSet button {
     color: white;
