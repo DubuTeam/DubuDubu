@@ -15,7 +15,7 @@
 	</definition>
 	
 	<definition name="home" extends="mainTemplate">
-		<put-attribute name="main" value="/WEB-INF/views/sales/order.jsp" />
+		<put-attribute name="main" value="/WEB-INF/views/Display/productProcess.jsp" />
 	</definition>
 	
 	<!-- 위의 정의된 템플릿을 기반으로해서 main을 어떻게 정의할것인지 -->
