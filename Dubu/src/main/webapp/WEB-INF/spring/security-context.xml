@@ -17,6 +17,10 @@
 		<!-- hasAuthority('ROLE_ADMIN') : 특정한 권한을 가진 경우에만 접근이 가능함 여기선 관리자롤 -->
 		<security:intercept-url pattern="/admin/**" access="hasAuthority('ROLE_ADMIN')"/>
 		
+		<!-- access="hasAuthority('ROLE_ADMIN')" : 특정한 권한을 가지사람만 체크 -->
+		<!-- hasAuthority('ROLE_ADMIN') : 특정한 권한을 가진 경우에만 접근이 가능함 여기선 관리자롤 -->
+		<security:intercept-url pattern="/user/**" access="hasAuthority('ROLE_USER')"/>
+		
 		<!-- isAuthenticated() : 인증된 사람모든사람이 접근가능함 -->
 		<!-- 권한과 상관없이 인증을한 어드민, 유저 모두 접근가능함 -->
 		<security:intercept-url pattern="/**" access="isAuthenticated()"/>
@@ -32,15 +36,29 @@
 		<security:csrf disabled="true"/>
 	</security:http>
 	
+	
 	<security:authentication-manager>
-		<security:authentication-provider>
-			<security:user-service>
-				<!-- {noop} : 현재 비밀번호를 암호화 처리 -->
-				<security:user name="user" password="{noop}1234" authorities="ROLE_USER"/>
-				<security:user name="admin" password="{noop}1234" authorities="ROLE_ADMIN"/>
-			</security:user-service>
-		</security:authentication-provider>
-	</security:authentication-manager>
+	<!-- provider : 인증처리하는애, 인증을 체크하는애 = 등록되어있는지 체크하는애  -->
+    <security:authentication-provider>
+       <!-- data를 들고있는 bean을 참조한다 -->
+       <!-- users-by-username-query은 인증 처리 -->
+       <!-- authorities-by-username-query은 권한을 처리 -->
+       <!-- jdbc-user-service : 세션에 저장하는애 -->
+      <security:jdbc-user-service data-source-ref="dataSource"
+          users-by-username-query
+            ="select LOGIN_ID, PASSWORD, 1
+              from T_USER
+              where LOGIN_ID = ?"
+          authorities-by-username-query
+            ="select LOGIN_ID, ROLE_NAME
+              from T_ROLE
+                inner join T_USER_ROLE on T_ROLE.ID = T_USER_ROLE.ROLE_ID
+                inner join T_USER on T_USER_ROLE.USER_ID = T_USER.ID
+              where LOGIN_ID = ?" />
+       <!-- 로그인할때 사용하는 비밀번호의 복호화작업을 실행함 ( 들어오는 data에 대해 암호화 작업해애함 ) -->
+       <security:password-encoder hash="bcrypt"/> <!-- bcrypt : 복호화 작업을함 -->
+    </security:authentication-provider>
+  </security:authentication-manager>
 
 
 
