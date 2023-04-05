@@ -4,6 +4,8 @@
                 integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
                 crossorigin="anonymous" referrerpolicy="no-referrer" />
  <!-- 헤더부분 -->
+ <!-- Begin Page Content -->
+<div class="container-fluid">
    <div class="container-fluid px-4">
       <h1 class="mt-4">생산관리</h1>
        <ol class="breadcrumb mb-4">
@@ -68,3 +70,8 @@
         </div>
 
 </div>
+</div>
+<!-- /.container-fluid -->
+
+</div>
+<!-- End of Main Content -->

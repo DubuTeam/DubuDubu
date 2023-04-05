@@ -6,6 +6,8 @@
 
 <!-- 생산계획조회 -->
 <!-- 헤더부분 -->
+<!-- Begin Page Content -->
+<div class="container-fluid">
 <div class="container-fluid px-4">
 	<h1 class="mt-4">생산계획조회</h1>
 	<ol class="breadcrumb mb-4">
@@ -93,5 +95,9 @@
 			<div id='grid'></div>
 		</div>
 	</div>
+</div>
+</div>
+<!-- /.container-fluid -->
+
 </div>
 <!-- End of Main Content -->
