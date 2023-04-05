@@ -6,3 +6,10 @@
    padding: 6px;
    border-radius: 4px
 }
+
+#start{
+	display: inline-block;
+}
+#end{
+	display: inline-block;
+}

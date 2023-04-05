@@ -38,14 +38,18 @@
 										<i class="fas fa-file"></i> 초기화
 									</button>
 									<tr>
+									
 										<th>제품명</th>
-										<td><input type="text" class="form-control" id="prdtNm"
-											name="prdtNm" style="width: 150px;"> <!-- 모달버튼 -->
-											<button type="button" class="btn btn-primary"
-												id="prdtSearchBtn" data-bs-toggle="modal"
-												data-bs-target="#proModal">
-												<i class="fas fa-search"></i>
-											</button></td>
+										<td>
+											<div style="display: flex;">
+												<input type="text" class="form-control" id="prdtNm"
+													name="prdtNm" style="width: 150px;">
+												<button type="button" class="btn btn-primary"
+													id="openProduct" data-bs-toggle="modal"
+													data-bs-target="#proModal">
+													<i class="fas fa-search"></i>
+												</button>
+											</div></td>
 										<th></th>
 										<td></td>
 									</tr>

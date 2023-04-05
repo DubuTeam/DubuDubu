@@ -35,11 +35,13 @@
 							</button>
 						</div>
 						<form name="IstSearchFrm" id="IstSearchFrm">
-							<label for="edctsIstDt" class="form-label">제품 입고일자</label> <input
-								type="date" id="edctsIstDtStart" name="edctsIstDtStart"
-								class="form-control" style="width: 150px; margin-left: 5px;">
-							- <input type="date" id="edctsIstDtEnd" name="edctsIstDtEnd"
-								class="form-control" style="width: 150px;">
+							<label for="edctsIstDt" class="form-label">제품 입고일자</label>
+							<div style="display: flex;">
+								<input type="date" id="start" name="start" class="form-control"
+									style="width: 150px;"> <span style="padding: 5px;">-</span>
+								<input type="date" id="end" name="end" class="form-control"
+									style="width: 150px;">
+							</div>
 							<table class="table" style="vertical-align: middle;">
 								<colgroup>
 									<col style="width: 150px;">
@@ -58,14 +60,15 @@
 											id="edctsIstNo" name="edctsIstNo" placeholder="등록시 자동생성"
 											readonly style="width: 150px; margin-left: 6px;"></td>
 										<th>완제품LOT번호</th>
-										<td><input type="text" class="form-control"
-											id="edctsLotNo" name="edctsLotNo" style="width: 150px"
-											readonly> <!-- 모달버튼 -->
-											<button type="button" class="btn btn-primary"
-												id="lotSearchBtn" data-bs-toggle="modal"
-												data-bs-target="#lotModal">
-												<i class="fas fa-search"></i>
-											</button></td>
+										<td><div style="display: flex;">
+												<input type="text" class="form-control" id="vendNm"
+													name="vendNm" style="width: 150px;" class="input" readonly>
+												<button type="button" class="btn btn-primary"
+													id="openCompany" data-bs-toggle="modal"
+													data-bs-target="#comModal" class="butt">
+													<i class="fas fa-search"></i>
+												</button>
+											</div></td>
 										<th></th>
 										<td></td>
 										<th></th>

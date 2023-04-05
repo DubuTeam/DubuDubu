@@ -47,14 +47,15 @@
 								<tbody>
 									<tr>
 										<th>완제품LOT번호</th>
-										<td><input type="text" class="form-control"
-											id="edctsLotNo" name="edctsLotNo" style="width: 200px;"
-											readonly> <!-- 모달버튼 -->
-											<button type="button" class="btn btn-primary"
-												id="lotSearchBtn" data-bs-toggle="modal"
-												data-bs-target="#lotModal" style="margin-bottom: 3px;">
-												<i class="fas fa-search"></i>
-											</button></td>
+										<td><div style="display: flex;">
+												<input type="text" class="form-control" id="vendNm"
+													name="vendNm" style="width: 150px;" class="input" readonly>
+												<button type="button" class="btn btn-primary"
+													id="openCompany" data-bs-toggle="modal"
+													data-bs-target="#comModal" class="butt">
+													<i class="fas fa-search"></i>
+												</button>
+											</div></td>
 										<th></th>
 										<td></td>
 										<th></th>
@@ -62,11 +63,14 @@
 									</tr>
 									<tr>
 										<th>제품 입고일자</th>
-										<td><input type="date" id="edctsIstDtStart"
-											name="edctsIstDtStart" class="form-control"
-											style="width: 150px;"> - <input type="date"
-											id="edctsIstDtEnd" name="edctsIstDtEnd" class="form-control"
-											style="width: 150px;">
+										<td>
+											<div style="display: flex;">
+												<input type="date" id="start" name="start"
+													class="form-control" style="width: 150px;"> <span
+													style="padding: 5px;">-</span> <input type="date" id="end"
+													name="end" class="form-control" style="width: 150px;">
+											</div>
+										</td>
 										<th></th>
 										<td></td>
 										<th></th>

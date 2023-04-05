@@ -6,7 +6,8 @@
 <link
 	href="${pageContext.request.contextPath}/resources/css/sales/orderList.css"
 	rel="stylesheet" type="text/css">
-
+ <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="path/to/your/vue/component.js"></script>
 <!-- Begin Page Content -->
 <div class="container-fluid">
 	<div class="container-fluid px-4">
@@ -43,13 +44,17 @@
 								<tbody>
 									<tr>
 										<th>거래처명</th>
-										<td><input type="text" class="form-control" id="vendNm"
-											name="vendNm" style="width: 150px;">
-											<button type="button" class="btn btn-primary"
-												id="openCompany" data-bs-toggle="modal"
-												data-bs-target="#comModal">
-												<i class="fas fa-search"></i>
-											</button></td>
+										<td>
+											<div style="display: flex;">
+												<input type="text" class="form-control" id="vendNm"
+													name="vendNm" style="width: 150px;" class="input">
+												<button type="button" class="btn btn-primary"
+													id="openCompany" data-bs-toggle="modal"
+													data-bs-target="#comModal" class="butt">
+													<i class="fas fa-search"></i>
+												</button>
+											</div>
+										</td>
 										<th></th>
 										<td></td>
 										<th></th>
@@ -57,24 +62,32 @@
 									</tr>
 									<tr>
 										<th>제품명</th>
-										<td><input type="text" class="form-control" id="prdtNm"
-											name="prdtNm" style="width: 150px;">
-											<button type="button" class="btn btn-primary"
-												id="openProduct" data-bs-toggle="modal"
-												data-bs-target="#proModal">
-												<i class="fas fa-search"></i>
-											</button></td>
+										<td>
+											<div style="display: flex;">
+												<input type="text" class="form-control" id="prdtNm"
+													name="prdtNm" style="width: 150px;">
+												<button type="button" class="btn btn-primary"
+													id="openProduct" data-bs-toggle="modal"
+													data-bs-target="#proModal">
+													<i class="fas fa-search"></i>
+												</button>
+											</div>
+										</td>
 										<th></th>
 										<td></td>
 										<th></th>
 										<td></td>
 									</tr>
 									<tr>
-										<th>주문일자</th>
-										<td><input type="date" id="start" name="start"
-											class="form-control" style="width: 150px;"> - <input
-											type="date" id="end" name="end" class="form-control"
-											style="width: 150px;"></td>
+										<th>주문 일자</th>
+										<td>
+											<div style="display: flex;">
+												<input type="date" id="start" name="start"
+													class="form-control" style="width: 150px;"> <span
+													style="padding: 5px;">-</span> <input type="date" id="end"
+													name="end" class="form-control" style="width: 150px;">
+											</div>
+										</td>
 										<th></th>
 										<td></td>
 										<th></th>

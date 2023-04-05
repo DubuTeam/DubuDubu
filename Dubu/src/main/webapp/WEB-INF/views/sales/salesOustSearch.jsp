@@ -62,10 +62,13 @@
 									</tr>
 									<tr>
 										<th>제품 출고일자</th>
-										<td><input type="date" id="oustStart" name="oustStart"
-											class="form-control" style="width: 150px"> - <input
-											type="date" id="oustEnd" name="oustEnd" class="form-control"
-											style="width: 150px">
+										<td>
+											<div style="display: flex;">
+												<input type="date" id="start" name="start"
+													class="form-control" style="width: 150px;"> <span
+													style="padding: 5px;">-</span> <input type="date" id="end"
+													name="end" class="form-control" style="width: 150px;">
+											</div>
 										<th></th>
 										<td></td>
 										<th></th>
