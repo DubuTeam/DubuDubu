@@ -40,7 +40,7 @@
 								<!--/* <button class="btn btn-primary" id="delBtn"><i class="fas fa-trash"></i> 삭제</button> */-->
 								<br> <br>
 							</div>
-							<form id="dataForm" name="dataForm" action="#" method="post">
+							<form id="dataForm" name="dataForm" action="#" method="post">  <!-- 첫번 째 전환 탭 -->
 								<table class="table" style="vertical-align : middle;">
 									<colgroup>
 										<col style="width: 150px">
