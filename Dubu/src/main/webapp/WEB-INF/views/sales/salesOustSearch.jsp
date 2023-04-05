@@ -81,6 +81,6 @@
 		<div id="grid" class="card mb-4"></div>
 	</div>
 	<!-- /.container-fluid -->
-
+</div>
 </div>
 <!-- End of Main Content -->
