@@ -65,20 +65,20 @@
 											<tr>
 												<th>판정</th>
 												<td>
-													<input type="radio" name="jdgmnt" value="적합">적합&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+													<input type="radio" name="jdgmnt" value="적합"> 적합&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 													<input type="radio" name="jdgmnt" value="부적합"> 부적합
 												</td>
 
 												<th>조치사항</th>
 												<td>
-													<input type="radio" name="dispoMatter" value="수리">수리&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-													<input type="radio" name="dispoMatter" value="점검">점검
+													<input type="radio" name="dispoMatter" value="수리"> 수리&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+													<input type="radio" name="dispoMatter" value="점검"> 점검
 												</td>
 
 												<th>점검구분</th>
 												<td>
-													<input type="radio" name="chckFg" value="정기점검">정기점검&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-													<input type="radio" name="chckFg" value="수시점검">수시점검
+													<input type="radio" name="chckFg" value="정기점검"> 정기점검&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+													<input type="radio" name="chckFg" value="수시점검"> 수시점검
 												</td>
 											</tr>
 

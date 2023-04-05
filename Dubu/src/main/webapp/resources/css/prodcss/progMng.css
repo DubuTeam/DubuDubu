@@ -1,34 +1,33 @@
-  
-        #container {
-            width : 98%;
-            margin : 0 auto;
-        }
+#container {
+	width: 98%;
+	margin: 0 auto;
+}
 
-        .col {
-            width: 700px
-        }
+.col {
+	width: 700px
+}
 
-        #pDate {
-            float: left;
-        }
+#pDate {
+	float: left;
+}
 
-        #lbtn{
-            float:left;
-            display:inline-block;
-        }
+#lbtn {
+	float: left;
+	display: inline-block;
+}
 
-        .rbtn{
-            float:right;
-            display:inline-block;
-        }
+.rbtn {
+	float: right;
+	display: inline-block;
+}
 
-        #grid3{
-            float: right;
-            margin-top: 0px;
-        }
-        
-        .linelist {
-		   float: right;
-		   margin-top: 0px;
-		   margin-right: 150px;
-		}
+#grid3 {
+	float: right;
+	margin-top: 0px;
+}
+
+.linelist {
+	float: right;
+	margin-top: 0px;
+	margin-right: 150px;
+}

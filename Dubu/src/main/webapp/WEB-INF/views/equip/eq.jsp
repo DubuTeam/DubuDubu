@@ -165,7 +165,7 @@
 
 											<th>가동여부 *</th>
 											<td>
-												<input type="radio" name="useYN" value="Y">가동&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+												<input type="radio" name="useYN" value="Y"> 가동
 												<input type="radio" name="useYN" value="N"> 미가동
 											</td>
 										</tr>

@@ -1,4 +1,4 @@
-uploadResult {
+.uploadResult {
 	display: grid;
 	grid-template-columns: 1fr 1fr 1fr;
 }
@@ -49,4 +49,11 @@ label {
 
 #searchBar {
 	display: flex;
+}
+
+
+/*  */
+
+#opN, #sTtn {
+    margin: 0px 10px;
 }

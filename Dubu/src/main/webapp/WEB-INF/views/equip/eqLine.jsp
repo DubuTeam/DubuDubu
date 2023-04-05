@@ -41,6 +41,7 @@
 			</div>
 
 			<div style="width: 2%"></div>
+			
 			<div class="col-lg-3">
 				<div class="card mb-4">
 					<div class="card-body">
