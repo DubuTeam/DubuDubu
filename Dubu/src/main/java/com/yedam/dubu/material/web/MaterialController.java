@@ -12,16 +12,70 @@ public class MaterialController {
 	@Autowired
 	MaterialService materialService;
 	
-	// 자재입고검사
-	@GetMapping("materialInsp")
-	public String getMaterialInsp(Model model) {
-		return "material/materialInsp";
-	}
-	
 	// 자재입고검사조회
 	@GetMapping("materialInspList")
 	public String getMaterialInspList(Model model) {
 		return "material/materialInspList";
+	}
+	
+	// 자재입/출고조회
+	@GetMapping("materialIOList")
+	public String getMaterialIOList(Model model) {
+		return "material/materialIOList";
+	}
+	
+	// 자재입고관리
+	@GetMapping("materialIst")
+	public String getMaterialIist(Model model) {
+		return "material/materialIst";
+	}
+	
+	// 자재입고조회
+	@GetMapping("materialIstList")
+	public String getMaterialIstList(Model model) {
+		return "material/materialIstList";
+	}
+	
+	// 자재LOT재고조회
+	@GetMapping("materialLOTList")
+	public String getMaterialLOTList(Model model) {
+		return "material/materialLOTList";
+	}
+	
+	// 자재발주
+	@GetMapping("materialOrder")
+	public String getMaterialOrder(Model model) {
+		return "material/materialOrder";
+	}
+	
+	// 자재발주(모달)
+	@GetMapping("materialOrderAdd")
+	public String getMaterialOrderAdd(Model model) {
+		return "material/materialOrderAdd";
+	}
+	
+	// 자재발주(검색)
+	@GetMapping("materialOrderSearch")
+	public String getMaterialOrderSearch(Model model) {
+		return "material/materialOrderSearch";
+	}
+	
+	// 원자재출고관리
+	@GetMapping("materialOust")
+	public String getMaterialOust(Model model) {
+		return "material/materialOust";
+	}
+	
+	// 원자재출고조회
+	@GetMapping("materialOustList")
+	public String getMaterialOustList(Model model) {
+		return "material/materialOustList";
+	}
+	
+	// 자재재고조회
+	@GetMapping("materialStcList")
+	public String getMaterialStcList(Model model) {
+		return "material/materialStcList";
 	}
 	
 }
