@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 
+<link href="${pageContext.request.contextPath}/resources/css/material/materialIst.css" rel="stylesheet">
+
 
 <!-- Begin Page Content -->
 <div class="container-fluid">
@@ -28,7 +30,6 @@
 							</button>
 						</div>
 
-
 						<table style="vertical-align: middle; text-align: center">
 							<colgroup>
 								<col style="width: 120px">
@@ -48,7 +49,8 @@
 										<div
 											class="tui-datepicker-input tui-datetime-input tui-has-focus"
 											style="height: 40px; border-radius: 5px;">
-											<input type="text" id="istDt" aria-label="Date-Time"
+
+											<input type="date" id="istDt" aria-label="Date-Time"
 												class="form-control"> <span class="tui-ico-date"></span>
 										</div>
 										<div id="wrapper" style="margin-top: -1px;"></div>
@@ -63,7 +65,7 @@
 					</div>
 				</div>
 			</div>
-
+				
 			<div class="sub">
 				<div class="card">
 					<div class="card-body">
@@ -98,30 +100,15 @@
 									<td></td>
 									<th><b>검사자료</b></th>
 									<td>
-										<div class="datepickers-wrapper"
-											style="display: flex; flex-direction: row;">
-											<div
-												class="tui-datepicker-input tui-datetime-input tui-has-focus"
-												style="height: 40px; border-radius: 5px;">
-												<input id="startpicker-input" class="form-control"
-													type="date" aria-label="Date" name="startDt"> <span
-													class="tui-ico-date"></span>
-												<div id="startpicker-container" style="margin-left: -1px;"></div>
-											</div>
-											<span></span>
-											<div
-												class="tui-datepicker-input tui-datetime-input tui-has-focus"
-												style="height: 40px; border-radius: 5px;">
-												<input id="endpicker-input" class="form-control" type="date"
-													aria-label="Date" name="endDt"> <span
-													class="tui-ico-date"></span>
-												<div id="endpicker-container" style="margin-left: -1px;"></div>
-											</div>
+										<div style="display: flex;">
+											<input type="date" id="start" name="start"
+												class="form-control" style="width: 150px;"> <span
+												style="padding: 5px;">-</span> <input type="date" id="end"
+												name="end" class="form-control" style="width: 150px;">
+											<input id="getInspList" type="button" class="btn btn-primary"
+												value="가져오기" />
 										</div>
 									</td>
-									<th></th>
-									<td><input id="getInspList" type="button"
-										class="btn btn-primary" value="가져오기" /></td>
 								</tr>
 							</table>
 						</form>
@@ -129,8 +116,7 @@
 				</div>
 			</div>
 
-			<div class="styleFlex">
-				<!-- 플렉스쓰려고 넣은것 -->
+			<div class="styleFlex"><!-- 플렉스쓰려고 넣은것 -->
 				<div class="body">
 					<div class="card">
 						<div class="card-body">
@@ -141,164 +127,170 @@
 							</div>
 							<br> <br>
 							<!-- 조회 시 나타나는 테이블 -->
-							<div class="flex-wrapper"
-								style="display: flex; flex-direction: row;">
-								<div id="list-body" class="table">
-									<table>
-										<thead>
-											<tr>
-												<th><input type="checkbox"></th>
-												<th>자재코드</th>
-												<th>품명</th>
-												<th>규격</th>
-												<th>단위</th>
-												<th>자재유형</th>
-												<th>발주번호</th>
-												<th>입고가능수량</th>
-												<th>입고수량</th>
-												<th>유통기한</th>
-											</tr>
-										</thead>
-										<!-- ↓↓↓여기에 조회된 결과 출력 -->
-										<tbody id="list">
-											<tr>
-												<td><input type="checkbox"></td>
-												<td>test</td>
-												<td>test</td>
-												<td>test</td>
-												<td>test</td>
-												<td>test</td>
-												<td>test</td>
-												<td>test</td>
-												<td>test</td>
-												<td>test</td>
-											</tr>
-										</tbody>
-									</table>
-								</div>
-								<div class="rightside">
-									<div class="card">
-										<div class="card-body"style="width: 540px;">
-											<b>입고목록</b> <br> <br>
-											<!-- 조회 시 나타나는 테이블 -->
-											<div id="list-body" class="table" >
-												<table>
-													<thead>
-														<tr>
-															<th>입고코드</th>
-															<th>입고일자</th>
-															<th>건수</th>
-														</tr>
-													</thead>
-													<!-- ↓↓↓여기에 조회된 결과 출력 -->
-													<tbody id="list">
-														<tr>
-															<td>test</td>
-															<td>test</td>
-															<td>test</td>
-														</tr>
-													</tbody>
-												</table>
-											</div>
-										</div>
-									</div>
-								</div>
+							<div id="list-body" class="table">
+								<table>
+									<thead>
+										<tr>
+											<th><input type="checkbox"></th>
+											<th>자재코드</th>
+											<th>품명</th>
+											<th>규격</th>
+											<th>단위</th>
+											<th>자재유형</th>
+											<th>발주번호</th>
+											<th>입고가능수량</th>
+											<th>입고수량</th>
+											<th>유통기한</th>
+										</tr>
+									</thead>
+									<!-- ↓↓↓여기에 조회된 결과 출력 -->
+									<tbody id="list">
+										<tr>
+											<td><input type="checkbox"></td>
+											<td>test</td>
+											<td>test</td>
+											<td>test</td>
+											<td>test</td>
+											<td>test</td>
+											<td>test</td>
+											<td>test</td>
+											<td>test</td>
+											<td>test</td>
+										</tr>
+									</tbody>
+								</table>
 							</div>
-
-							<!-- Modal for vend search -->
-							<div class="modal fade" id="vendModal" tabindex="-1">
-								<div class="modal-dialog">
-									<div class="modal-content">
-										<div class="modal-header">
-											<h4 class="modal-title">업체검색</h4>
-											<button type="button" class="btn-close"
-												data-bs-dismiss="modal" aria-label="Close"></button>
-										</div>
-										<div class="modal-body">
-											<form id="vendSchForm">
-												<table>
-													<colgroup>
-														<col style="width: 400px;">
-														<col style="width: 10px">
-														<col style="width: 50px;">
-													</colgroup>
-													<tbody>
-														<tr>
-															<td><input type="text" name="vendNm"
-																class="form-control" placeholder="업체명"></td>
-															<td></td>
-															<td rowspan="2">
-																<button id="vendSch" class="btn btn-primary"
-																	type="button" style="height: 90px;">
-																	<i class="fas fa-search"></i>
-																</button>
-															</td>
-														</tr>
-														<tr>
-															<td><input type="text" name="vendCd"
-																class="form-control" placeholder="업체코드"></td>
-														</tr>
-													</tbody>
-												</table>
-											</form>
-											<br>
-											<div id="vend-grid"></div>
-											<div style="float: right">
-												<p>선택 : 더블클릭</p>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-
-							<!-- Modal for resource search -->
-							<div class="modal fade" id="rscModal" tabindex="-1"
-								aria-labelledby="rscModal" aria-hidden="true">
-								<div class="modal-dialog">
-									<div class="modal-content">
-										<div class="modal-header">
-											<h4 class="modal-title">자재검색</h4>
-											<button type="button" class="btn-close"
-												data-bs-dismiss="modal" aria-label="Close"></button>
-										</div>
-										<div class="modal-body">
-											<form id="rscSchForm">
-												<table>
-													<colgroup>
-														<col style="width: 400px;">
-														<col style="width: 10px">
-														<col style="width: 50px;">
-													</colgroup>
-													<tbody>
-														<tr>
-															<td><input type="text" id="rscNmInMod" name="rscNm"
-																class="form-control" placeholder="자재명"></td>
-															<td></td>
-															<td rowspan="2">
-																<button id="rscSch" class="btn btn-primary"
-																	type="button" style="height: 90px;">
-																	<i class="fas fa-search"></i>
-																</button>
-															</td>
-														</tr>
-														<tr>
-															<td><input type="text" id="rscCdInMod" name="rscCd"
-																class="form-control" placeholder="자재코드"></td>
-														</tr>
-													</tbody>
-												</table>
-											</form>
-											<br>
-											<div id="rsc-grid"></div>
-											<div style="float: right">
-												<p>선택 : 더블클릭</p>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
+							<!-- 조회시 나타나는 테이블 닫는 태그 -->
 						</div>
-						<!-- /.container-fluid -->
-
 					</div>
-					<!-- End of Main Content -->
+				</div>
+
+				<div class="rightside">
+					<div class="card">
+						<div class="card-body">
+							<b>입고목록</b> <br> <br>
+							<!-- 조회 시 나타나는 테이블 -->
+							<div id="list-body" class="table">
+								<table>
+									<thead>
+										<tr>
+											<th>입고코드</th>
+											<th>입고일자</th>
+											<th>건수</th>
+										</tr>
+									</thead>
+									<!-- ↓↓↓여기에 조회된 결과 출력 -->
+									<tbody id="list">
+										<tr>
+											<td>test</td>
+											<td>test</td>
+											<td>test</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+							<!-- 조회시 나타나는 테이블 닫는 태그 -->
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- 플렉스넣은태그 닫는태그 -->
+	</div>
+
+	<!-- Modal for vend search -->
+	<div class="modal fade" id="vendModal" tabindex="-1">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title">업체검색</h4>
+					<button type="button" class="btn-close" data-bs-dismiss="modal"
+						aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+					<form id="vendSchForm">
+						<table>
+							<colgroup>
+								<col style="width: 400px;">
+								<col style="width: 10px">
+								<col style="width: 50px;">
+							</colgroup>
+							<tbody>
+								<tr>
+									<td><input type="text" name="vendNm" class="form-control"
+										placeholder="업체명"></td>
+									<td></td>
+									<td rowspan="2">
+										<button id="vendSch" class="btn btn-primary" type="button"
+											style="height: 90px;">
+											<i class="fas fa-search"></i>
+										</button>
+									</td>
+								</tr>
+								<tr>
+									<td><input type="text" name="vendCd" class="form-control"
+										placeholder="업체코드"></td>
+								</tr>
+							</tbody>
+						</table>
+					</form>
+					<br>
+					<div id="vend-grid"></div>
+					<div style="float: right">
+						<p>선택 : 더블클릭</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Modal for resource search -->
+	<div class="modal fade" id="rscModal" tabindex="-1"
+		aria-labelledby="rscModal" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title">자재검색</h4>
+					<button type="button" class="btn-close" data-bs-dismiss="modal"
+						aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+					<form id="rscSchForm">
+						<table>
+							<colgroup>
+								<col style="width: 400px;">
+								<col style="width: 10px">
+								<col style="width: 50px;">
+							</colgroup>
+							<tbody>
+								<tr>
+									<td><input type="text" id="rscNmInMod" name="rscNm"
+										class="form-control" placeholder="자재명"></td>
+									<td></td>
+									<td rowspan="2">
+										<button id="rscSch" class="btn btn-primary" type="button"
+											style="height: 90px;">
+											<i class="fas fa-search"></i>
+										</button>
+									</td>
+								</tr>
+								<tr>
+									<td><input type="text" id="rscCdInMod" name="rscCd"
+										class="form-control" placeholder="자재코드"></td>
+								</tr>
+							</tbody>
+						</table>
+					</form>
+					<br>
+					<div id="rsc-grid"></div>
+					<div style="float: right">
+						<p>선택 : 더블클릭</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- /.container-fluid -->
+
+</div>
+<!-- End of Main Content -->
