@@ -1,41 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-     <style>
-
-        #container {
-            width : 98%;
-            margin : 0 auto;
-        }
-
-        .col {
-            width: 700px
-        }
-
-        #pDate {
-            float: left;
-        }
-
-        #lbtn{
-            float:left;
-            display:inline-block;
-        }
-
-        .rbtn{
-            float:right;
-            display:inline-block;
-        }
-
-        #grid3{
-            float: right;
-            margin-top: 0px;
-        }
-        
-        .linelist {
-		   float: right;
-		   margin-top: 0px;
-		   margin-right: 150px;
-		}
-    </style>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/prodcss/progMng.css"
+                integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+                crossorigin="anonymous" referrerpolicy="no-referrer" />
  <!-- 헤더부분 -->
    <div class="container-fluid px-4">
       <h1 class="mt-4">생산관리</h1>

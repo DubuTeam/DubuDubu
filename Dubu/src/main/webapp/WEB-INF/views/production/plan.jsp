@@ -1,34 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/prodcss/plan.css"
+                integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+                crossorigin="anonymous" referrerpolicy="no-referrer" />
 <!-- Begin Page Content -->
  <!-- 헤더부분 -->
  <!-- 생산계획 -->
- <style>
 
-        #container {
-            width: 98%;
-            margin: 0 auto;
-        }
-
-        .col {
-            width: 100%
-        }
-
-        .linelist {
-            float: right;
-            margin: 0 20px 20px 0;
-
-        }
-
-        #pDate {
-            float: left;
-        }
-
-
-        .tui-datepicker {
-            z-index: 99;
-        }
-    </style>
         <div class="container-fluid px-4">
             <h1 class="mt-4">생산계획</h1>
             <ol class="breadcrumb mb-4">
