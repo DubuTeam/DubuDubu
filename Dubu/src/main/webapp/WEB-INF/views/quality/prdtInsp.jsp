@@ -2,7 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page session="false"%>
-
+<link href="${pageContext.request.contextPath}/resources/css/prdcss/prdt.css" rel="stylesheet" type="text/css">
 
 <!-- Begin Page Content -->
 <div class="container-fluid">
