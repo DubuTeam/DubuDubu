@@ -1,10 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 
-<!-- CSS -->
-<link
-	href="${pageContext.request.contextPath}/resources/css/material/materialStcList.css"
-	rel="stylesheet" type="text/css">
 
 <!-- Begin Page Content -->
 <div class="container-fluid">
