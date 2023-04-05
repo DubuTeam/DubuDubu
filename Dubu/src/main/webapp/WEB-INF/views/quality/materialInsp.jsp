@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-
+<link href="${pageContext.request.contextPath}/resources/css/material/materialInsp2.css" rel="stylesheet" type="text/css">
 <!-- Begin Page Content -->
 <div class="container-fluid">
 
@@ -85,7 +85,7 @@
 									<td></td>
 									<th><label for="vendNm"><b>업체명</b></label></th>
 									<td><input id="vendNm" type="text" class="form-control"
-										placeholder="검색버튼을 이용하세요" style="width: 250px;" required
+										placeholder="검색버튼을 이용하세요" style="width: 200px;" required
 										readonly> <input id="vendCd" type="hidden"
 										name="vendCd">
 										<button id="modalBtn" type="button" class="btn btn-primary">
@@ -94,23 +94,13 @@
 									<td></td>
 									<th><b>납기예정일</b></th>
 									<td>
-										<div
-											class="tui-datepicker-input tui-datetime-input tui-has-focus"
-											style="height: 40px; border-radius: 5px;">
-											<input id="startpicker-input" class="form-control"
-												type="text" aria-label="Date" name="startDt"> <span
-												class="tui-ico-date"></span>
-											<div id="startpicker-container" style="margin-left: -1px;"></div>
-										</div> <span></span>
-										<div
-											class="tui-datepicker-input tui-datetime-input tui-has-focus"
-											style="height: 40px; border-radius: 5px;">
-											<input id="endpicker-input" class="form-control" type="text"
-												aria-label="Date" name="endDt"> <span
-												class="tui-ico-date"></span>
-											<div id="endpicker-container" style="margin-left: -1px;"></div>
-										</div>
-									</td>
+											<div style="display: flex;">
+												<input type="date" id="start" name="start"
+													class="form-control" style="width: 150px;"> <span
+													style="padding: 5px;">-</span> <input type="date" id="end"
+													name="end" class="form-control" style="width: 150px;">
+											</div>
+										</td>
 									<th></th>
 									<td><input id="getOrdrList" type="button"
 										class="btn btn-primary" value="가져오기" /></td>
