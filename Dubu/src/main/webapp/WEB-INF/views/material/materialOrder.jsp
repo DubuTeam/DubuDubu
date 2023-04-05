@@ -15,7 +15,7 @@
 		</ol>
 
 		<div class="card mb-4">
-			<div class="card-body">
+			<div class="card-body" style="display: flex;">
 
 				<tr>
 					<th>원자재명</th>
@@ -31,10 +31,10 @@
 
 					<br>
 					<br>
-					<div id="grid">자재목록</div>
+					
 			</div>
 		</div>
-
+<div id="grid">자재목록</div>
 		<div class="card mb-4">
 			<div class="card-body">
 
@@ -60,3 +60,4 @@
 <!-- /.container-fluid -->
 </div>
 <!-- End of Main Content -->
+
