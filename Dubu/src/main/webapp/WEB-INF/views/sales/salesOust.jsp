@@ -81,6 +81,6 @@
 		<!--검사완료 완제품 재고 모달 끝-->
 	</div>
 	<!-- /.container-fluid -->
-
+</div>
 </div>
 <!-- End of Main Content -->
