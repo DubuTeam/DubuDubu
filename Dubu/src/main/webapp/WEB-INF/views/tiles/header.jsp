@@ -71,11 +71,11 @@
             	<a class="collapse-item" href="${pageContext.request.contextPath}/prcProcess">제품공정흐름관리</a>
                 <a class="collapse-item" href="${pageContext.request.contextPath}/prcs">공정관리</a>
                 <a class="collapse-item" href="${pageContext.request.contextPath}/plan">생산계획</a>
-                <a class="collapse-item" href="${pageContext.request.contextPath}/planSearch">생산계획조회</a>
+                <a class="collapse-item" href="${pageContext.request.contextPath}/planSearch">생산계획조회XXX</a>
                 <a class="collapse-item" href="${pageContext.request.contextPath}/indica">생산지시</a>
-                <a class="collapse-item" href="${pageContext.request.contextPath}/indicaSearch">생산지시조회</a>
+                <a class="collapse-item" href="${pageContext.request.contextPath}/indicaSearch">생산지시조회XXX</a>
                 <a class="collapse-item" href="${pageContext.request.contextPath}/progMng">생산관리</a>
-                <a class="collapse-item" href="${pageContext.request.contextPath}/prcsSearch">생산실적조회</a>
+                <a class="collapse-item" href="${pageContext.request.contextPath}/prcsSearch">생산실적조회XXX</a>
             </div>
         </div>
     </li>
@@ -114,12 +114,12 @@
         <div id="bbb" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 <a class="collapse-item" href="${pageContext.request.contextPath}/materialOrder">자재발주관리</a>
-                <a class="collapse-item" href="${pageContext.request.contextPath}/materialOrderSearch">자재발주조회</a>
-                <a class="collapse-item" href="${pageContext.request.contextPath}/materialInspList">자재입고검사조회</a>
+                <a class="collapse-item" href="${pageContext.request.contextPath}/materialOrderSearch">자재발주조회XXX</a>
+                <a class="collapse-item" href="${pageContext.request.contextPath}/materialInspList">자재입고검사조회XXX</a>
                 <a class="collapse-item" href="${pageContext.request.contextPath}/materialIst">자재입고관리</a>
-                <a class="collapse-item" href="${pageContext.request.contextPath}/materialIstList">자재입고조회</a>
-                <a class="collapse-item" href="${pageContext.request.contextPath}/materialOust">원자재출고관리</a>
-                <a class="collapse-item" href="${pageContext.request.contextPath}/materialOustList">원자재출고조회</a>
+                <a class="collapse-item" href="${pageContext.request.contextPath}/materialIstList">자재입고조회XXX</a>
+                <a class="collapse-item" href="${pageContext.request.contextPath}/materialOust">원자재출고관리△△△</a>
+                <a class="collapse-item" href="${pageContext.request.contextPath}/materialOustList">원자재출고조회XXX</a>
                 <a class="collapse-item" href="${pageContext.request.contextPath}/materialStcList">자재재고조회</a>
                 <a class="collapse-item" href="${pageContext.request.contextPath}/materialLOTList">자재LOT재고조회</a>
                 <a class="collapse-item" href="${pageContext.request.contextPath}/materialIOList">자재입/출고조회</a>
