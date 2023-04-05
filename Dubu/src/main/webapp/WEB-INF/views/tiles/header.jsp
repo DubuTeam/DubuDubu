@@ -94,7 +94,7 @@
             <div class="bg-white py-2 collapse-inner rounded">
                 <a class="collapse-item" href="${pageContext.request.contextPath}/eqLine">라인관리</a>
                 <a class="collapse-item" href="${pageContext.request.contextPath}/eq">설비관리</a>
-                <a class="collapse-item" href="${pageContext.request.contextPath}/eqCheck">설비점검관리</a>
+                <a class="collapse-item" href="${pageContext.request.contextPath}/eqCheck">설비점검내역</a>
                 <a class="collapse-item" href="${pageContext.request.contextPath}/eqIpopr">비가동관리</a>
                 <a class="collapse-item" href="${pageContext.request.contextPath}/equIp">실시간설비상태</a>
             </div>
