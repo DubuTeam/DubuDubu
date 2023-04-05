@@ -65,10 +65,12 @@
 										<th><b>출고유형</b></th>
 										<td>
 											<div id="sortBtn">
-												<label><input type="radio" class="form-check-input"
-													name="oustTyp" value="부서" checked> 부서</label> &nbsp; <label><input
+												<label> <input type="radio" class="form-check-input"
+													name="oustTyp" value="부서" checked> 부서
+												</label> <label style="margin-left: 20px;"> <input
 													type="radio" class="form-check-input" name="oustTyp"
-													value="협력사"> 협력업체</label>
+													value="협력사"> 협력업체
+												</label>
 											</div>
 										</td>
 										<th>
