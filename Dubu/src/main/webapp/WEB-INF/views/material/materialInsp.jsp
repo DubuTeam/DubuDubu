@@ -1,51 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-        <style>
-        tr {
-            height: 50px;
-        }
-
-        .inspBtn {
-            border-width: 0.01em;
-            border-radius: 5px;
-            border-color: #4f5050;
-            color: black;
-            height: 25px;
-        }
-
-        .layout {
-            width: 1628px;
-            height: 750px;
-
-            display: grid;
-            grid:
-                    "header header header" 85px
-                    "ordr ordr ordr" 85px
-                    "body body rightside" auto
-                    / auto auto 350px;
-            gap: 8px;
-        }
-
-        .header {
-            grid-area: header;
-        }
-
-        .ordr {
-            grid-area: ordr;
-        }
-
-        .rightside {
-            grid-area: rightside;
-        }
-
-        .body {
-            grid-area: body;
-        }
-
-        .highlight {
-            background-color: rgba(19, 78, 94, 0.2) !important;
-        }
-    </style>
+      <link
+	href="${pageContext.request.contextPath}/resources/css/material/materialInsp.css"
+	rel="stylesheet" type="text/css">
  <div class="container-fluid px-4">
         <h1 class="mt-4">자재입고검사</h1>
         <ol class="breadcrumb mb-4">

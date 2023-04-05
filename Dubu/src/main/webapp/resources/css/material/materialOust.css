@@ -1,0 +1,27 @@
+   tr {
+            height: 50px;
+        }
+
+        .layout {
+            width: 1628px;
+            height: 700px;
+
+            display: grid;
+            grid:
+                    "header header header" 85px
+                    "body body rightside" auto
+                    / auto auto 350px;
+            gap: 8px;
+        }
+
+        .header {
+            grid-area: header;
+        }
+
+        .rightside {
+            grid-area: rightside;
+        }
+
+        .body {
+            grid-area: body;
+        }

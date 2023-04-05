@@ -1,34 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-     <style>
-        tr {
-            height: 50px;
-        }
 
-        .layout {
-            width: 1628px;
-            height: 700px;
-
-            display: grid;
-            grid:
-                    "header header header" 85px
-                    "body body rightside" auto
-                    / auto auto 350px;
-            gap: 8px;
-        }
-
-        .header {
-            grid-area: header;
-        }
-
-        .rightside {
-            grid-area: rightside;
-        }
-
-        .body {
-            grid-area: body;
-        }
-    </style>
+     <link
+	href="${pageContext.request.contextPath}/resources/css/material/materialOust.css"
+	rel="stylesheet" type="text/css">
 <div class="container-fluid px-4">
         <h1 class="mt-4">원자재출고관리</h1>
         <ol class="breadcrumb mb-4">
