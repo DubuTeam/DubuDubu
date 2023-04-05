@@ -25,10 +25,10 @@
 
 					<div class="row me-3">
 						<div class="col-12">
-							<th>설비명</th>&nbsp&nbsp
+							<th>설비명</th>
 							<td>
 								<input class="form-control" type="text" id="SEqmNm" name="eqmNm" style="width: 150px" placeholder="설비명">
-							</td>&nbsp&nbsp
+							</td>
 
 							<th>비가동일자</th>
 							<td>
@@ -37,7 +37,7 @@
 
 							<td>
 								<input class="form-control" type="date" id="SToDt" name="toDt" style="width: 150px">
-							</td>&nbsp&nbsp
+							</td>
 
 							<button type="button" style="width: 85px; height: 38px; margin-bottom: 4px" class="btn btn-primary" onclick="eqmSelect()">
 								<i class="fas fa-search"></i> 조회

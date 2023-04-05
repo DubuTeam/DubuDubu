@@ -41,3 +41,7 @@ textarea {
 #searchEqmSet {
 	display: flex;
 }
+
+#keyword3, #stDt, #toDt, #excelBtn {
+	margin: 0px 10px;
+}

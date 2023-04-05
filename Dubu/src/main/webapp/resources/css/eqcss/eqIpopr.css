@@ -28,3 +28,7 @@ label {
 .col-12 {
 	display: flex;
 }
+
+#SEqmNm, #STrDt, #SToDt, #excelBtn, #del {
+    margin: 0px 10px;
+}
