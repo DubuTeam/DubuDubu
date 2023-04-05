@@ -1,10 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-      <style>
-        tr {
-            height: 50px;
-        }
-    </style>
+          <link
+	href="${pageContext.request.contextPath}/resources/css/material/materialIstList.css"
+	rel="stylesheet" type="text/css">
 <div class="container-fluid px-4">
         <h1 class="mt-4">자재입고조회</h1>
         <ol class="breadcrumb mb-4">

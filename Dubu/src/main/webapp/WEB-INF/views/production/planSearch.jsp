@@ -1,21 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/prodcss/planSearch.css"
+                integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+                crossorigin="anonymous" referrerpolicy="no-referrer" />
 
-<style>
-#container {
-	width: 98%;
-	margin: 0 auto;
-}
-
-.col {
-	width: 100%
-}
-
-.linelist {
-	float: right;
-	margin-top: 0px;
-}
-</style>
 <!-- 생산계획조회 -->
 <!-- 헤더부분 -->
 <div class="container-fluid px-4">
