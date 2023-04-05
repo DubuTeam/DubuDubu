@@ -1,6 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 
+<link
+	href="${pageContext.request.contextPath}/resources/css/material/materialLotList.css"
+	rel="stylesheet">
+
 <!-- Begin Page Content -->
 <div class="container-fluid">
 
@@ -37,19 +41,25 @@
 						</colgroup>
 						<tbody>
 							<tr>
-								<th><label for="rscNm"><b>자재명</b></label></th>
-								<td><input id="rscNm" style="width: 300px;" type="text"
+								<th>
+									<label for="rscNm"><b>자재명</b></label>
+								</th>
+								<td>
+									<input id="rscNm" style="width: 300px; display:inline-block;" type="text"
 									placeholder="검색버튼을 이용하세요" class="form-control" required
-									readonly> <input id="rscCd" type="hidden" name="rscCd">
+									readonly> 
+									<input id="rscCd" type="hidden" name="rscCd">
 									<button id="rscModBtn" type="button" class="btn btn-primary">
 										<i class="fas fa-search"></i>
-									</button></td>
+									</button>
+								</td>
 							</tr>
 							<tr>
-								<th><label class="form-check-label" for="noZeroLot">가용
-										LOT</label></th>
+								<th>
+									<label class="form-check-label" for="noZeroLot">가용LOT</label>
+								</th>
 								<td>
-									<div class="form-check">
+									<div class="form-check" style="margin-bottom: 25px;">
 										<input class="form-check-input" type="checkbox" value="1"
 											id="noZeroLot" name="noZeroLot">
 									</div>
@@ -63,7 +73,37 @@
 		<br>
 		<div class="card">
 			<div class="card-body">
-				<div id="grid"></div>
+				<!-- 조회 시 나타나는 테이블 -->
+				<div id="list-body" class="table">
+					<table>
+						<thead>
+							<tr>
+								<th>자재코드</th>
+								<th>자재명</th>
+								<th>자재구분</th>
+								<th>규격</th>
+								<th>단위</th>
+								<th>기초수량</th>
+								<th>재고수량</th>
+								<th>안전재고</th>
+							</tr>
+						</thead>
+						<!-- ↓↓↓여기에 조회된 결과 출력 -->
+						<tbody id="list">
+							<tr>
+								<td>test</td>
+								<td>test</td>
+								<td>test</td>
+								<td>test</td>
+								<td>test</td>
+								<td>test</td>
+								<td>test</td>
+								<td>test</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+				<!-- 조회시 나타나는 테이블 닫는 태그 -->
 			</div>
 		</div>
 	</div>

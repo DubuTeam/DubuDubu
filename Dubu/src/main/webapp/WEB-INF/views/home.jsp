@@ -4,11 +4,12 @@
 <%@ page session="false"%>
 
 <!-- Begin Page Content -->
-<div class="container-fluid">
+<div class="container-fluid" style="padding-left: 0px;">
 
 	<!-- Page Heading -->
-	<h1 class="h3 mb-4 text-gray-800">1조는 영원한 1조</h1>
-
+	<div style="width : 100%; height:100%;">
+		<img src="${pageContext.request.contextPath}/resources/images/mainImage.jpg" alt="이미지안보임" >
+	</div>
 </div>
 <!-- /.container-fluid -->
 
