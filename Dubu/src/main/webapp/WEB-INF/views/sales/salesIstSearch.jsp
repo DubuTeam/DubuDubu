@@ -6,7 +6,7 @@
 <link
 	href="${pageContext.request.contextPath}/resources/css/sales/salesIstSearch.css"
 	rel="stylesheet" type="text/css">
-
+  
 <!-- Begin Page Content -->
 <div class="container-fluid">
 	<div class="container-fluid px-4">

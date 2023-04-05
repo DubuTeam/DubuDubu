@@ -1,4 +1,4 @@
-package com.yedam.dubu.service.web;
+package com.yedam.dubu.sales.service.web;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
