@@ -20,7 +20,7 @@
         <div class="sidebar-brand-icon rotate-n-15">
             <i class="fas fa-laugh-wink"></i>
         </div>
-        <div class="sidebar-brand-text mx-3">서나는짱짱걸</div>
+        <div class="sidebar-brand-text mx-3">THIS IS DUBU</div>
     </a>
 
     <!-- Divider -->
@@ -28,9 +28,9 @@
 
     <!-- Nav Item - Dashboard -->
     <li class="nav-item active">
-        <a class="nav-link" href="index.html">
+        <a class="nav-link" href="/">
             <i class="fas fa-fw fa-tachometer-alt"></i>
-            <span>Dashboard</span></a>
+            <span>부서목록</span></a>
     </li>
 
     <!-- Divider -->
@@ -46,10 +46,12 @@
         </a>
         <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
-                <a class="collapse-item" href="buttons.html">주문서관리</a>
-                <a class="collapse-item" href="cards.html">영업관리</a>
-                <a class="collapse-item" href="cards.html">제품출고등록</a>
-                <a class="collapse-item" href="cards.html">제품입고등록</a>
+                <a class="collapse-item" href="${pageContext.request.contextPath}/orderList">주문서관리</a>
+                <a class="collapse-item" href="${pageContext.request.contextPath}/salesIst">제품입고등록</a>
+                <a class="collapse-item" href="${pageContext.request.contextPath}/salesIstSearch">제품입고조회</a>
+                <a class="collapse-item" href="${pageContext.request.contextPath}/salesOust">제품출고등록</a>
+                <a class="collapse-item" href="${pageContext.request.contextPath}/salesOustSearch">제품출고조회</a>
+                <a class="collapse-item" href="${pageContext.request.contextPath}/salesStc">완제품LOT재고조회</a>
             </div>
         </div>
     </li>
@@ -68,8 +70,11 @@
             <div class="bg-white py-2 collapse-inner rounded">
                 <a class="collapse-item" href="buttons.html">공정관리</a>
                 <a class="collapse-item" href="cards.html">생산계획</a>
+                <a class="collapse-item" href="cards.html">생산계획조회</a>
                 <a class="collapse-item" href="cards.html">생산지시</a>
+                <a class="collapse-item" href="cards.html">생산지시조회</a>
                 <a class="collapse-item" href="cards.html">생산관리</a>
+                <a class="collapse-item" href="cards.html">생산실적조회</a>
             </div>
         </div>
     </li>
@@ -90,6 +95,7 @@
                 <a class="collapse-item" href="cards.html">설비관리</a>
                 <a class="collapse-item" href="cards.html">설비점검내역</a>
                 <a class="collapse-item" href="cards.html">비가동관리</a>
+                <a class="collapse-item" href="cards.html">실시간설비상태</a>
             </div>
         </div>
     </li>
@@ -106,9 +112,15 @@
         </a>
         <div id="bbb" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
-                <a class="collapse-item" href="buttons.html">자재발주</a>
-                <a class="collapse-item" href="cards.html">자재입고검사</a>
+                <a class="collapse-item" href="buttons.html">자재발주관리</a>
+                <a class="collapse-item" href="buttons.html">자재발주조회</a>
+                <a class="collapse-item" href="cards.html">자재입고관리</a>
+                <a class="collapse-item" href="cards.html">자재입고조회</a>
                 <a class="collapse-item" href="cards.html">원자재출고관리</a>
+                <a class="collapse-item" href="cards.html">원자재출고조회</a>
+                <a class="collapse-item" href="cards.html">자재재고조회</a>
+                <a class="collapse-item" href="cards.html">자재LOT재고조회</a>
+                <a class="collapse-item" href="cards.html">자재입/출고조회</a>
             </div>
         </div>
     </li>
@@ -126,6 +138,7 @@
         <div id="ccc" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 <a class="collapse-item" href="buttons.html">제품검사관리</a>
+                <a class="collapse-item" href="cards.html">자재입고검사관리</a>
             </div>
         </div>
     </li>
