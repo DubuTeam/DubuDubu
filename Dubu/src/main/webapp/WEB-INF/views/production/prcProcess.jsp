@@ -3,45 +3,61 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page session="false"%>
 
-<link href="${pageContext.request.contextPath}/resources/css/test.css" rel="stylesheet" type="text/css">
+<link href="${pageContext.request.contextPath}/resources/css/prdcss/prdt.css" rel="stylesheet" type="text/css">
 
 <!-- Begin Page Content -->
   <div class="container-fluid">
 
      <!-- Page Heading -->
      <h1 class="h3 mb-4 text-gray-800">제품공정흐름관리</h1>
-      <div>
-      	<i class="fa fa-home" aria-hidden="true"></i> 기준정보관리 > 제품공정흐름관리
-      </div>
-      <div id="btn-bom">
-      
-      		<label for="search">제품명</label>
+     <ol class="breadcrumb mb-4">
+			<li class="breadcrumb-item"><a href="/"><i
+					class="fas fa-home"></i></a></li>
+			<li class="breadcrumb-item">> 생산관리</li>
+			<li class="breadcrumb-item active">> 제품공정흐름관리</li>
+		</ol>
+		
+      <div id="btn-bom">     
+      		<label>제품명</label>
             <input type="text">
-            <button>검색</button>
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" id="modalBtn"><i class="fas fa-search"></i></button>
 	
 	  <div style="float: right;">	
-            <button>새자료</button>
-            <button>저장</button>
-            <button>삭제</button>
+      		<button id="addBtn" class="btn btn-primary" form="">
+				<i class="fas fa-add"></i> 새자료
+			</button>
+			<button id="saveBtn" class="btn btn-primary" form="">
+				<i class="fas fa-save"></i> 저장
+			</button>
+			<button id="deleteBtn" class="btn btn-primary" form="">
+				<i class="fas fa-minus"></i> 삭제
+			</button>
+
        </div>
         </div><br>
-        
-       <form class="p_Process1">
-        <div id="list-body">
-          <table id="datatablesSimple" class="table">
-            <thead >
-              <tr>
-                <th>No.</th>
-                <th>완제품코드</th>
-                <th>제품명</th>
-              </tr>
-            </thead>
+        <div style="display:flex;">
+ 			<div class="col-lg-8" style="width: 73%">
+				<div class="card mb-4">
+					<div class="card-body">
+						<!-- 조회 시 나타나는 테이블 -->
+						<div id="list-body" class="table">
+							<table id="datatablesSimple" class="table">
+								<thead>
+									<tr>
+										<th>No.</th>
+               							<th>완제품코드</th>
+                						<th>제품명</th>
+									</tr>
+								</thead>
 
-            <!-- ↓↓↓여기에 조회된 결과 출력 -->
-            <tbody id="list"></tbody>
-          </table>
-        </div>
-       </form>
+								<!-- ↓↓↓여기에 조회된 결과 출력 -->
+								<tbody id="list"></tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+		
        
        
 	<form class="p_Process2" style="float: right;">
@@ -51,9 +67,16 @@
   	 <input type="radio" id="tab-2" name="show" />
 
   	<div class="tab">
-    	<label for="tab-1">제품정보</label>
-    	<label for="tab-2">공정흐름</label>
-
+    	<nav>
+			<div class="nav nav-tabs" id="nav-tab" role="tablist">
+				<label class="nav-link active" id="nav-insp-tab"
+					data-bs-toggle="tab" data-bs-target="#nav-insp" type="button"
+					role="tab" aria-controls="nav-insp" aria-selected="true" for="tab-1">제품정보</label>
+				<label class="nav-link" id="nav-info-tab" data-bs-toggle="tab"
+					data-bs-target="#nav-info" type="button" role="tab"
+					aria-controls="nav-info" aria-selected="false" for="tab-2">공정흐름</label>
+			</div>
+		</nav>
   </div>
   <div class="content">
     <div class="content-dis">
@@ -93,12 +116,13 @@
             </tbody>
           </table>
         </div>
-    </div>
+  </div>
     </div>
 	</form>       
-        	
+    </div>   	
     </div>
   </div>
+ 
  <!-- /.container-fluid -->
   
  </div>
