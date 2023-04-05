@@ -5,7 +5,8 @@
                 crossorigin="anonymous" referrerpolicy="no-referrer" />	
 <!-- Begin Page Content -->
 <!-- 헤더부분 -->
-
+<!-- Begin Page Content -->
+<div class="container-fluid">
 <div class="container-fluid px-4">
 	<h1 class="mt-4">공정관리</h1>
 	<ol class="breadcrumb mb-4">
@@ -62,3 +63,8 @@
 	</div>
 </div>
 <br>
+</div>
+<!-- /.container-fluid -->
+
+</div>
+<!-- End of Main Content -->

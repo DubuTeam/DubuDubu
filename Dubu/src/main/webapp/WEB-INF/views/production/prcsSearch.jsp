@@ -3,6 +3,8 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/prodcss/prcsSearch.css"
                 integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
                 crossorigin="anonymous" referrerpolicy="no-referrer" />
+<!-- Begin Page Content -->
+<div class="container-fluid">
 <div class="container-fluid px-4">
       <h1 class="mt-4">공정실적조회</h1>
       <ol class="breadcrumb mb-4">
@@ -84,3 +86,9 @@
 			</div>
 		   </div>		
    </div> 
+   
+   </div>
+<!-- /.container-fluid -->
+
+</div>
+<!-- End of Main Content -->

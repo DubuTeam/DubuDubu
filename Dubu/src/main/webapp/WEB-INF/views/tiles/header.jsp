@@ -16,7 +16,7 @@
   	<ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
     <!-- Sidebar - Brand -->
-    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="${pageContext.request.contextPath}/">
         <div class="sidebar-brand-icon rotate-n-15">
             <i class="fas fa-laugh-wink"></i>
         </div>
@@ -68,13 +68,14 @@
         </a>
         <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
-                <a class="collapse-item" href="buttons.html">공정관리</a>
-                <a class="collapse-item" href="cards.html">생산계획</a>
-                <a class="collapse-item" href="cards.html">생산계획조회</a>
-                <a class="collapse-item" href="cards.html">생산지시</a>
-                <a class="collapse-item" href="cards.html">생산지시조회</a>
-                <a class="collapse-item" href="cards.html">생산관리</a>
-                <a class="collapse-item" href="cards.html">생산실적조회</a>
+            	<a class="collapse-item" href="${pageContext.request.contextPath}/prcProcess">제품공정흐름관리</a>
+                <a class="collapse-item" href="${pageContext.request.contextPath}/prcs">공정관리</a>
+                <a class="collapse-item" href="${pageContext.request.contextPath}/plan">생산계획</a>
+                <a class="collapse-item" href="${pageContext.request.contextPath}/planSearch">생산계획조회</a>
+                <a class="collapse-item" href="${pageContext.request.contextPath}/indica">생산지시</a>
+                <a class="collapse-item" href="${pageContext.request.contextPath}/indicaSearch">생산지시조회</a>
+                <a class="collapse-item" href="${pageContext.request.contextPath}/progMng">생산관리</a>
+                <a class="collapse-item" href="${pageContext.request.contextPath}/prcsSearch">생산실적조회</a>
             </div>
         </div>
     </li>
@@ -91,11 +92,11 @@
         </a>
         <div id="aaa" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
-                <a class="collapse-item" href="buttons.html">라인관리</a>
-                <a class="collapse-item" href="cards.html">설비관리</a>
-                <a class="collapse-item" href="cards.html">설비점검내역</a>
-                <a class="collapse-item" href="cards.html">비가동관리</a>
-                <a class="collapse-item" href="cards.html">실시간설비상태</a>
+                <a class="collapse-item" href="${pageContext.request.contextPath}/eqLine">라인관리</a>
+                <a class="collapse-item" href="${pageContext.request.contextPath}/eq">설비관리</a>
+                <a class="collapse-item" href="${pageContext.request.contextPath}/eqCheck">설비점검관리</a>
+                <a class="collapse-item" href="${pageContext.request.contextPath}/eqIpopr">비가동관리</a>
+                <a class="collapse-item" href="${pageContext.request.contextPath}/equIp">실시간설비상태</a>
             </div>
         </div>
     </li>
@@ -112,15 +113,16 @@
         </a>
         <div id="bbb" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
-                <a class="collapse-item" href="buttons.html">자재발주관리</a>
-                <a class="collapse-item" href="buttons.html">자재발주조회</a>
-                <a class="collapse-item" href="cards.html">자재입고관리</a>
-                <a class="collapse-item" href="cards.html">자재입고조회</a>
-                <a class="collapse-item" href="cards.html">원자재출고관리</a>
-                <a class="collapse-item" href="cards.html">원자재출고조회</a>
-                <a class="collapse-item" href="cards.html">자재재고조회</a>
-                <a class="collapse-item" href="cards.html">자재LOT재고조회</a>
-                <a class="collapse-item" href="cards.html">자재입/출고조회</a>
+                <a class="collapse-item" href="${pageContext.request.contextPath}/materialOrder">자재발주관리</a>
+                <a class="collapse-item" href="${pageContext.request.contextPath}/materialOrderSearch">자재발주조회</a>
+                <a class="collapse-item" href="${pageContext.request.contextPath}/materialInspList">자재입고검사조회</a>
+                <a class="collapse-item" href="${pageContext.request.contextPath}/materialIst">자재입고관리</a>
+                <a class="collapse-item" href="${pageContext.request.contextPath}/materialIstList">자재입고조회</a>
+                <a class="collapse-item" href="${pageContext.request.contextPath}/materialOust">원자재출고관리</a>
+                <a class="collapse-item" href="${pageContext.request.contextPath}/materialOustList">원자재출고조회</a>
+                <a class="collapse-item" href="${pageContext.request.contextPath}/materialStcList">자재재고조회</a>
+                <a class="collapse-item" href="${pageContext.request.contextPath}/materialLOTList">자재LOT재고조회</a>
+                <a class="collapse-item" href="${pageContext.request.contextPath}/materialIOList">자재입/출고조회</a>
             </div>
         </div>
     </li>
@@ -137,8 +139,8 @@
         </a>
         <div id="ccc" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
-                <a class="collapse-item" href="buttons.html">제품검사관리</a>
-                <a class="collapse-item" href="cards.html">자재입고검사관리</a>
+                <a class="collapse-item" href="${pageContext.request.contextPath}/prdtInsp">제품검사관리</a>
+                <a class="collapse-item" href="${pageContext.request.contextPath}/materialInsp">자재입고검사관리</a>
             </div>
         </div>
     </li>

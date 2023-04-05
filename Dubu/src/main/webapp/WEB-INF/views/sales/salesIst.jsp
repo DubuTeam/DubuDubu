@@ -124,11 +124,10 @@
 				</div>
 			</div>
 		</div>
+		<!-- 모달 div끝 -->
 	</div>
-	<!-- 모달 div끝 -->
+	<!-- /.container-fluid -->
 </div>
-<!-- /.container-fluid -->
-
 </div>
 <!-- End of Main Content -->
 

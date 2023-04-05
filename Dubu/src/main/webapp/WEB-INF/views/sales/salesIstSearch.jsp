@@ -6,7 +6,7 @@
 <link
 	href="${pageContext.request.contextPath}/resources/css/sales/salesIstSearch.css"
 	rel="stylesheet" type="text/css">
-  
+
 <!-- Begin Page Content -->
 <div class="container-fluid">
 	<div class="container-fluid px-4">
@@ -101,15 +101,13 @@
 						<button type="button" id="cancleLotBtn" class="btn btn-secondary"
 							data-bs-dismiss="modal">닫기</button>
 					</div>
+
+					<!-- 모달 div끝 -->
 				</div>
 			</div>
 		</div>
-		<!-- 모달 div끝 -->
 	</div>
+	<!-- /.container-fluid -->
 </div>
-</div>
-</div>
-<!-- /.container-fluid -->
-
 </div>
 <!-- End of Main Content -->

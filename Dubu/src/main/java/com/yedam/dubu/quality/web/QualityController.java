@@ -13,15 +13,16 @@ public class QualityController {
 	@Autowired
 	QualityService qualityService;
 	
-	// 자재입고검사
-	@GetMapping("materialInsp")
-	public String getMaterialInsp(Model model) {
-		return "quality/materialInsp";
-	}
-	
 	// 제품검사관리
 	@GetMapping("/prdtInsp")
 	public String getPrdtInsp(Model model) {
 		return "quality/prdtInsp";
 	}
+	
+	// 자재입고검사관리
+	@GetMapping("/materialInsp")
+	public String getMaterialInsp(Model model) {
+		return "quality/materialInsp";
+	}
+	
 }
