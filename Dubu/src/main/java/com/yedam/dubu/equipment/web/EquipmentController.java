@@ -13,6 +13,12 @@ public class EquipmentController {
 	@Autowired
 	EquipmentService equipmentService;
 	
+	// 라인관리
+	@GetMapping("/eqLine")
+	public String getEqLine(Model model) {
+		return "equip/eqLine";
+	}
+	
 	// 설비관리
 	@GetMapping("/eq")
 	public String getEq(Model model) {
@@ -29,12 +35,6 @@ public class EquipmentController {
 	@GetMapping("/eqIpopr")
 	public String getEqIpopr(Model model) {
 		return "equip/eqIpopr";
-	}
-	
-	// 라인관리
-	@GetMapping("/eqLine")
-	public String getEqLine(Model model) {
-		return "equip/eqLine";
 	}
 	
 	// 실시간설비상태
