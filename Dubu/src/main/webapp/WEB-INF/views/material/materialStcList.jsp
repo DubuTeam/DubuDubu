@@ -1,14 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    <style>
-        tr {
-            height: 50px;
-        }
-
-        .tui-grid-cell.lowStock {
-            background-color: rgba(255, 0, 0, 0.3);
-        }
-    </style>
+    <link
+	href="${pageContext.request.contextPath}/resources/css/material/materialStcList.css"
+	rel="stylesheet" type="text/css">
  <div class="container-fluid px-4">
         <h1 class="mt-4">자재재고조회</h1>
         <ol class="breadcrumb mb-4">

@@ -1,27 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/prodcss/indica.css"
+                integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+                crossorigin="anonymous" referrerpolicy="no-referrer" />
 
-<style>
-
-
-#container {
-   width : 98%;
-   margin : 0 auto;
-}
-
-.col {
-   width: 700px
-}
-
-.linelist {
-   float: right;
-   margin: 0 20px 20px 0;
-   
-}
-
-
-
-</style>
 <!-- Begin Page Content -->
  <!-- 헤더부분 -->
  <!-- 생산지시 -->

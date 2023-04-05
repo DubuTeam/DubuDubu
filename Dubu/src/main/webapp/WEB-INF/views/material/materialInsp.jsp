@@ -1,25 +1,30 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-        <link
-	href="${pageContext.request.contextPath}/resources/css/material/materialIst.css"
+      <link
+	href="${pageContext.request.contextPath}/resources/css/material/materialInsp.css"
 	rel="stylesheet" type="text/css">
  <div class="container-fluid px-4">
-        <h1 class="mt-4">자재입고관리</h1>
+        <h1 class="mt-4">자재입고검사</h1>
         <ol class="breadcrumb mb-4">
             <li class="breadcrumb-item"><a href="home.do"><i class="fas fa-home"></i></a></li>
             <li class="breadcrumb-item">> 자재관리</li>
-            <li class="breadcrumb-item active">> 자재입고관리</li>
+            <li class="breadcrumb-item active">> 자재입고검사</li>
         </ol>
+
         <section class="layout">
             <div class="header">
-                <div class="card">
+                <div class="card" id="card-1">
                     <div class="card-body">
-                        <div style="display: inline-block; margin: auto 0; float: right">
-                            <button class="btn btn-primary" id="saveBtn"><i class="fas fa-save"></i> 저장</button>
-                            <button class="btn btn-primary" id="reloadBtn"><i class="fas fa-file"></i> 새자료</button>
+                        <div style="display: inline-block; margin: auto 0; float: right;">
+                            <button class="btn btn-primary" id="saveBtn"><i class="fas fa-save"></i> 저장
+                            </button>
+                            <button class="btn btn-primary" id="delDataBtn"><i class="fas fa-file"></i>
+                                삭제
+                            </button>
+                            <button class="btn btn-primary" id="reloadBtn"><i class="fas fa-file"></i>
+                                새자료
+                            </button>
                         </div>
-
-
                         <table style="vertical-align : middle; text-align: center">
                             <colgroup>
                                 <col style="width: 120px">
@@ -33,39 +38,40 @@
                             <tbody>
                             <tr>
                                 <th>
-                                    <b>입고등록</b>
+                                    <b>자재검사등록</b>
                                 </th>
                                 <td></td>
                                 <th>
-                                    <b>입고일자</b>
+                                    <b>검사일자</b>
                                 </th>
                                 <td>
                                     <div class="tui-datepicker-input tui-datetime-input tui-has-focus"
                                          style="height: 40px; border-radius: 5px;">
-                                        <input type="text" id="istDt" aria-label="Date-Time" class="form-control">
+                                        <input type="text" id="inspDt" aria-label="Date-Time" class="form-control">
                                         <span class="tui-ico-date"></span>
                                     </div>
                                     <div id="wrapper" style="margin-top: -1px;"></div>
                                 </td>
                                 <td></td>
                                 <th>
-                                    <b>입고유형</b>
+                                    <b>검사자</b>
                                 </th>
                                 <td>
-                                    <input type="text" id="istTyp" class="form-control" style="width: 168px;">
+                                    <input type="text" id="inspTstr" class="form-control" style="width: 168px;">
                                 </td>
                             </tr>
+
                             </tbody>
                         </table>
+
                     </div>
                 </div>
             </div>
 
-            <div class="sub">
+            <div class="ordr">
                 <div class="card">
                     <div class="card-body">
-                        <form id="getIstListFrm">
-                            <input type="hidden" name="from" value="ist">
+                        <form id="ordrListFrm">
                             <table style="vertical-align : middle; text-align: center">
                                 <colgroup>
                                     <col style="width: 120px">
@@ -78,7 +84,7 @@
                                 </colgroup>
                                 <tr>
                                     <th>
-                                        <b>검사자료 조회</b>
+                                        <b>발주자료 조회</b>
                                     </th>
                                     <td></td>
                                     <th>
@@ -94,7 +100,7 @@
                                     </td>
                                     <td></td>
                                     <th>
-                                        <b>검사자료</b>
+                                        <b>납기예정일</b>
                                     </th>
                                     <td>
                                         <div class="tui-datepicker-input tui-datetime-input tui-has-focus"
@@ -117,7 +123,7 @@
                                     </td>
                                     <th></th>
                                     <td>
-                                        <input id="getInspList" type="button" class="btn btn-primary" value="가져오기"/>
+                                        <input id="getOrdrList" type="button" class="btn btn-primary" value="가져오기"/>
                                     </td>
                                 </tr>
                             </table>
@@ -129,19 +135,22 @@
             <div class="body">
                 <div class="card">
                     <div class="card-body">
-                        <div class="linelist" style="float: right;">
+                        <div class="linelist" style="float: right">
+                            <button class="btn btn-primary" id="addRow" style="height: 30px"><i class="fas fa-plus"></i> 추가</button>
                             <button class="btn btn-primary" id="delRow" style="height: 30px"><i class="fas fa-minus"></i> 삭제</button>
                         </div>
-                        <br><br>
+                        <br>
+                        <br>
                         <div id="grid"></div>
                     </div>
                 </div>
+
             </div>
 
             <div class="rightside">
                 <div class="card">
                     <div class="card-body">
-                        <b>입고목록</b>
+                        <b>검사목록</b>
                         <br><br>
                         <div id="mdfy-grid"></div>
                     </div>
@@ -150,8 +159,6 @@
         </section>
     </div>
 
-
-    <!-- Modal for vend search -->
     <div class="modal fade" id="vendModal" tabindex="-1">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -174,8 +181,7 @@
                                 </td>
                                 <td></td>
                                 <td rowspan="2">
-                                    <button id="vendSch" class="btn btn-primary" type="button"
-                                            style="height: 90px;"><i
+                                    <button id="vendSch" class="btn btn-primary" type="button" style="height: 90px;"><i
                                             class="fas fa-search"></i></button>
                                 </td>
                             </tr>
@@ -219,8 +225,7 @@
                                 </td>
                                 <td></td>
                                 <td rowspan="2">
-                                    <button id="rscSch" class="btn btn-primary" type="button"
-                                            style="height: 90px;"><i
+                                    <button id="rscSch" class="btn btn-primary" type="button" style="height: 90px;"><i
                                             class="fas fa-search"></i></button>
                                 </td>
                             </tr>
@@ -236,6 +241,25 @@
                     <br>
                     <div id="rsc-grid"></div>
                     <div style="float: right"><p>선택 : 더블클릭</p></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--inspection detail modal-->
+    <div class="modal fade" id="infModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <b class="modal-title">검사상세</b>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="inf-grid"></div>
+                    <br>
+                    <div style="float: right">
+                        <input type="button" id="calInfCnt" value="입력" class="btn btn-primary">
+                    </div>
                 </div>
             </div>
         </div>

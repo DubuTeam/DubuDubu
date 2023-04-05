@@ -1,0 +1,17 @@
+
+#container {
+   width : 98%;
+   margin : 0 auto;
+}
+
+.col {
+   width: 700px
+}
+
+.linelist {
+   float: right;
+   margin: 0 20px 20px 0;
+   
+}
+
+

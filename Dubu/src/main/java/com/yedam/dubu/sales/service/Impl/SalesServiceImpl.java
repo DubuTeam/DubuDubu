@@ -1,4 +1,4 @@
-package com.yedam.dubu.service.Impl;
+package com.yedam.dubu.sales.service.Impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
