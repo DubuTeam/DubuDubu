@@ -78,19 +78,23 @@
 					<table>
 						<thead>
 							<tr>
+								<th>LOT번호</th>
 								<th>자재코드</th>
 								<th>자재명</th>
 								<th>자재구분</th>
 								<th>규격</th>
 								<th>단위</th>
-								<th>기초수량</th>
-								<th>재고수량</th>
-								<th>안전재고</th>
+								<th>홀딩수량</th>
+								<th>입고량</th>
+								<th>출고량</th>
+								<th>현재고</th>
 							</tr>
 						</thead>
 						<!-- ↓↓↓여기에 조회된 결과 출력 -->
 						<tbody id="list">
 							<tr>
+								<td>test</td>
+								<td>test</td>
 								<td>test</td>
 								<td>test</td>
 								<td>test</td>

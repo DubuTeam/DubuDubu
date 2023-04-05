@@ -1,6 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 
+<link
+	href="${pageContext.request.contextPath}/resources/css/material/materialIOList.css"
+	rel="stylesheet">
+
 <!-- Begin Page Content -->
 <div class="container-fluid">
 
@@ -35,27 +39,18 @@
 							<tr>
 								<th><b>조회일자</b></th>
 								<td>
-									<div
-										class="tui-datepicker-input tui-datetime-input tui-has-focus"
-										style="height: 40px; border-radius: 5px;">
-										<input id="startpicker-input" class="form-control" type="text"
-											aria-label="Date" name="startDt"> <span
-											class="tui-ico-date"></span>
-										<div id="startpicker-container" style="margin-left: -1px;"></div>
-									</div> <span></span>
-									<div
-										class="tui-datepicker-input tui-datetime-input tui-has-focus"
-										style="height: 40px; border-radius: 5px;">
-										<input id="endpicker-input" class="form-control" type="text"
-											aria-label="Date" name="endDt"> <span
-											class="tui-ico-date"></span>
-										<div id="endpicker-container" style="margin-left: -1px;"></div>
+									<div style="display: flex;">
+										<input type="date" id="start" name="start"
+											class="form-control" style="width: 150px;"> <span
+											style="padding: 5px;">-</span> <input type="date" id="end"
+											name="end" class="form-control" style="width: 150px;">
 									</div>
 								</td>
 							</tr>
 							<tr>
 								<th><label for="rscNm"><b>자재명</b></label></th>
-								<td><input id="rscNm" style="width: 300px;" type="text"
+								<td><input id="rscNm"
+									style="width: 300px; display: inline-block;" type="text"
 									placeholder="검색버튼을 이용하세요" class="form-control" required
 									readonly> <input id="rscCd" type="hidden" name="rscCd">
 									<button id="rscModBtn" type="button" class="btn btn-primary">
@@ -70,7 +65,35 @@
 		<br>
 		<div class="card">
 			<div class="card-body">
-				<div id="grid"></div>
+				<!-- 조회 시 나타나는 테이블 -->
+				<div id="list-body" class="table">
+					<table>
+						<thead>
+							<tr>
+								<th>처리일자</th>
+								<th>자재코드</th>
+								<th>자재명</th>
+								<th>규격</th>
+								<th>단위</th>
+								<th>입고수량</th>
+								<th>출고수량</th>
+							</tr>
+						</thead>
+						<!-- ↓↓↓여기에 조회된 결과 출력 -->
+						<tbody id="list">
+							<tr>
+								<td>test</td>
+								<td>test</td>
+								<td>test</td>
+								<td>test</td>
+								<td>test</td>
+								<td>test</td>
+								<td>test</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+				<!-- 조회시 나타나는 테이블 닫는 태그 -->
 			</div>
 		</div>
 	</div>
