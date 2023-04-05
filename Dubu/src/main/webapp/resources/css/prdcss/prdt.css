@@ -1,0 +1,26 @@
+/* Tab menu */
+.nav-tabs .nav-link {
+  border: none;
+  background: none;
+  color: #000;
+  font-weight: bold;
+}
+
+.nav-tabs .nav-link.active,
+.nav-tabs .nav-link:focus,
+.nav-tabs .nav-link:hover {
+  border: none;
+  background: none;
+  color: #007bff;
+  font-weight: bold;
+  border-bottom: 3px solid #007bff;
+}
+
+/* Tab content */
+.tab-content .tab-pane {
+  display: none;
+}
+
+.tab-content .tab-pane.active {
+  display: block;
+}

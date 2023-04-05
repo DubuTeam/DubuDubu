@@ -87,34 +87,8 @@
 							</form>
             </div>
         	</div>
-					<!-- 주문서 Modal -->
-					<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-					  <div class="modal-dialog modal-xl">
-					    <div class="modal-content">
-					      <div class="modal-header">
-					        <h5 class="modal-title" id="exampleModalLabel">주문서 목록</h5>
-					        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-					      </div>
-					      <div class="modal-body">
-					      	<label for="" autofocus="autofocus">거래처명</label> <input type="text" class="form-control"
-									id="modalSearch" name="modalSearch" style="width: 200px">
-									<button class="btn btn-primary" id="modalSearchBtn"><i class="fas fa-search"></i> 검색</button>
-									<br><br>
-					        <div id="modalGrid"></div>
-					      </div>
-					      <div class="modal-footer">
-					        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
-					        <button type="button" class="btn btn-primary" id="modalSelBtn">확인</button>
-					      </div>
-					    </div>
-					  </div>
-					</div>
-					<!-- 모달 끝 -->
-        	<div class="card mb-4">
-            <div class="card-body">
-            	<div id="grid"></div>
-            </div>
-        	</div>
+					
+
 				</div>
 				<!-- 검사조회 탭 -->
 				<div class="tab-pane fade" id="nav-info" role="tabpanel" aria-labelledby="nav-info-tab">
@@ -160,35 +134,9 @@
 							</form>
             </div>
         	</div>
-        	<div class="card mb-4">
-            <div class="card-body">
-            	<div id="grid2"></div>
-            </div>
-        	</div>
+
 				</div><!-- end nav-tabContent -->
-				<!-- 성적서 모달 -->
-				<div class="modal fade" id="inspModal" tabindex="-1" aria-labelledby="inspModalLabel" aria-hidden="true">
-				  <div class="modal-dialog modal-xl">
-				    <div class="modal-content">
-				      <div class="modal-header">
-				        <h5 class="modal-title" id="inspModalLabel">검사상세조회</h5>
-				        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-				      </div>
-				      <div class="modal-body">
-				      	<form action="prdtInspPdf" method="post">
-				      	<label for="inspModalNo" autofocus="autofocus">LOT </label>  <input type="text" class="form-control" id="inspModalNo" name="param" style="width: 200px" readonly />
-								<button class="btn btn-primary" id="pdfBtn"><i class="fas fa-download"></i> 성적서</button>
-								</form>
-								<br><br>
-				        <div id="inspModalGrid"></div>
-				      </div>
-				      <div class="modal-footer">
-				        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
-				        <button type="button" class="btn btn-primary" id="inspModalSelBtn">확인</button>
-				      </div>
-				    </div>
-				  </div>
-				</div><!-- 성적서 모달 end -->
+
 			</div>
 		</div>
 <!-- End of Main Content -->
