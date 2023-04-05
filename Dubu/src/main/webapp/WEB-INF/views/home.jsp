@@ -3,12 +3,20 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page session="false"%>
 
-<!-- Begin Page Content -->
-<div class="container-fluid" style="padding-left: 0px;">
+<style>
+#back {
+    height: 100vh;
+    width: 100vw;
+    background: url(${pageContext.request.contextPath}/resources/images/mainImage.jpg) no-repeat center;
+    background-size: cover;
+}
+</style>
 
+<!-- Begin Page Content -->
+<div class="container-fluid">
 	<!-- Page Heading -->
-	<div style="width : 100%; height:100%;">
-		<img src="${pageContext.request.contextPath}/resources/images/mainImage.jpg" alt="이미지안보임" >
+	<div id="back">
+	
 	</div>
 </div>
 <!-- /.container-fluid -->
