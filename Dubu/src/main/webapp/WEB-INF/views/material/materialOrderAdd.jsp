@@ -1,9 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 
-                  <link
-	href="${pageContext.request.contextPath}/resources/css/material/materialOrdrAdd.css"
-	rel="stylesheet" type="text/css">
 
 <div class="container-fluid px-4">
 	<h1 class="mt-4">자재발주</h1>

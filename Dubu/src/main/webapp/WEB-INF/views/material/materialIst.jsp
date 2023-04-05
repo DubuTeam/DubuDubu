@@ -1,11 +1,24 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 
-<!-- CSS -->
-<link
-	href="${pageContext.request.contextPath}/resources/css/material/materialIst.css"
-	rel="stylesheet" type="text/css">
-
+	<style>
+	.table table {
+	    width: 100%;
+	}
+	.body{
+		width: 70%
+		
+	}
+	.rightside{
+		width : 20%;
+	}
+	
+	.styleFlex{
+		display: flex;
+	}
+	
+	
+	</style>
 <!-- Begin Page Content -->
 <div class="container-fluid">
 
@@ -18,6 +31,7 @@
 			<li class="breadcrumb-item">> 자재관리</li>
 			<li class="breadcrumb-item active">> 자재입고관리</li>
 		</ol>
+
 		<section class="layout">
 			<div class="header">
 				<div class="card">
@@ -122,7 +136,8 @@
 					</div>
 				</div>
 			</div>
-
+			
+			<div class="styleFlex"> <!-- 플렉스쓰려고 넣은것 -->
 			<div class="body">
 				<div class="card">
 					<div class="card-body">
@@ -132,7 +147,40 @@
 							</button>
 						</div>
 						<br> <br>
-						<div id="grid"></div>
+						<!-- 조회 시 나타나는 테이블 -->
+						<div id="list-body" class="table">
+							<table>
+								<thead>
+									<tr>
+										<th><input type="checkbox"></th>
+										<th>자재코드</th>
+										<th>품명</th>
+										<th>규격</th>
+										<th>단위</th>
+										<th>자재유형</th>
+										<th>발주번호</th>
+										<th>입고가능수량</th>
+										<th>입고수량</th>
+										<th>유통기한</th>
+									</tr>
+								</thead>
+								<!-- ↓↓↓여기에 조회된 결과 출력 -->
+								<tbody id="list">
+									<tr>
+										<td><input type="checkbox"></td>
+										<td>test</td>
+										<td>test</td>
+										<td>test</td>
+										<td>test</td>
+										<td>test</td>
+										<td>test</td>
+										<td>test</td>
+										<td>test</td>
+										<td>test</td>
+									</tr>
+								</tbody>
+							</table>
+						</div> <!-- 조회시 나타나는 테이블 닫는 태그 -->
 					</div>
 				</div>
 			</div>
@@ -141,10 +189,30 @@
 				<div class="card">
 					<div class="card-body">
 						<b>입고목록</b> <br> <br>
-						<div id="mdfy-grid"></div>
+						<!-- 조회 시 나타나는 테이블 -->
+						<div id="list-body" class="table">
+							<table>
+								<thead>
+									<tr>
+										<th>입고코드</th>
+										<th>입고일자</th>
+										<th>건수</th>
+									</tr>
+								</thead>
+								<!-- ↓↓↓여기에 조회된 결과 출력 -->
+								<tbody id="list">
+									<tr>
+										<td>test</td>
+										<td>test</td>
+										<td>test</td>
+									</tr>
+								</tbody>
+							</table>
+						</div> <!-- 조회시 나타나는 테이블 닫는 태그 -->
 					</div>
 				</div>
 			</div>
+			</div> <!-- 플렉스넣은태그 닫는태그 -->
 		</section>
 	</div>
 

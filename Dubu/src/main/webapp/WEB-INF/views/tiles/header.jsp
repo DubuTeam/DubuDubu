@@ -28,7 +28,7 @@
 
     <!-- Nav Item - Dashboard -->
     <li class="nav-item active">
-        <a class="nav-link" href="/">
+        <a class="nav-link">
             <i class="fas fa-fw fa-tachometer-alt"></i>
             <span>부서목록</span></a>
     </li>
