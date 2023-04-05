@@ -3,21 +3,12 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page session="false"%>
 
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
 <link
 	href="${pageContext.request.contextPath}/resources/css/sales/orderList.css"
 	rel="stylesheet" type="text/css">
-<!-- fontawesome 사용! -->
-<link rel="stylesheet"
-	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-	integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
-	crossorigin="anonymous" referrerpolicy="no-referrer" />
-</head>
-<body>
+
+<!-- Begin Page Content -->
+<div class="container-fluid">
 	<div class="container-fluid px-4">
 		<h1 class="mt-4">주문서관리</h1>
 		<ol class="breadcrumb mb-4">
@@ -130,71 +121,74 @@
 			</div>
 		</div>
 	</div>
-	</div>
+</div>
 
-	<!-- 제품명 모달(조회) -->
-	<div class="modal fade" id="proModal" tabindex="-1"
-		aria-labelledby="exampleModalLabel" aria-hidden="true">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title" id="exampleModalLabel">제품 목록</h5>
-					<button type="button" class="btn-close" data-bs-dismiss="modal"
-						aria-label="Close"></button>
-				</div>
-				<div id="proGrid" class="modal-body"></div>
-				<div class="modal-footer">
-					<button type="button" id="confirmBtn" class="btn btn-primary"
-						data-bs-dismiss="modal">확인</button>
-					<button type="button" id="cancleProdBtn" class="btn btn-secondary"
-						data-bs-dismiss="modal">닫기</button>
-				</div>
+<!-- 제품명 모달(조회) -->
+<div class="modal fade" id="proModal" tabindex="-1"
+	aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalLabel">제품 목록</h5>
+				<button type="button" class="btn-close" data-bs-dismiss="modal"
+					aria-label="Close"></button>
+			</div>
+			<div id="proGrid" class="modal-body"></div>
+			<div class="modal-footer">
+				<button type="button" id="confirmBtn" class="btn btn-primary"
+					data-bs-dismiss="modal">확인</button>
+				<button type="button" id="cancleProdBtn" class="btn btn-secondary"
+					data-bs-dismiss="modal">닫기</button>
 			</div>
 		</div>
 	</div>
+</div>
 
-	<!-- 거래처 모달(등록)-->
-	<div class="modal fade" id="vendGridModal" tabindex="-1"
-		aria-labelledby="exampleModalLabel" aria-hidden="true">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title" id="exampleModalLabel">거래처 목록</h5>
-					<button type="button" class="btn-close" data-bs-dismiss="modal"
-						aria-label="Close"></button>
-				</div>
-				<div class="modal-body">
-					<div id="vendGrid"></div>
-				</div>
-				<div class="modal-footer">
-					<button type="button" id="confirmBtn" class="btn btn-primary"
-						data-bs-dismiss="modal">확인</button>
-					<button type="button" id="cancleAddVendBtn"
-						class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
-				</div>
+<!-- 거래처 모달(등록)-->
+<div class="modal fade" id="vendGridModal" tabindex="-1"
+	aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalLabel">거래처 목록</h5>
+				<button type="button" class="btn-close" data-bs-dismiss="modal"
+					aria-label="Close"></button>
+			</div>
+			<div class="modal-body">
+				<div id="vendGrid"></div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" id="confirmBtn" class="btn btn-primary"
+					data-bs-dismiss="modal">확인</button>
+				<button type="button" id="cancleAddVendBtn"
+					class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
 			</div>
 		</div>
 	</div>
+</div>
 
-	<!-- 거래처 모달(조회)-->
-	<div class="modal fade" id="comModal" tabindex="-1"
-		aria-labelledby="exampleModalLabel" aria-hidden="true">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title" id="exampleModalLabel">거래처 목록</h5>
-					<button type="button" class="btn-close" data-bs-dismiss="modal"
-						aria-label="Close"></button>
-				</div>
-				<div id="comGrid" class="modal-body"></div>
-				<div class="modal-footer">
-					<button type="button" id="confirmBtn" class="btn btn-primary"
-						data-bs-dismiss="modal">확인</button>
-					<button type="button" id="cancleVendBtn" class="btn btn-secondary"
-						data-bs-dismiss="modal">닫기</button>
-				</div>
+<!-- 거래처 모달(조회)-->
+<div class="modal fade" id="comModal" tabindex="-1"
+	aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalLabel">거래처 목록</h5>
+				<button type="button" class="btn-close" data-bs-dismiss="modal"
+					aria-label="Close"></button>
+			</div>
+			<div id="comGrid" class="modal-body"></div>
+			<div class="modal-footer">
+				<button type="button" id="confirmBtn" class="btn btn-primary"
+					data-bs-dismiss="modal">확인</button>
+				<button type="button" id="cancleVendBtn" class="btn btn-secondary"
+					data-bs-dismiss="modal">닫기</button>
 			</div>
 		</div>
 	</div>
-</body>
-</html>
+</div>
+</div>
+<!-- /.container-fluid -->
+
+</div>
+<!-- End of Main Content -->
