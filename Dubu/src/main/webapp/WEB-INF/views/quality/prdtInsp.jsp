@@ -30,8 +30,8 @@
 
   	<div class="tab">
     	<nav>
-			<div class="nav nav-tabs" id="nav-tab" role="tablist">
-				<label class="nav-link active" id="nav-insp-tab"
+			<div class="nav-tabs" id="nav-tab" role="tablist">
+				<label class="nav-link" id="nav-insp-tab"
 					data-bs-toggle="tab" data-bs-target="#nav-insp" type="button"
 					role="tab" aria-controls="nav-insp" aria-selected="true" for="tab-1">제품검사
 					등록</label>
@@ -154,6 +154,19 @@
  </div>
  <!-- End of Main Content -->
  <script>
+ const tabs = document.querySelectorAll('.nav-tabs .nav-link ');
+
+ tabs.forEach(tab => {
+   tab.addEventListener('click', () => {
+     // 모든 탭 요소에서 .active 클래스 제거
+     tabs.forEach(tab => {
+       tab.classList.remove('active');
+     });
+
+     // 선택한 탭 요소에 .active 클래스 추가
+     tab.classList.add('active');
+   });
+ });
 
 </script>
 
