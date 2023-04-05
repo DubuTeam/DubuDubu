@@ -108,6 +108,5 @@
  <!-- End of Main Content -->
  <script>
 
-}
 </script>
 
