@@ -85,7 +85,7 @@
 									<td></td>
 									<th><label for="vendNm"><b>업체명</b></label></th>
 									<td><input id="vendNm" type="text" class="form-control"
-										placeholder="검색버튼을 이용하세요" style="width: 200px;" required
+										placeholder="검색버튼을 이용하세요" style="width: 250px;" required
 										readonly> <input id="vendCd" type="hidden"
 										name="vendCd">
 										<button id="modalBtn" type="button" class="btn btn-primary">

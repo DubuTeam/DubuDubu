@@ -6,6 +6,7 @@
   font-weight: bold;
 }
 
+
 .nav-tabs .nav-link.active,
 .nav-tabs .nav-link:focus,
 .nav-tabs .nav-link:hover {
@@ -26,9 +27,7 @@
 }
 
 
-/*div변경과 관련된 코드입니다.
-색 등의 디자인은 보이기 위해서 표시해놨으니
-스타일 추가 및 변경이 가능합니다.*/
+
 .main input[type=radio] {
 	display: none;
 }
