@@ -9,7 +9,7 @@
   <div class="container-fluid">
 
      <!-- Page Heading -->
-     <h1 class="h3 mb-4 text-gray-800">제품검사관리</h1>
+    <h1 class="mt-4">제품검사관리</h1>
      <ol class="breadcrumb mb-4">
 			<li class="breadcrumb-item"><a href="/"><i
 					class="fas fa-home"></i></a></li>

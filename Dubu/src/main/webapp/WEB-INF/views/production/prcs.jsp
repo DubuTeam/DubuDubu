@@ -57,7 +57,22 @@
 				</button>
 			</div>
 			<br> <br> <br>
+						<div id="list-body" class="table">
+							<table id="datatablesSimple" class="table">
+								<thead>
+									<tr>
+										<th><input type="checkbox"/></th>
+               							<th>공정구분코드</th>
+                						<th>구분코드</th>
+                						<th>공정명</th>
+                						<th>공정설명</th>
+									</tr>
+								</thead>
 
+								<!-- ↓↓↓여기에 조회된 결과 출력 -->
+								<tbody id="list"></tbody>
+							</table>
+						</div>
 			<div id='grid'></div>
 		</div>
 	</div>
