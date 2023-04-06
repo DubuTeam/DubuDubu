@@ -114,27 +114,8 @@
 			</div>
 		
        
-       
-	<form class="p_Process2" style="float: right;">
-
-	<div class="main">
- 	 <input type="radio" id="tab-1" name="show" checked/>
-  	 <input type="radio" id="tab-2" name="show" />
-
-  	<div class="tab">
-    	<nav>
-			<div class="nav-tabs" id="nav-tab" role="tablist">
-				<label class="nav-link" id="nav-insp-tab"
-					data-bs-toggle="tab" data-bs-target="#nav-insp" type="button"
-					role="tab" aria-controls="nav-insp" aria-selected="true" for="tab-1">제품정도
-				</label>
-				<label class="nav-link" id="nav-info-tab" data-bs-toggle="tab"
-					data-bs-target="#nav-info" type="button" role="tab"
-					aria-controls="nav-info" aria-selected="false" for="tab-2">공정흐름</label>
-			</div>
-		</nav>
-  </div>
-  <div class="content">
+     
+<%--   <div class="content">
       <div class="content-dis">
 	    <form id="dataForm" name="dataForm" action="#" method="post">
 								<table class="table" style="vertical-align : middle;">
@@ -186,7 +167,7 @@
           </table>
         </div>
   </div>
-    </div>
+    </div> --%>
 	</form>       
     </div>   	
     </div>

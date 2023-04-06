@@ -1,8 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/prodcss/prcs.css"
                 integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
-                crossorigin="anonymous" referrerpolicy="no-referrer" />	
+                crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel="stylesheet" href="https://uicdn.toast.com/grid/latest/tui-grid.css" />
+<script src="https://uicdn.toast.com/grid/latest/tui-grid.js"></script>	
 <!-- Begin Page Content -->
 <!-- 헤더부분 -->
 <!-- Begin Page Content -->
@@ -27,9 +31,10 @@
 						<div class="mb-3">
 							<label for="name">공정구분</label> <select id="prcs"
 								class="dataTable-selector">
-								<option selected value=''>--선택--</option>
-								<option th:each="code : ${ccds['PRC']}"
-									th:value="${code.ccdDtlNm}" th:text="${code.ccdDtlNm}"></option>
+								<option selected value=''>선택</option>
+								<c:forEach items="${selectPrcList }" var="prc">
+								<option value="${prc.prcsDiv }">${prc.prcsDiv }</option>
+								</c:forEach>
 							</select>
 							<button id="sBtn" class="btn btn-primary" form="">
 								<i class="fas fa-search"></i> 검색
@@ -58,20 +63,7 @@
 			</div>
 			<br> <br> <br>
 						<div id="list-body" class="table">
-							<table id="datatablesSimple" class="table">
-								<thead>
-									<tr>
-										<th><input type="checkbox"/></th>
-               							<th>공정구분코드</th>
-                						<th>구분코드</th>
-                						<th>공정명</th>
-                						<th>공정설명</th>
-									</tr>
-								</thead>
-
-								<!-- ↓↓↓여기에 조회된 결과 출력 -->
-								<tbody id="list"></tbody>
-							</table>
+							<div id='order'></div>
 						</div>
 			<div id='grid'></div>
 		</div>
@@ -83,3 +75,53 @@
 
 </div>
 <!-- End of Main Content -->
+<script>
+var grid1 = tui.Grid;
+let sBtn = document.getElementById("sBtn");
+let prcsDiv1 = document.getElementById("prcs");
+
+function search() {
+	prcsDiv = prcsDiv1.options[prcsDiv1.selectedIndex].value;
+	 
+	$.ajax({
+        url: "prcs",
+        method: "post",
+        data: { prcsDiv : prcsDiv },
+        success: function(data) {
+           grid.resetData(data);  //그리드 적용
+           console.log(data);
+        },
+        error: function (reject) {
+          console.log(reject);
+        },
+    });
+} 
+		//그리드 선언
+        var grid = new tui.Grid({
+             el: document.getElementById('order'),
+             rowHeaders: ['checkbox'],
+             columns: [
+
+                 {
+                     header: '공정구분코드',
+                     name: 'prcsDiv',
+                 },
+                 {
+                     header: '공정코드',
+                     name: 'prcsCd',
+                 },
+                 {
+                     header: '공정명',
+                     name: 'prcsNm',
+                 },
+                 {
+                     header: '공정설명',
+                     name: 'prcsCtnt',
+                 }
+                 
+             ]
+
+         });
+    
+    sBtn.addEventListener("click", search);
+</script>
