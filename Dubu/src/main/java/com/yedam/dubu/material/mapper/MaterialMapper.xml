@@ -3,4 +3,10 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.yedam.dubu.material.mapper.MaterialMapper">
+
+	<select id="getMaterialList" resultType="MaterialVO">
+		SELECT RSC_CD, VEND_CD,RSC_NM, RSC_SPEC, MNG_UNIT,RSC_TYP,SAF_STC,USE_YN
+		FROM RSC
+	</select>
+
 </mapper>
