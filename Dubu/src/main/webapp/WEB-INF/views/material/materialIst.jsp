@@ -65,7 +65,7 @@
 					</div>
 				</div>
 			</div>
-				
+			<br>
 			<div class="sub">
 				<div class="card">
 					<div class="card-body">
@@ -115,7 +115,9 @@
 					</div>
 				</div>
 			</div>
-
+			
+			<br>
+			
 			<div class="styleFlex"><!-- 플렉스쓰려고 넣은것 -->
 				<div class="body">
 					<div class="card">

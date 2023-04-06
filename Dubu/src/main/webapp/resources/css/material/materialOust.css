@@ -1,27 +1,16 @@
-   tr {
-            height: 50px;
-        }
+.table table {
+	width: 100%;
+}
 
-        .layout {
-            width: 1628px;
-            height: 700px;
+.styleFlex{
+	display:flex;
+}
 
-            display: grid;
-            grid:
-                    "header header header" 85px
-                    "body body rightside" auto
-                    / auto auto 350px;
-            gap: 8px;
-        }
+.body{
+	flex: 2;
+	margin-right : 10px;
+}
 
-        .header {
-            grid-area: header;
-        }
-
-        .rightside {
-            grid-area: rightside;
-        }
-
-        .body {
-            grid-area: body;
-        }
+.rightside {
+	flex: 1;
+}

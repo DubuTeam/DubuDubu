@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-
+	
+<link href="${pageContext.request.contextPath}/resources/css/material/materialOust.css" rel="stylesheet">
 
 <!-- Begin Page Content -->
 <div class="container-fluid">
@@ -51,7 +52,7 @@
 											<div
 												class="tui-datepicker-input tui-datetime-input tui-has-focus"
 												style="height: 40px; border-radius: 5px;">
-												<input type="text" id="oustDt" name="oustDt"
+												<input type="date" id="oustDt" name="oustDt"
 													aria-label="Date-Time" class="form-control"> <span
 													class="tui-ico-date"></span>
 											</div>
@@ -83,6 +84,9 @@
 				</div>
 			</div>
 
+			<br>
+			
+			<div class="styleFlex"><!-- 플렉스쓰려고 넣은것 -->
 			<div class="body">
 				<div class="card">
 					<div class="card-body">
@@ -95,22 +99,75 @@
 							</button>
 						</div>
 						<br> <br>
-						<div id="grid"></div>
+						<!-- 조회 시 나타나는 테이블 -->
+						<div id="list-body" class="table">
+							<table>
+								<thead>
+									<tr>
+										<th><input type="checkbox"></th>
+										<th>자재코드</th>
+										<th>자재명</th>
+										<th>규격</th>
+										<th>단위</th>
+										<th>자재유형</th>
+										<th>LOT번호</th>
+										<th>LOT재고</th>
+										<th>출고량</th>
+									</tr>
+								</thead>
+								<!-- ↓↓↓여기에 조회된 결과 출력 -->
+								<tbody id="list">
+									<tr>
+										<td><input type="checkbox"></td>
+										<td>test</td>
+										<td>test</td>
+										<td>test</td>
+										<td>test</td>
+										<td>test</td>
+										<td>test</td>
+										<td>test</td>
+										<td>test</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+						<!-- 조회시 나타나는 테이블 닫는 태그 -->
 					</div>
 				</div>
 			</div>
-
+			<br>
 			<div class="rightside">
 				<div class="card">
 					<div class="card-body">
 						<b>출고목록</b> <br> <br>
-						<div id="mdfy-grid"></div>
+						<!-- 조회 시 나타나는 테이블 -->
+						<div id="list-body" class="table">
+							<table>
+								<thead>
+									<tr>
+										<th>출고번호</th>
+										<th>출고일자</th>
+										<th>건수</th>
+									</tr>
+								</thead>
+								<!-- ↓↓↓여기에 조회된 결과 출력 -->
+								<tbody id="list">
+									<tr>
+										<td>test</td>
+										<td>test</td>
+										<td>test</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+						<!-- 조회시 나타나는 테이블 닫는 태그 -->
 					</div>
 				</div>
 			</div>
-		</section>
+		</div>
+		<!-- 플렉스넣은태그 닫는태그 -->
 	</div>
-
+		
 	<!-- Modal for resource search -->
 	<div class="modal fade" id="rscModal" tabindex="-1"
 		aria-labelledby="rscModal" aria-hidden="true">
