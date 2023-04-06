@@ -1,12 +1,12 @@
 package com.yedam.dubu.sales.web;
 
-import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.yedam.dubu.sales.service.SalesService;
@@ -19,19 +19,19 @@ public class SalesController {
 
 	// 주문서 관리
 	@GetMapping("/orderList")
-	public String searchOrders(@RequestParam("vendNm") String vendNm, @RequestParam("prdtNm") String prdtNm,
-			@RequestParam("start") LocalDate startDate, @RequestParam("end") LocalDate endDate, Model model) {
-		// Code to search for orders using the input parameters
-		List<SalesVO> orders = salesService.getOrderList(vendNm, prdtNm, startDate, endDate);
-
-		// Add the search results to the model
-		model.addAttribute("orders", orders);
-
-		return "sales/orderList";
+	public String searchSales(@RequestParam(name = "vendNm", required = false) String vendNm,
+							  @RequestParam(name = "prdtNm", required = false) String prdtNm,
+							  @RequestParam(name = "orderDt", required = false) String orderDt, 
+							  Model model) {
+	List<SalesVO> salesList = salesService.searchSalesList(vendNm, prdtNm, orderDt);
+	model.addAttribute("salesList", salesList);
+		
+	return "sales/orderList";
 	}
 
 	// 제품입고등록
 	@GetMapping("/salesIst")
+
 	public String salesIst(Model model) {
 		return "sales/salesIst";
 	}
