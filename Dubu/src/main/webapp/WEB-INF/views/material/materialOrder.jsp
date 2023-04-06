@@ -1,14 +1,23 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 
+<!-- JSTL -->
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<link rel="stylesheet" href="https://uicdn.toast.com/grid/latest/tui-grid.css" />
-<script src="https://uicdn.toast.com/grid/latest/tui-grid.js"></script>
+<!-- JQuery -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
+<!-- Grid -->
+<!-- <link rel="stylesheet" href="https://uicdn.toast.com/grid/latest/tui-grid.css" />
+<script src="https://uicdn.toast.com/grid/latest/tui-grid.js"></script> -->
+
+<!-- CSS -->
 <link
 	href="${pageContext.request.contextPath}/resources/css/material/materialOrdr.css"
 	rel="stylesheet">
+
+<!-- JS -->
+<script src="${pageContext.request.contextPath}/resources/js/material/materialOrder.js"></script>
 
 <!-- Begin Page Content -->
 <div class="container-fluid">
@@ -47,7 +56,7 @@
 				
 				<div id="grid"></div>
 				<!-- 조회 시 나타나는 테이블 -->
-				<!-- <div id="list-body" class="table">
+				<div id="listTable" class="table">
 					<table>
 						<thead>
 							<tr>
@@ -60,20 +69,23 @@
 								<th>안전재고</th>
 							</tr>
 						</thead>
-						↓↓↓여기에 조회된 결과 출력
+						<!-- ↓↓↓여기에 조회된 결과 출력 -->
 						<tbody id="list">
-							<tr>
-								<td>test</td>
-								<td>test</td>
-								<td>test</td>
-								<td>test</td>
-								<td>test</td>
-								<td>test</td>
-								<td>test</td>
-							</tr>
+						<c:forEach items="${materialList}" var="material" varStatus="status">
+								<tr class='eachRow <c:if test="${material.avalStc < material.safStc}">warn</c:if>' 
+								ondblclick="materialOrder('${material.rscCd}','${material.rscNm}','${material.vendCd}','${material.vendNm}','${material.avalStc}','${material.safStc}')">		
+									<td>${status.count}</td>
+									<td>${material.rscCd}</td>
+									<td>${material.rscNm}</td>
+									<td>${material.vendCd}</td>
+									<td>${material.vendNm}</td>
+									<td>${material.avalStc}</td>
+									<td>${material.safStc}</td>
+								</tr>
+						</c:forEach>
 						</tbody>
 					</table>
-				</div> -->
+				</div>
 				<!-- 조회시 나타나는 테이블 닫는 태그 -->
 			</div>
 		</div>
@@ -99,8 +111,6 @@
 					<table>
 						<thead>
 							<tr>
-								<th><input type="checkbox"></th>
-								<th>No.</th>
 								<th>자재코드</th>
 								<th>자재명</th>
 								<th>업체코드</th>
@@ -114,21 +124,7 @@
 							</tr>
 						</thead>
 						<!-- ↓↓↓여기에 조회된 결과 출력 -->
-						<tbody id="list">
-							<tr>
-								<th><input type="checkbox"></th>
-								<td>test</td>
-								<td>test</td>
-								<td>test</td>
-								<td>test</td>
-								<td>test</td>
-								<td>test</td>
-								<td>test</td>
-								<td>test</td>
-								<td>test</td>
-								<td>test</td>
-								<td>test</td>
-							</tr>
+						<tbody id="order">
 						</tbody>
 					</table>
 				</div>
