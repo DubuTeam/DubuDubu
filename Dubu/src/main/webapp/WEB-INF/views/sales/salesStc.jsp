@@ -44,11 +44,55 @@
 											<div style="display: flex;">
 												<input type="text" class="form-control" id="prdtNm"
 													name="prdtNm" style="width: 150px;">
-												<button type="button" class="btn btn-primary"
-													id="openProduct" data-bs-toggle="modal"
-													data-bs-target="#proModal">
-													<i class="fas fa-search"></i>
-												</button>
+														<!-- Button trigger modal (4.6버젼) -->
+                                       <button type="button"  style="margin-left: 3px" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal222" id="searchBtn" name="searchBtn">
+                                          <i class="fas fa-search"></i>
+                                       </button>
+                                       
+                                       <!-- Modal -->
+                                       <div class="modal fade" id="exampleModal222" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                         <!-- <div class="modal-dialog"> -->
+                                         <div class="modal-dialog modal-dialog-centered modal-lg">   <!-- 모달창 화면 중앙에  modal-dialog-centered, 모달 사이즈 변경 직접 불가해서 modal-lg 추가 -->
+                                           <div class="modal-content">
+                                             <div class="modal-header">
+                                               <h5 class="modal-title" id="exampleModalLabel">제품목록</h5>
+                                               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                 <span aria-hidden="true">&times;</span>
+                                               </button>
+                                             </div>
+                                             <div class="modal-body" style="text-align: center;">
+                                                <div style="display: flex; margin-bottom: 10px;">
+                                                </div>
+                                                
+                                              <div id="list-body" class="table">
+					<table style="width:100%;">
+						<thead>
+							<tr>
+								<th><input type="checkbox"></th>
+								<th>제품코드</th>
+								<th>제품명</th>
+							</tr>
+						</thead>
+						<!-- ↓↓↓여기에 조회된 결과 출력 -->
+						<tbody id="list">
+							<tr>
+								<th><input type="checkbox"></th>
+								<td style="background-color:gainsboro;">test</td>
+								<td style="background-color:gainsboro;">test</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+                                             </div>
+                                             <div class="modal-footer">
+                                               <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
+                                               <button type="button" class="btn btn-primary">삭제</button>
+                                             </div>
+                                           </div>
+                                         </div>
+                                       </div>
+                                       
+                                       <!-- ↑↑↑ 모달 -->
 											</div></td>
 										<th></th>
 										<td></td>

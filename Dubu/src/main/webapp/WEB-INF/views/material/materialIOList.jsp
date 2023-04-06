@@ -53,9 +53,99 @@
 									style="width: 300px; display: inline-block;" type="text"
 									placeholder="검색버튼을 이용하세요" class="form-control" required
 									readonly> <input id="rscCd" type="hidden" name="rscCd">
-									<button id="rscModBtn" type="button" class="btn btn-primary">
-										<i class="fas fa-search"></i>
-									</button></td>
+									<button type="button" class="btn btn-primary" data-toggle="modal"
+											data-target="#myModal"><i class="fas fa-search"></i></button>
+										<div class="modal" id="myModal">
+											<div class="modal-dialog">
+												<div class="modal-content">
+
+													<!-- Modal Header -->
+													<div class="modal-body" style="height:500px;" >
+														<div class="modal-dialog modal-dialog-scrollable">
+															<div class="modal-content">
+																<div class="modal-header">
+																	<h4 class="modal-title">자재검색</h4>
+																	<button type="button" class="close"
+																		data-dismiss="modal">&times;</button>
+																</div>
+																<!-- Modal body -->
+																<div class="modal-body">
+																	<form id="vendSchForm">
+																		<table>
+																			<colgroup>
+																				<col style="width: 400px;">
+																				<col style="width: 10px">
+																				<col style="width: 50px;">
+																			</colgroup>
+																			<tbody>
+																				<tr>
+																					<td><input type="text" name="vendNm"
+																							class="form-control"
+																							placeholder="자재명"></td>
+																					<td></td>
+																					<td rowspan="2">
+																						<button id="vendSch"
+																							class="btn btn-primary"
+																							type="button"
+																							style="height: 90px;">
+																							<i
+																								class="fas fa-search"></i>
+																						</button>
+																					</td>
+																				</tr>
+																				<tr>
+																					<td><input type="text" name="vendCd"
+																							class="form-control"
+																							placeholder="자재코드"></td>
+																				</tr>
+																			</tbody>
+																		</table>
+																	</form>
+																	<br>
+																	<!-- 조회 시 나타나는 테이블 -->
+																	<div id="list-body" class="table">
+																		<table>
+																			<thead>
+																				<tr>
+																					<th>자재코드</th>
+																					<th>자재명</th>
+																					<th>자재단위</th>
+																				</tr>
+																			</thead>
+																			<!-- ↓↓↓여기에 조회된 결과 출력 -->
+																			<tbody id="list">
+																				<tr>
+																					<td>test</td>
+																					<td>test</td>
+																					<td>test</td>
+																				</tr>
+																			</tbody>
+																		</table>
+																	</div>
+																	<!-- 조회시 나타나는 테이블 닫는 태그 -->
+
+																	<div id="vend-grid"></div>
+																	<div style="float: right">
+																		<p>선택 : 더블클릭</p>
+																	</div>
+
+
+																</div>
+															</div>
+														</div>
+
+													</div>
+												</div>
+
+												<!-- Modal footer -->
+												<div class="modal-footer">
+													<button type="button" class="btn btn-secondary"
+														data-dismiss="modal">Close</button>
+													<button type="button" class="btn btn-primary">Save changes</button>
+												</div>
+
+											</div>
+										</div></td>
 							</tr>
 						</tbody>
 					</table>
