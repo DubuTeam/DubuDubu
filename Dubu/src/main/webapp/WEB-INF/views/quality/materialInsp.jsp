@@ -93,7 +93,7 @@
 												<div class="modal-content">
 
 													<!-- Modal Header -->
-													<div class="modal-body" style="height:500px;">
+													<div class="modal-body" style="height:500px;" >
 														<div class="modal-dialog modal-dialog-scrollable">
 															<div class="modal-content">
 																<div class="modal-header">
