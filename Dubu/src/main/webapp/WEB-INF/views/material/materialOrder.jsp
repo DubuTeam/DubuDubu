@@ -1,6 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
+<link rel="stylesheet" href="https://uicdn.toast.com/grid/latest/tui-grid.css" />
+<script src="https://uicdn.toast.com/grid/latest/tui-grid.js"></script>
+
 <link
 	href="${pageContext.request.contextPath}/resources/css/material/materialOrdr.css"
 	rel="stylesheet">
@@ -40,8 +45,9 @@
 				<br>
 				<span><b>자재목록</b></span>
 				
+				<div id="grid"></div>
 				<!-- 조회 시 나타나는 테이블 -->
-				<div id="list-body" class="table">
+				<!-- <div id="list-body" class="table">
 					<table>
 						<thead>
 							<tr>
@@ -54,7 +60,7 @@
 								<th>안전재고</th>
 							</tr>
 						</thead>
-						<!-- ↓↓↓여기에 조회된 결과 출력 -->
+						↓↓↓여기에 조회된 결과 출력
 						<tbody id="list">
 							<tr>
 								<td>test</td>
@@ -67,7 +73,7 @@
 							</tr>
 						</tbody>
 					</table>
-				</div>
+				</div> -->
 				<!-- 조회시 나타나는 테이블 닫는 태그 -->
 			</div>
 		</div>

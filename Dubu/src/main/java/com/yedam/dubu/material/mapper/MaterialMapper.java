@@ -1,5 +1,12 @@
 package com.yedam.dubu.material.mapper;
 
-public interface MaterialMapper {
+import java.util.List;
 
+import com.yedam.dubu.material.service.MaterialVO;
+
+public interface MaterialMapper {
+	
+	// 자재 목록
+	public List<MaterialVO> getMaterialList();
+	
 }

@@ -1,11 +1,18 @@
 package com.yedam.dubu.material.web;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.yedam.dubu.material.service.MaterialService;
+import com.yedam.dubu.material.service.MaterialVO;
+
+import oracle.jdbc.proxy.annotation.Post;
 
 @Controller
 public class MaterialController {
@@ -21,8 +28,18 @@ public class MaterialController {
 	// 자재발주
 	@GetMapping("/materialOrder")
 	public String getMaterialOrder(Model model) {
+		model.addAttribute("materialList",materialService.getMaterialList());
 		return "material/materialOrder";
 	}
+	
+	/*
+	 * // 자재발주
+	 * 
+	 * @PostMapping("/materialOrder")
+	 * 
+	 * @ResponseBody public List<MaterialVO> postMaterialOrder() {
+	 * //System.out.println(model); return }
+	 */
 		
 	// 자재발주조회
 	@GetMapping("/materialOrderSearch")
