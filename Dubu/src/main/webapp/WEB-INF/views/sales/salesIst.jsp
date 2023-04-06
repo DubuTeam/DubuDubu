@@ -2,6 +2,11 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page session="false"%>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<!-- jqGrid 플러그인 로드 -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/free-jqgrid/4.15.5/css/ui.jqgrid.min.css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/free-jqgrid/4.15.5/jquery.jqgrid.min.js"></script>
 
 <link
 	href="${pageContext.request.contextPath}/resources/css/sales/salesIst.css"
@@ -131,6 +136,9 @@
 	</div>
 	<!-- /.container-fluid -->
 </div>
+<script>
+
+</script>
 </div>
 <!-- End of Main Content -->
 

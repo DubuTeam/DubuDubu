@@ -141,7 +141,7 @@
 
 				<!-- ↓↓↓여기에 조회된 결과 출력 -->
 				<tbody id="list">
-					<c:forEach items="${orders}" var="order">
+					<c:forEach items="${salesList}" var="orders">
 						</tr>
 						<th><input type="checkbox"></th>
 						<th>${order.orderNo}</th>
