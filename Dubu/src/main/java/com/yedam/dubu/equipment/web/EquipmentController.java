@@ -16,6 +16,7 @@ public class EquipmentController {
 	// 라인관리
 	@GetMapping("/eqLine")
 	public String getEqLine(Model model) {
+		model.addAttribute("eqLineList", equipmentService.selectAllEquipmentList());
 		return "equip/eqLine";
 	}
 	

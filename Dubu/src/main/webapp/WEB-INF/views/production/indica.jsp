@@ -1,9 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<link rel="stylesheet"
-	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/prodcss/indica.css"
-	integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
-	crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+<link href="${pageContext.request.contextPath}/resources/css/prodcss/indica.css" rel="stylesheet" type="text/css">
 
 <!-- Begin Page Content -->
 <!-- 헤더부분 -->
@@ -26,10 +24,62 @@
 					<button id="clearBtn" class="btn btn-primary" form="">
 						<i class="fas fa-file"></i> 초기화
 					</button>
-					<button data-bs-toggle="modal" class="btn btn-primary"
-						id="modalBtn" data-bs-target="#exampleModal">
-						<i class="fas fa-search"></i> 계획조회
-					</button>
+					<!--  -->
+					<!-- Button trigger modal (4.6버젼) -->
+					<button type="button" style="margin-left: 3px" class="btn btn-primary" data-toggle="modal"
+					data-target="#exampleModal" id="searchBtn" name="searchBtn">
+					<i class="fas fa-search"></i>계획 조회
+				</button>
+
+				<!-- Modal -->
+				<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+					aria-hidden="true">
+					<!-- <div class="modal-dialog"> -->
+					<div class="modal-dialog modal-dialog-centered modal-lg">
+						<!-- 모달창 화면 중앙에  modal-dialog-centered, 모달 사이즈 변경 직접 불가해서 modal-lg 추가 -->
+						<div class="modal-content">
+							<div class="modal-header">
+								<h5 class="modal-title" id="exampleModalLabel">생산 계획 조회</h5>
+								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+									<span aria-hidden="true">&times;</span>
+								</button>
+							</div>
+							<div class="modal-body" style="text-align: center;">
+
+								<!-- 조회 시 나타나는 테이블 -->
+								<div id="list-body" class="table">
+									<table>
+										<thead>
+											<tr>
+												<th><input type="checkbox"></th>
+												<th>생산계획코드</th>
+												<th>제품명</th>
+												<th>주문수량</th>
+											</tr>
+										</thead>
+
+										<!-- ↓↓↓여기에 조회된 결과 출력 (테스트용 더미 넣었음) -->
+										<tbody id="list">
+											<tr>
+												<td><input type="checkbox"></td>
+												<td>더미기</td>
+												<td>Dummy01</td>
+												<td>Dummy123</td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
+								<button type="button" class="btn btn-primary">삭제</button>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<!-- ↑↑↑ 모달 -->
+					<!--  -->
 					<button class="btn btn-primary" id="regiBtn">
 						<i class="fas fa-save"></i> 저장
 					</button>
