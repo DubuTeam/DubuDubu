@@ -49,6 +49,21 @@
 		</div>
 		<div class="card mb-4">
 			<div class="card-body">
+				<div id="list-body" class="table">
+								<table id="datatablesSimple" class="table">
+									<thead>
+										<tr>
+											<th>계획코드</th>
+	               							<th>주문번호</th>
+	                						<th>원료수량</th>
+	                						<th>납기일자</th>
+										</tr>
+									</thead>
+	
+									<!-- ↓↓↓여기에 조회된 결과 출력 -->
+									<tbody id="list"></tbody>
+								</table>
+							</div>
 				<div id="grid"></div>
 			</div>
 		</div>
@@ -56,25 +71,92 @@
 		<div class="card mb-4">
 			<div class="card-body">
 				<div class="d-flex flex-row justify-content-between">
-					<div id="grid2" style="width: 1000px;">제품</div>
-					<div id="grid3" style="width: 500px;">제품공정확인</div>
+					<div id="grid2" style="width: 65%;">제품
+						<div id="list-body" class="table">
+								<table id="datatablesSimple" class="table">
+									<thead>
+										<tr>
+											<th>제품명</th>
+	               							<th>라인번호</th>
+	                						<th>시작일자</th>
+	                						<th>종료일자</th>
+	                						<th>생산수량</th>
+	                						<th>작업우선순위</th>
+	                						<th>계획코드</th>
+										</tr>
+									</thead>
+	
+									<!-- ↓↓↓여기에 조회된 결과 출력 -->
+									<tbody id="list"></tbody>
+								</table>
+							</div>
+							</div>
+					<div id="grid3" style="width: 30%;">제품공정확인
+					<div id="list-body" class="table">
+								<table id="datatablesSimple" class="table">
+									<thead>
+										<tr>
+											<th>제품코드</th>
+	               							<th>라인번호</th>
+	                						<th>공정코드</th>
+	                						<th>계획코드</th>
+										</tr>
+									</thead>
+	
+									<!-- ↓↓↓여기에 조회된 결과 출력 -->
+									<tbody id="list"></tbody>
+								</table>
+								</div>
 				</div>
 			</div>
 		</div>
 		<br>
 		<div class="card mb-4">
-			<div class="card-body">
+					<div class="card-body">
 				<div class="d-flex flex-row justify-content-between">
-					<div id="grid4" style="width: 1000px;">사용가능자재</div>
-					<div id="grid5" style="width: 500px;">자재확인</div>
+					<div id="grid2" style="width: 65%;">사용가능자재
+						<div id="list-body" class="table">
+								<table id="datatablesSimple" class="table">
+									<thead>
+										<tr>
+											<th><input type="checkbox"/></th>
+	               							<th>자재명</th>
+	                						<th>자재LOT</th>
+	                						<th>사용가능수량</th>
+	                						<th>출고수량</th>
+	                						<th>사용량</th>
+
+										</tr>
+									</thead>
+	
+									<!-- ↓↓↓여기에 조회된 결과 출력 -->
+									<tbody id="list"></tbody>
+								</table>
+							</div>
+							</div>
+					<div id="grid3" style="width: 30%;">자재확인
+					<div id="list-body" class="table">
+								<table id="datatablesSimple" class="table">
+									<thead>
+										<tr>
+											<th>자재코드</th>
+	                						<th>공정코드</th>
+	                						<th>출고수량</th>
+	                						<th>계획코드</th>
+
+										</tr>
+									</thead>
+	
+									<!-- ↓↓↓여기에 조회된 결과 출력 -->
+									<tbody id="list"></tbody>
+								</table>
+								</div>
 				</div>
 			</div>
 		</div>
 
-
 		<div id="tui-date-picker-container" style="margin-top: -1px;"></div>
 		<br>
-	</div>
 
 	<!-- Modal -->
 	<div class="modal fade" id="exampleModal" tabindex="-1"
