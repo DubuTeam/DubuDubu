@@ -5,6 +5,12 @@
 <link href="${pageContext.request.contextPath}/resources/css/eqcss/eqLine.css" rel="stylesheet"
 	type="text/css">
 
+<!-- Jquery -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+
+<!-- JS 연결 -->
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/eqcss/eqLine.js"></script>
+
 <!-- Begin Page Content -->
 <div class="container-fluid">
 	<div class="container-fluid px-4">
@@ -33,7 +39,17 @@
 								</thead>
 
 								<!-- ↓↓↓여기에 조회된 결과 출력 -->
-								<tbody id="list"></tbody>
+								<tbody id="list">
+									<c:forEach items="${eqLineList }" var="eqLine">
+										<tr class="eachRow">
+											<td>${eqLine.lineCd }</td>
+											<td>${eqLine.lineNm }</td>
+											<td>${eqLine.eqmPsch }</td>
+											<td>${eqLine.uphCnt }</td>					
+											<td>${eqLine.useYn }</td>
+										</tr>
+									</c:forEach>
+								</tbody>
 							</table>
 						</div>
 					</div>
@@ -41,42 +57,47 @@
 			</div>
 
 			<div style="width: 2%"></div>
-			
+
 			<div class="col-lg-3">
 				<div class="card mb-4">
 					<div class="card-body">
 						<div class="linelist" style="float: right;">
-							<button class="btn btn-primary" id="saveBtn"><i class="fas fa-save"></i> 저장 </button>
+							<button class="btn btn-primary" id="saveBtn"><i class="fas fa-save"></i> 저장
+							</button>
 							<!-- <button class="btn btn-primary" id="delBtn"><i class="fas fa-trash"></i> 삭제 </button> -->
 
 
 							<!-- Button trigger modal (4.6버젼) -->
-							<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-							<i class="fas fa-trash"></i> 삭제
+							<button type="button" class="btn btn-primary" data-toggle="modal"
+								data-target="#exampleModal">
+								<i class="fas fa-trash"></i> 삭제
 							</button>
-							
+
 							<!-- Modal -->
-							<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-							  <!-- <div class="modal-dialog"> -->
-							  <div class="modal-dialog modal-sm">   <!-- 모달창 크기 작게 modal-sm -->
-							    <div class="modal-content">
-							      <div class="modal-header" style="border-bottom: none;">
-							        <!-- <h5 class="modal-title" id="exampleModalLabel">Modal title</h5> -->
-							        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-							          <span aria-hidden="true">&times;</span>
-							        </button>
-							      </div>
-							      <div class="modal-body" style="text-align: center;">
-							        정말 삭제하시겠습니까?
-							      </div>
-							      <div class="modal-footer" style="border-top: none;">
-							        <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
-							        <button type="button" class="btn btn-primary">삭제</button>
-							      </div>
-							    </div>
-							  </div>
+							<div class="modal fade" id="exampleModal" tabindex="-1"
+								aria-labelledby="exampleModalLabel" aria-hidden="true">
+								<!-- <div class="modal-dialog"> -->
+								<div class="modal-dialog modal-sm"> <!-- 모달창 크기 작게 modal-sm -->
+									<div class="modal-content">
+										<div class="modal-header" style="border-bottom: none;">
+											<!-- <h5 class="modal-title" id="exampleModalLabel">Modal title</h5> -->
+											<button type="button" class="close" data-dismiss="modal"
+												aria-label="Close">
+												<span aria-hidden="true">&times;</span>
+											</button>
+										</div>
+										<div class="modal-body" style="text-align: center;">
+											정말 삭제하시겠습니까?
+										</div>
+										<div class="modal-footer" style="border-top: none;">
+											<button type="button" class="btn btn-secondary"
+												data-dismiss="modal">취소</button>
+											<button type="button" class="btn btn-primary">삭제</button>
+										</div>
+									</div>
+								</div>
 							</div>
-							
+
 							<!-- ↑↑↑ 모달 -->
 
 						</div>
@@ -85,25 +106,29 @@
 
 						<form id="dataForm" action="#">
 							<div class="mb-3">
-								<label for="no" class="form-label">라인코드</label> <input type="text" th:value="${lineCode.lineCd}" readonly class="form-control" id="lineCd" name="lineCd">
+								<label for="lineCd" class="form-label">라인코드</label>
+								<input type="text" class="form-control" id="lineCd" name="lineCd" readonly>
 							</div>
 
 							<div class="mb-3"></div>
+
 							<div class="mb-3">
-								<label for="id" class="form-label">라인명</label> <input type="text" class="form-control" id="lineNm" name="lineNm">
+								<label for="lineNm" class="form-label">라인명</label> <input type="text" class="form-control" id="lineNm" name="lineNm">
 							</div>
 
 							<div class="mb-3">
-								<label for="id" class="form-label">UPH생산량</label> <input type="text" class="form-control" id="uphCnt" name="uphCnt">
+								<label for="uph" class="form-label">UPH생산량</label> <input type="text" class="form-control" id="uph" name="uph">
 							</div>
 
 							<div class="mb-3">
-								<label for="email" class="form-label">담당자</label> <input type="text" class="form-control" id="eqmPsch" name="eqmPsch">
+								<label for="staff" class="form-label">담당자</label> <input type="text" class="form-control" id="staff" name="staff">
 							</div>
 
 							<div class="mb-4">
-								<label for="email" class="form-label">사용여부</label><br> <input type="radio" name="useYn" value="Y"> 사용&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-								<input type="radio" name="useYn" value="N"> 미사용
+								<label for="yn" class="form-label">사용여부</label><br>
+								<input type="radio" id="ynY" name="yn" value="Y">
+								사용&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+								<input type="radio" id="ynN" name="yn" value="N"> 미사용
 							</div>
 						</form>
 					</div>

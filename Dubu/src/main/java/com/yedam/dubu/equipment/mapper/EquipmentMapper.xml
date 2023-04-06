@@ -4,4 +4,8 @@
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
  
 <mapper namespace="com.yedam.dubu.equipment.mapper.EquipmentMapper">
+	<!-- 라인 관리 - 전체 조회 -->
+	<select id="selectAllEquipmentList" resultType="EquipmentVO">
+		SELECT * FROM EQM_LINE ORDER BY line_cd
+	</select>
 </mapper>

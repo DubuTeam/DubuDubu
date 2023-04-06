@@ -1,24 +1,32 @@
+#container {
+    width: 98%;
+    margin: 0 auto;
+}
 
-        #container {
-            width: 98%;
-            margin: 0 auto;
-        }
+.col {
+    width: 100%
+}
 
-        .col {
-            width: 100%
-        }
+/* .linelist {
+    float: right;
+    margin: 0 20px 20px 0;
 
-        .linelist {
-            float: right;
-            margin: 0 20px 20px 0;
+} */
 
-        }
-
-        #pDate {
-            float: left;
-        }
+#pDate {
+    display: inline-block;
+}
 
 
-        .tui-datepicker {
-            z-index: 99;
-        }
+.tui-datepicker {
+    z-index: 99;
+}
+
+#upper-body {
+    display: flex;
+    justify-content: space-between;
+}
+
+.table table {
+    width: 100%;
+}
