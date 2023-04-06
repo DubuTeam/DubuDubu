@@ -26,4 +26,9 @@ public class ProductionServiceImpl implements ProductionService {
 	public List<ProductionVO> getPrcsGrid(String prcsDiv) {
 		return productionMapper.selectPrcsGrid(prcsDiv);
 	}
+
+	@Override
+	public String deletePrcsGird(String prcsDiv) {
+		return productionMapper.deletePrcsGrid(prcsDiv);
+	}
 }

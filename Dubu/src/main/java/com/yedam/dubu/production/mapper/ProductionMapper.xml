@@ -17,4 +17,9 @@
 		FROM  PRCS
 		WHERE PRCS_DIV=#{prcsDiv}
 	</select>
+	<!-- 삭제 -->
+	<delete id="deletePrcsGrid" parameterType="String">
+		DELETE FROM PRCS
+		WHERE PRCS_DIV=#{prcsDiv}
+	</delete>
 </mapper>
