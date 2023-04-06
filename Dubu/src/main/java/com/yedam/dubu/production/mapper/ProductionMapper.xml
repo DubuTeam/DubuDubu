@@ -3,8 +3,18 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.yedam.dubu.production.mapper.ProductionMapper">
+
 	<!-- 조회 -->
 	<select id="selectPrcList" resultType="ProductionVO">
 		SELECT * FROM PRCS 
+	</select>
+	<!-- 그리드 -->
+	<select id="selectPrcsGrid" resultType="ProductionVO">
+		SELECT PRCS_DIV,
+			   PRCS_CD,
+			   PRCS_NM,
+			   PRCS_CTNT
+		FROM  PRCS
+		WHERE PRCS_DIV=#{prcsDiv}
 	</select>
 </mapper>
