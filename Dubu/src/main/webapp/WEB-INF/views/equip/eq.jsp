@@ -70,10 +70,37 @@
 					<div class="card mb-4">
 						<div class="card-body">
 							<div class="linelist" style="float: right;">
-								<button class="btn btn-primary" id="initBtn"><i class="fas fa-file"></i> 새자료</button>
 								<button class="btn btn-primary" id="modBtn"><i class="fa-solid fa-paintbrush"></i> 수정</button>
 								<button class="btn btn-primary" id="insertBtn"><i class="fas fa-save"></i> 등록</button>
-								<button class="btn btn-primary" id="delBtn"><i class="fas fa-trash"></i> 삭제</button>
+								
+								<!-- Button trigger modal (4.6버젼) -->
+								<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+								<i class="fas fa-trash"></i> 삭제
+								</button>
+								
+								<!-- Modal -->
+								<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+								  <!-- <div class="modal-dialog"> -->
+								  <div class="modal-dialog modal-sm">   <!-- 모달창 크기 작게 modal-sm -->
+								    <div class="modal-content">
+								      <div class="modal-header" style="border-bottom: none;">
+								        <!-- <h5 class="modal-title" id="exampleModalLabel">Modal title</h5> -->
+								        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+								          <span aria-hidden="true">&times;</span>
+								        </button>
+								      </div>
+								      <div class="modal-body" style="text-align: center;">
+								        정말 삭제하시겠습니까?
+								      </div>
+								      <div class="modal-footer" style="border-top: none;">
+								        <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
+								        <button type="button" class="btn btn-primary">삭제</button>
+								      </div>
+								    </div>
+								  </div>
+								</div>
+								
+								<!-- ↑↑↑ 모달 -->
 							</div>
 
 							<form id="dataForm" name="dataForm" action="#" method="post">

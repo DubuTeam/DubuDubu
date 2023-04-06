@@ -24,7 +24,6 @@
 							<div class="card-body">
 								<div class="linelist" style="float: right;">
 									<button class="btn btn-primary" id="saveBtn"><i class="fas fa-save"></i> 저장</button>
-									<button class="btn btn-primary" id="newBtn"><i class="fas fa-file"></i> 새자료</button>
 								</div>
 
 								<br> <br>
@@ -45,9 +44,71 @@
 												<th>설비코드</th>
 												<td id="eqmCodeTd">
 													<input class="form-control" name="eqmCd" id="eqmCd" style="width: 250px" readonly>
-													<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" id="searchBtn" name="searchBtn">
+													
+													<!-- Button trigger modal (4.6버젼) -->
+													<button type="button"  style="margin-left: 3px" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal222" id="searchBtn" name="searchBtn">
 														<i class="fas fa-search"></i>
 													</button>
+													
+													<!-- Modal -->
+													<div class="modal fade" id="exampleModal222" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+													  <!-- <div class="modal-dialog"> -->
+													  <div class="modal-dialog modal-dialog-centered modal-lg">   <!-- 모달창 화면 중앙에  modal-dialog-centered, 모달 사이즈 변경 직접 불가해서 modal-lg 추가 -->
+													    <div class="modal-content">
+													      <div class="modal-header">
+													        <h5 class="modal-title" id="exampleModalLabel">설비명 검색</h5>
+													        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+													          <span aria-hidden="true">&times;</span>
+													        </button>
+													      </div>
+													      <div class="modal-body" style="text-align: center;">
+													      	<div style="display: flex; margin-bottom: 10px;">
+														      	<span style="display: flex; align-items: center;">설비명</span> <input type="text" style="margin: 0px 5px;" id="modal-searchEqpName" name="eqpName" placeholder="설비명" style="width: 180px"></input>
+	
+																<button type="button" id="sTtn" class="btn btn-primary" style="margin-bottom: 3px">
+																	<i class="fas fa-search"></i> 검색
+																</button>
+													      	</div>
+													      	
+													      	<!-- 조회 시 나타나는 테이블 -->
+															<div id="list-body" class="table">
+																<table>
+																	<thead>
+																		<tr>
+																			<th>No.</th>
+																			<th>설비명</th>
+																			<th>설비코드</th>
+																			<th>공정코드</th>
+																			<th>공정명</th>
+																			<th>사용여부</th>
+																		</tr>
+																	</thead>
+							
+																	<!-- ↓↓↓여기에 조회된 결과 출력 (테스트용 더미 넣었음) -->
+																	<tbody id="list">
+																		<tr>
+																			<td>더미1</td>
+																			<td>더미기</td>
+																			<td>Dummy01</td>
+																			<td>Dummy123</td>
+																			<td>더미</td>
+																			<td>N</td>
+																		</tr>
+																	</tbody>
+																</table>
+															</div>
+													      </div>
+													      <div class="modal-footer">
+													        <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
+													        <button type="button" class="btn btn-primary">삭제</button>
+													      </div>
+													    </div>
+													  </div>
+													</div>
+													
+													<!-- ↑↑↑ 모달 -->
+													
+													<!--  -->
 												</td>
 
 												<th>설비명</th>
@@ -119,7 +180,34 @@
 
 								<button type="submit" formaction="eqmChckExelView" style="margin-bottom: 3px" class="btn btn-primary" id="excelBtn"><i class="fas fa-download"></i> Excel </button>
 
-								<button type="button" style="margin-bottom: 3px" class="btn btn-primary" id="delBtn"><i class="fas fa-trash"></i> 삭제 </button>
+							<!-- Button trigger modal (4.6버젼) -->
+							<button type="button" style="width: 85px; height: 38px; margin-bottom: 4px" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" id="delBtn">
+							<i class="fas fa-trash"></i> 삭제
+							</button>
+							
+							<!-- Modal -->
+							<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+							  <!-- <div class="modal-dialog"> -->
+							  <div class="modal-dialog modal-sm">   <!-- 모달창 크기 작게 modal-sm -->
+							    <div class="modal-content">
+							      <div class="modal-header" style="border-bottom: none;">
+							        <!-- <h5 class="modal-title" id="exampleModalLabel">Modal title</h5> -->
+							        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							          <span aria-hidden="true">&times;</span>
+							        </button>
+							      </div>
+							      <div class="modal-body" style="text-align: center;">
+							        정말 삭제하시겠습니까?
+							      </div>
+							      <div class="modal-footer" style="border-top: none;">
+							        <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
+							        <button type="button" class="btn btn-primary">삭제</button>
+							      </div>
+							    </div>
+							  </div>
+							</div>
+							
+							<!-- ↑↑↑ 모달 -->
 							</div>
 						</form>
 
