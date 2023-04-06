@@ -2,12 +2,22 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page session="false"%>
+<head>
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</head>
 
 <link
 	href="${pageContext.request.contextPath}/resources/css/sales/orderList.css"
 	rel="stylesheet" type="text/css">
- <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-    <script src="path/to/your/vue/component.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="path/to/your/vue/component.js"></script>
 <!-- Begin Page Content -->
 <div class="container-fluid">
 	<div class="container-fluid px-4">
@@ -43,9 +53,11 @@
 								</colgroup>
 								<tbody>
 									<tr>
+										
 										<th>거래처명</th>
 										<td>
 											<div style="display: flex;">
+
 												<input type="text" class="form-control" id="vendNm"
 													name="vendNm" style="width: 150px;" class="input">
 												<button type="button" class="btn btn-primary"
@@ -53,6 +65,7 @@
 													data-bs-target="#comModal" class="butt">
 													<i class="fas fa-search"></i>
 												</button>
+												
 											</div>
 										</td>
 										<th></th>
@@ -72,6 +85,7 @@
 													<i class="fas fa-search"></i>
 												</button>
 											</div>
+
 										</td>
 										<th></th>
 										<td></td>
@@ -95,7 +109,7 @@
 									</tr>
 								</tbody>
 							</table>
-						</form>
+							</form>
 					</div>
 				</div>
 			</div>
@@ -109,7 +123,40 @@
 		<button class="btn btn-primary" id="delBtn">
 			<i class="fas fa-minus"></i> 삭제
 		</button>
-		<div id="grid" class="card mb-4"></div>
+		<div id="grid" class="card mb-4">
+			<table id="datatablesSimple" class="table">
+				<thead>
+					<tr>
+						<th><input type="checkbox"></th>
+						<th>주문번호</th>
+						<th>제품코드</th>
+						<th>거래처코드</th>
+						<th>거래처</th>
+						<th>주문일자</th>
+						<th>납기일자</th>
+						<th>제품명</th>
+						<th>주문수량</th>
+					</tr>
+				</thead>
+
+				<!-- ↓↓↓여기에 조회된 결과 출력 -->
+				<tbody id="list">
+					<c:forEach items="${orders}" var="order">
+						</tr>
+						<th><input type="checkbox"></th>
+						<th>${order.orderNo}</th>
+						<th>${order.edctsCd}</th>
+						<th>${order.vendCd}</th>
+						<th>${order.vendNm}</th>
+						<th>${order.orderDt}</th>
+						<th>${order.paprdDt}</th>
+						<th>${order.prdtNm}</th>
+						<th>${order.orderCnt}</th>
+						<tr>
+					</c:forEach>
+				</tbody>
+			</table>
+		</div>
 	</div>
 
 	<!-- 제품코드 모달(등록) -->
