@@ -18,9 +18,24 @@ public class SalesServiceImpl implements SalesService {
 
 
 	@Override
-	public List<SalesVO> searchSalesList(String vendNm, String prdtNm, String orderDt) {
-		return salesMapper.searchSalesList(vendNm, prdtNm, orderDt);
+	public List<SalesVO> searchSalesList(String vendNm) {
+		return salesMapper.searchSalesList(vendNm);
 	}
+
+
+
+	@Override
+	public int deleteSalesInfo(String orderNo) {
+		// TODO Auto-generated method stub
+		return salesMapper.deleteSalesInfo(orderNo);
+	}
+
+
+
+
+
+
+
   
 }
 

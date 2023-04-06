@@ -10,7 +10,12 @@ import org.apache.ibatis.annotations.Param;
 public interface SalesService {
 
 
-	public List<SalesVO> searchSalesList(String vendNm, String prdtNm, String orderDt);
+	public List<SalesVO> searchSalesList(String vendNm);
+
+	public int deleteSalesInfo(String orderNo);
+	
+	
+
 
 
 	
