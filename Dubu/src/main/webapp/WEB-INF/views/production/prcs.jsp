@@ -51,13 +51,13 @@
 	<div class="card mb-4">
 		<div class="card-body">
 			<div class="linelist">
-				<button id="addBtn" class="btn btn-primary" form="">
+				<button id="addBtn" class="btn btn-primary" form="" onclick="appendl()">
 					<i class="fas fa-add"></i> 추가
 				</button>
-				<button id="deleteBtn" class="btn btn-primary" form="">
+				<button id="deleteBtn" class="btn btn-primary" form="" onclick="minusl()">
 					<i class="fas fa-minus"></i> 삭제
 				</button>
-				<button id="saveBtn" class="btn btn-primary" form="">
+				<button id="saveBtn" class="btn btn-primary" form="" >
 					<i class="fas fa-save"></i> 저장
 				</button>
 			</div>
@@ -124,4 +124,28 @@ function search() {
          });
     
     sBtn.addEventListener("click", search);
+    
+    function appendl(){
+    	grid.appendRow();
+    }
+     function minusl(){
+    	var datas = grid.getCheckedRows();
+    	var prcsData = JSON.stringify(datas);
+    	var formData = new Formdata();
+    	formData.append("list",prcsData);
+    	
+    	$.ajax({
+    		url:'prcs',
+    		data:formData,
+    		type:'POST',
+    		success:function(dd){
+    			console.log(dd);
+    		}error: function (reject) {
+    	        console.log(reject);
+    	});
+    	dd.removeRow(dd.getRowCount()-1);
+    	dd.refreshLayout();
+      }
+    };
+    
 </script>

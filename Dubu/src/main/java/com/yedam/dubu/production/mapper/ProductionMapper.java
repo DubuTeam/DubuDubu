@@ -13,4 +13,7 @@ public interface ProductionMapper {
 	
 	// 그리드
 	public List<ProductionVO> selectPrcsGrid(@Param("prcsDiv")String prcsDiv);
+	
+	// 삭제
+	public String deletePrcsGrid(String prcsDiv);
 }

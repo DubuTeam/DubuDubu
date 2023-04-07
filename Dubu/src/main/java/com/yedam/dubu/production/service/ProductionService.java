@@ -9,4 +9,7 @@ public interface ProductionService {
 	
 	// 그리드
 	public List<ProductionVO> getPrcsGrid(String prcsDiv);
+	
+	// 삭제
+	public String deletePrcsGird(String prcsDiv);
 }	
