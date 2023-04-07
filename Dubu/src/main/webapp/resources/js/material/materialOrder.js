@@ -2,38 +2,12 @@
  * 자재발주관리 자바스크립트 materialOrder.jsp
  */
  
- function materialOrder(rscCd, rscNm, vendCd, vendNm, avalStc, safStc){
-    
+// 발주할 자재 더블클릭시 작동하는 함수
+ function materialOrder(rscCd, rscNm, vendCd, vendNm, avalStc, safStc, OrderCode){
   let tbody = $("#order"); // tbody 선택
-  let row = $("<tr>");
-
-  // td 생성
-  row.append($('<input>', {type: 'hidden', name: 'data1', value:'value1' }));
-  row.append($('<input>', {type: 'hidden', name: 'data1', value:'value1' }));
-
-  let checktd = $("<td>");
-  checktd.append($('<input>', {type: 'checkbox'}));
-  row.append(checktd);
-
-  row.append($("<td>").text(rscCd));
-  row.append($("<td>").text(rscNm));
-  row.append($("<td>").text(vendCd));
-  row.append($("<td>").text(vendNm));
-
-  checktd = $("<td>");
-  checktd.append($('<input>', {id : rscCd, type: 'text', value : avalStc , onchange : "expected(rscCd)"}));
-  row.append(checktd);
-
-  row.append($("<td>").text(avalStc));
-  row.append($("<td>").text(safStc));
-  row.append($("<td>").text(expected(rscCd)));
-
-  checktd = $("<td>");
-  checktd.append($('<input>', {type: 'date'}));
-  row.append(checktd);
-
+  let row = makeTr(rscCd, rscNm, vendCd, vendNm, avalStc, safStc, OrderCode);
   tbody.append(row);
-
+ }
 
 /*
   $.ajax({
@@ -83,11 +57,83 @@
   
   })
 */
+
+// tr 태그 만들어서 반환하는 함수
+function makeTr(rscCd, rscNm, vendCd, vendNm, avalStc, safStc, OrderCode){
+  let row = $("<tr>").data('rscCd',rscCd);
+
+  // td 생성
+  let checktd = $("<td>");
+  checktd.append($('<input>', {type: 'checkbox', name : 'RowCheck', value : rscCd}));
+  row.append(checktd);
+
+  row.append($("<td>").text(rscCd)); // 자재코드
+  row.append($("<td>").text(rscNm)); // 자재명
+  row.append($("<td>").text(vendCd)); // 업체코드
+  row.append($("<td>").text(vendNm)); // 업체명
+
+  checktd = $("<td>");
+  checktd.append($('<input>', {type: 'text', value : OrderCode})); // 발주코드
+  row.append(checktd);
+
+  checktd = $("<td>");
+  checktd.append($('<input>', {id : rscCd, type: 'text', value : avalStc , onchange : "expected(this)"}));
+  row.append(checktd);
+
+  row.append($("<td>").addClass( 'avalStc' ).text(avalStc)); // 현재재고
+  row.append($("<td>").text(safStc)); // 안전재고
+  row.append($("<td>").addClass( 'expect' ).text(avalStc)); // 예상재고량
+
+  checktd = $("<td>");
+  checktd.append($('<input>', {type: 'date'})); // 납기요청일
+  row.append(checktd);
+
+  return row;
+
  }
 
- function expected(rscCd){
-    console.log(rscCd);
-    let order = $('#'+rscCd).text();
-    console.log(order);
-    
+ // 발주수량이 변화할경우 실행하는 함수
+ function expected(obj){
+    let orderCount = $(obj).val(); // 발주수량
+    let parentTr = $(obj).parent().parent();
+    let avalStc = parentTr.find('.avalStc').text(); // 현재 재고량
+
+    let total = parseInt(avalStc) + parseInt(orderCount);
+
+    parentTr.find('.expect').text(total); // 예상재고량 넣기
+
+    console.log("예상재고" + total);
+    console.log("현재재고" + avalStc);
+    console.log("발주량" + orderCount);
  }
+
+$(document).ready(function(){
+  $('#saveBtn').on('click',function() {
+
+    let chkObj = document.getElementsByName("RowCheck"); // name 속성이 RowCheck인것을 모두 가져옴
+    for (let i = 0; i < chkObj.length; i++) {
+      if (chkObj[i].checked == true) {
+        let rscCd = chkObj[i].value;
+        console.log(rscCd);
+        // $.ajax({
+        //   url: 'cartDelete.do',
+        //   method: 'post', // get , put , post 가능함
+        //   data: { cartId: cartId }, // 쿼리스트링
+        //   success: function (result) {
+        //     if (result.retCode == 'Success') {
+        //       console.log(cartId);
+        //       //chkObj[i].parent().parent().remove();
+        //       $('chkObj[i]').parent().parent().remove('tr');
+        //       window.location.reload();
+        //     } else {
+        //       alert("삭제 오류!!");
+        //     }
+        //   },
+        //   error: function (reject) {
+        //     console.log(reject);
+        //   }
+        // })
+      }
+    }
+  });
+});

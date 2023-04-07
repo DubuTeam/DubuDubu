@@ -4,12 +4,41 @@
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.yedam.dubu.material.mapper.MaterialMapper">
 
+	<!-- 자재 목록 리스트 -->
 	<select id="getMaterialList" resultType="MaterialVO">
 		SELECT r.RSC_CD, r.RSC_NM, r.VEND_CD, rs.AVAL_STC, r.SAF_STC, v.VEND_NM
 		FROM RSC r JOIN RSC_STC rs
   		ON r.RSC_CD = rs.RSC_CD
   		JOIN VEND v
   		ON v.VEND_CD = r.VEND_CD
+	</select>
+	
+	<!-- 자재 발주 리스트 -->
+	<select id="getMaterialOrderList" resultType="MaterialVO">
+		SELECT rd.RSC_CD,
+	       rs.RSC_NM, 
+	       rs.VEND_CD, 
+	       v.VEND_NM, 
+	       ro.ORDR_CD, 
+	       rd.ORDR_CNT, 
+	       rc.AVAL_STC,
+	       rs.SAF_STC,
+	       (AVAL_STC+ORDR_CNT) as expect,
+	       rd.PAPRD_CMND_DT
+		FROM RSC_ORDR ro JOIN RSC_ORDR_DTL rd
+	  	ON ro.ORDR_CD = rd.ORDR_CD
+	  	JOIN RSC rs
+	  	ON rd.RSC_CD = rs.RSC_CD
+	  	JOIN VEND v
+	  	ON v.VEND_CD = ro.VEND_CD
+	  	JOIN RSC_STC rc
+	  	ON rc.RSC_CD = rd.RSC_CD
+	</select>
+	
+	<!-- 자재 발주 코드 -->
+	<select id="getNextMaterialOrderCode" resultType="MaterialVO">
+		SELECT 'ORDR' || RSC_ORDR_SEQ.NEXTVAL as ordrCd
+		FROM DUAL
 	</select>
 
 </mapper>

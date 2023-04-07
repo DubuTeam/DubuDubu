@@ -29,6 +29,8 @@ public class MaterialController {
 	@GetMapping("/materialOrder")
 	public String getMaterialOrder(Model model) {
 		model.addAttribute("materialList",materialService.getMaterialList());
+		model.addAttribute("materialOrderList",materialService.getMaterialOrderList());
+		model.addAttribute("OrderCode",materialService.getNextMaterialOrderCode().getOrdrCd());
 		return "material/materialOrder";
 	}
 	

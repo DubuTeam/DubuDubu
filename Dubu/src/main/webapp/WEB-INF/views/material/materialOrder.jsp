@@ -3,6 +3,7 @@
 
 <!-- JSTL -->
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <!-- JQuery -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
@@ -10,6 +11,8 @@
 <!-- Grid -->
 <!-- <link rel="stylesheet" href="https://uicdn.toast.com/grid/latest/tui-grid.css" />
 <script src="https://uicdn.toast.com/grid/latest/tui-grid.js"></script> -->
+
+
 
 <!-- CSS -->
 <link
@@ -45,7 +48,7 @@
 						<td>
 							<input class="form-control" type="text" id="vendNm"
 							name="vendNm" style="width: 150px ; display: inline-block;">
-							<button style="margin-bottom: 3px" class="btn btn-primary" id="rscSearchBtn">
+							<button type="button" style="margin-bottom: 3px" class="btn btn-primary" id="rscSearchBtn">
 								<i class="fas fa-search"></i>
 							</button>
 						</td>
@@ -73,7 +76,7 @@
 						<tbody id="list">
 						<c:forEach items="${materialList}" var="material" varStatus="status">
 								<tr class='eachRow <c:if test="${material.avalStc < material.safStc}">warn</c:if>' 
-								ondblclick="materialOrder('${material.rscCd}','${material.rscNm}','${material.vendCd}','${material.vendNm}','${material.avalStc}','${material.safStc}')">		
+								ondblclick="materialOrder('${material.rscCd}','${material.rscNm}','${material.vendCd}','${material.vendNm}','${material.avalStc}','${material.safStc}', '${OrderCode}')">		
 									<td>${status.count}</td>
 									<td>${material.rscCd}</td>
 									<td>${material.rscNm}</td>
@@ -94,10 +97,10 @@
 			<div class="card-body">
 
 				<div class="linelist" style="float: right;">
-					<button class="btn btn-primary" id="minusBtn">
+					<button type="button" class="btn btn-primary" id="minusBtn">
 						<i class="fas fa-minus"></i> 삭제
 					</button>
-					<button class="btn btn-primary" id="saveBtn">
+					<button type="button" class="btn btn-primary" id="saveBtn">
 						<i class="fas fa-save"></i> 발주
 					</button>
 					<br> <br>
@@ -111,6 +114,7 @@
 					<table>
 						<thead>
 							<tr>
+								<th><input type="checkbox"></th>
 								<th>자재코드</th>
 								<th>자재명</th>
 								<th>업체코드</th>
@@ -125,6 +129,21 @@
 						</thead>
 						<!-- ↓↓↓여기에 조회된 결과 출력 -->
 						<tbody id="order">
+						<c:forEach items="${materialOrderList}" var="materialOrder">
+							<tr>
+								<td><input type="checkbox"></td>
+								<td>${materialOrder.rscCd}</td>
+								<td>${materialOrder.rscNm}</td>
+								<td>${materialOrder.vendCd}</td>
+								<td>${materialOrder.vendNm}</td>
+								<td>${materialOrder.ordrCd}</td>
+								<td>${materialOrder.ordrCnt}</td>
+								<td>${materialOrder.avalStc}</td>
+								<td>${materialOrder.safStc}</td>
+								<td>${materialOrder.expect}</td>
+								<td><fmt:formatDate value="${materialOrder.paprdCmndDt}" pattern = "yyyy-MM-dd"/></td>
+							</tr>
+						</c:forEach>
 						</tbody>
 					</table>
 				</div>
