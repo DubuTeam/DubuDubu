@@ -24,6 +24,8 @@ public class QualityController {
 		model.addAttribute("getPrdtInsp",qualityService.selectQualityList());
 		return "quality/prdtInsp";
 	}
+	
+
 	@PostMapping("/prdtInsp")
 	@ResponseBody
 	public List<QualityVO>PrdtInsp2(QualityVO qualityVO) {

@@ -6,18 +6,36 @@
 
 <!-- 조회 -->
 
-	<select id="selectQualityList" resultType="QualityVO">
-		SELECT pi.EDCTS_LOT_NO                               <!-- 완제품LOT번호 --><!--  -->
-      , COALESCE(pi.EDCTS_CD, 'N/A') AS EDCTS_CD           <!-- 완제품코드 -->
-      , os.PRDT_NM                                          <!--제품명  -->
-      , COALESCE(pi.INSP_JM, 'N/A') AS INSP_JM              <!-- 최종판정 -->
-      , pi.INSP_DT                                          <!--검사일자  -->
-      , COALESCE(pi.INSP_PSCH, ' N/A') AS INSP_PSCH         <!--검사담당자  -->
-FROM PRDT_INSP pi                                        <!-- 제품검사관리  테이블 -->
+ <select id="selectQualityList" resultType="QualityVO">
+		SELECT pi.EDCTS_LOT_NO                               
+      , COALESCE(pi.EDCTS_CD, 'N/A') AS EDCTS_CD           
+      , os.PRDT_NM                                          
+      , COALESCE(pi.INSP_JM, 'N/A') AS INSP_JM              
+      , pi.INSP_DT                                          
+      , COALESCE(pi.INSP_PSCH, ' N/A') AS INSP_PSCH        
+FROM PRDT_INSP pi                                        
 JOIN ORDER_SHEET os
-ON pi.ORDER_NO = os.ORDER_NO     	<!--주문번호  -->
+ON pi.ORDER_NO = os.ORDER_NO     
 WHERE (pi.INSP_DT BETWEEN '2023-01-01' AND '2023-05-02')
 OR (pi.EDCTS_LOT_NO = 'LOT2')
 
-	</select>
+	</select>  
+
+
+<!-- <select id="selectQualityList" resultType="QualityVO">
+		SELECT p.EDCTS_LOT_NO "LOT번호", p.EDCTS_CD "제품코드", e.PRDT_NM "제품명", p.INSP_JM "최종판정", TO_CHAR(p.INSP_DT, 'YYYY-MM-DD') "검사날짜", p.INSP_PSCH "검사자"
+		FROM PRDT_INSP p, EDCTS e
+		WHERE p.EDCTS_CD = e.EDCTS_CD
+		AND INSP_JM IS NOT NULL
+		<if test="edctsLotNo != null and edctsLotNo !=''">and EDCTS_LOT_NO LIKE '%'||#{edctsLotNo}||'%'</if>
+		<if test="startDt != null"><![CDATA[and INSP_DT >= #{startDt}]]></if>
+		<if test="endDt != null"><![CDATA[and INSP_DT <= #{endDt}]]></if>
+		ORDER BY EDCTS_LOT_NO
+    ORDER BY EDCTS_LOT_NO
+</select>
+ -->
+
+
+
+
 </mapper>
