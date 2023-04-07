@@ -10,9 +10,16 @@ import org.apache.ibatis.annotations.Param;
 public interface SalesService {
 
 
-	public List<SalesVO> searchSalesList(String vendNm);
+	//전체주문서 조회
+	public List<SalesVO> searchOrdr(SalesVO vo);
 
-	public int deleteSalesInfo(String orderNo);
+	//조건별 주문서 조회
+	public List<SalesVO> findOrdr(SalesVO vo);
+	//주문서 삭제
+	public void deleteOrdr(List<SalesVO> delList);
+
+	
+	
 	
 	
 

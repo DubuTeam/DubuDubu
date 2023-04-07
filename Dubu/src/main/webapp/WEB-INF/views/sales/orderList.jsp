@@ -5,19 +5,18 @@
 <head>
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<link rel="stylesheet"
+	href="https://uicdn.toast.com/tui-grid/latest/tui-grid.min.css" />
 <script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script
-	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-<script
-	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+	src="https://uicdn.toast.com/tui.code-snippet/latest/tui-code-snippet.min.js"></script>
+<script src="https://uicdn.toast.com/tui-grid/latest/tui-grid.min.js"></script>
 </head>
 
 <link
 	href="${pageContext.request.contextPath}/resources/css/sales/orderList.css"
 	rel="stylesheet" type="text/css">
-<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-<script src="path/to/your/vue/component.js"></script>
+
+
 <!-- Begin Page Content -->
 <div class="container-fluid">
 	<div class="container-fluid px-4">
@@ -53,7 +52,7 @@
 								</colgroup>
 								<tbody>
 									<tr>
-										
+
 										<th>거래처명</th>
 										<td>
 											<div style="display: flex;">
@@ -62,11 +61,10 @@
 													name="vendNm" style="width: 150px;" class="input">
 												<button type="submit" class="btn btn-primary"
 													id="openCompany" data-bs-toggle="modal"
-													data-bs-target="#comModal"
-													>
+													data-bs-target="#comModal">
 													<i class="fas fa-search"></i>
 												</button>
-												
+
 											</div>
 										</td>
 										<th></th>
@@ -110,7 +108,7 @@
 									</tr>
 								</tbody>
 							</table>
-							</form>
+						</form>
 					</div>
 				</div>
 			</div>
@@ -121,44 +119,11 @@
 		<button class="btn btn-primary" id="okBtn">
 			<i class="fas fa-save"></i> 저장
 		</button>
-		<button class="btn btn-primary" id="delBtn">
+		<button class="btn btn-primary" id="delBtn" onclick="orderDelete()">
 			<i class="fas fa-minus"></i> 삭제
 		</button>
-		
-		<div id="grid" class="card mb-4">
-			<table id="datatablesSimple" class="table">
-				<thead>
-					<tr>
-						<th><input type="checkbox"></th>
-						<th>주문번호</th>
-						<th>제품코드</th>
-						<th>거래처코드</th>
-						<th>거래처</th>
-						<th>주문일자</th>
-						<th>납기일자</th>
-						<th>제품명</th>
-						<th>주문수량</th>
-					</tr>
-				</thead>
 
-				<!-- ↓↓↓여기에 조회된 결과 출력 -->
-				<tbody id="list">
-					<c:forEach items="${salesList}" var="order">
-						</tr>
-						<td><input type="checkbox"></td>
-						<td>${order.orderNo}</td>
-						<td>${order.edctsCd}</td>
-						<td>${order.vendCd}</td>
-						<td>${order.vendNm}</td>
-						<td>${order.orderDt}</td>
-						<td>${order.paprdDt}</td>
-						<td>${order.prdtNm}</td>
-						<td>${order.orderCnt}</td>
-						<tr>
-					</c:forEach>
-				</tbody>
-			</table>
-		</div>
+		<div id="grid" class="card mb-4"></div>
 	</div>
 
 	<!-- 제품코드 모달(등록) -->
@@ -254,3 +219,207 @@
 </div>
 <!-- End of Main Content -->
 
+<script>
+	const grid = new tui.Grid({
+		el : document.getElementById('grid'),
+		scrollX : false,
+		bodyHeight : 300,
+		rowHeight : 35,
+		rowHeaders : [ 'checkbox' ],
+		header : {
+			height : 40
+		},
+		columns : [ {
+			header : '주문번호',
+			name : 'orderNo',
+			editor : 'text',
+			align : 'center'
+		}, {
+			header : '제품코드',
+			name : 'edctsCd',
+			editor : 'text',
+			align : 'center'
+		}, {
+			header : '거래처코드',
+			name : 'vendCd',
+			editor : 'text',
+			align : 'center'
+		}, {
+			header : '거래처',
+			name : 'vendNm',
+			editor : 'text',
+			align : 'left'
+		}, {
+			header : '주문일자',
+			name : 'orderDt',
+			editor : 'datePicker',
+			align : 'center'
+		}, {
+			header : '진행상황',
+			name : 'progAppe',
+			align : 'left',
+			defaultValue : '접수완료'
+		}, {
+			header : '납기일자',
+			name : 'paprdDt',
+			editor : 'datePicker',
+			align : 'center'
+		}, {
+			header : '제품명',
+			name : 'prdtNm',
+			editor : 'text',
+			align : 'left'
+		}, {
+			header : '주문수량',
+			name : 'orderCnt',
+			editor : 'text',
+			align : 'right'
+		}, ]
+	});
+
+	// 제품명 모달 그리드(조회)    
+	const proGrid = new tui.Grid({
+		el : document.getElementById('proGrid'),
+		scrollX : false,
+		scrollY : false,
+		rowHeaders : [ 'checkbox' ],
+		columns : [ {
+			header : '완제품코드',
+			name : 'edctsCd',
+			width : 200,
+			align : 'center'
+		}, {
+			header : '제품명',
+			name : 'prdtNm',
+			align : 'left',
+			width : 200
+		} ]
+	});
+
+	// 제품코드 모달 그리드(등록)    
+	const CdModal = new tui.Grid({
+		el : document.getElementById('CdModal'),
+		scrollX : false,
+		scrollY : false,
+		rowHeaders : [ 'checkbox' ],
+		columns : [ {
+			header : '완제품코드',
+			name : 'edctsCd',
+			width : 200,
+			align : 'center'
+		}, {
+			header : '제품명',
+			name : 'prdtNm',
+			align : 'left',
+			width : 200
+		} ]
+	});
+
+	// 거래처 모달 그리드(조회)
+	const comGrid = new tui.Grid({
+		el : document.getElementById('comGrid'),
+		scrollX : false,
+		scrollY : false,
+		rowHeaders : [ 'checkbox' ],
+		columns : [ {
+			header : '거래처코드',
+			name : 'vendCd',
+			width : 100,
+			align : 'center'
+		}, {
+			header : '거래처명',
+			name : 'vendNm',
+			align : 'left',
+			width : 100
+		}, {
+			header : '사업자등록번호',
+			name : 'bizNo',
+			width : 110,
+			align : 'center'
+		}, {
+			header : '전화번호',
+			name : 'telNo',
+			width : 100,
+			align : 'center'
+		} ]
+	});
+
+	// 거래처 모달 그리드(등록)    
+	const vendGrid = new tui.Grid({
+		el : document.getElementById('vendGrid'),
+		//scrollX: false,
+		rowHeaders : [ 'checkbox' ],
+		columns : [ {
+			header : '거래처코드',
+			name : 'vendCd',
+			align : 'center'
+		}, {
+			header : '거래처명',
+			name : 'vendNm',
+			align : 'left'
+		}, {
+			header : '사업자등록번호',
+			name : 'bizNo',
+			align : 'center'
+		}, {
+			header : '전화번호',
+			name : 'telNo',
+			align : 'center'
+		} ]
+	});
+
+	//삭제 ajax
+	function orderDelete() {
+		var delList = [];
+		// 체크한 행만 가져오기
+		var checkedRows = grid.getCheckedRows();
+		for (let i = 0; i < checkedRows.length; i++) {
+			delList.push({
+				prcsCd : checkedRows[i].prcsCd
+			});
+		}
+		console.log(delList);
+
+		$.ajax({
+			url : 'deleteOrdr',
+			data : JSON.stringify(delList),
+			type : 'DELETE',
+			contentType : "application/json; charset=utf-8",
+			success : function(data) {
+				console.log('주문서 삭제 성공');
+				grid.removeCheckedRows();
+			},
+			error : function(reject) {
+				console.log('주문서 삭제 실패');
+			}
+		});
+	}
+	//조건별 주문서 조회
+	let ordrBtn = document.getElementById("ordrBtn");
+	ordrBtn.addEventListener('click', function(e) {
+		search();
+	})
+
+	//조건별 주문서 조회 function
+	function search() {
+		setTimeout(function() {
+			grid.refreshLayout()
+		}, 300);
+		var searchData = $("#searchFrm").serialize();
+		var tf = true;
+		$.ajax({
+			url : "findOrdr",
+			dataType : "json",
+			method : "post",
+			data : searchData,
+			success : function(result) {
+				if ($("#start").val() > $("#end").val()) {
+					tf = false;
+					toastr.warning('검색범위가 올바르지 않습니다');
+				}
+				grid.resetData(result);
+
+			}
+		})
+	};
+</script>
