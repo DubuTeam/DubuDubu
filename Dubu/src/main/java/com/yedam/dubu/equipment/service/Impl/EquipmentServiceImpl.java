@@ -17,7 +17,28 @@ public class EquipmentServiceImpl implements EquipmentService{
 
 	@Override
 	public List<EquipmentVO> selectAllEquipmentList() {
-
 		return equipmentMapper.selectAllEquipmentList();
+	}
+
+	@Override
+	public String getLineCode() {		
+		return equipmentMapper.getLineCode();
+	}
+
+	@Override
+	public int insertEquipment(EquipmentVO equipmentVO) {
+		
+		return equipmentMapper.insertEquipment(equipmentVO);
+	}
+
+	@Override
+	public int updateEquipment(EquipmentVO equipmentVO) {
+		
+		return equipmentMapper.updateEquipment(equipmentVO);
+	}
+
+	@Override
+	public int deleteEquipment(EquipmentVO equipmentVO) {
+		return equipmentMapper.deleteEquipment(equipmentVO);
 	}
 }

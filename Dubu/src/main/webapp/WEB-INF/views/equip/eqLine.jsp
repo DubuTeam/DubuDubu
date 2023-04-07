@@ -62,6 +62,7 @@
 				<div class="card mb-4">
 					<div class="card-body">
 						<div class="linelist" style="float: right;">
+							<button class="btn btn-primary" id="initBtn"><i class="fas fa-file"></i> 초기화</button>
 							<button class="btn btn-primary" id="saveBtn"><i class="fas fa-save"></i> 저장
 							</button>
 							<!-- <button class="btn btn-primary" id="delBtn"><i class="fas fa-trash"></i> 삭제 </button> -->
@@ -107,7 +108,7 @@
 						<form id="dataForm" action="#">
 							<div class="mb-3">
 								<label for="lineCd" class="form-label">라인코드</label>
-								<input type="text" class="form-control" id="lineCd" name="lineCd" readonly>
+								<input type="text" class="form-control" id="lineCd" name="lineCd" value="${getLineCode }" readonly>
 							</div>
 
 							<div class="mb-3"></div>

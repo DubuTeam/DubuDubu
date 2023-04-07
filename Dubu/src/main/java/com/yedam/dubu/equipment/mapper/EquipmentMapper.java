@@ -10,13 +10,20 @@ public interface EquipmentMapper {
 		public List<EquipmentVO> selectAllEquipmentList();
 
 
-		// 등록
+		// 자동으로 부여될 라인코드
+		public String getLineCode();
 		
+		
+		// 테스트
+		// 나는 지금 form 태그랑 뷰 페이지랑 같이 있어서, 따로 뷰 페이지 만들 필요 없을 듯
+		// 등록
+		public int insertEquipment(EquipmentVO equipmentVO);
 		
 		
 		// 수정
-		
+		public int updateEquipment(EquipmentVO equipmentVO);
 		
 		
 		// 삭제
+		public int deleteEquipment(EquipmentVO equipmentVO);
 }
