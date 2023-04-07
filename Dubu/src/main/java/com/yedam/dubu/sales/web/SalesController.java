@@ -20,14 +20,17 @@ public class SalesController {
 	// 주문서 관리
 	@GetMapping("/orderList")
 	public String searchSales(@RequestParam(name = "vendNm", required = false) String vendNm,
-							  @RequestParam(name = "prdtNm", required = false) String prdtNm,
-							  @RequestParam(name = "orderDt", required = false) String orderDt, 
-							  Model model) {
-	List<SalesVO> salesList = salesService.searchSalesList(vendNm, prdtNm, orderDt);
-	model.addAttribute("salesList", salesList);
-		
-	return "sales/orderList";
+			 Model model) {
+		List<SalesVO> salesList = salesService.searchSalesList(vendNm);
+		model.addAttribute("salesList", salesList);
+		return "sales/orderList";
 	}
+	
+//	@GetMapping("orderDelete")
+//	public String boardDelete(@RequestParam String orderNo) {
+//		salesService.deleteSalesInfo(orderNo);
+//		return "redirect:orderList";
+//	}
 
 	// 제품입고등록
 	@GetMapping("/salesIst")

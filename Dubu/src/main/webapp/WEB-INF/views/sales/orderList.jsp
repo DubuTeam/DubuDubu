@@ -60,9 +60,10 @@
 
 												<input type="text" class="form-control" id="vendNm"
 													name="vendNm" style="width: 150px;" class="input">
-												<button type="button" class="btn btn-primary"
+												<button type="submit" class="btn btn-primary"
 													id="openCompany" data-bs-toggle="modal"
-													data-bs-target="#comModal" class="butt">
+													data-bs-target="#comModal"
+													>
 													<i class="fas fa-search"></i>
 												</button>
 												
@@ -79,7 +80,7 @@
 											<div style="display: flex;">
 												<input type="text" class="form-control" id="prdtNm"
 													name="prdtNm" style="width: 150px;">
-												<button type="button" class="btn btn-primary"
+												<button type="submit" class="btn btn-primary"
 													id="openProduct" data-bs-toggle="modal"
 													data-bs-target="#proModal">
 													<i class="fas fa-search"></i>
@@ -123,6 +124,7 @@
 		<button class="btn btn-primary" id="delBtn">
 			<i class="fas fa-minus"></i> 삭제
 		</button>
+		
 		<div id="grid" class="card mb-4">
 			<table id="datatablesSimple" class="table">
 				<thead>
@@ -141,17 +143,17 @@
 
 				<!-- ↓↓↓여기에 조회된 결과 출력 -->
 				<tbody id="list">
-					<c:forEach items="${salesList}" var="orders">
+					<c:forEach items="${salesList}" var="order">
 						</tr>
-						<th><input type="checkbox"></th>
-						<th>${order.orderNo}</th>
-						<th>${order.edctsCd}</th>
-						<th>${order.vendCd}</th>
-						<th>${order.vendNm}</th>
-						<th>${order.orderDt}</th>
-						<th>${order.paprdDt}</th>
-						<th>${order.prdtNm}</th>
-						<th>${order.orderCnt}</th>
+						<td><input type="checkbox"></td>
+						<td>${order.orderNo}</td>
+						<td>${order.edctsCd}</td>
+						<td>${order.vendCd}</td>
+						<td>${order.vendNm}</td>
+						<td>${order.orderDt}</td>
+						<td>${order.paprdDt}</td>
+						<td>${order.prdtNm}</td>
+						<td>${order.orderCnt}</td>
 						<tr>
 					</c:forEach>
 				</tbody>
@@ -251,3 +253,4 @@
 
 </div>
 <!-- End of Main Content -->
+

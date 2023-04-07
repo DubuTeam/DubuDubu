@@ -9,6 +9,10 @@ import com.yedam.dubu.sales.service.SalesVO;
 public interface SalesMapper {
 
 	
-	public List<SalesVO> searchSalesList(String vendNm, String prdtNm, String orderDt);
+	public List<SalesVO> searchSalesList(String vendNm);
+	
+	public int deleteSalesInfo(String orderNo);
+	
+
 }
 
