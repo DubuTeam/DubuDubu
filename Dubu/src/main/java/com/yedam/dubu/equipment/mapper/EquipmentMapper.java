@@ -13,14 +13,12 @@ public interface EquipmentMapper {
 		// 자동으로 부여될 라인코드
 		public String getLineCode();
 		
-		
-		// 테스트
-		// 나는 지금 form 태그랑 뷰 페이지랑 같이 있어서, 따로 뷰 페이지 만들 필요 없을 듯
-		// 등록
+
+		// 등록	(나는 지금 form 태그랑 뷰 페이지랑 같이 있어서, 따로 뷰 페이지 만들 필요 없을 듯)
 		public int insertEquipment(EquipmentVO equipmentVO);
 		
 		
-		// 수정
+		// 수정	(나는 지금 form 태그랑 뷰 페이지랑 같이 있어서, 따로 뷰 페이지 만들 필요 없을 듯)
 		public int updateEquipment(EquipmentVO equipmentVO);
 		
 		

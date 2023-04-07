@@ -27,9 +27,9 @@ public class EquipmentController {
 	
 	
 	@PostMapping("/insertEqLine")
-	@ResponseBody
+	@ResponseBody			// ajax 랑 데이터를 주고 받을 때, 객체로 보내고 객체로 받기 위해서 @ResponseBody 사용
 	public String equipmentInsertProcess(EquipmentVO equipmentVO) {
-		equipmentService.insertEquipment(equipmentVO);
+		equipmentService.insertEquipment(equipmentVO);		// <- 여기서..정보가 담긴 VO 객체를 가지고, 직접적인 DB 랑 연결.
 		
 		return "redirect:eqLine";
 	}
@@ -44,8 +44,11 @@ public class EquipmentController {
 	}
 	
 
-//	@GetMapping("/deleteEqLine")
-//	public String deleteEqLine()
+	@PostMapping("/deleteEqLine")
+	public String deleteEqLine(EquipmentVO equipmentVO) {
+		equipmentService.deleteEquipment(equipmentVO);
+		return "redirect:eqLine";
+	}
 	
 
 	///////////////////////////////////////////////////////////////////////////
@@ -56,6 +59,10 @@ public class EquipmentController {
 	public String getEq(Model model) {
 		return "equip/eq";
 	}
+
+	
+	///////////////////////////////////////////////////////////////////////////
+	
 	
 	// 설비점검관리
 	@GetMapping("/eqCheck")
@@ -63,17 +70,23 @@ public class EquipmentController {
 		return "equip/eqCheck";
 	}
 	
+	
+	///////////////////////////////////////////////////////////////////////////
+	
+	
 	// 비가동관리
 	@GetMapping("/eqIpopr")
 	public String getEqIpopr(Model model) {
 		return "equip/eqIpopr";
 	}
 	
+	
+	///////////////////////////////////////////////////////////////////////////
+	
+	
 	// 실시간설비상태
 	@GetMapping("/equIp")
 	public String getEquIp(Model model) {
 		return "equip/equIp";
 	}
-	
-	
 }
