@@ -6,7 +6,7 @@
 
 	<!-- 조회 -->
 	<select id="selectPrcList" resultType="ProductionVO">
-		SELECT * FROM PRCS 
+		SELECT DISTINCT(PRCS_DIV) FROM PRCS 
 	</select>
 	<!-- 그리드 -->
 	<select id="selectPrcsGrid" resultType="ProductionVO">
@@ -20,6 +20,21 @@
 	<!-- 삭제 -->
 	<delete id="deletePrcsGrid" parameterType="String">
 		DELETE FROM PRCS
-		WHERE PRCS_DIV=#{prcsDiv}
+		WHERE PRCS_CD=#{prcsCd}
 	</delete>
+	<!-- 등록 -->
+	<insert id="insertPrcsGrid" parameterType="ProductionVO">
+		INSERT INTO PRCS(PRCS_DIV,
+						 PRCS_CD,
+						 PRCS_NM,
+						 PRCS_CTNT)
+				VALUES  (#{prcsDiv},
+						 #{prcsCd},
+						 #{prcsNm},
+						 #{prcsCtnt})
+	</insert>
+	<!-- 등록하고자 하는 코드 -->
+	<select id="inesrtPrcsCode" resultType="ProductionVO">
+		SELECT PRCS_DIV FROM PRCS WHERE PRCS_DIV=#{prcsDiv}
+	</select>
 </mapper>

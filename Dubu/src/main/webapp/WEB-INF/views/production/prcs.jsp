@@ -62,9 +62,7 @@
 				</button>
 			</div>
 			<br> <br> <br>
-						<div id="list-body" class="table">
-							<div id='order'></div>
-						</div>
+							<div id='prcss'></div>
 			<div id='grid'></div>
 		</div>
 	</div>
@@ -77,8 +75,10 @@
 <!-- End of Main Content -->
 <script>
 var grid1 = tui.Grid;
-let sBtn = document.getElementById("sBtn");
-let prcsDiv1 = document.getElementById("prcs");
+var sBtn = document.getElementById("sBtn");
+var prcsDiv1 = document.getElementById("prcs");
+var str = '';
+var checkLen = '';
 
 function search() {
 	prcsDiv = prcsDiv1.options[prcsDiv1.selectedIndex].value;
@@ -89,7 +89,6 @@ function search() {
         data: { prcsDiv : prcsDiv },
         success: function(data) {
            grid.resetData(data);  //그리드 적용
-           console.log(data);
         },
         error: function (reject) {
           console.log(reject);
@@ -98,54 +97,78 @@ function search() {
 } 
 		//그리드 선언
         var grid = new tui.Grid({
-             el: document.getElementById('order'),
+             el: document.getElementById('prcss'),
              rowHeaders: ['checkbox'],
              columns: [
 
                  {
                      header: '공정구분코드',
-                     name: 'prcsDiv',
+                     name: 'prcsDiv'
+                     
                  },
                  {
                      header: '공정코드',
                      name: 'prcsCd',
+                     editor: 'text'
                  },
                  {
                      header: '공정명',
                      name: 'prcsNm',
+                     editor: 'text'
                  },
                  {
                      header: '공정설명',
                      name: 'prcsCtnt',
+                     editor: 'text'
                  }
                  
              ]
 
          });
+		
+  // 체크되것만 찾기
+    grid.on('check', (ev) => {
+ 	      checkLen = grid.getCheckedRows().length;
+	  });
+   grid.on('allCheck', (ev) => {
+	      checkLen = grid.getCheckedRows().length;
+	  });   
+   grid.on('unCheck', (ev) => {
+	      checkLen = grid.getCheckedRows().length;
+	  }); 
+	
     
     sBtn.addEventListener("click", search);
-    
+    // 행추가
     function appendl(){
-    	grid.appendRow();
+    	grid.appendRow(prcss,{
+    		at : grid.getRowCount(),
+    		focus : true
+    		});
+    		grid.enable()
     }
-     function minusl(){
-    	var datas = grid.getCheckedRows();
-    	var prcsData = JSON.stringify(datas);
-    	var formData = new Formdata();
-    	formData.append("list",prcsData);
+    // 삭제
+      function minusl(){
+    	var datas = '';
     	
-    	$.ajax({
-    		url:'prcs',
-    		data:formData,
+ 		// 체크한 행만 가져오기
+    	 for (let i = 0; i < checkLen; i++) {
+    	        str += grid.getCheckedRows()[i].prcsCd + ",";
+    	      }
+    	 console.log(str);
+      
+      	 $.ajax({
+    		url:'deletePrcs',
+    		data:{prcsCd : str},
     		type:'POST',
-    		success:function(dd){
-    			console.log(dd);
-    		}error: function (reject) {
+    		success:function(data){
+    			console.log('성공')
+    			grid.removeRow(str);
+    		},error: function (reject) {
     	        console.log(reject);
-    	});
-    	dd.removeRow(dd.getRowCount()-1);
-    	dd.refreshLayout();
-      }
-    };
+    	}
+      	 })
+      }   
+    	
     
 </script>
