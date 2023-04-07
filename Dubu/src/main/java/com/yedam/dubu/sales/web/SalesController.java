@@ -5,9 +5,12 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.yedam.dubu.sales.service.SalesService;
 import com.yedam.dubu.sales.service.SalesVO;
@@ -17,20 +20,42 @@ public class SalesController {
 	@Autowired
 	SalesService salesService;
 
-	// 주문서 관리
-	@GetMapping("/orderList")
-	public String searchSales(@RequestParam(name = "vendNm", required = false) String vendNm,
-			 Model model) {
-		List<SalesVO> salesList = salesService.searchSalesList(vendNm);
-		model.addAttribute("salesList", salesList);
+	// 제품입고등록
+		@GetMapping("/orderList")
+		public String orderlist(Model model) {
+			return "sales/orderList";
+		}
+	
+	// 주문서 조회/등록 페이지 불러오기
+	@RequestMapping("/orderSelect")
+	public String orderList() {
 		return "sales/orderList";
 	}
+
+	// 주문서 전체 불러오기
+	@PostMapping("/orderList")
+	@ResponseBody
+	public List<SalesVO> orderSelect(SalesVO vo) {
+		return salesService.searchOrdr(vo);
+	}
 	
-//	@GetMapping("orderDelete")
-//	public String boardDelete(@RequestParam String orderNo) {
-//		salesService.deleteSalesInfo(orderNo);
-//		return "redirect:orderList";
-//	}
+
+
+	// 조건별 주문서 조회
+	@PostMapping("/findOrdr")
+	@ResponseBody
+	public List<SalesVO> findOrdr(SalesVO vo) {
+		System.out.println(vo);
+		return salesService.findOrdr(vo);
+
+	}
+
+	// 주문서 삭제
+	@DeleteMapping("/deleteOrdr")
+	public String deleteOrdr(@RequestBody List<SalesVO> delList) {
+	    salesService.deleteOrdr(delList);
+	    return "sales/orderList";
+	}
 
 	// 제품입고등록
 	@GetMapping("/salesIst")

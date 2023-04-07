@@ -1,19 +1,40 @@
 package com.yedam.dubu.sales.service;
 
+import java.util.Date;
+
+import org.springframework.format.annotation.DateTimeFormat;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import lombok.Data;
 
 @Data
 public class SalesVO {
-	private String orderNo;
-	private String edctsCd;
-	private String vendCd;
-	//@DateTimeFormat(pattern = "yyyy-MM-dd")
-	private String orderDt;
-	private String vendNm;
-	private String prdtNm;
-	private int orderCnt;
-	private String progAppe;
-	//@DateTimeFormat(pattern = "yyyy-MM-dd")
-	private String paprdDt;
+	String orderNo;
+	String edctsCd;
+	String vendCd;
+	String vendNm;
+	@DateTimeFormat(pattern="yyyy-MM-dd")
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
+	Date orderDt;
+	@DateTimeFormat(pattern="yyyy-MM-dd")
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
+	Date start;
+	@DateTimeFormat(pattern="yyyy-MM-dd")
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
+	Date end;
+	String progAppe;
+	@DateTimeFormat(pattern="yyyy-MM-dd")
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
+	Date paprdDt;
+	String prdtNm;
+	int orderCnt;
+	String checked;
+	String bizNo;
+	String telNo;
+	
+	String index;
+	String defaultValue;
+	String edctsLotNo;
 
 }
