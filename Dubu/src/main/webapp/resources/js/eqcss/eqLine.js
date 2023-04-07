@@ -2,7 +2,7 @@ $(document).ready(function () {
     // 라인 관리 페이지
     // 1. row 하나 클릭 시,
     $('.eachRow').on("click", function (e) {
-        // 2. 해당 행에 입력된 데이터를 받아옴.
+        // 2. 해당 행에 입력된 데이터를 받아옴.     (가장 가까운 tr태그의 각 셀들)
         let lineCode = $(this).closest("tr").children().eq(0).text();
         let lineName = $(this).closest("tr").children().eq(1).text();
         let staff = $(this).closest("tr").children().eq(2).text();
@@ -109,6 +109,7 @@ $(document).ready(function () {
     })
 
 
+
     ///////////////////// 데이터 수정 및 insert 를 위한 테스트 /////////////////////////
 
 
@@ -134,5 +135,21 @@ $(document).ready(function () {
 
 
     // 4. 삭제
-    
+    // 삭제 버튼 누른 후, 다시 한 번 삭제 확인 버튼 누르면...
+    $('#confirmBtn').on("click", function (e) {
+        let currentCd = $('#lineCd').val();     // input 창에 있는 라인코드 값을 가져옴.
+        console.log(currentCd);
+
+        $.ajax({
+            url: 'deleteEqLine',
+            method: 'post',
+            data: {
+                lineCd: currentCd
+            },
+            success: function (result) {
+                console.log('삭제성공입니다~~~');
+                $('#exampleModal').click();         // 모달창 닫기,  .click() 혹은 .hide() ..?
+            }
+        })
+    })
 });

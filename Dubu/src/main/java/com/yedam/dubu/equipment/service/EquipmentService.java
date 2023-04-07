@@ -12,7 +12,7 @@ public interface EquipmentService {
 	public String getLineCode();
 	
 	
-	// 등록
+	// 등록	(1개가 성공적으로 insert 되는 경우 숫자 1을 반환 받음)
 	public int insertEquipment(EquipmentVO equipmentVO);
 	
 	

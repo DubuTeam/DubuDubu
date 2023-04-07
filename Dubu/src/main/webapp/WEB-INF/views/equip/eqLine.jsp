@@ -69,8 +69,7 @@
 
 
 							<!-- Button trigger modal (4.6버젼) -->
-							<button type="button" class="btn btn-primary" data-toggle="modal"
-								data-target="#exampleModal">
+							<button type="button" class="btn btn-primary" id="delBtn" data-toggle="modal" data-target="#exampleModal">
 								<i class="fas fa-trash"></i> 삭제
 							</button>
 
@@ -93,7 +92,7 @@
 										<div class="modal-footer" style="border-top: none;">
 											<button type="button" class="btn btn-secondary"
 												data-dismiss="modal">취소</button>
-											<button type="button" class="btn btn-primary">삭제</button>
+											<button type="button" class="btn btn-primary" id="confirmBtn">삭제</button>
 										</div>
 									</div>
 								</div>
