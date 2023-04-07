@@ -3,4 +3,21 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.yedam.dubu.quality.mapper.QualityMapper">
+
+<!-- 조회 -->
+
+	<select id="selectQualityList" resultType="QualityVO">
+		SELECT pi.EDCTS_LOT_NO                               <!-- 완제품LOT번호 --><!--  -->
+      , COALESCE(pi.EDCTS_CD, 'N/A') AS EDCTS_CD           <!-- 완제품코드 -->
+      , os.PRDT_NM                                          <!--제품명  -->
+      , COALESCE(pi.INSP_JM, 'N/A') AS INSP_JM              <!-- 최종판정 -->
+      , pi.INSP_DT                                          <!--검사일자  -->
+      , COALESCE(pi.INSP_PSCH, ' N/A') AS INSP_PSCH         <!--검사담당자  -->
+FROM PRDT_INSP pi                                        <!-- 제품검사관리  테이블 -->
+JOIN ORDER_SHEET os
+ON pi.ORDER_NO = os.ORDER_NO     	<!--주문번호  -->
+WHERE (pi.INSP_DT BETWEEN '2023-01-01' AND '2023-05-02')
+OR (pi.EDCTS_LOT_NO = 'LOT2')
+
+	</select>
 </mapper>

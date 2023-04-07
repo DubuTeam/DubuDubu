@@ -147,6 +147,32 @@
 									</tbody>
 								</table>
 							</form>
+							<form>
+							<div class="card mb-4">
+					
+					
+            <div class="card-body" style="width:100%;"> <!-- 개인적 체크포인트    --------------------------------------------------------- -->
+						<div id="list-body" class="table" style="width:100%;">
+							<table style="width:100%;">
+								<thead>
+									<tr>
+										<th>검사코드</th>
+										<th>검사명</th>
+										<th>검사기준</th>
+										<th>검사결과</th>
+										<th>결과판정</th>
+									</tr>
+								</thead>
+
+								<!-- ↓↓↓여기에 조회된 결과 출력 -->
+								<tbody id="list"></tbody>
+							</table>
+						</div>
+							
+            </div>
+        	</div>
+            </form>
+							
     </div>
     <div class="content-dis">
     <div class="linelist" style="float: right;">
@@ -210,11 +236,12 @@
 							<table style="width:100%;">
 								<thead>
 									<tr>
-										<th>라인코드</th>
-										<th>라인명</th>
-										<th>담당자</th>
-										<th>UPH생산량</th>
-										<th>사용여부</th>
+										<th>완제품LOT번호</th>
+										<th>제품코드</th>
+										<th>제품명</th>
+										<th>최종판정</th>
+										<th>검사날짜</th>
+										<th>검사자</th>
 									</tr>
 								</thead>
 
