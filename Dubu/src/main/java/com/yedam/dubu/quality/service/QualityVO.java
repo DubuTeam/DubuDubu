@@ -14,4 +14,9 @@ public class QualityVO {
 	private Date inspDt; //검사일자
 	private String inspPsch; //검사담당자
 	
+	private Date startDt;
+	private Date endDt;
+	
+	
+	
 }
