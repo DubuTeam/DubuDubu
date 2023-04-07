@@ -103,8 +103,7 @@ function search() {
 
                  {
                      header: '공정구분코드',
-                     name: 'prcsDiv'
-                     
+                     name: 'prcsDiv' 
                  },
                  {
                      header: '공정코드',
@@ -126,16 +125,7 @@ function search() {
 
          });
 		
-  // 체크되것만 찾기
-    grid.on('check', (ev) => {
- 	      checkLen = grid.getCheckedRows().length;
-	  });
-   grid.on('allCheck', (ev) => {
-	      checkLen = grid.getCheckedRows().length;
-	  });   
-   grid.on('unCheck', (ev) => {
-	      checkLen = grid.getCheckedRows().length;
-	  }); 
+
 	
     
     sBtn.addEventListener("click", search);
@@ -146,7 +136,26 @@ function search() {
     		focus : true
     		});
     		grid.enable()
+    	
+    	
+    	$ajax({
+    		url:'insertPrcs',
+    		data:{}
+    	})
+    
     }
+    
+    // 체크되것만 찾기
+    grid.on('check', (ev) => {
+ 	      checkLen = grid.getCheckedRows().length;
+	  });
+   grid.on('allCheck', (ev) => {
+	      checkLen = grid.getCheckedRows().length;
+	  });   
+   grid.on('unCheck', (ev) => {
+	      checkLen = grid.getCheckedRows().length;
+	  }); 
+    
     // 삭제
       function minusl(){
     	var datas = '';
@@ -155,7 +164,7 @@ function search() {
     	 for (let i = 0; i < checkLen; i++) {
     	        str += grid.getCheckedRows()[i].prcsCd + ",";
     	      }
-    	 console.log(str);
+    	 console.log(grid.getCheckedRows()[0].rowKey);
       
       	 $.ajax({
     		url:'deletePrcs',
@@ -163,7 +172,7 @@ function search() {
     		type:'POST',
     		success:function(data){
     			console.log('성공')
-    			grid.removeRow(str);
+    			grid.removeRow(grid.getCheckedRows()[0].rowKey);
     		},error: function (reject) {
     	        console.log(reject);
     	}

@@ -43,6 +43,11 @@ public class ProductionController {
 	public int deletePrcsGrid(@RequestParam String prcsCd) {
 		return productionService.deletePrcsGird(prcsCd);
 	}
+	// 공정관리 - 그리드로 추가
+	@PostMapping("/insertPrcs")
+	public String insertPrcsGrid(ProductionVO productionVO) {
+		return productionService.insertPrcsGrid(productionVO);
+	}
 	
 	// 생산계획
 	@GetMapping("/plan")
