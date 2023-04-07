@@ -8,4 +8,45 @@
 	<select id="selectAllEquipmentList" resultType="EquipmentVO">
 		SELECT * FROM EQM_LINE ORDER BY line_cd
 	</select>
+	
+	<!-- 부여될 라인 코드를 미리 조회 (등록과 관련)  -  라인명은 LINE0002, LINE0003  이런식으로 문자열이다. -->
+	<select id="getLineCode" resultType="String">
+		SELECT NVL2(MAX(line_cd), 'LINE'||LPAD(REPLACE(MAX(line_cd), 'LINE') + 1, 4, '0'), 'LINE0001') FROM eqm_line
+	</select>
+	
+	
+	<insert id="insertEquipment" parameterType="equipmentVO">
+		INSERT INTO eqm_line
+						(
+							line_cd,
+							line_nm,
+							eqm_psch,
+							uph_cnt,
+							use_yn
+						)
+				VALUES (
+							#{lineCd},
+							#{lineNm},
+							#{eqmPsch},
+							#{uphCnt},
+							#{useYn}
+						)			
+	</insert>
+	
+
+	<update id="updateEquipment" parameterType="equipmentVO">
+		UPDATE eqm_line
+		SET
+			line_nm = #{lineNm},
+			eqm_psch = #{eqmPsch},
+			uph_cnt = #{uphCnt},
+			use_yn = #{useYn}
+		WHERE line_cd = #{lineCd}
+	</update>
+	
+	
+	<delete id="deleteEquipment" parameterType="equipmentVO">
+		DELETE FROM eqm_line
+			WHERE line_cd = #{lineCd}
+	</delete>
 </mapper>
