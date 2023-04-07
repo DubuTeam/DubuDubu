@@ -2,11 +2,14 @@
  * 자재발주관리 자바스크립트 materialOrder.jsp
  */
  
+let material = [];
+
 // 발주할 자재 더블클릭시 작동하는 함수
  function materialOrder(rscCd, rscNm, vendCd, vendNm, avalStc, safStc, OrderCode){
   let tbody = $("#order"); // tbody 선택
   let row = makeTr(rscCd, rscNm, vendCd, vendNm, avalStc, safStc, OrderCode);
   tbody.append(row);
+  material.push({rscCd : rscCd, rscNm : rscNm, vendCd : vendCd, vendNm:vendNm, avalStc : avalStc, safStc:safStc, OrderCode:OrderCode})
  }
 
 /*
@@ -73,11 +76,11 @@ function makeTr(rscCd, rscNm, vendCd, vendNm, avalStc, safStc, OrderCode){
   row.append($("<td>").text(vendNm)); // 업체명
 
   checktd = $("<td>");
-  checktd.append($('<input>', {type: 'text', value : OrderCode})); // 발주코드
+  checktd.append($('<input>', {type: 'text', class : OrderCode ,value : OrderCode})); // 발주코드
   row.append(checktd);
 
   checktd = $("<td>");
-  checktd.append($('<input>', {id : rscCd, type: 'text', value : avalStc , onchange : "expected(this)"}));
+  checktd.append($('<input>', {id : rscCd ,type: 'text', value : '0' , onchange : "expected(this)"}));
   row.append(checktd);
 
   row.append($("<td>").addClass( 'avalStc' ).text(avalStc)); // 현재재고
@@ -102,19 +105,23 @@ function makeTr(rscCd, rscNm, vendCd, vendNm, avalStc, safStc, OrderCode){
 
     parentTr.find('.expect').text(total); // 예상재고량 넣기
 
-    console.log("예상재고" + total);
-    console.log("현재재고" + avalStc);
-    console.log("발주량" + orderCount);
  }
 
 $(document).ready(function(){
-  $('#saveBtn').on('click',function() {
 
+  let rscCds = "";
+  let orderCode = "";
+  $('#saveBtn').on('click',function() {
     let chkObj = document.getElementsByName("RowCheck"); // name 속성이 RowCheck인것을 모두 가져옴
     for (let i = 0; i < chkObj.length; i++) {
       if (chkObj[i].checked == true) {
-        let rscCd = chkObj[i].value;
-        console.log(rscCd);
+        rscCds = rscCds + chkObj[i].value + ",";
+        
+        for(let i = 0 ; i < material.length; i++){
+          if(material[i].rscCd == chkObj[i].value){
+            orderCode = orderCode + material[i].orderCode + ","; 
+          }
+        }
         // $.ajax({
         //   url: 'cartDelete.do',
         //   method: 'post', // get , put , post 가능함
@@ -135,5 +142,6 @@ $(document).ready(function(){
         // })
       }
     }
+      console.log(rscCds);
   });
 });
