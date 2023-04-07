@@ -44,7 +44,7 @@ public class ProductionServiceImpl implements ProductionService {
 
 	@Override
 	public String insertPrcsGrid(ProductionVO productionVO) {
-		return null ;
+		return productionMapper.inesrtPrcsCode() ;
 	}
 
 	@Override
