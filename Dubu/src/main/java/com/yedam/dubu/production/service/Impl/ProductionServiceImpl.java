@@ -28,7 +28,27 @@ public class ProductionServiceImpl implements ProductionService {
 	}
 
 	@Override
-	public String deletePrcsGird(String prcsDiv) {
-		return productionMapper.deletePrcsGrid(prcsDiv);
+	public int deletePrcsGird(String prcsCd) {
+		 String[] array = prcsCd.split(",");
+		 int result = 0;
+		   for(int i=0; i<array.length; i++) {
+		         result += productionMapper.deletePrcsGrid(array[i]);
+		      }
+		    if(result > 0) {
+		         return result;
+		      } else {
+		         return -1;
+		      }
+		   }
+	
+
+	@Override
+	public String insertPrcsGrid(ProductionVO productionVO) {
+		return null ;
+	}
+
+	@Override
+	public String inesrtPrcsCode() {
+		return productionMapper.inesrtPrcsCode();
 	}
 }

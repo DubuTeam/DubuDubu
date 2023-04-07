@@ -15,5 +15,11 @@ public interface ProductionMapper {
 	public List<ProductionVO> selectPrcsGrid(@Param("prcsDiv")String prcsDiv);
 	
 	// 삭제
-	public String deletePrcsGrid(String prcsDiv);
+	public int deletePrcsGrid(String prcsCd);
+	
+	// 등록
+	public String insertPrcsGrid(ProductionVO productionVO);
+	
+	// 등록하고자 하는 공정코드
+	public String inesrtPrcsCode();
 }

@@ -37,14 +37,12 @@ public class ProductionController {
 	public List<ProductionVO> getPrcsGrid(@RequestParam(required=false) String prcsDiv) {
 		return productionService.getPrcsGrid(prcsDiv);
 	}
-	// 공정관리 - 삭제
-	/*
-	 * @PostMapping("/prcs")
-	 * 
-	 * @ResponseBody public String deletePrcsGrid(@RequestParam(required=false)
-	 * String prcsDiv) { return productionService.deletePrcsGird(prcsDiv); }
-	 */
-
+	// 공정관리 - 그리드로 삭제
+	@PostMapping("/deletePrcs")
+	@ResponseBody
+	public int deletePrcsGrid(@RequestParam String prcsCd) {
+		return productionService.deletePrcsGird(prcsCd);
+	}
 	
 	// 생산계획
 	@GetMapping("/plan")
