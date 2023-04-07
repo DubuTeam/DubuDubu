@@ -1,4 +1,11 @@
-
 .table table {
 	width: 100%;
+}
+
+.eachRow:hover {
+	background-color: rgb(233, 233, 233);
+}
+
+.warn{
+	background-color : #FFF0F5;
 }

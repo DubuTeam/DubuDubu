@@ -5,8 +5,11 @@
 <mapper namespace="com.yedam.dubu.material.mapper.MaterialMapper">
 
 	<select id="getMaterialList" resultType="MaterialVO">
-		SELECT RSC_CD, VEND_CD,RSC_NM, RSC_SPEC, MNG_UNIT,RSC_TYP,SAF_STC,USE_YN
-		FROM RSC
+		SELECT r.RSC_CD, r.RSC_NM, r.VEND_CD, rs.AVAL_STC, r.SAF_STC, v.VEND_NM
+		FROM RSC r JOIN RSC_STC rs
+  		ON r.RSC_CD = rs.RSC_CD
+  		JOIN VEND v
+  		ON v.VEND_CD = r.VEND_CD
 	</select>
 
 </mapper>

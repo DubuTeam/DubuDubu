@@ -32,14 +32,12 @@ public class MaterialController {
 		return "material/materialOrder";
 	}
 	
-	/*
-	 * // 자재발주
-	 * 
-	 * @PostMapping("/materialOrder")
-	 * 
-	 * @ResponseBody public List<MaterialVO> postMaterialOrder() {
-	 * //System.out.println(model); return }
-	 */
+	 // 자재발주
+	// @PostMapping("/materialOrder")
+	// public List<MaterialVO> postMaterialOrder() {
+	// System.out.println(model); return 
+	//}
+	 
 		
 	// 자재발주조회
 	@GetMapping("/materialOrderSearch")
