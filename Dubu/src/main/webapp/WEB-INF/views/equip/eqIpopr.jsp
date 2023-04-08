@@ -90,7 +90,7 @@
 				<table>
 					<thead>
 						<tr>
-							<th>점검코드</th>
+							<th>비가동코드</th>
 							<th>설비코드</th>
 							<th>설비명</th>
 							<th>시작날짜</th>
