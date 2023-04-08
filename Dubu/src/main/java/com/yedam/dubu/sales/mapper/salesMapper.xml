@@ -14,8 +14,7 @@
 	</select>
 
 	<!-- 조건별 주문서 조회 -->
-	<select id="findOrdr"
-		resultType="SalesVO">
+	<select id="findOrdr" resultType="SalesVO">
 		SELECT * FROM ORDER_SHEET
 		<!-- WHERE ORDER_DT BETWEEN #{start} AND #{end} -->
 		WHERE 1=1
@@ -25,11 +24,17 @@
 		<if test="end != null"><![CDATA[and ORDER_DT <= #{end}]]></if>
 		ORDER BY ORDER_NO
 	</select>
-
+	
+	<!-- 거래처 목록 조회 모달창 -->
+	<select id="comSearch" resultType="SalesVO">
+		SELECT VEND_CD, VEND_NM, BIZNO, TELNO FROM VEND
+	</select>
+	
+	<!-- 주문서 삭제 -->
 	<delete id="deleteOrdr" parameterType="SalesVO">
 		DELETE FROM ORDER_SHEET
 		WHERE ORDER_NO = #{orderNo}
 	</delete>
-	
+
 
 </mapper>

@@ -21,11 +21,11 @@ public class SalesController {
 	SalesService salesService;
 
 	// 제품입고등록
-		@GetMapping("/orderList")
-		public String orderlist(Model model) {
-			return "sales/orderList";
-		}
-	
+	@GetMapping("/orderList")
+	public String orderlist(Model model) {
+		return "sales/orderList";
+	}
+
 	// 주문서 조회/등록 페이지 불러오기
 	@RequestMapping("/orderSelect")
 	public String orderList() {
@@ -38,8 +38,6 @@ public class SalesController {
 	public List<SalesVO> orderSelect(SalesVO vo) {
 		return salesService.searchOrdr(vo);
 	}
-	
-
 
 	// 조건별 주문서 조회
 	@PostMapping("/findOrdr")
@@ -51,10 +49,19 @@ public class SalesController {
 	}
 
 	// 주문서 삭제
-	@DeleteMapping("/deleteOrdr")
+	@PostMapping("deleteOrdr")
 	public String deleteOrdr(@RequestBody List<SalesVO> delList) {
-	    salesService.deleteOrdr(delList);
-	    return "sales/orderList";
+		salesService.deleteOrdr(delList);
+		return "sales/orderList";
+	}
+
+	
+	
+	// 거래처 목록 조회 모달창
+	@RequestMapping("comSearch")
+	@ResponseBody
+	public List<SalesVO> comSearch(SalesVO vo) {
+		return salesService.comSearch(vo);
 	}
 
 	// 제품입고등록

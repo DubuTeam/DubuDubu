@@ -21,25 +21,25 @@ public class SalesServiceImpl implements SalesService {
 		return salesMapper.searchOrdr(vo);
 	}
 
-
 	// 조건별 주문서 조회
 	@Override
 	public List<SalesVO> findOrdr(SalesVO vo) {
 		// TODO Auto-generated method stub
 		return salesMapper.findOrdr(vo);
 	}
-	//주문서 삭제
+
+	// 주문서 삭제
 	@Override
 	public void deleteOrdr(List<SalesVO> delList) {
 		for (SalesVO vo : delList) {
 			salesMapper.deleteOrdr(vo);
 		}
-
 	}
 
+	// 거래처 목록 조회 모달창
+	@Override
+	public List<SalesVO> comSearch(SalesVO vo) {
+		return salesMapper.comSearch(vo);
+	}
 
-
-
-	
-	
 }

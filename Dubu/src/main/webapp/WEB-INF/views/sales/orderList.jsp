@@ -10,6 +10,10 @@
 <script
 	src="https://uicdn.toast.com/tui.code-snippet/latest/tui-code-snippet.min.js"></script>
 <script src="https://uicdn.toast.com/tui-grid/latest/tui-grid.min.js"></script>
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.css">
+<script
+	src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.js"></script>
 </head>
 
 <link
@@ -58,10 +62,9 @@
 											<div style="display: flex;">
 
 												<input type="text" class="form-control" id="vendNm"
-													name="vendNm" style="width: 150px;" class="input">
-												<button type="submit" class="btn btn-primary"
-													id="openCompany" data-bs-toggle="modal"
-													data-bs-target="#comModal">
+													name="vendNm" style="width: 150px;">
+												<button type="button" class="btn btn-primary"
+													id="openCompany">
 													<i class="fas fa-search"></i>
 												</button>
 
@@ -119,7 +122,7 @@
 		<button class="btn btn-primary" id="okBtn">
 			<i class="fas fa-save"></i> 저장
 		</button>
-		<button class="btn btn-primary" id="delBtn" onclick="orderDelete()">
+		<button class="btn btn-primary" id="delBtn">
 			<i class="fas fa-minus"></i> 삭제
 		</button>
 
@@ -368,32 +371,36 @@
 		} ]
 	});
 
-	//삭제 ajax
-	function orderDelete() {
-		var delList = [];
-		// 체크한 행만 가져오기
-		var checkedRows = grid.getCheckedRows();
-		for (let i = 0; i < checkedRows.length; i++) {
-			delList.push({
-				prcsCd : checkedRows[i].prcsCd
-			});
-		}
-		console.log(delList);
-
-		$.ajax({
-			url : 'deleteOrdr',
-			data : JSON.stringify(delList),
-			type : 'DELETE',
-			contentType : "application/json; charset=utf-8",
-			success : function(data) {
-				console.log('주문서 삭제 성공');
-				grid.removeCheckedRows();
-			},
-			error : function(reject) {
-				console.log('주문서 삭제 실패');
+	//주문서 삭제
+	let delBtn = document.getElementById("delBtn");
+	delBtn.addEventListener('click', function(e) {
+		var data = grid.getCheckedRows();
+		if (data == '') {
+			showAlert();
+		} else {
+			var confirmResult = confirm('선택한 주문서를 삭제하시겠습니까?');
+			if (confirmResult) {
+				for (var i = 0, len = data.length; i < len; i++) {
+					var rowKey = data[i].rowKey;
+					grid.removeRow(rowKey);
+				}
+				$.ajax({
+					url : "deleteOrdr",
+					method : "post",
+					data : JSON.stringify(data),
+					contentType : "application/json",
+					success : function(data) {
+						console.log('삭제되었습니다');
+						console.log(data);
+					},
+					error : function(er) {
+						console.log(er);
+						console.log('오류')
+					}
+				});
 			}
-		});
-	}
+		}
+	});
 	//조건별 주문서 조회
 	let ordrBtn = document.getElementById("ordrBtn");
 	ordrBtn.addEventListener('click', function(e) {
@@ -422,4 +429,46 @@
 			}
 		})
 	};
+	function showAlert() {
+		Swal.fire({
+			icon : 'error',
+			title : '알림',
+			text : '삭제할 주문서를 선택해주세요',
+		});
+	}
+
+	// input 태그 클릭 시 모달창 열기
+	$('#vendNm').click(function() {
+		$('#comModal').modal('show');
+	});
+
+	// 검색 버튼 클릭 시 모달창 열기
+	$('#openCompany').click(function() {
+		$('#comModal').modal('show');
+	});
+
+	//조회 거래처모달창 닫기 버튼 클릭 -> 폼 input에 들어간 데이터값 지우기
+	$("#cancleVendBtn").on("click", function() {
+		vendNm.value = '';
+	})
+	// '닫기' 버튼 클릭 시 모달 닫기
+	$('#cancleVendBtn').click(function() {
+		$('#comModal').modal('hide');
+	});
+	//거래처 목록 모달창으로 가져오기
+	function comList() {
+		$("#openCompany").on("click", function(comlist) {
+			setTimeout(function() {
+				comGrid.refreshLayout()
+			}, 300);
+			$.ajax({
+				url : "comSearch",
+				method : "get",
+				datatype : "json",
+				success : function(comlist) {
+					comGrid.resetData(comlist);
+				}
+			})
+		})
+	}
 </script>

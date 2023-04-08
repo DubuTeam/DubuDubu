@@ -17,4 +17,6 @@ public interface SalesMapper {
 	// 주문서 삭제
 	public void deleteOrdr(SalesVO vo);
 
+	// 거래처 목록 조회 모달창
+	public List<SalesVO> comSearch(SalesVO vo);
 }

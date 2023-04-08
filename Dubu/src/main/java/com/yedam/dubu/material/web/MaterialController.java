@@ -1,18 +1,11 @@
 package com.yedam.dubu.material.web;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.yedam.dubu.material.service.MaterialService;
-import com.yedam.dubu.material.service.MaterialVO;
-
-import oracle.jdbc.proxy.annotation.Post;
 
 @Controller
 public class MaterialController {
