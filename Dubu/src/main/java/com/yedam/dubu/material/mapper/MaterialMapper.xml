@@ -40,5 +40,9 @@
 		SELECT 'ORDR' || RSC_ORDR_SEQ.NEXTVAL as ordrCd
 		FROM DUAL
 	</select>
+	
+	<insert id="getMaterialOrderInsert" parameterType="MaterialVO">
+		
+	</insert>
 
 </mapper>
