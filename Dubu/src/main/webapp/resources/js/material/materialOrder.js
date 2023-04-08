@@ -63,12 +63,13 @@ let material = [];
 
 // tr 태그 만들어서 반환하는 함수
 function makeTr(rscCd, rscNm, vendCd, vendNm, avalStc, safStc, OrderCode){
+
   let row = $("<tr>").data('rscCd',rscCd);
 
   // td 생성
   let checktd = $("<td>");
   checktd.append($('<input>', {type: 'checkbox', name : 'RowCheck', value : rscCd}));
-  row.append(checktd);
+  row.append(checktd); // 체크박스
 
   row.append($("<td>").text(rscCd)); // 자재코드
   row.append($("<td>").text(rscNm)); // 자재명
@@ -80,7 +81,7 @@ function makeTr(rscCd, rscNm, vendCd, vendNm, avalStc, safStc, OrderCode){
   row.append(checktd);
 
   checktd = $("<td>");
-  checktd.append($('<input>', {id : rscCd ,type: 'text', value : '0' , onchange : "expected(this)"}));
+  checktd.append($('<input>', {id : rscCd ,type: 'text', value : '0' , onchange : "expected(this)"})); // 발주수량
   row.append(checktd);
 
   row.append($("<td>").addClass( 'avalStc' ).text(avalStc)); // 현재재고
@@ -88,7 +89,7 @@ function makeTr(rscCd, rscNm, vendCd, vendNm, avalStc, safStc, OrderCode){
   row.append($("<td>").addClass( 'expect' ).text(avalStc)); // 예상재고량
 
   checktd = $("<td>");
-  checktd.append($('<input>', {type: 'date'})); // 납기요청일
+  checktd.append($('<input>', {type: 'date', onchange : "requestDate(this)" })); // 납기요청일
   row.append(checktd);
 
   return row;
@@ -98,50 +99,85 @@ function makeTr(rscCd, rscNm, vendCd, vendNm, avalStc, safStc, OrderCode){
  // 발주수량이 변화할경우 실행하는 함수
  function expected(obj){
     let orderCount = $(obj).val(); // 발주수량
-    let parentTr = $(obj).parent().parent();
+    let parentTr = $(obj).parent().parent(); // tr
     let avalStc = parentTr.find('.avalStc').text(); // 현재 재고량
-
     let total = parseInt(avalStc) + parseInt(orderCount);
 
-    parentTr.find('.expect').text(total); // 예상재고량 넣기
+    parentTr.find('.expect').css('color','red').text(total); // 예상재고량 넣기
 
+    for(let i = 0; i < material.length; i++){  
+        if(parentTr.data('rscCd') == material[i].rscCd){
+        material[i].orderCount =  orderCount;
+      }
+    }
  }
+
+ // 날짜가 변화할경우 실행하는 함수
+ function requestDate(obj){
+  let reqDate = $(obj).val(); // 납기 요청일
+  let parentTr = $(obj).parent().parent(); // tr
+  
+  for(let i = 0; i < material.length; i++){  
+    if(parentTr.data('rscCd') == material[i].rscCd){
+      material[i].requestDate = reqDate;
+    }
+  }
+}
 
 $(document).ready(function(){
 
-  let rscCds = "";
-  let orderCode = "";
+  let rscCds = ""; // 자재코드
+  let orderCode = ""; // 발주번호
+  let orderCount = ""; // 발주수량 
+  let requestDate= ""; // 납기요청일
+
+
+  // 발주버튼을 눌렀을떄 실행하는 함수
   $('#saveBtn').on('click',function() {
     let chkObj = document.getElementsByName("RowCheck"); // name 속성이 RowCheck인것을 모두 가져옴
     for (let i = 0; i < chkObj.length; i++) {
       if (chkObj[i].checked == true) {
-        rscCds = rscCds + chkObj[i].value + ",";
+        rscCds = rscCds + chkObj[i].value + ","; // 자재코드
         
-        for(let i = 0 ; i < material.length; i++){
-          if(material[i].rscCd == chkObj[i].value){
-            orderCode = orderCode + material[i].orderCode + ","; 
+        for(let j = 0 ; j < material.length; j++){
+          if(material[j].rscCd == chkObj[i].value){ // 자재코드가 같다면
+            orderCode = orderCode + material[j].OrderCode + ",";  // 발주번호(코드) 받아오기
+            orderCount = orderCount + material[j].orderCount + ","; // 발주수량 받아오기
+            requestDate = requestDate + material[j].requestDate + ","; // 납기요청일
+            material.splice(j, 1);
           }
         }
-        // $.ajax({
-        //   url: 'cartDelete.do',
-        //   method: 'post', // get , put , post 가능함
-        //   data: { cartId: cartId }, // 쿼리스트링
-        //   success: function (result) {
-        //     if (result.retCode == 'Success') {
-        //       console.log(cartId);
-        //       //chkObj[i].parent().parent().remove();
-        //       $('chkObj[i]').parent().parent().remove('tr');
-        //       window.location.reload();
-        //     } else {
-        //       alert("삭제 오류!!");
-        //     }
-        //   },
-        //   error: function (reject) {
-        //     console.log(reject);
-        //   }
-        // })
+
+        console.log(rscCds); // 자재코드
+        console.log(orderCode); // 발주번호
+        console.log(orderCount); // 발주수량
+        console.log(requestDate); // 납기요청일
+  
+        let data = {
+          param : insert, // 삽입
+          rscCd : rscCds, // 자재코드
+          ordrCd : orderCode, // 발주번호
+          ordrCnt : orderCount, // 발주수량
+          paprdCmndDt : requestDate // 납기요청일
+        }
+  
+        $.ajax({
+            url: '/materialOrder',
+            method: 'post', 
+            data: data, // 쿼리스트링
+            success: function (result) {
+              if (result.retCode == 'Success') {
+                //chkObj[i].parent().parent().remove();
+                $('chkObj[i]').parent().parent().remove('tr');
+              } else {
+                alert("삭제 오류!!");
+              }
+            },
+            error: function (reject) {
+              console.log(reject);
+            }
+          })
       }
     }
-      console.log(rscCds);
   });
 });
