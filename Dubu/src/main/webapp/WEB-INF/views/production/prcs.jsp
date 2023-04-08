@@ -150,21 +150,17 @@ function search() {
     		});
     		}
     function savedl(){	
-    	grid.getModifiedRows
-    	
-    	/* $.ajax({
+    	console.log(grid.getModifiedRows());
+    	$.ajax({
     		url:'insertPrcs',
-    		data:{prcsDiv : prcsDiv, 
-    			  prcsCd : prcsCd, 
-    			  prcsNm : prcsNm, 
-    			  prcsCtnt : prcsCtnt},
+    		data:grid.getModifiedRows(),
     		type: 'POST',
     		success:function(data){
     			console.log('성공');
     		},error:function(reject){
     			console.log(reject);
     		}
-    	}) */
+    	})
     		} 
     saveBtn.addEventListener("click", savedl);
     
