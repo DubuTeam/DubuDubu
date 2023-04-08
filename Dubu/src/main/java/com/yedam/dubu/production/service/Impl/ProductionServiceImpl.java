@@ -31,8 +31,9 @@ public class ProductionServiceImpl implements ProductionService {
 	public int deletePrcsGird(String prcsCd) {
 		 String[] array = prcsCd.split(",");
 		 int result = 0;
+		 
 		   for(int i=0; i<array.length; i++) {
-		         result += productionMapper.deletePrcsGrid(array[i]);
+		         result = productionMapper.deletePrcsGrid(array[i]);
 		      }
 		    if(result > 0) {
 		         return result;
