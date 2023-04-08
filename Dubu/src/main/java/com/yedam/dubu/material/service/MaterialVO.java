@@ -9,6 +9,9 @@ import lombok.Data;
 @Data
 public class MaterialVO {
 	
+	// 파라미터 : insert, update, delete
+	private String param;
+	
 	// 자재정보 테이블
 	private String rscCd; // 자재코드
 	private String vendCd; // 거래처코드 fk
@@ -30,6 +33,7 @@ public class MaterialVO {
 	
 	// 자재발주 디테일
 	private int ordrCnt; // 발주량
+	
 	@DateTimeFormat(pattern="yyyy-MM-dd")
 	private Date paprdCmndDt; // 납기요청일
 	

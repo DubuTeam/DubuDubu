@@ -108,7 +108,7 @@
 
 				<br><br>
 				
-				<span><b>자재발주</b></span>
+				<span><b>자재발주신청</b></span>
 				<!-- 조회 시 나타나는 테이블 -->
 				<div id="list-body" class="table">
 					<table>
@@ -129,6 +129,47 @@
 						</thead>
 						<!-- ↓↓↓여기에 조회된 결과 출력 -->
 						<tbody id="order">
+						
+						</tbody>
+					</table>
+				</div>
+				<!-- 조회시 나타나는 테이블 닫는 태그 -->
+			</div>
+		</div>
+		<br>
+		<div class="card mb-4">
+			<div class="card-body">
+				<div class="linelist" style="float: right;">
+					<button type="button" class="btn btn-primary" id="minusBtn">
+						<i class="fas fa-minus"></i> 삭제
+					</button>
+					<button type="button" class="btn btn-primary" id="saveBtn">
+						<i class="fas fa-save"></i> 수정
+					</button>
+					<br> <br>
+				</div>
+				<br><br>
+				<span><b>자재발주목록</b></span>
+				<!-- 조회 시 나타나는 테이블 -->
+				<div id="list" class="table">
+					<table>
+						<thead>
+							<tr>
+								<th><input type="checkbox"></th>
+								<th>자재코드</th>
+								<th>자재명</th>
+								<th>업체코드</th>
+								<th>업체명</th>
+								<th>발주코드</th>
+								<th>발주수량</th>
+								<th>현재재고</th>
+								<th>안전재고</th>
+								<th>예상재고량</th>
+								<th>납기요청일</th>
+							</tr>
+						</thead>
+						<!-- ↓↓↓여기에 조회된 결과 출력 -->
+						<tbody id="orderPrint">
 						<c:forEach items="${materialOrderList}" var="materialOrder">
 							<tr>
 								<td><input type="checkbox"></td>

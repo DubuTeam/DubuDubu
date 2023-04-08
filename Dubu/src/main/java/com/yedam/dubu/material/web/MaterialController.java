@@ -27,11 +27,21 @@ public class MaterialController {
 		return "material/materialOrder";
 	}
 	
-	 // 자재발주
-	// @PostMapping("/materialOrder")
-	// public List<MaterialVO> postMaterialOrder() {
-	// System.out.println(model); return 
-	//}
+	 // 자재발주 insert , update, delete
+//	 @PostMapping("/materialOrder")
+//	 @ResponseBody
+//	 public List<MaterialVO> postMaterialOrder(MaterialVO materialVO) {
+//		 
+//		 if(materialVO.getParam().equals("insert")) {
+//			 String[] rscCd = materialVO.getRscCd().split(",");
+//			 
+//			 
+//		 }else {
+//			 
+//		 }
+//		 System.out.println(materialVO);
+//		 return 0;
+//	}
 	 
 		
 	// 자재발주조회
