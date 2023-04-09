@@ -154,7 +154,7 @@ $(document).ready(function(){
         console.log(requestDate); // 납기요청일
   
         let data = {
-          param : insert, // 삽입
+          param : 'insert', // 삽입
           rscCd : rscCds, // 자재코드
           ordrCd : orderCode, // 발주번호
           ordrCnt : orderCount, // 발주수량

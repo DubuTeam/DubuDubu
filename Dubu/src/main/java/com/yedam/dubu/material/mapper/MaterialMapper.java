@@ -16,5 +16,5 @@ public interface MaterialMapper {
 	public MaterialVO getNextMaterialOrderCode();
 	
 	// 자재발주 INSERT
-	public List<MaterialVO> getMaterialOrderInsert();
+	public int getMaterialOrderInsert(MaterialVO material);
 }
