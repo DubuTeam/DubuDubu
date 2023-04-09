@@ -14,6 +14,21 @@
 	href="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.css">
 <script
 	src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.js"></script>
+<link rel="stylesheet"
+	href="https://unpkg.com/ag-grid-community@25.3.0/dist/styles/ag-grid.css">
+<link rel="stylesheet"
+	href="https://unpkg.com/ag-grid-community@25.3.0/dist/styles/ag-theme-alpine.css">
+<script
+	src="https://unpkg.com/ag-grid-community@25.3.0/dist/ag-grid-community.min.noStyle.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css"
+	integrity="sha512-Nq3Ewev5VE5G5SYNt5cJN5QXvwr8omxN+jR02gk6Uu2Hv/d8zlPwVHNfPV3OMRY3bw7vmp0xUWxBa1e0Y+Zo+A=="
+	crossorigin="anonymous" referrerpolicy="no-referrer" />
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.min.js"
+	integrity="sha512-HofT0l9eA6rWl6RpwUMLZuU7Qfsz6zoNemggVnPTgxlLq7RU/1n8Wd5/fHu0Yf3J5E53G5VE5ZYR0LYlJcC1XQ=="
+	crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 </head>
 
 <link
@@ -62,9 +77,9 @@
 											<div style="display: flex;">
 
 												<input type="text" class="form-control" id="vendNm"
-													name="vendNm" style="width: 150px;">
+													name="vendNm" style="width: 150px;" onclick='comList()'>
 												<button type="button" class="btn btn-primary"
-													id="openCompany">
+													id="openCompany" onclick='comList()'>
 													<i class="fas fa-search"></i>
 												</button>
 
@@ -223,6 +238,60 @@
 <!-- End of Main Content -->
 
 <script>
+	$(function() {
+		searchAll();
+		comList();
+		proList();
+	})
+
+	//거래처 목록 모달창으로 가져오기
+	function comList() {
+		$("#openCompany").on("click", function(comlist) {
+			setTimeout(function() {
+				comGrid.refreshLayout()
+			}, 300);
+			$.ajax({
+				url : "comSearch",
+				method : "get",
+				datatype : "json",
+				success : function(comlist) {
+					comGrid.resetData(comlist);
+				}
+			})
+		})
+	}
+
+	//제품명 목록 모달창으로 가져오기
+	function proList() {
+		$("#openProduct").on("click", function(prolist) {
+			setTimeout(function() {
+				proGrid.refreshLayout()
+			}, 300);
+			$.ajax({
+				url : "proSearch",
+				method : "get",
+				datatype : "json",
+				success : function(prolist) {
+					proGrid.resetData(prolist);
+				}
+			})
+		})
+	}
+	//현재날짜 기준 주문서 조회(첫페이지)
+	function searchAll() {
+		var searchData = $("#searchFrm").serialize();
+		$.ajax({
+			url : "orderSelect",
+			method : "post",
+			dataType : "json",
+			data : searchData,
+			success : function(result) {
+
+				grid.resetData(result);
+			}
+		})
+	}
+
 	const grid = new tui.Grid({
 		el : document.getElementById('grid'),
 		scrollX : false,
@@ -406,6 +475,7 @@
 	ordrBtn.addEventListener('click', function(e) {
 		search();
 	})
+	search();
 
 	//조건별 주문서 조회 function
 	function search() {
@@ -437,24 +507,22 @@
 		});
 	}
 
-	// input 태그 클릭 시 모달창 열기
-	$('#vendNm').click(function() {
-		$('#comModal').modal('show');
-	});
-
-	// 검색 버튼 클릭 시 모달창 열기
-	$('#openCompany').click(function() {
-		$('#comModal').modal('show');
-	});
-
-	//조회 거래처모달창 닫기 버튼 클릭 -> 폼 input에 들어간 데이터값 지우기
-	$("#cancleVendBtn").on("click", function() {
-		vendNm.value = '';
-	})
-	// '닫기' 버튼 클릭 시 모달 닫기
-	$('#cancleVendBtn').click(function() {
-		$('#comModal').modal('hide');
-	});
+	//거래처 목록 모달창으로 가져오기
+	function comList() {
+		$("#openCompany").on("click", function(comlist) {
+			setTimeout(function() {
+				comGrid.refreshLayout()
+			}, 300);
+			$.ajax({
+				url : "comSearch",
+				method : "get",
+				datatype : "json",
+				success : function(comlist) {
+					comGrid.resetData(comlist);
+				}
+			})
+		})
+	}
 	//거래처 목록 모달창으로 가져오기
 	function comList() {
 		$("#openCompany").on("click", function(comlist) {

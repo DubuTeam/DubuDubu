@@ -2,9 +2,8 @@ package com.yedam.dubu.sales.mapper;
 
 import java.util.List;
 
-import org.apache.ibatis.annotations.Param;
-
 import com.yedam.dubu.sales.service.SalesVO;
+import com.yedam.dubu.sales.service.VendVO;
 
 public interface SalesMapper {
 
@@ -18,5 +17,5 @@ public interface SalesMapper {
 	public void deleteOrdr(SalesVO vo);
 
 	// 거래처 목록 조회 모달창
-	public List<SalesVO> comSearch(SalesVO vo);
+	public List<VendVO> comSearch(VendVO vo);
 }

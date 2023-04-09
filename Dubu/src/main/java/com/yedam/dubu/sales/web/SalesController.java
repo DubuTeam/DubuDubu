@@ -5,7 +5,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -14,6 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.yedam.dubu.sales.service.SalesService;
 import com.yedam.dubu.sales.service.SalesVO;
+import com.yedam.dubu.sales.service.VendVO;
 
 @Controller
 public class SalesController {
@@ -58,9 +58,9 @@ public class SalesController {
 	
 	
 	// 거래처 목록 조회 모달창
-	@RequestMapping("comSearch")
+	@RequestMapping("/comSearch")
 	@ResponseBody
-	public List<SalesVO> comSearch(SalesVO vo) {
+	public List<VendVO> comSearch(VendVO vo) {
 		return salesService.comSearch(vo);
 	}
 

@@ -1,9 +1,9 @@
 package com.yedam.dubu.sales.service;
 
-import java.time.LocalDate;
+
 import java.util.List;
 
-import org.apache.ibatis.annotations.Param;
+
 
 public interface SalesService {
 
@@ -17,5 +17,5 @@ public interface SalesService {
 	public void deleteOrdr(List<SalesVO> delList);
 
 	// 거래처 목록 조회 모달창
-	public List<SalesVO> comSearch(SalesVO vo);
+	public List<VendVO> comSearch(VendVO vo);
 }
