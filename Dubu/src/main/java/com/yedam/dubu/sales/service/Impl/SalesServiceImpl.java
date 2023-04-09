@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.yedam.dubu.sales.mapper.SalesMapper;
 import com.yedam.dubu.sales.service.SalesService;
 import com.yedam.dubu.sales.service.SalesVO;
+import com.yedam.dubu.sales.service.VendVO;
 
 @Service
 public class SalesServiceImpl implements SalesService {
@@ -38,7 +39,7 @@ public class SalesServiceImpl implements SalesService {
 
 	// 거래처 목록 조회 모달창
 	@Override
-	public List<SalesVO> comSearch(SalesVO vo) {
+	public List<VendVO> comSearch(VendVO vo) {
 		return salesMapper.comSearch(vo);
 	}
 

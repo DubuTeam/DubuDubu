@@ -62,9 +62,9 @@
 											<div style="display: flex;">
 
 												<input type="text" class="form-control" id="vendNm"
-													name="vendNm" style="width: 150px;">
+													name="vendNm" style="width: 150px;" onclick='comList()' >
 												<button type="button" class="btn btn-primary"
-													id="openCompany">
+													id="openCompany" onclick='comList()'>
 													<i class="fas fa-search"></i>
 												</button>
 
@@ -223,6 +223,8 @@
 <!-- End of Main Content -->
 
 <script>
+
+
 	const grid = new tui.Grid({
 		el : document.getElementById('grid'),
 		scrollX : false,
@@ -457,15 +459,15 @@
 	});
 	//거래처 목록 모달창으로 가져오기
 	function comList() {
-		$("#openCompany").on("click", function(comlist) {
-			setTimeout(function() {
+		$("#openCompany").on("click",function(comlist) {
+			 setTimeout(function () {
 				comGrid.refreshLayout()
 			}, 300);
 			$.ajax({
-				url : "comSearch",
-				method : "get",
-				datatype : "json",
-				success : function(comlist) {
+				url:"comSearch",
+				method:"get",
+				datatype:"json",
+				success:function(comlist) {
 					comGrid.resetData(comlist);
 				}
 			})
