@@ -52,4 +52,9 @@ public class ProductionServiceImpl implements ProductionService {
 	public String inesrtPrcsCode() {
 		return productionMapper.inesrtPrcsCode();
 	}
+
+	@Override
+	public List<ProductionVO> OrderList() {
+		return productionMapper.OrderList();
+	}
 }

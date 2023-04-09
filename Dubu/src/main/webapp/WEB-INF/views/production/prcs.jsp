@@ -149,19 +149,21 @@ function search() {
     		focus : true
     		});
     		}
-    function savedl(){	
-    	console.log(grid.getModifiedRows());
+   function savedl(){	
+    	console.log(grid.getModifiedRows().createdRows);
     	$.ajax({
-    		url:'insertPrcs',
-    		data:grid.getModifiedRows(),
-    		type: 'POST',
-    		success:function(data){
-    			console.log('성공');
-    		},error:function(reject){
-    			console.log(reject);
-    		}
-    	})
-    		} 
+    	    url: 'insertPrcs',
+    	    data: JSON.stringify(grid.getModifiedRows()),
+    	    contentType: 'application/json',
+    	    type: 'POST',
+    	    success: function(data) {
+    	        console.log('성공');
+    	    },
+    	    error: function(reject) {
+    	        console.log(reject);
+    	    }
+    	});
+    		}  
     saveBtn.addEventListener("click", savedl);
     
     

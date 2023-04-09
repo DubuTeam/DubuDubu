@@ -1,6 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 
 	<link href="${pageContext.request.contextPath}/resources/css/prodcss/plan.css" rel="stylesheet" type="text/css">
+<!-- JQuery -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
 
 	<!-- Begin Page Content -->
 	<!-- 헤더부분 -->
@@ -35,7 +38,7 @@
 						<!-- Button trigger modal (4.6버젼) -->
 						<button type="button" style="margin-left: 3px" class="btn btn-primary" data-toggle="modal"
 							data-target="#exampleModal" id="searchBtn" name="searchBtn">
-							<i class="fas fa-search"></i>주문서
+							<i class="fas fa-search" ></i>주문서
 						</button>
 
 						<!-- Modal -->
@@ -55,26 +58,7 @@
 
 										<!-- 조회 시 나타나는 테이블 -->
 										<div id="list-body" class="table">
-											<table>
-												<thead>
-													<tr>
-														<th><input type="checkbox"></th>
-														<th>주문번호</th>
-														<th>거래처명</th>
-														<th>제품명</th>
-													</tr>
-												</thead>
-
-												<!-- ↓↓↓여기에 조회된 결과 출력 (테스트용 더미 넣었음) -->
-												<tbody id="list">
-													<tr>
-														<td><input type="checkbox"></td>
-														<td>더미기</td>
-														<td>Dummy01</td>
-														<td>Dummy123</td>
-													</tr>
-												</tbody>
-											</table>
+											<div id="orderGrid"></div>
 										</div>
 									</div>
 									<div class="modal-footer">
@@ -234,3 +218,43 @@
 
 			</div>
 			<!-- End of Main Content -->
+<script>
+$(document).ready(function(){
+	orderList();
+});
+function orderList() {
+	 
+	$.ajax({
+        url: "orderList",
+        method: "post",
+        data: { orderNo : orderNo },
+        success: function(data) {
+           grid.resetData(data);  //그리드 적용
+        },
+        error: function (reject) {
+          console.log(reject);
+        },
+    });
+} 
+		//그리드 선언
+        var grid = new tui.Grid({
+             el: document.getElementById('orderGrid')
+             columns: [
+
+                 {
+                     header: '주문번호',
+                     name: 'OrderNo'
+                 },
+                 {
+                     header: '거래처명',
+                     name: 'VendNm'
+                 },
+                 {
+                     header: '제품명',
+                     name: 'PrdtNm'
+                 }
+                 
+             ]
+
+         });
+</script>

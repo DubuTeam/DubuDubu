@@ -1,7 +1,6 @@
 package com.yedam.dubu.production.web;
 
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -47,9 +46,9 @@ public class ProductionController {
 	// 공정관리 - 그리드로 추가
 	@PostMapping("/insertPrcs")
 	@ResponseBody
-	public String insertPrcsGrid(Map<String, Object> param) {
+	public String insertPrcsGrid(@RequestParam(required=false) ProductionVO productionVO) {
 		
-		System.out.println(param);
+		System.out.println(productionVO.getCreatedRows());
 		
 		//return productionService.insertPrcsGrid(productionVO);
 		return null;
@@ -66,6 +65,7 @@ public class ProductionController {
 	public String getPlanSearch(Model model){
 		return "production/planSearch";
 	}
+	
 	
 	// 생산지시
 	@GetMapping("/indica")
