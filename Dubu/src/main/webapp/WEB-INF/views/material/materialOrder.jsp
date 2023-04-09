@@ -6,7 +6,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <!-- JQuery -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
 <!-- Grid -->
 <!-- <link rel="stylesheet" href="https://uicdn.toast.com/grid/latest/tui-grid.css" />
@@ -137,7 +137,7 @@
 			</div>
 		</div>
 		<br>
-		<div class="card mb-4">
+		<%-- <div class="card mb-4">
 			<div class="card-body">
 				<div class="linelist" style="float: right;">
 					<button type="button" class="btn btn-primary" id="minusBtn">
@@ -190,11 +190,19 @@
 				</div>
 				<!-- 조회시 나타나는 테이블 닫는 태그 -->
 			</div>
-		</div>
+		</div> --%>
 	</div>
 </div>
 <!-- /.container-fluid -->
 <br>
 </div>
 <!-- End of Main Content -->
+<!--  <script>
 
+let code = '${OrderCode}';
+let ordr = code.substring(0,4); // ORDR
+let ordrNum = parseInt(code.substring(4)) + 1; // 숫자 4자리
+console.log(code);
+console.log(ordr);
+console.log(ordrNum);
+</script>-->
