@@ -6,8 +6,14 @@ import com.yedam.dubu.material.service.MaterialVO;
 
 public interface MaterialMapper {
 	
+	// 자재 검색 모달
+	public List<MaterialVO> getMaterialModal();
+	
+	// 업체 검색 모달
+	public List<MaterialVO> getVendModal();
+	
 	// 자재 목록
-	public List<MaterialVO> getMaterialList();
+	public List<MaterialVO> getMaterialList(MaterialVO materialVO);
 	
 	// 자재 발주 리스트
 	public List<MaterialVO> getMaterialOrderList();

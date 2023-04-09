@@ -2,19 +2,22 @@
 	pageEncoding="UTF-8"%>
 
 <!-- JSTL -->
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 <!-- JQuery -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
 <!-- Grid -->
 <!-- <link rel="stylesheet" href="https://uicdn.toast.com/grid/latest/tui-grid.css" />
 <script src="https://uicdn.toast.com/grid/latest/tui-grid.js"></script> -->
 
 <!-- SweetAlert -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.css">
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.js"></script>
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.css">
+<script
+	src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.js"></script>
 
 
 <!-- CSS -->
@@ -39,27 +42,148 @@
 		</ol>
 
 		<div class="card mb-4">
-			<div class="card-body" >
+			<div class="card-body">
+				<div class="linelist" style="float: right;">
+					<button type="button" class="btn btn-primary" id="searchBtn">
+						<i class="fas fa-search"></i> 조회
+					</button>
+					<br> <br>
+				</div>
+				
 				<table>
 					<tr>
-						<th>원자재명</th>
+						<th>자재명</th>
 						<td>
-							<input class="form-control" type="text" id="rscNm"
-							name="rscNm" style="width: 150px">
+							<input class="form-control" type="text" id="rscNm" name="rscNm" style="width: 150px">
 						</td>
-						<th>업체명</th>
-						<td>
-							<input class="form-control" type="text" id="vendNm"
-							name="vendNm" style="width: 150px ; display: inline-block;">
-							<button type="button" style="margin-bottom: 3px" class="btn btn-primary" id="rscSearchBtn">
+						<th></th>
+						<td>	
+							<!--  자재명 모달창 버튼 -->
+							<button type="button" style="margin-left: 3px; margin-right : 10px;"
+								class="btn btn-primary" data-toggle="modal"
+								data-target="#materialModal" id="rscSearchBtn" name="rscSearchBtn">
 								<i class="fas fa-search"></i>
 							</button>
 						</td>
+						
+						<th style="margin-right : 10px;">업체명</th>
+						<td>
+							<input class="form-control" type="text" id="vendNm" name="vendNm" style="width: 150px; display: inline-block;">
+						</td>
+						
+						<td>
+							<!-- 업체명 모달창 버튼 -->
+							<button type="button" style="margin-left: 3px"
+								class="btn btn-primary" data-toggle="modal"
+								data-target="#vendModal" id="vendSearchBtn" name="vendSearchBtn">
+								<i class="fas fa-search"></i>
+							</button>
+						</td>
+							
 					<tr>
 				</table>
-				<br>
-				<span><b>자재목록</b></span>
 				
+				<!-- Modal -->
+				<div class="modal fade" id="materialModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+					<!-- <div class="modal-dialog"> -->
+					<div class="modal-dialog modal-dialog-centered modal-lg">
+						<!-- 모달창 화면 중앙에  modal-dialog-centered, 모달 사이즈 변경 직접 불가해서 modal-lg 추가 -->
+						<div class="modal-content">
+							<div class="modal-header">
+								<h5 class="modal-title" id="exampleModalLabel">자재 검색</h5>
+								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+									<span aria-hidden="true">X</span>
+								</button>
+							</div>
+							<div class="modal-body" style="text-align: center;">
+								<!-- 조회 시 나타나는 테이블 -->
+								<div id="materialModalTable" class="table">
+									<table style="width:100%;">
+										<thead>
+											<tr>
+												<td>No.</td>
+												<th>자재코드</th>
+												<th>자재명</th>
+												<th>자재유형</th>
+												<th>자재단위</th>
+											</tr>
+										</thead>
+
+										<!-- ↓↓↓여기에 조회된 결과 출력 (테스트용 더미 넣었음) -->
+										<tbody id="materialModallist">
+										<c:forEach items="${materialModalList}" var="materialModal" varStatus="status">
+											<tr class='eachRow' ondblclick="searchMaterial('${materialModal.rscNm}')">
+												<td>${status.count}</td>
+												<td>${materialModal.rscCd}</td>
+												<td>${materialModal.rscNm}</td>
+												<td>${materialModal.rscTyp}</td>
+												<td>${materialModal.mngUnit}</td>
+											</tr>
+										</c:forEach>
+										</tbody>
+									</table>
+								</div>
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- ↑↑↑ 모달 -->
+				
+				<!-- Modal -->
+				<div class="modal fade" id="vendModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+					<!-- <div class="modal-dialog"> -->
+					<div class="modal-dialog modal-dialog-centered modal-lg">
+						<!-- 모달창 화면 중앙에  modal-dialog-centered, 모달 사이즈 변경 직접 불가해서 modal-lg 추가 -->
+						<div class="modal-content">
+							<div class="modal-header">
+								<h5 class="modal-title" id="exampleModalLabel">업체 검색</h5>
+								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+									<span aria-hidden="true">X</span>
+								</button>
+							</div>
+							<div class="modal-body" style="text-align: center;">
+								<!-- 조회 시 나타나는 테이블 -->
+								<div id="vendModalTable" class="table">
+									<table style="width:100%;">
+										<thead>
+											<tr>
+												<td>No.</td>
+												<th>업체코드</th>
+												<th>업체명</th>
+												<th>사업자번호</th>
+												<th>전화번호</th>
+											</tr>
+										</thead>
+
+										<!-- ↓↓↓여기에 조회된 결과 출력 (테스트용 더미 넣었음) -->
+										<tbody id="vendModallist">
+											<c:forEach items="${vendMoalList}" var="vendModal" varStatus="status">
+												<tr class='eachRow' ondblclick="searchVend('${vendModal.vendNm}')">
+													<td>${status.count}</td>
+													<td>${vendModal.vendCd}</td>
+													<td>${vendModal.vendNm}</td>
+													<td>${vendModal.binzo}</td>
+													<td>${vendModal.telno}</td>
+												</tr>
+											</c:forEach>
+										</tbody>
+									</table>
+								</div>
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- ↑↑↑ 모달 -->
+				
+				
+				<br> <span><b>자재목록</b></span>
+
 				<div id="grid"></div>
 				<!-- 조회 시 나타나는 테이블 -->
 				<div id="listTable" class="table">
@@ -77,9 +201,11 @@
 						</thead>
 						<!-- ↓↓↓여기에 조회된 결과 출력 -->
 						<tbody id="list">
-						<c:forEach items="${materialList}" var="material" varStatus="status">
-								<tr class='eachRow <c:if test="${material.avalStc < material.safStc}">warn</c:if>' 
-								ondblclick="materialOrder('${material.rscCd}','${material.rscNm}','${material.vendCd}','${material.vendNm}','${material.avalStc}','${material.safStc}', '${OrderCode}')">		
+							<c:forEach items="${materialList}" var="material"
+								varStatus="status">
+								<tr
+									class='eachRow <c:if test="${material.avalStc < material.safStc}">warn</c:if>'
+									ondblclick="materialOrder('${material.rscCd}','${material.rscNm}','${material.vendCd}','${material.vendNm}','${material.avalStc}','${material.safStc}')">
 									<td>${status.count}</td>
 									<td>${material.rscCd}</td>
 									<td>${material.rscNm}</td>
@@ -88,7 +214,7 @@
 									<td>${material.avalStc}</td>
 									<td>${material.safStc}</td>
 								</tr>
-						</c:forEach>
+							</c:forEach>
 						</tbody>
 					</table>
 				</div>
@@ -109,15 +235,13 @@
 					<br> <br>
 				</div>
 
-				<br><br>
-				
-				<span><b>자재발주신청</b></span>
+				<br> <br> <span><b>자재발주신청</b></span>
 				<!-- 조회 시 나타나는 테이블 -->
 				<div id="list-body" class="table">
 					<table>
 						<thead>
 							<tr>
-								<th><input type="checkbox"></th>
+								<th><input id="allCheck" type="checkbox" onclick="allChk(this)"></th>
 								<th>자재코드</th>
 								<th>자재명</th>
 								<th>업체코드</th>
@@ -132,7 +256,7 @@
 						</thead>
 						<!-- ↓↓↓여기에 조회된 결과 출력 -->
 						<tbody id="order">
-						
+
 						</tbody>
 					</table>
 				</div>
@@ -202,23 +326,80 @@
 <!-- End of Main Content -->
 
 <script>
-	let code = '${OrderCode}'; // 발주코드
+	
+	let OrderCode = '${OrderCode}'; // 발주코드
 	let material = []; // 자재발주목록
-	let successMaterial = [] // 자재발주 신청한 목록
 	let rscCds = ""; // 자재코드
 	let orderCode = ""; // 발주번호
 	let orderCount = ""; // 발주수량 
 	let requestDates= ""; // 납기요청일
 	let vendCd =""; // 거래처코드
 	
+	// 자재 검색 모달창에서 더블클릭시 작동하는 함수
+	function searchMaterial(materialName){
+		$('#rscNm').val(materialName); // 자재명 입력됨
+		$('.close').click(); // 모달창 닫기
+	}
+	
+	// 업체 검색 모달창에서 더블클릭시 작동하는 함수
+	function searchVend(vendName){
+		$('#vendNm').val(vendName); // 거래처명 입력됨
+		$('.close').click(); // 모달창 닫기
+	}
+	
 	// 발주할 자재 더블클릭시 작동하는 함수
-	function materialOrder(rscCd, rscNm, vendCd, vendNm, avalStc, safStc, OrderCode){
+	function materialOrder(rscCd, rscNm, vendCd, vendNm, avalStc, safStc){
 	  let datas = {rscCd : rscCd, rscNm : rscNm, vendCd : vendCd, vendNm:vendNm, avalStc : avalStc, safStc:safStc, OrderCode:OrderCode}
 	  material.push(datas)
 	  let tbody = $("#order"); // tbody 선택
 	  let row = makeTr(datas);
 	  tbody.append(row);
 	}
+	
+	// 조회버튼 클릭시 작동하는 함수
+	$('#searchBtn').on('click',function(){
+		
+		 $.ajax({
+		   url: 'searchMaterialOrder',
+		   type: 'GET', 
+		   dateType : 'json',
+		   data: {rscNm : $('#rscNm').val() , vendNm : $('#vendNm').val()}, // 쿼리스트링
+		   success: function (result) {
+			   
+			   console.log(result.result);
+			   
+			   let tbody = $('#list');
+			   tbody.empty();
+
+			   $.each(result.result, function (index, item) {
+				   var row = $('<tr>');
+                   // td 생성
+                   row.append($("<th scope='row'>").text(index + 1));
+                   row.append($("<td>").text(item.ordrDtlCd));
+                   row.append($("<td>").text(item.ordrDtlCnt));
+                   row.append($("<td>").text(item.cprNm));
+                   row.append($("<td>").text(item.caNm));
+                   row.append($("<td>").text(item.dlvryDt));
+                   row.append($("<td>").text(item.orshPr));
+                   var td = $("<td>");
+                   var button = $("<button>", {
+                       type: "button",
+                       class: "planBtn cndInsBtn hi",
+                       text: "등록"
+                   });
+                   td.append(button);
+                   row.append(td);
+
+                   tbody.append(row);
+			   });
+			  	
+		   },
+	       error: function (reject) {
+		       console.log(reject);
+		   }
+		 });
+		
+	});
 	
 	// tr 태그 만들어서 반환하는 함수
 	function makeTr(datas={}){
@@ -227,7 +408,7 @@
 	
 	  // td 생성
 	  let checktd = $("<td>");
-	  checktd.append($('<input>', {type: 'checkbox', name : 'RowCheck', value : datas.rscCd}));
+	  checktd.append($('<input>', {type: 'checkbox', name : 'RowCheck', onclick : "RowChk(this)" ,value : datas.rscCd}));
 	  row.append(checktd); // 체크박스
 	
 	  row.append($("<td>").text(datas.rscCd)); // 자재코드
@@ -257,32 +438,51 @@
 	
 	// 발주수량이 변화할경우 실행하는 함수
 	function expected(obj){
-	let orderCount = $(obj).val(); // 발주수량
-	let parentTr = $(obj).parent().parent(); // tr
-	let avalStc = parentTr.find('.avalStc').text(); // 현재 재고량
-	let total = parseInt(avalStc) + parseInt(orderCount);
+		let orderCount = $(obj).val(); // 발주수량
+		let parentTr = $(obj).parent().parent(); // tr
+		let avalStc = parentTr.find('.avalStc').text(); // 현재 재고량
+		let total = parseInt(avalStc) + parseInt(orderCount);
 	
-	parentTr.find('.expect').css('color','red').text(total); // 예상재고량 넣기
+		parentTr.find('.expect').css('color','red').text(total); // 예상재고량 넣기
 	
-	for(let i = 0; i < material.length; i++){  
-	    if(parentTr.data('rscCd') == material[i].rscCd){
-	    material[i].expectedCount = total; // 예상재고량
-	    material[i].orderCount =  orderCount; // 발주수량
-	  }
-	}
+		for(let i = 0; i < material.length; i++){  
+		    if(parentTr.data('rscCd') == material[i].rscCd){
+		    material[i].expectedCount = total; // 예상재고량
+		    material[i].orderCount =  orderCount; // 발주수량
+		  }
+		}
 	}
 	
 	// 날짜가 변화할경우 실행하는 함수
 	function requestDate(obj){
-	let reqDate = $(obj).val(); // 납기 요청일
-	let parentTr = $(obj).parent().parent(); // tr
+		let reqDate = $(obj).val(); // 납기 요청일
+		let parentTr = $(obj).parent().parent(); // tr
+		
+		for(let i = 0; i < material.length; i++){  
+		  if(parentTr.data('rscCd') == material[i].rscCd){
+		    material[i].requestDate = reqDate; // 납기요청일
+		  }
+		}
+	}
 	
-	for(let i = 0; i < material.length; i++){  
-	  if(parentTr.data('rscCd') == material[i].rscCd){
-	    material[i].requestDate = reqDate; // 납기요청일
-	  }
-	}
-	}
+	// 삭제 버튼을 눌렀을때 실행하는 함수
+	$('#minusBtn').on('click', function(){
+		let chkObj = document.getElementsByName("RowCheck"); // name 속성이 RowCheck인것을 모두 가져옴
+		  for (let i = 0; i < chkObj.length; i++) {
+		    if (chkObj[i].checked == true) {
+		    	for(let j = 0 ; j < material.length; j++){
+		    		if(material[j].rscCd == chkObj[i].value){ // 자재코드가 같다면
+		    			material.splice(j, 1); // 발주한 자재목록 제거
+		    		}
+		    	}
+		    }
+		}
+	  let tbody = $("#order"); // tbody 선택
+      tbody.empty();
+      for(let i = 0 ; i < material.length; i++){
+          tbody.append(makeTr(material[i]));
+        }
+	});
 	
 	// 발주버튼을 눌렀을떄 실행하는 함수
 	$('#saveBtn').on('click',function() {
@@ -297,18 +497,17 @@
 	          orderCount = orderCount + material[j].orderCount + ","; // 발주수량 받아오기
 	          requestDates = requestDates + material[j].requestDate + ","; // 납기요청일
 	          vendCd = vendCd + material[j].vendCd + ","; // 거래처코드
-	          successMaterial[i] = material[j]; // 자재 발주 신청한 애들 복사
 	          material.splice(j, 1); // 발주한 자재목록 제거
 	        }
 	      }
 	    }
 	  }
 	
-	  console.log(rscCds); // 자재코드
+	  /* console.log(rscCds); // 자재코드
 	  console.log(orderCode); // 발주번호
 	  console.log(orderCount); // 발주수량
 	  console.log(requestDates); // 납기요청일
-	  console.log(vendCd); // 거래처코드
+	  console.log(vendCd); // 거래처코드 */
 	
 	  let data = {
 	    param : 'insert', // 삽입
@@ -328,24 +527,28 @@
         	  Swal.fire({
                    icon: 'success',
                    title: '자재 발주 신청이 완료되었습니다.',
-                   text: '발주 번호 : ' + code + ' 신청 완료되었습니다.',
+                   text: '발주 번호 : ' + OrderCode + ' 신청 완료되었습니다.',
                });
 	          console.log("성공");
 	          let tbody = $("#order"); // tbody 선택
 	          
 	          tbody.empty();
 	          
-	          let ordr = code.substring(0,4); // ORDR
-      		  let ordrNum = parseInt(code.substring(4)) + 1; // 숫자 4자리
+	          let ordr = OrderCode.substring(0,4); // ORDR
+      		  let ordrNum = parseInt(OrderCode.substring(4)) + 1; // 숫자 4자리
+      		  
 	          for(let i = 0 ; i < material.length; i++){
         	  
-	            console.log(code);
+	            /* console.log(OrderCode);
 	            console.log(ordr);
-	            console.log(ordrNum);
+	            console.log(ordrNum); */
+	            
 	            material[i].OrderCode = ordr + ordrNum;
 	            tbody.append(makeTr(material[i]));
 	          }
-	          code = ordr + ordrNum; // 다음에 오는 발주번호
+      		  
+	          OrderCode = ordr + ordrNum; // 다음에 오는 발주번호
+	          
 	        }else{
 	          console.log("실패");
 	        }
@@ -356,55 +559,38 @@
 	    })
 	});
 	
-	
-/* $(document).ready(function(){ }); */
- 
- /*
-	$.ajax({
-	  url: '/materialOrder', // 요청이 전송될 URL 주소
-	  type: 'post', // http 요청 방식 (default: ‘GET’)
-	  data: { materialCode : materialCode, accountCode : accountCode }, // 요청 시 포함되어질 데이터
-	  success: function(data) {
-	    let tbody = $("#order"); // tbody 선택
-	    tbody.empty(); // tbody 비우기
-	
-	    // 데이터 반복문 처리
-	    $.each(data.result, function (index, item) {
-	        let row = $("<tr>");
-	
-	        // td 생성
-	        row.append($('<input>', {type: 'hidden', name: 'data1', value:'value1' }));
-	        row.append($('<input>', {type: 'hidden', name: 'data1', value:'value1' }));
-	
-	        let checktd = $("<td>");
-	        checktd.append($('<input>', {type: 'checkbox'}));
-	        row.append(checktd);
-	
-	        row.append($("<td>").text(item.rscCd));
-	        row.append($("<td>").text(item.rscNm));
-	        row.append($("<td>").text(item.vendCd));
-	        row.append($("<td>").text(item.vendNm));
-	
-	        checktd = $("<td>");
-	        checktd.append($('<input>', {type: 'text'}));
-	        row.append(checktd);
-	
-	        row.append($("<td>").text(item.avalStc));
-	        row.append($("<td>").text(item.safStc));
-	        row.append($("<td>").text(item.avalStc));
-	
-	        checktd = $("<td>");
-	        checktd.append($('<input>', {type: 'date'}));
-	        row.append(checktd);
-	
-	        row.append(td);
-	        tbody.append(row);
-	    })
-	  },
-	  error: function(err) {
-	    console.log(err)
-	  },
-	
-	})
-	*/
+	// 전체 선택박스
+    function allChk(obj) {
+      let chkObj = document.getElementsByName("RowCheck"); // name 속성이 RowCheck인것을 모두 가져옴
+      let rowCnt = chkObj.length - 1; // 가져온 노드의 갯수를 -1해줌
+      let check = obj.checked; // 전체선택박스가 체크상태(true)인지 체크가 안되었는지(false) 반환
+      if (check) { // 체크가 되었다면
+        for (let i = 0; i <= rowCnt; i++) {
+          if (chkObj[i].type == "checkbox")
+            chkObj[i].checked = true;
+        }
+      } else { // 체크가 안되었다면
+        for (let i = 0; i <= rowCnt; i++) {
+          if (chkObj[i].type == "checkbox") {
+            chkObj[i].checked = false;
+          }
+        }
+      }
+    }
+    // 체크박스 개별 선택후 => 모두 선택되면 => 전체선택 버튼 활성화
+    function RowChk(result) {
+      let chkObj = document.getElementsByName("RowCheck"); // name 속성이 RowCheck인것을 모두 가져옴
+      let rowCnt = chkObj.length;
+      let count = 0;
+      for (let i = 0; i < rowCnt; i++) {
+        if (chkObj[i].checked == true) {
+          count = count + 1;
+        }
+      }
+      if (rowCnt == count) {
+        allCheck.checked = true;
+      } else {
+        allCheck.checked = false;
+      }
+    }
 </script>

@@ -3,9 +3,15 @@ package com.yedam.dubu.material.service;
 import java.util.List;
 
 public interface MaterialService {
-
+	
+	// 자재 검색 모달
+	public List<MaterialVO> getMaterialModal();
+		
+	// 업체 검색 모달
+	public List<MaterialVO> getVendModal();
+	
 	// 자재 목록
-	public List<MaterialVO> getMaterialList();
+	public List<MaterialVO> getMaterialList(MaterialVO materivalVO);
 	
 	// 자재 발주 리스트
 	public List<MaterialVO> getMaterialOrderList();

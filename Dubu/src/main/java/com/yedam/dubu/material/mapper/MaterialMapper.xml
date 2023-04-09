@@ -4,6 +4,20 @@
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.yedam.dubu.material.mapper.MaterialMapper">
 
+	<!-- 자재 검색 리스트 -->
+	<select id="getMaterialModal" resultType="MaterialVO">
+	SELECT DISTINCT RSC_CD , RSC_NM ,RSC_TYP, MNG_UNIT 
+	FROM RSC
+	ORDER BY RSC_CD
+	</select>
+		
+	<!-- 업체 검색 리스트 -->
+	<select id="getVendModal" resultType="MaterialVO">
+	SELECT DISTINCT VEND_CD, VEND_NM, BINZO, TELNO 
+	FROM VEND
+	ORDER BY VEND_CD
+	</select>
+	
 	<!-- 자재 목록 리스트 -->
 	<select id="getMaterialList" resultType="MaterialVO">
 		SELECT r.RSC_CD, r.RSC_NM, r.VEND_CD, rs.AVAL_STC, r.SAF_STC, v.VEND_NM
@@ -11,6 +25,23 @@
   		ON r.RSC_CD = rs.RSC_CD
   		JOIN VEND v
   		ON v.VEND_CD = r.VEND_CD
+		<where>
+		    <if test="rscNm != null and !rscNm.equals('')">
+		         r.RSC_NM LIKE '%' || #{rscNm} || '%'
+		    </if>
+		    <if test="vendNm != null and !vendNm.equals('')">
+		         AND UPPER(v.VEND_NM) LIKE '%' || UPPER(#{vendNm}) || '%'
+		    </if>
+		</where>
+		ORDER BY r.RSC_CD
+		
+		<!-- 전체 목록 리스트 -->
+		<!-- SELECT r.RSC_CD, r.RSC_NM, r.VEND_CD, rs.AVAL_STC, r.SAF_STC, v.VEND_NM
+		FROM RSC r LEFT JOIN RSC_STC rs
+  		ON r.RSC_CD = rs.RSC_CD
+  		LEFT JOIN VEND v
+  		ON v.VEND_CD = r.VEND_CD
+		ORDER BY r.RSC_CD -->
 	</select>
 	
 	<!-- 자재 발주 리스트 -->
@@ -35,7 +66,7 @@
 	  	ON rc.RSC_CD = rd.RSC_CD
 	</select>
 	
-	<!-- 자재 발주 코드 -->
+	<!-- 다음에 오는 자재 발주 코드 -->
 	<select id="getNextMaterialOrderCode" resultType="MaterialVO">
 		SELECT 'ORDR' || RSC_ORDR_SEQ.NEXTVAL as ordrCd
 		FROM DUAL
