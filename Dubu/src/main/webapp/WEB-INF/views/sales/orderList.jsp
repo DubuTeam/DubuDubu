@@ -21,14 +21,8 @@
 <script
 	src="https://unpkg.com/ag-grid-community@25.3.0/dist/ag-grid-community.min.noStyle.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<link rel="stylesheet"
-	href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css"
-	integrity="sha512-Nq3Ewev5VE5G5SYNt5cJN5QXvwr8omxN+jR02gk6Uu2Hv/d8zlPwVHNfPV3OMRY3bw7vmp0xUWxBa1e0Y+Zo+A=="
-	crossorigin="anonymous" referrerpolicy="no-referrer" />
-<script
-	src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.min.js"
-	integrity="sha512-HofT0l9eA6rWl6RpwUMLZuU7Qfsz6zoNemggVnPTgxlLq7RU/1n8Wd5/fHu0Yf3J5E53G5VE5ZYR0LYlJcC1XQ=="
-	crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+
 </head>
 
 <link
@@ -77,11 +71,13 @@
 											<div style="display: flex;">
 
 												<input type="text" class="form-control" id="vendNm"
-													name="vendNm" style="width: 150px;" onclick='comList()'>
+													name="vendNm" style="width: 150px;">
 												<button type="button" class="btn btn-primary"
-													id="openCompany" onclick='comList()'>
+													id="openCompany" data-toggle="modal"
+													data-target="#comModal">
 													<i class="fas fa-search"></i>
 												</button>
+
 
 											</div>
 										</td>
@@ -175,15 +171,17 @@
 		<div class="modal-content">
 			<div class="modal-header">
 				<h5 class="modal-title" id="exampleModalLabel">제품 목록</h5>
-				<button type="button" class="btn-close" data-bs-dismiss="modal"
-					aria-label="Close"></button>
+				<button type="button" class="close" data-dismiss="modal"
+					aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
 			</div>
 			<div id="proGrid" class="modal-body"></div>
 			<div class="modal-footer">
 				<button type="button" id="confirmBtn" class="btn btn-primary"
-					data-bs-dismiss="modal">확인</button>
+					data-dismiss="modal">확인</button>
 				<button type="button" id="cancleProdBtn" class="btn btn-secondary"
-					data-bs-dismiss="modal">닫기</button>
+					data-dismiss="modal">닫기</button>
 			</div>
 		</div>
 	</div>
@@ -213,21 +211,26 @@
 </div>
 
 <!-- 거래처 모달(조회)-->
-<div class="modal fade" id="comModal" tabindex="-1"
+<div class="modal fade" id="comModal" tabindex="-1" role="dialog"
 	aria-labelledby="exampleModalLabel" aria-hidden="true">
-	<div class="modal-dialog">
+	<div class="modal-dialog modal-dialog-centered modal-xl"
+		role="document">
 		<div class="modal-content">
 			<div class="modal-header">
 				<h5 class="modal-title" id="exampleModalLabel">거래처 목록</h5>
-				<button type="button" class="btn-close" data-bs-dismiss="modal"
-					aria-label="Close"></button>
+				<button type="button" class="close" data-dismiss="modal"
+					aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
 			</div>
-			<div id="comGrid" class="modal-body"></div>
+			<div class="modal-body">
+				<div id="comGrid"></div>
+			</div>
 			<div class="modal-footer">
 				<button type="button" id="confirmBtn" class="btn btn-primary"
-					data-bs-dismiss="modal">확인</button>
-				<button type="button" id="cancleVendBtn" class="btn btn-secondary"
-					data-bs-dismiss="modal">닫기</button>
+					data-dismiss="modal">확인</button>
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
+
 			</div>
 		</div>
 	</div>
@@ -238,28 +241,13 @@
 <!-- End of Main Content -->
 
 <script>
-	$(function() {
-		searchAll();
-		comList();
-		proList();
-	})
+$(function() {
+	searchAll();
+	comList();
+	
+})
 
-	//거래처 목록 모달창으로 가져오기
-	function comList() {
-		$("#openCompany").on("click", function(comlist) {
-			setTimeout(function() {
-				comGrid.refreshLayout()
-			}, 300);
-			$.ajax({
-				url : "comSearch",
-				method : "get",
-				datatype : "json",
-				success : function(comlist) {
-					comGrid.resetData(comlist);
-				}
-			})
-		})
-	}
+
 
 	//제품명 목록 모달창으로 가져오기
 	function proList() {
@@ -523,20 +511,45 @@
 			})
 		})
 	}
-	//거래처 목록 모달창으로 가져오기
-	function comList() {
-		$("#openCompany").on("click", function(comlist) {
-			setTimeout(function() {
-				comGrid.refreshLayout()
-			}, 300);
-			$.ajax({
-				url : "comSearch",
-				method : "get",
-				datatype : "json",
-				success : function(comlist) {
-					comGrid.resetData(comlist);
-				}
-			})
+	
+	//거래처코드 칸 클릭 -> 거래처 목록 모달창 띄우기
+		var vendCdRowKey = '';
+		grid.on("click",(e) => {
+	const {columnName} = e;
+	vendCdRowKey = e.rowKey;
+	if(columnName == 'vendCd') {
+		$("#vendGridModal").modal("show");
+		$.ajax({
+			url:"comSearch",
+			dataType:"json",
+			method:"get",
+			success:function(vendlist) {
+				setTimeout(function() {
+					vendGrid.refreshLayout();
+				},300);
+				vendGrid.resetData(vendlist);
+			}
 		})
 	}
+})
+//거래처 목록 모달창으로 가져오기
+function comList() {
+	$("#openCompany").on("click",function(comlist) {
+		 setTimeout(function () {
+			comGrid.refreshLayout()
+		}, 300);
+		$.ajax({
+			url:"comSearch",
+			method:"get",
+			datatype:"json",
+			success:function(comlist) {
+				comGrid.resetData(comlist);
+			}
+		})
+	})
+}
+		
+
+		
+
 </script>
