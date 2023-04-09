@@ -27,6 +27,8 @@ public class MaterialVO {
 	
 	// 거래처 테이블
 	private String vendNm; // 거래처명
+	private String binzo; // 사업자 등록번호 
+	private String telno; // 거래처 전화번호
 	
 	// 자재를 발주한 정보를 저장하는 테이블
 	private String ordrCd; // 발주번호

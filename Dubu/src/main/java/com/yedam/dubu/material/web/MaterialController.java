@@ -1,6 +1,7 @@
 package com.yedam.dubu.material.web;
 
-import java.text.ParseException;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -22,14 +23,25 @@ public class MaterialController {
 	public String getMaterialOrderAdd(Model model) {
 		return "material/materialOrderAdd";
 	}
-
+	
 	// 자재발주
 	@GetMapping("/materialOrder")
-	public String getMaterialOrder(Model model) {
-		model.addAttribute("materialList", materialService.getMaterialList()); // 자재 목록
+	public String getMaterialOrder(Model model, MaterialVO materialVO) {
+		model.addAttribute("materialModalList",materialService.getMaterialModal());
+		model.addAttribute("vendMoalList",materialService.getVendModal());
+		model.addAttribute("materialList", materialService.getMaterialList(materialVO)); // 자재 목록
 		model.addAttribute("materialOrderList", materialService.getMaterialOrderList()); // 자재 발주 리스트
 		model.addAttribute("OrderCode", materialService.getNextMaterialOrderCode().getOrdrCd()); // 다음에 오는 발주코드
 		return "material/materialOrder";
+	}
+	
+	@GetMapping("/searchMaterialOrder")
+	@ResponseBody
+	public Map<String, Object> getSearchMaterialOrder(MaterialVO materialVO) {
+		System.out.println(materialVO);
+		Map<String, Object> map = new HashMap<>();
+		map.put("result", materialService.getMaterialList(materialVO));
+		return map;
 	}
 
 	// 자재발주 insert , update, delete
@@ -54,7 +66,7 @@ public class MaterialController {
 				material.setOrdrCnt(Integer.parseInt(ordrCnt[i])); // 발주수량
 				material.setPaprdCmndDt2(paprdCmndDt[i]); // 납기요청일
 				material.setVendCd(vendCd[i]); // 거래처코드
-				System.out.println(nextOrdrCd);
+				//System.out.println(nextOrdrCd);
 				r=1;
 				//r = materialService.getMaterialOrderInsert(material); // 발주 insert
 			}
