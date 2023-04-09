@@ -37,4 +37,11 @@
 	<select id="inesrtPrcsCode" resultType="ProductionVO">
 		SELECT PRCS_DIV FROM PRCS WHERE PRCS_DIV=#{prcsDiv}
 	</select>
+	<!-- 주문서 조회 -->
+	<select id="OrderList" resultType="ProductionVO">
+		SELECT ORDER_NO,
+			   VEND_NM,
+			   PRDT_NM
+		FROM ORDER_SHEET	
+	</select>
 </mapper>
