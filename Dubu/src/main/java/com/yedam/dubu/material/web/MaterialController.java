@@ -1,6 +1,7 @@
 package com.yedam.dubu.material.web;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,10 +28,10 @@ public class MaterialController {
 	// 자재발주
 	@GetMapping("/materialOrder")
 	public String getMaterialOrder(Model model, MaterialVO materialVO) {
-		model.addAttribute("materialModalList",materialService.getMaterialModal());
-		model.addAttribute("vendMoalList",materialService.getVendModal());
+		model.addAttribute("materialModalList",materialService.getMaterialModal()); // 자재명 모달창
+		model.addAttribute("vendMoalList",materialService.getVendModal()); // 업체명 모달창
 		model.addAttribute("materialList", materialService.getMaterialList(materialVO)); // 자재 목록
-		model.addAttribute("materialOrderList", materialService.getMaterialOrderList()); // 자재 발주 리스트
+		//model.addAttribute("materialOrderList", materialService.getMaterialOrderList()); // 자재 발주 리스트
 		model.addAttribute("OrderCode", materialService.getNextMaterialOrderCode().getOrdrCd()); // 다음에 오는 발주코드
 		return "material/materialOrder";
 	}
@@ -80,13 +81,21 @@ public class MaterialController {
 		return r;
 	}
 	 
-	// 자재발주조회
+	// 자재발주조회 페이지
 	@GetMapping("/materialOrderSearch")
 	public String getMaterialOrderSearch(Model model) {
+		model.addAttribute("vendMoalList",materialService.getVendModal()); // 업체명 모달창
 		return "material/materialOrderSearch";
 	}
 	
-	
+	// 자재발주한 목록들 받아오기
+	@PostMapping("/materialOrderSearch")
+	@ResponseBody
+	public List<MaterialVO> getMaterialOrderList(MaterialVO materialVO){
+		System.out.println(materialVO.getStartOrdrReqDt());
+		System.out.println(materialVO.getEndOrdrReqDt());
+		return materialService.getMaterialOrderList(materialVO);
+	}
 
 	// 자재입고검사조회
 	@GetMapping("/materialInspList")

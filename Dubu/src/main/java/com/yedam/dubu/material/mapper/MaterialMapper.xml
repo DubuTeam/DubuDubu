@@ -4,18 +4,19 @@
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.yedam.dubu.material.mapper.MaterialMapper">
 
+	<!-- * 자재 발주 관리 페이지 * -->
 	<!-- 자재 검색 리스트 -->
 	<select id="getMaterialModal" resultType="MaterialVO">
-	SELECT DISTINCT RSC_CD , RSC_NM ,RSC_TYP, MNG_UNIT 
-	FROM RSC
-	ORDER BY RSC_CD
+		SELECT DISTINCT RSC_CD , RSC_NM ,RSC_TYP, MNG_UNIT 
+		FROM RSC
+		ORDER BY RSC_CD
 	</select>
 		
 	<!-- 업체 검색 리스트 -->
 	<select id="getVendModal" resultType="MaterialVO">
-	SELECT DISTINCT VEND_CD, VEND_NM, BINZO, TELNO 
-	FROM VEND
-	ORDER BY VEND_CD
+		SELECT DISTINCT VEND_CD, VEND_NM, BINZO, TELNO 
+		FROM VEND
+		ORDER BY VEND_CD
 	</select>
 	
 	<!-- 자재 목록 리스트 -->
@@ -44,8 +45,49 @@
 		ORDER BY r.RSC_CD -->
 	</select>
 	
-	<!-- 자재 발주 리스트 -->
+	<!-- 다음에 오는 자재 발주 코드 -->
+	<select id="getNextMaterialOrderCode" resultType="MaterialVO">
+		SELECT 'ORDR' || RSC_ORDR_SEQ.NEXTVAL as ordrCd
+		FROM DUAL
+	</select>
+	
+	<!-- 자재 발주 INSERT  -->
+	<insert id="getMaterialOrderInsert" parameterType="MaterialVO">
+		INSERT INTO RSC_ORDR(ORDR_CD, VEND_CD, ORDR_REQ_DT)
+		VALUES(#{ordrCd}, #{vendCd}, sysdate)
+	</insert>
+	
+	<!-- 자재 발주 디테일 INSERT  -->
+	<insert id="getMaterialOrderDetailInsert" parameterType="MaterialVO">
+		INSERT INTO RSC_ORDR_DTL(ORDR_CD, RSC_CD, ORDR_CNT , RMN_CNT, PAPRD_CMND_DT)
+		VALUES(#{ordrCd},#{rscCd}, #{ordrCnt}, #{rmnCnt}, TO_DATE(#{paprdCmndDt2},'YYYY-MM-DD'))
+	</insert>
+	
+	<!-- *자재 발주 조회 페이지* -->
+	<!-- 자재 발주 조회 -->
 	<select id="getMaterialOrderList" resultType="MaterialVO">
+		SELECT r.ORDR_CD, r.VEND_CD, v.VEND_NM, r.ORDR_REQ_DT
+		FROM RSC_ORDR r JOIN VEND v
+		ON r.VEND_CD = v.VEND_CD
+		<where>
+		    <if test="vendNm != null and !vendNm.equals('')">
+		        UPPER(v.VEND_NM) LIKE '%' || UPPER(#{vendNm}) || '%'
+		    </if>
+		    <!-- <if test="startOrdrReqDt != null and endOrdrReqDt != null">
+		         AND TO_CHAR(ORDR_REQ_DT,'YYYY-MM-DD') between ORDR_REQ_DT=#{startOrdrReqDt} 
+		         AND ORDR_REQ_DT=#{endOrdrReqDt}
+		    </if> -->
+		</where>
+		ORDER BY r.ORDR_CD
+
+		<!-- SELECT r.ORDR_CD, r.VEND_CD, v.VEND_NM, r.ORDR_REQ_DT
+		FROM RSC_ORDR r JOIN VEND v
+		ON r.VEND_CD = v.VEND_CD
+		ORDER BY r.ORDR_CD -->
+	</select>
+	
+	<!-- 자재 발주 상세 리스트 -->
+	<select id="getMaterialOrderListDetail" resultType="MaterialVO">
 		SELECT rd.RSC_CD,
 	       rs.RSC_NM, 
 	       rs.VEND_CD, 
@@ -65,23 +107,5 @@
 	  	JOIN RSC_STC rc
 	  	ON rc.RSC_CD = rd.RSC_CD
 	</select>
-	
-	<!-- 다음에 오는 자재 발주 코드 -->
-	<select id="getNextMaterialOrderCode" resultType="MaterialVO">
-		SELECT 'ORDR' || RSC_ORDR_SEQ.NEXTVAL as ordrCd
-		FROM DUAL
-	</select>
-	
-	<!-- 자재 발주 INSERT  -->
-	<insert id="getMaterialOrderInsert" parameterType="MaterialVO">
-		INSERT INTO RSC_ORDR(ORDR_CD, VEND_CD, ORDR_REQ_DT)
-		VALUES(#{ordrCd}, #{vendCd}, sysdate)
-	</insert>
-	
-	<!-- 자재 발주 디테일 INSERT  -->
-	<insert id="getMaterialOrderDetailInsert" parameterType="MaterialVO">
-		INSERT INTO RSC_ORDR_DTL(ORDR_CD, RSC_CD, ORDR_CNT , RMN_CNT, PAPRD_CMND_DT)
-		VALUES(#{ordrCd},#{rscCd}, #{ordrCnt}, #{rmnCnt}, TO_DATE(#{paprdCmndDt2},'YYYY-MM-DD'))
-	</insert>
 
 </mapper>

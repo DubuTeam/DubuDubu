@@ -33,6 +33,8 @@ public class MaterialVO {
 	@DateTimeFormat(pattern="yyyy-MM-dd")
 	private Date ordrReqDt; // 발주신청일
 	private String ordrReqDt2; // 발주신청일 String
+	private String startOrdrReqDt; // 발주 신청일 start
+	private String endOrdrReqDt; // 발주 신청일 end
 	
 	// 자재발주 디테일
 	private int ordrCnt; // 발주량
