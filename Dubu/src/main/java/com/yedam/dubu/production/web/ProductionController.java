@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -46,12 +47,22 @@ public class ProductionController {
 	// 공정관리 - 그리드로 추가
 	@PostMapping("/insertPrcs")
 	@ResponseBody
-	public String insertPrcsGrid(@RequestParam(required=false) ProductionVO productionVO) {
+	public int insertPrcsGrid(@RequestBody ProductionVO productionVO) {
 		
+		//System.out.println(productionVO.getCreatedRows());
 		System.out.println(productionVO.getCreatedRows());
 		
-		//return productionService.insertPrcsGrid(productionVO);
-		return null;
+		return productionService.insertPrcsGrid(productionVO.getCreatedRows());
+	}
+	// 공정관리 - 그리드로 수정
+	@PostMapping("/updatePrcs")
+	@ResponseBody
+	public int updatePrcsGrid(@RequestBody ProductionVO productionVO) {
+		
+		//System.out.println(productionVO.getCreatedRows());
+		System.out.println(productionVO.getUpdatedRows());
+		
+		return productionService.insertPrcsGrid(productionVO.getUpdatedRows());
 	}
 	
 	// 생산계획

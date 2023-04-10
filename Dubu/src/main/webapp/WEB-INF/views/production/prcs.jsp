@@ -9,6 +9,9 @@
 <link rel="stylesheet"
 	href="https://uicdn.toast.com/grid/latest/tui-grid.css" />
 <script src="https://uicdn.toast.com/grid/latest/tui-grid.js"></script>
+<!-- SweetAlert -->
+<link rel="stylesheet"   href="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.css">
+<script   src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.js"></script>
 <!-- Begin Page Content -->
 <!-- 헤더부분 -->
 <!-- Begin Page Content -->
@@ -149,24 +152,47 @@ function search() {
     		focus : true
     		});
     		}
+    
    function savedl(){	
     	console.log(grid.getModifiedRows().createdRows);
+    	let data = { createdRows : grid.getModifiedRows({ignoredColumns: ['_attributes', 'rowKey']}).createdRows };
+    	console.log(JSON.stringify(data));
     	$.ajax({
     	    url: 'insertPrcs',
-    	    data: JSON.stringify(grid.getModifiedRows()),
-    	    contentType: 'application/json',
+    	    data: JSON.stringify(grid.getModifiedRows({ignoredColumns: ['_attributes', 'rowKey']})),
+    	    contentType : 'application/json',
     	    type: 'POST',
+    	    async: false,
     	    success: function(data) {
-    	        console.log('성공');
+    	        	console.log('성공');
+    	        	search();  
+    	    },
+    	    error: function(reject) {
+    	        console.log(reject);
+    	    }
+    	});
+    	console.log(grid.getModifiedRows().updatedRows);
+    	$.ajax({
+    	    url: 'updatePrcs',
+    	    data: JSON.stringify(grid.getModifiedRows({ignoredColumns: ['_attributes', 'rowKey']})),
+    	    contentType : 'application/json',
+    	    type: 'POST',
+    	    async: false,
+    	    success: function(data) {
+    	        	console.log('성공');
+    	        	search();
+        		    Swal.fire({
+	        		      icon: 'success',
+	        		      title: '입력 및 수정이 완료되었습니다.'
+	        		 });
     	    },
     	    error: function(reject) {
     	        console.log(reject);
     	    }
     	});
     		}  
-    saveBtn.addEventListener("click", savedl);
-    
-    
+
+
     // 체크되것만 찾기
     grid.on('check', (ev) => {
  	      checkLen = grid.getCheckedRows().length;

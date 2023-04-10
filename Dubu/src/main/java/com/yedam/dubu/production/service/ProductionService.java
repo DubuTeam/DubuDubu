@@ -14,7 +14,10 @@ public interface ProductionService {
 	public int deletePrcsGird(String prcsCd);
 	
 	// 등록
-	public String insertPrcsGrid(ProductionVO productionVO);
+	public int insertPrcsGrid(List<ProductionVO> list);
+	
+	// 수정
+	public int updatePrcsGrid(List<ProductionVO> update);
 	
 	// 등록하고자 하는 공정코드
 	public String inesrtPrcsCode();
