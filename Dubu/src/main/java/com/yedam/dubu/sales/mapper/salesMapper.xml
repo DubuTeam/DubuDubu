@@ -24,17 +24,31 @@
 		<if test="end != null"><![CDATA[and ORDER_DT <= #{end}]]></if>
 		ORDER BY ORDER_NO
 	</select>
-	
+
 	<!-- 거래처 목록 조회 모달창 -->
 	<select id="comSearch" resultType="VendVO">
-		SELECT VEND_CD, VEND_NM, BINZO, TELNO FROM VEND
+		SELECT VEND_CD, VEND_NM,
+		BINZO, TELNO FROM VEND
 	</select>
-	
+
 	<!-- 주문서 삭제 -->
 	<delete id="deleteOrdr" parameterType="SalesVO">
 		DELETE FROM ORDER_SHEET
 		WHERE ORDER_NO = #{orderNo}
 	</delete>
 
+	<!-- 제품명 목록 조회 모달창 -->
+	<select id="proSearch" resultType="SalesVO">
+		SELECT EDCTS_CD, PRDT_NM FROM
+		EDCTS
+	</select>
+
+	<!-- 주문번호 인덱스 가져오기 -->
+	<select id="getordrNo" resultType="SalesVO">
+		SELECT
+		NVL(LPAD(MAX(SUBSTR(ORDER_NO, 4)+1),3,'0'), '001') AS "index"
+		FROM
+		ORDER_SHEET
+	</select>
 
 </mapper>
