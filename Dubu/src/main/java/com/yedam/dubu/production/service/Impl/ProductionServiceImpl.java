@@ -43,10 +43,7 @@ public class ProductionServiceImpl implements ProductionService {
 		   }
 	
 
-	@Override
-	public String insertPrcsGrid(ProductionVO productionVO) {
-		return productionMapper.inesrtPrcsCode() ;
-	}
+
 
 	@Override
 	public String inesrtPrcsCode() {
@@ -56,5 +53,23 @@ public class ProductionServiceImpl implements ProductionService {
 	@Override
 	public List<ProductionVO> OrderList() {
 		return productionMapper.OrderList();
+	}
+
+	@Override
+	public int insertPrcsGrid(List<ProductionVO> list) {
+		int result = 0;
+		for(ProductionVO vo : list) {
+			result += productionMapper.insertPrcsGrid(vo);
+		}
+		return result;
+	}
+
+	@Override
+	public int updatePrcsGrid(List<ProductionVO> update) {
+		int result = 0;
+		for(ProductionVO vo : update) {
+			result += productionMapper.insertPrcsGrid(vo);
+		}
+		return result;
 	}
 }

@@ -18,7 +18,10 @@ public interface ProductionMapper {
 	public int deletePrcsGrid(String prcsCd);
 	
 	// 등록
-	public String insertPrcsGrid(ProductionVO productionVO);
+	public int insertPrcsGrid(ProductionVO vo);
+	
+	// 수정
+	public int updatePrcsGrid(ProductionVO vo);
 	
 	// 등록하고자 하는 공정코드
 	public String inesrtPrcsCode();

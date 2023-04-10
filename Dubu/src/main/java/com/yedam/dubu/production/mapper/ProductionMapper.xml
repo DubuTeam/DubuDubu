@@ -37,6 +37,32 @@
 	<select id="inesrtPrcsCode" resultType="ProductionVO">
 		SELECT PRCS_DIV FROM PRCS WHERE PRCS_DIV=#{prcsDiv}
 	</select>
+	<!-- 수정 -->
+	<update id="updatePrcsGrid" parameterType="ProductionVO">
+		UPDATE PRCS INTO (PRCS_DIV
+						  <if test="prcsCd != null and !prcsCd.equals('')">
+						  ,PRCS_CD
+						  </if>
+						  <if test="prcsNm != null and !prcsNm.equals('')">
+						  ,PRCS_NM
+						  </if>
+						  <if test="prcsCtnt != null and !prcsCtnt.equals('')">
+						  ,PRCS_CTNT
+						  </if>)
+					<set>
+						(#{prcsDiv}
+						<if test="prcsCd != null and !prcsCd.equals('')">
+						,#{prcsCd}
+						</if>
+						<if test="prcsNm != null and !prcsNm.equals('')">
+						,#{prcsNm}
+						</if>
+						<if test="prcsCtnt != null and !prcsCtnt.equals('')">
+						,#{prcsCtnt}
+						</if>
+						)
+					</set>
+	</update>
 	<!-- 주문서 조회 -->
 	<select id="OrderList" resultType="ProductionVO">
 		SELECT ORDER_NO,
