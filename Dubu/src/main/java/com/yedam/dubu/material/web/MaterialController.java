@@ -35,6 +35,7 @@ public class MaterialController {
 		return "material/materialOrder";
 	}
 	
+	// 자재 조회(자재명, 업체명)
 	@GetMapping("/searchMaterialOrder")
 	@ResponseBody
 	public Map<String, Object> getSearchMaterialOrder(MaterialVO materialVO) {
@@ -44,48 +45,48 @@ public class MaterialController {
 		return map;
 	}
 
-	// 자재발주 insert , update, delete
-	@PostMapping("/materialOrder")
+	// 자재발주 insert
+	@PostMapping("/materialOrderInsert")
 	@ResponseBody // ★★무조건 JSON타입만 return 할수있는것이 아님 여러 data타입들을 return 할 수 있음★★ 
-	public int postMaterialOrder(MaterialVO materialVO) { 
+	public int postMaterialOrderInsert(MaterialVO materialVO) { 
+
+		String[] rscCd = materialVO.getRscCd().split(","); // 자재코드
+		String[] ordrCd = materialVO.getOrdrCd().split(","); // 발주코드
+		String[] ordrCnt = materialVO.getOrdrCnt2().split(","); // 발주수량
+		String[] paprdCmndDt = materialVO.getPaprdCmndDt2().split(","); // 납기요청일
+		String[] vendCd = materialVO.getVendCd().split(","); // 거래처코드
 		
+		String nextOrdrCd = materialService.getNextMaterialOrderCode().getOrdrCd(); // 다음에 오는 발주코드
+	
+		MaterialVO material = new MaterialVO();
+	
 		int r = 0;
 		
-		if(materialVO.getParam().equals("insert")) {
-			String[] rscCd = materialVO.getRscCd().split(","); // 자재코드
-			String[] ordrCd = materialVO.getOrdrCd().split(","); // 발주코드
-			String[] ordrCnt = materialVO.getOrdrCnt2().split(","); // 발주수량
-			String[] paprdCmndDt = materialVO.getPaprdCmndDt2().split(","); // 납기요청일
-			String[] vendCd = materialVO.getVendCd().split(","); // 거래처코드
-			String nextOrdrCd = materialService.getNextMaterialOrderCode().getOrdrCd(); // 다음에 오는 발주코드
-			MaterialVO material = new MaterialVO();
+		material.setOrdrCd(ordrCd[0]); // 발주코드
+		material.setVendCd(vendCd[0]); // 거래처코드
+		r = materialService.getMaterialOrderInsert(material); // 발주 insert
+		
+		for(int i = 0 ; i < rscCd.length; i++) {
+			material.setRscCd(rscCd[i]); // 자재코드
+			//material.setOrdrCd(ordrCd[i]); // 발주코드
+			material.setOrdrCnt(Integer.parseInt(ordrCnt[i])); // 발주수량
+			material.setRmnCnt(Integer.parseInt(ordrCnt[i])); // 미입고잔량 = 발주수량
+			material.setPaprdCmndDt2(paprdCmndDt[i]); // 납기요청일
+			//material.setVendCd(vendCd[i]); // 거래처코드
 			
-			for(int i = 0 ; i < rscCd.length; i++) {
-				material.setRscCd(rscCd[i]); // 자재코드
-				material.setOrdrCd(ordrCd[i]); // 발주코드
-				material.setOrdrCnt(Integer.parseInt(ordrCnt[i])); // 발주수량
-				material.setPaprdCmndDt2(paprdCmndDt[i]); // 납기요청일
-				material.setVendCd(vendCd[i]); // 거래처코드
-				//System.out.println(nextOrdrCd);
-				r=1;
-				//r = materialService.getMaterialOrderInsert(material); // 발주 insert
-			}
-			return r;
-		}else if(materialVO.getParam().equals("update")) {
-			r = 0;
-			return r;
-		}else {
-			r = 0;
-			return r;
+			r = materialService.getMaterialOrderDetailInsert(material); // 발주 디테일 insert 
+			System.out.println(material);
 		}
+		return r;
 	}
 	 
-
 	// 자재발주조회
 	@GetMapping("/materialOrderSearch")
 	public String getMaterialOrderSearch(Model model) {
 		return "material/materialOrderSearch";
 	}
+	
+	
 
 	// 자재입고검사조회
 	@GetMapping("/materialInspList")
