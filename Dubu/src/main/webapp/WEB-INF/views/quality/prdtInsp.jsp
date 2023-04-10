@@ -336,7 +336,7 @@
 				});
 
 
-				/* // 테스트
+				// 테스트
 				$('#selectBtn').on("click", function (e) {
 
 
@@ -355,78 +355,11 @@
 							endDt: endDt
 						}, success(result) {
 
+						},
+						error: function (reject) {
+							console.log(reject);
 						}
 					})
-				}) */
-				const grid2 = new tui.Grid({
-					el: document.getElementById('grid2'),
-					scrollX: false,
-					bodyHeight: 300,
-					rowHeaders: ['rowNum'],
-					columns: [{
-						header: '완제품LOT번호',
-						name: 'edctsLotNo',
-						align: 'center',
-						sortable: true,
-						sortingType: 'desc'
-					}, {
-						header: '제품코드',
-						name: 'edctsCd',
-						align: 'center',
-						sortable: true,
-						sortingType: 'desc'
-					}, {
-						header: '제품명',
-						name: 'prdtNm',
-						align: 'left',
-						sortable: true,
-						sortingType: 'desc'
-					}, {
-						header: '최종판정',
-						name: 'inspJm',
-						align: 'left',
-						sortable: true,
-						sortingType: 'desc'
-					}, {
-						header: '검사날짜',
-						name: 'inspDt',
-						align: 'center',
-						sortable: true,
-						sortingType: 'desc'
-					}, {
-						header: '검사자',
-						name: 'inspPsch',
-						align: 'left',
-						sortable: true,
-						sortingType: 'desc'
-					}]
-				});
+				})
 
-				//레이아웃 재배치
-				$('#nav-info-tab').click(ev => {
-					setTimeout(function () {
-						grid2.refreshLayout()
-					}, 200);
-				});
-				$('#nav-insp-tab').click(ev => {
-					setTimeout(function () {
-						grid.refreshLayout()
-					}, 200);
-				});
-
-				//조회결과 로드
-				$('#searchBtn').click(ev => {
-					$.ajax({
-						url: "getPrdtInsp",
-						method: "POST",
-						data: $('#dataForm2').serialize(),
-						dataType: "JSON",
-						success: function (result) {
-							setTimeout(function () {
-								grid.refreshLayout()
-							}, 300);
-							grid2.resetData(result);
-						}
-					})
-				});
 			</script>
