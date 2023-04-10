@@ -51,4 +51,30 @@
 		ORDER_SHEET
 	</select>
 
+	<!-- 주문서 수정 및 등록 -->
+	<update id="saveOrdr" parameterType="SalesVO">
+		MERGE INTO ORDER_SHEET o
+		USING DUAL ON (o.ORDER_NO = #{orderNo})
+		WHEN MATCHED THEN
+		UPDATE SET
+		o.EDCTS_CD = #{edctsCd}, o.VEND_CD = #{vendCd}, o.VEND_NM = #{vendNm},
+		o.ORDER_DT = #{orderDt}, o.PROG_APPE = #{progAppe}, o.PAPRD_DT =
+		#{paprdDt}, o.PRDT_NM = #{prdtNm}, o.ORDER_CNT = #{orderCnt}
+		WHEN NOT
+		MATCHED THEN
+		INSERT (o.ORDER_NO, o.EDCTS_CD, o.VEND_CD, o.VEND_NM,
+		o.ORDER_DT,
+		o.PROG_APPE, o.PAPRD_DT, o.PRDT_NM, o.ORDER_CNT)
+		VALUES(#{orderNo},#{edctsCd},#{vendCd},#{vendNm},#{orderDt},'InProgress',#{paprdDt},#{prdtNm},#{orderCnt})
+	</update>
+	<!-- saleslst.jsp -->
+	<!-- 입고 목록 날짜 기준 조회(첫페이지) -->
+	<select id="salesIstList" resultType="SalesIstVO">
+		SELECT i.edcts_ist_no,
+		i.edcts_ist_dt, i.edcts_ist_cnt, i.edcts_cd, i.edcts_lot_no, e.prdt_nm
+		FROM edcts_ist i JOIN edcts e
+		ON i.edcts_cd = e.edcts_cd
+		WHERE i.edcts_ist_dt BETWEEN #{edctsIstDtStart} AND #{edctsIstDtEnd}
+	</select>
+
 </mapper>

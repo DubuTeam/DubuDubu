@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.yedam.dubu.sales.mapper.SalesMapper;
+import com.yedam.dubu.sales.service.SalesIstVO;
 import com.yedam.dubu.sales.service.SalesService;
 import com.yedam.dubu.sales.service.SalesVO;
 import com.yedam.dubu.sales.service.VendVO;
@@ -53,6 +54,22 @@ public class SalesServiceImpl implements SalesService {
 	@Override
 	public SalesVO getordrNo(SalesVO vo) {
 		return salesMapper.getordrNo(vo);
+	}
+
+	// 주문서 수정저장
+	@Override
+	public void saveOrdr(List<SalesVO> ordList) {
+		for (SalesVO vo : ordList) {
+			salesMapper.saveOrdr(vo);
+		}
+	}
+
+////////////////////////////////////////////////////////////////
+	// saleslst.jsp 페이지
+	// 제품 입고 목록 현재 날짜 기준으로 조회(첫페이지)
+	@Override
+	public List<SalesIstVO> salesIstList(SalesIstVO vo) {
+		return salesMapper.salesIstList(vo);
 	}
 
 }

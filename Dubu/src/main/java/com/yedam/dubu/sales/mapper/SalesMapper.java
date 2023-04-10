@@ -2,6 +2,7 @@ package com.yedam.dubu.sales.mapper;
 
 import java.util.List;
 
+import com.yedam.dubu.sales.service.SalesIstVO;
 import com.yedam.dubu.sales.service.SalesVO;
 import com.yedam.dubu.sales.service.VendVO;
 
@@ -25,4 +26,11 @@ public interface SalesMapper {
 	// 주문번호 생성, 가져오기
 	public SalesVO getordrNo(SalesVO vo);
 
+	//주문서 수정입력
+	public void saveOrdr(SalesVO ordList);
+	
+	///////////////////////////////////////////////////////////////////////
+	//saleslst.jsp 페이지 
+	//제품 입고 목록 현재 날짜 기준으로 조회(첫페이지)
+	public List<SalesIstVO> salesIstList(SalesIstVO vo);
 }

@@ -77,4 +77,11 @@ public class orderController {
 		return salesService.getordrNo(vo);
 	}
 
+	// 주문서 수정저장
+	@PostMapping("saveOrdr")
+	public String saveOrdr(@RequestBody List<SalesVO> ordList) {
+		salesService.saveOrdr(ordList);
+		return "sales/orderList";
+	}
+
 }
