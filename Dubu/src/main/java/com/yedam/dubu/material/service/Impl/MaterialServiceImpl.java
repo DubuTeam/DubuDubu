@@ -33,12 +33,6 @@ public class MaterialServiceImpl implements MaterialService{
 		return materialMapper.getMaterialList(materialVO);
 	}
 
-	// 자재 발주 리스트
-	@Override
-	public List<MaterialVO> getMaterialOrderList() {
-		return materialMapper.getMaterialOrderList();
-	}
-	
 	// 다음에 오는 발주코드
 	@Override
 	public MaterialVO getNextMaterialOrderCode() {
@@ -56,6 +50,17 @@ public class MaterialServiceImpl implements MaterialService{
 	public int getMaterialOrderDetailInsert(MaterialVO material) {
 		return materialMapper.getMaterialOrderDetailInsert(material);
 	}
+
+	/* 자재 발주 조회 페이지 */
+	// 자재 발주 조회
+	@Override
+	public List<MaterialVO> getMaterialOrderList(MaterialVO materialVO) {
+		return materialMapper.getMaterialOrderList(materialVO);
+	}
 	
+	// 자재 발주 상세 리스트
+	public List<MaterialVO> getMaterialOrderListDetail() {
+		return materialMapper.getMaterialOrderListDetail();
+	}
 
 }

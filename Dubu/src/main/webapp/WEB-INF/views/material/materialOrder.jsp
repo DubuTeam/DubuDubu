@@ -83,7 +83,7 @@
 					<tr>
 				</table>
 				
-				<!-- Modal -->
+				<!-- 자재명 Modal -->
 				<div class="modal fade" id="materialModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 					<!-- <div class="modal-dialog"> -->
 					<div class="modal-dialog modal-dialog-centered modal-lg">
@@ -132,7 +132,7 @@
 				</div>
 				<!-- ↑↑↑ 모달 -->
 				
-				<!-- Modal -->
+				<!-- 업체명 Modal -->
 				<div class="modal fade" id="vendModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 					<!-- <div class="modal-dialog"> -->
 					<div class="modal-dialog modal-dialog-centered modal-lg">
