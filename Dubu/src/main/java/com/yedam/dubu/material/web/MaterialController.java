@@ -92,9 +92,15 @@ public class MaterialController {
 	@PostMapping("/materialOrderSearch")
 	@ResponseBody
 	public List<MaterialVO> getMaterialOrderList(MaterialVO materialVO){
-		System.out.println(materialVO.getStartOrdrReqDt());
-		System.out.println(materialVO.getEndOrdrReqDt());
+		//System.out.println(materialVO.getStartOrdrReqDt());
+		//System.out.println(materialVO.getEndOrdrReqDt());
 		return materialService.getMaterialOrderList(materialVO);
+	}
+	
+	@PostMapping("/materialDetail")
+	@ResponseBody
+	public List<MaterialVO> getMaterialOrderDetail(MaterialVO materialVO){
+		return materialService.getMaterialOrderListDetail(materialVO.getOrdrCd());
 	}
 
 	// 자재입고검사조회

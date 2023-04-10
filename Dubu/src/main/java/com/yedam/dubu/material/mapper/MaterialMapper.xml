@@ -73,10 +73,12 @@
 		    <if test="vendNm != null and !vendNm.equals('')">
 		        UPPER(v.VEND_NM) LIKE '%' || UPPER(#{vendNm}) || '%'
 		    </if>
-		    <!-- <if test="startOrdrReqDt != null and endOrdrReqDt != null">
-		         AND TO_CHAR(ORDR_REQ_DT,'YYYY-MM-DD') between ORDR_REQ_DT=#{startOrdrReqDt} 
-		         AND ORDR_REQ_DT=#{endOrdrReqDt}
-		    </if> -->
+		    <if test="startOrdrReqDt != null and !startOrdrReqDt.equals('')">
+		    	AND <![CDATA[ORDR_REQ_DT >= #{startOrdrReqDt}]]>
+		    </if>
+			<if test="endOrdrReqDt != null and !endOrdrReqDt.equals('')">
+				AND <![CDATA[ORDR_REQ_DT <= #{endOrdrReqDt}]]>
+			</if>
 		</where>
 		ORDER BY r.ORDR_CD
 
@@ -89,15 +91,15 @@
 	<!-- 자재 발주 상세 리스트 -->
 	<select id="getMaterialOrderListDetail" resultType="MaterialVO">
 		SELECT rd.RSC_CD,
-	       rs.RSC_NM, 
-	       rs.VEND_CD, 
-	       v.VEND_NM, 
-	       ro.ORDR_CD, 
-	       rd.ORDR_CNT, 
-	       rc.AVAL_STC,
-	       rs.SAF_STC,
-	       (AVAL_STC+ORDR_CNT) as expect,
-	       rd.PAPRD_CMND_DT
+		       rs.RSC_NM, 
+		       rs.VEND_CD, 
+		       v.VEND_NM, 
+		       ro.ORDR_CD, 
+		       rd.ORDR_CNT, 
+		       rc.AVAL_STC,
+		       rs.SAF_STC,
+		       (AVAL_STC+ORDR_CNT) as expect,
+		       rd.PAPRD_CMND_DT
 		FROM RSC_ORDR ro JOIN RSC_ORDR_DTL rd
 	  	ON ro.ORDR_CD = rd.ORDR_CD
 	  	JOIN RSC rs
@@ -106,6 +108,7 @@
 	  	ON v.VEND_CD = ro.VEND_CD
 	  	JOIN RSC_STC rc
 	  	ON rc.RSC_CD = rd.RSC_CD
+	  	WHERE ro.ORDR_CD = #{ordrCd}
 	</select>
 
 </mapper>

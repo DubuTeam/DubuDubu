@@ -117,7 +117,7 @@
                 <a class="collapse-item" href="${pageContext.request.contextPath}/materialOrderSearch">자재발주조회</a>
                 <a class="collapse-item" href="${pageContext.request.contextPath}/materialIst">자재입고관리</a>
                 <%-- <a class="collapse-item" href="${pageContext.request.contextPath}/materialIstList">자재입고조회XXX</a> --%>
-                <a class="collapse-item" href="${pageContext.request.contextPath}/materialOust">원자재출고관리△△△</a>
+                <%-- <a class="collapse-item" href="${pageContext.request.contextPath}/materialOust">원자재출고관리△△△</a> --%>
                 <%-- <a class="collapse-item" href="${pageContext.request.contextPath}/materialOustList">원자재출고조회XXX</a> --%>
                 <a class="collapse-item" href="${pageContext.request.contextPath}/materialStcList">자재재고조회</a>
                 <a class="collapse-item" href="${pageContext.request.contextPath}/materialLOTList">자재LOT재고조회</a>

@@ -28,7 +28,7 @@ public class MaterialVO {
 	private String telno; // 거래처 전화번호
 	
 	// 자재를 발주한 정보를 저장하는 테이블
-	private String ordrCd; // 발주번호
+	private String ordrCd; // 발주번호(발주코드)
 	
 	@DateTimeFormat(pattern="yyyy-MM-dd")
 	private Date ordrReqDt; // 발주신청일
