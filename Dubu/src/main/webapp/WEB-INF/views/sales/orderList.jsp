@@ -3,15 +3,22 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page session="false"%>
 <head>
+
+<link rel="stylesheet"
+	href="https://uicdn.toast.com/tui.date-picker/latest/tui-date-picker.css" />
+<script
+	src="https://uicdn.toast.com/tui.date-picker/latest/tui-date-picker.js"></script>
+<link rel="stylesheet"
+	href="https://uicdn.toast.com/grid/latest/tui-grid.css" />
+<script src="https://uicdn.toast.com/grid/latest/tui-grid.js"></script>
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 <script
 	src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
-<link rel="stylesheet"
-	href="https://uicdn.toast.com/tui-grid/latest/tui-grid.min.css" />
+
 <script
 	src="https://uicdn.toast.com/tui.code-snippet/latest/tui-code-snippet.min.js"></script>
-<script src="https://uicdn.toast.com/tui-grid/latest/tui-grid.min.js"></script>
+
 <link rel="stylesheet"
 	href="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.css">
 <script
@@ -22,7 +29,14 @@
 	href="https://unpkg.com/ag-grid-community@25.3.0/dist/styles/ag-theme-alpine.css">
 <script
 	src="https://unpkg.com/ag-grid-community@25.3.0/dist/ag-grid-community.min.noStyle.js"></script>
-
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css"
+	integrity="sha512-3pIirOrwegjM6erE5gPSwkUzO+3cTjpnV9lexlNZqvupR64iZBnOOTiiLPb9M36zpMScbmUNIcHUqKD47M719g=="
+	crossorigin="anonymous" referrerpolicy="no-referrer" />
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"
+	integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw=="
+	crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
 
 </head>
@@ -156,9 +170,9 @@
 				</div>
 				<div class="modal-footer">
 					<button type="button" id="confirmBtn" class="btn btn-primary"
-						data-bs-dismiss="modal">확인</button>
+						data-dismiss="modal">확인</button>
 					<button type="button" id="cancleAddProd" class="btn btn-secondary"
-						data-bs-dismiss="modal">닫기</button>
+						data-dismiss="modal">닫기</button>
 				</div>
 			</div>
 		</div>
@@ -454,7 +468,7 @@ $(function() {
 					var rowKey = data[i].rowKey;
 					grid.removeRow(rowKey);
 				}
-				$.ajax({
+				$.ajax({	
 					url : "deleteOrdr",
 					method : "post",
 					data : JSON.stringify(data),
@@ -578,7 +592,42 @@ function comList() {
 		})
 	})
 }
+		//제품코드 모달창에서 제품코드 선택 -> 추가된 행 제품명,코드에 값 들어가기
+		CdModal.on("click", ev => {
+			console.log(ev);
+			let outProdCd = CdModal.getValue(ev.rowKey,'edctsCd');
+			let outProdNm  = CdModal.getValue(ev.rowKey,'prdtNm');
+			
+			grid.setValue(edctsCdRowKey, 'edctsCd', outProdCd);
+			grid.setValue(edctsCdRowKey, 'prdtNm', outProdNm)
+		})
+	   
+	   //더블클릭 하면 체크박스 체크
+	   grid.on('editingFinish', (ev) => {
+					var rowKey = ev.rowKey;
+					grid.check(rowKey);
+				});
 		
+		//제품코드 칸 클릭 -> 제품코드 모달창 띄우기
+		var edctsCdRowKey = '';
+		grid.on("click",(e) => {
+			const {columnName} = e;
+			edctsCdRowKey = e.rowKey;
+			if(columnName == 'edctsCd') {
+				$("#edctsCdModal").modal("show");
+				$.ajax({
+					url:"proSearch",
+					dataType:"json",
+					method:"get",
+					success:function(edctsCdList) {
+						setTimeout(function() {
+							CdModal.refreshLayout();
+						},300);
+						CdModal.resetData(edctsCdList);
+					}
+				})
+			}
+		})
 	
 		//새자료 버튼 클릭 -> 폼 input 비우기
 		$("#ReBtn").on("click",function() {
@@ -633,4 +682,29 @@ function comList() {
 		vendGrid.on("dblclick",(ev) => {
 			$("#vendGridModal").modal('hide');
 		});
+		
+		//주문서 수정 저장
+		var okBtn = document.getElementById('okBtn');
+		okBtn.addEventListener('click',function(result) {
+			var data = grid.getCheckedRows();
+			if(data == '') {
+				toastr.warning('주문서 작성을 완료해주세요');
+			}else {
+				$.ajax({
+				url:"saveOrdr",
+				method:"post",
+				data:JSON.stringify(data),
+				contentType:"application/json",
+				success:function() {
+					grid.uncheckAll();
+					toastr.success('저장되었습니다');
+					console.log(data);
+					},
+					error:function(er){
+						console.log(er);
+					}
+				})
+			}
+			
+			})
 </script>
