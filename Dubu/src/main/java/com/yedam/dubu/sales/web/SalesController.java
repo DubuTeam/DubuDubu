@@ -25,10 +25,17 @@ public class SalesController {
 	}
 
 	// 제품 입고 목록 현재 날짜 기준으로 조회(첫페이지)
-	@GetMapping("salesIstList")
+	@PostMapping("salesIstList")
 	@ResponseBody
 	public List<SalesIstVO> salesIstList(SalesIstVO vo) {
 		return salesService.salesIstList(vo);
+	}
+
+	// 제품 입고 목록 조건별 조회
+	@PostMapping("istOptionList")
+	@ResponseBody
+	public List<SalesIstVO> istOptionList(SalesIstVO vo) {
+		return salesService.istOptionList(vo);
 	}
 
 	// 제품입고조회
