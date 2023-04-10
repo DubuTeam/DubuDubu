@@ -5,10 +5,10 @@ import lombok.NoArgsConstructor;
 
 @Data
 public class VendVO {
-
+	//  거래처 테이블  
 	String vendCd;
 	String vendNm;
-	String bizno;
+	String binzo;
 	String telno;
 	String vendTyp;
 	String remk;

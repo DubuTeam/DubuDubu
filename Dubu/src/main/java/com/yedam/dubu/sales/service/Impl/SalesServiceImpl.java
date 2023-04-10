@@ -43,4 +43,16 @@ public class SalesServiceImpl implements SalesService {
 		return salesMapper.comSearch(vo);
 	}
 
+	@Override
+	public List<SalesVO> proSearch(SalesVO vo) {
+		// TODO Auto-generated method stub
+		return salesMapper.proSearch(vo);
+	}
+
+	// 주문번호 생성, 가져오기
+	@Override
+	public SalesVO getordrNo(SalesVO vo) {
+		return salesMapper.getordrNo(vo);
+	}
+
 }
