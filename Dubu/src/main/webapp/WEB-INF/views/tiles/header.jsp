@@ -114,8 +114,7 @@
         <div id="bbb" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 <a class="collapse-item" href="${pageContext.request.contextPath}/materialOrder">자재발주관리</a>
-                <%-- <a class="collapse-item" href="${pageContext.request.contextPath}/materialOrderSearch">자재발주조회XXX</a>
-                <a class="collapse-item" href="${pageContext.request.contextPath}/materialInspList">자재입고검사조회XXX</a> --%>
+                <a class="collapse-item" href="${pageContext.request.contextPath}/materialOrderSearch">자재발주조회</a>
                 <a class="collapse-item" href="${pageContext.request.contextPath}/materialIst">자재입고관리</a>
                 <%-- <a class="collapse-item" href="${pageContext.request.contextPath}/materialIstList">자재입고조회XXX</a> --%>
                 <a class="collapse-item" href="${pageContext.request.contextPath}/materialOust">원자재출고관리△△△</a>
@@ -141,6 +140,7 @@
             <div class="bg-white py-2 collapse-inner rounded">
                 <a class="collapse-item" href="${pageContext.request.contextPath}/prdtInsp">제품검사관리</a>
                 <a class="collapse-item" href="${pageContext.request.contextPath}/materialInsp">자재입고검사관리</a>
+                <a class="collapse-item" href="${pageContext.request.contextPath}/materialInspList">자재입고검사조회</a>
             </div>
         </div>
     </li>

@@ -349,6 +349,23 @@
 	
 	// 발주할 자재 더블클릭시 작동하는 함수
 	function materialOrder(rscCd, rscNm, vendCd, vendNm, avalStc, safStc){
+	  for(let i = 0; i < material.length; i++){
+		  if(material[i].rscCd == rscCd){
+			 Swal.fire({
+                  icon: 'warning',
+                  title: '해당 자재가 발주목록에 이미 존재합니다.',
+                  text:  rscNm + ' 자재가 발주 신청 목록에 이미 존재합니다.'
+              });
+			 return;
+		  }else if(material[i].vendCd != vendCd){
+			 Swal.fire({
+                  icon: 'error',
+                  title: '다른업체와 같이 신청 할수없습니다.',
+                  text:  '동일한 거래처를 클릭하세요'
+              });
+			 return;
+		  }
+	  }
 	  let datas = {rscCd : rscCd, rscNm : rscNm, vendCd : vendCd, vendNm:vendNm, avalStc : avalStc, safStc:safStc, OrderCode:OrderCode}
 	  material.push(datas)
 	  let tbody = $("#order"); // tbody 선택
@@ -372,27 +389,24 @@
 			   tbody.empty();
 
 			   $.each(result.result, function (index, item) {
-				   var row = $('<tr>');
+				   
+				   let row = "";
+				   if(item.avalStc < item.safStc){
+				   		row = $('<tr>', { class : 'eachRow warn'}).on('dblclick', () => materialOrder(item.rscCd, item.rscNm, item.vendCd, item.vendNm, item.avalStc, item.safStc));
+				   }else{
+						row = $('<tr>', { class : 'eachRow'}).on('dblclick', () => materialOrder(item.rscCd, item.rscNm, item.vendCd, item.vendNm, item.avalStc, item.safStc));
+				   }
+				   
                    // td 생성
-                   row.append($("<th scope='row'>").text(index + 1));
-                   row.append($("<td>").text(item.ordrDtlCd));
-                   row.append($("<td>").text(item.ordrDtlCnt));
-                   row.append($("<td>").text(item.cprNm));
-                   row.append($("<td>").text(item.caNm));
-                   row.append($("<td>").text(item.dlvryDt));
-                   row.append($("<td>").text(item.orshPr));
-                   var td = $("<td>");
-                   var button = $("<button>", {
-                       type: "button",
-                       class: "planBtn cndInsBtn hi",
-                       text: "등록"
-                   });
-                   td.append(button);
-                   row.append(td);
-
+                   row.append($("<td>").text(index + 1));
+                   row.append($("<td>").text(item.rscCd));
+                   row.append($("<td>").text(item.rscNm));
+                   row.append($("<td>").text(item.vendCd));
+                   row.append($("<td>").text(item.vendNm));
+                   row.append($("<td>").text(item.avalStc));
+                   row.append($("<td>").text(item.safStc));
                    tbody.append(row);
-			   });
-			  	
+			   	})	
 		   },
 	       error: function (reject) {
 		       console.log(reject);
@@ -510,7 +524,6 @@
 	  console.log(vendCd); // 거래처코드 */
 	
 	  let data = {
-	    param : 'insert', // 삽입
 	    rscCd : rscCds, // 자재코드
 	    ordrCd : orderCode, // 발주번호
 	    ordrCnt2 : orderCount, // 발주수량
@@ -519,17 +532,20 @@
 	  }
 	
 	  $.ajax({
-	      url: 'materialOrder',
+	      url: 'materialOrderInsert',
 	      type: 'POST', 
 	      data: data, // 쿼리스트링
 	      success: function (result) {
-	        if(result == 1){
+	        if(result > 0){ // 반환값이 1 이상이라면 실행
         	  Swal.fire({
                    icon: 'success',
                    title: '자재 발주 신청이 완료되었습니다.',
                    text: '발주 번호 : ' + OrderCode + ' 신청 완료되었습니다.',
                });
+        	  
+	          //console.log(typeof(result));
 	          console.log("성공");
+	          
 	          let tbody = $("#order"); // tbody 선택
 	          
 	          tbody.empty();
@@ -548,9 +564,10 @@
 	          }
       		  
 	          OrderCode = ordr + ordrNum; // 다음에 오는 발주번호
+	          allCheck.checked = false;
 	          
 	        }else{
-	          console.log("실패");
+	          console.log("INSERT 실패");
 	        }
 	      },
 	      error: function (reject) {

@@ -21,4 +21,7 @@ public interface MaterialService {
 	
 	// 자재발주 INSERT
 	public int getMaterialOrderInsert(MaterialVO material);
+	
+	// 자재발주디테일 INSERT
+	public int getMaterialOrderDetailInsert(MaterialVO material);
 }

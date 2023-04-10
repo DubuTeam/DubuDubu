@@ -45,9 +45,17 @@ public class MaterialServiceImpl implements MaterialService{
 		return materialMapper.getNextMaterialOrderCode();
 	}
 
+	// 자재발주 INSERT
 	@Override
 	public int getMaterialOrderInsert(MaterialVO material) {
 		return materialMapper.getMaterialOrderInsert(material);
 	}
+
+	// 자재발주디테일 INSERT
+	@Override
+	public int getMaterialOrderDetailInsert(MaterialVO material) {
+		return materialMapper.getMaterialOrderDetailInsert(material);
+	}
+	
 
 }

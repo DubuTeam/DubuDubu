@@ -72,8 +72,16 @@
 		FROM DUAL
 	</select>
 	
+	<!-- 자재 발주 INSERT  -->
 	<insert id="getMaterialOrderInsert" parameterType="MaterialVO">
-		
+		INSERT INTO RSC_ORDR(ORDR_CD, VEND_CD, ORDR_REQ_DT)
+		VALUES(#{ordrCd}, #{vendCd}, sysdate)
+	</insert>
+	
+	<!-- 자재 발주 디테일 INSERT  -->
+	<insert id="getMaterialOrderDetailInsert" parameterType="MaterialVO">
+		INSERT INTO RSC_ORDR_DTL(ORDR_CD, RSC_CD, ORDR_CNT , RMN_CNT, PAPRD_CMND_DT)
+		VALUES(#{ordrCd},#{rscCd}, #{ordrCnt}, #{rmnCnt}, TO_DATE(#{paprdCmndDt2},'YYYY-MM-DD'))
 	</insert>
 
 </mapper>
