@@ -9,9 +9,18 @@
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
+<!-- 부트스트랩 -->
+<script
+	src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+
+
 <!-- Grid -->
 <link rel="stylesheet" href="https://uicdn.toast.com/grid/latest/tui-grid.css" />
 <script src="https://uicdn.toast.com/grid/latest/tui-grid.js"></script>
+
+<!-- DatePicker -->
+<link rel="stylesheet" href="https://uicdn.toast.com/tui.date-picker/latest/tui-date-picker.css" />
+<script src="https://uicdn.toast.com/tui.date-picker/latest/tui-date-picker.js"></script>
 
 <!-- SweetAlert -->
 <link rel="stylesheet"
@@ -23,6 +32,10 @@
 <link
 	href="${pageContext.request.contextPath}/resources/css/material/materialOrdrSearch.css"
 	rel="stylesheet">
+
+<style>
+.tui-grid-cell.cell-red {background-color : #FFF0F5;}
+</style>
 
 <!-- Begin Page Content -->
 <div class="container-fluid">
@@ -122,31 +135,35 @@
 			</div>
 		</div>
 
-		<!-- Modal -->
-		<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
+		<!-- 자재발주 내역 조회 Modal -->
+		<div class="modal fade" id="detailModal" tabindex="-1" role="dialog"
 			aria-labelledby="exampleModalLabel" aria-hidden="true">
 			<div class="modal-dialog modal-xl" role="document">
 				<div class="modal-content">
 					<div class="modal-header">
 						<h5 class="modal-title" id="exampleModalLabel">자재발주내역조회</h5>
-						<button type="button" class="btn-close" data-bs-dismiss="modal"
-							aria-label="Close"></button>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">X</span>
+						</button>
 					</div>
 					<div class="modal-body">
-						<label style="margin-top: 5px">발주코드</label> <input
-							class="form-control" type="text" id="ordrCd" name="ordrCd"
-							style="width: 180px; margin-bottom: 10px" readonly />
-						<div class="linelist" style="float: right;">
-
-							<button type="button" class="btn btn-primary" id="saveBtn">
-								<i class="fas fa-save"></i> 수정
-							</button>
-							<button id="pdfBtn" name="pdfBtn" type="button"
-								class="btn btn-primary">
-								<i class="fas fa-download"></i> PDF
-							</button>
+						<div class="row">
+							<div class="col-md-6">
+								<label style="margin-top: 5px; display:inline;">발주코드</label> 
+								<input class="form-control" type="text" id="ordrCd" name="ordrCd" style="width: 180px; margin-bottom: 10px; display:inline;" readonly />
+							</div>
+							<div class="col-md-4"></div>
+							<div class="linelist col-md-2" style="margin-bottom:10px; float:right;">
+								<button type="button" class="btn btn-primary" id="saveBtn">
+									<i class="fas fa-save"></i> 수정
+								</button>
+								<button id="pdfBtn" name="pdfBtn" type="button"
+									class="btn btn-primary">
+									<i class="fas fa-download"></i> PDF
+								</button>
+							</div>
 						</div>
-						<div id="grid2"></div>
+						<div id="materialOrderDetailGrid"></div>
 					</div>
 				</div>
 			</div>
@@ -163,31 +180,39 @@
 //업체 검색 모달창에서 더블클릭시 작동하는 함수
 function searchVend(vendName){
 	$('#vendNm').val(vendName); // 거래처명 입력됨
-	$('.close').click(); // 모달창 닫기
+	$('#vendModal').modal('hide'); // 모달창 닫기
+	$('.modal-backdrop').remove(); // 모달창 닫을때 생기는 background배경 제거
 }
 
 // 그리드
 const grid = new tui.Grid({
 	  el: document.getElementById('grid'), // Container element
+	  scrollX: true,
+      scrollY: true,
+      rowHeaders: ['rowNum'],
 	  columns: [
 	    {
 	      header: '발주코드',
-	      name: 'ordrCd'
+	      name: 'ordrCd',
+	      align : 'center'
 	    },
 	    {
 	      header: '업체코드',
-	      name: 'vendCd'
+	      name: 'vendCd',
+	      align : 'center'
 	    },
 	    {
 	      header: '업체명',
-	      name: 'vendNm'
+	      name: 'vendNm',
+	      align : 'center'
 	    },
 	    {
 	      header: '발주신청일',
 	      name: 'ordrReqDt',
-	      formatter : function(data){          
-              return dateChange(data.value);
-          }
+	      align : 'center',
+	      formatter : function(data){ // 날짜형식 바꿔주는것
+              return dateFormat(data.value);
+         }
 
 	    }
 	  ]
@@ -217,7 +242,7 @@ function searchAll(){
 	let startOrdrReqDt = $('#start').val();
 	let endOrdrReqDt = $('#end').val();
 	
-	console.log(vendNm + " " + startOrdrReqDt + " " + endOrdrReqDt);
+	//console.log(vendNm + " " + startOrdrReqDt + " " + endOrdrReqDt);
 	
 	$.ajax({
 		   url: 'materialOrderSearch',
@@ -233,7 +258,7 @@ function searchAll(){
 }
 
 //날짜 변환
-function dateChange(date) {
+function dateFormat(date) {
    let date1 = new Date(date);
    let date2 = date1.getFullYear() + '-' 
          + ((date1.getMonth()<10)?'0'+(date1.getMonth()+1):(date1.getMonth()+1)) + '-'
@@ -241,6 +266,98 @@ function dateChange(date) {
    return date2;
 }
 
+
+// 그리드 셀 더블클릭시 나타나는 상세 자재 발주 모달창
+grid.on('dblclick', (e) => {
+	
+	let rscCdRowKey = '';
+	rscCdRowKey = e.rowKey; // 내가 더블클릭한 곳의 index 값
+	
+	// getRow(e.rowKey) : rowKey값의 행 정보(object)를 가져옴
+	// Return the object that contains all values in the specified row.
+	let ordrCd = grid.getRow(e.rowKey).ordrCd; 
+ 
+	$('#detailModal').modal('show'); // 모달창 show
+	
+	$.ajax({
+		url:"materialDetail",
+		data : {ordrCd:ordrCd},
+		method:"post",
+		success:function(result) {
+			//console.log(result);
+			setTimeout(function() {
+				detailGrid.refreshLayout(); // new tui.Grid의 refreshLayout()으로 해줘야함
+			},300);
+			$('#ordrCd').val(ordrCd);
+			detailGrid.resetData(result);
+		}
+	}) 
+});
+
+// 자재발주 내역 모달창 그리드  
+const detailGrid = new tui.Grid({
+	el : document.getElementById('materialOrderDetailGrid'),
+	scrollX : false,
+	scrollY : false,
+	rowHeaders : [ 'checkbox' ],
+	columns : [ 
+		{
+			header : '자재코드',
+			name : 'rscCd'
+		}, 
+		{
+			header : '자재명',
+			name : 'rscNm'
+		},
+		{
+			header : '업체코드',
+			name : 'rscNm'
+		},
+		{
+			header : '업체명',
+			name : 'vendNm'
+		},
+		{
+			header : '발주코드',
+			name : 'ordrCd'
+		},
+		{
+			header : '발주수량',
+			name : 'ordrCnt',
+			editor : 'text',
+			onAfterChange : function(data){    
+				
+				let rowKey = data.rowKey; // 변견한 행의 index
+				let ordrCnt = parseInt(data.value); // 변경한 발주 수량
+				let avalStc = parseInt(detailGrid.getRow(rowKey).avalStc); // 현재 재고
+				let expect = ordrCnt + avalStc; // 현재 재고 + 발주 수량 = 예상 재고량
+				
+				detailGrid.setValue(rowKey, 'expect', expect, false) // 예상재고량 변경
+				detailGrid.addCellClassName(rowKey, 'expect', 'cell-red'); // css
+			}
+		},
+		{
+			header : '현재재고',
+			name : 'avalStc'
+		},
+		{
+			header : '안전재고',
+			name : 'safStc'
+		},
+		{
+			header : '예상재고량',
+			name : 'expect'
+		},
+		{
+			header : '납기요청일',
+			name : 'paprdCmndDt',
+			editor : 'text',
+			formatter : function(data){    
+	              return dateFormat(data.value);
+	       	}
+		},
+	]
+});
 
 
 </script>

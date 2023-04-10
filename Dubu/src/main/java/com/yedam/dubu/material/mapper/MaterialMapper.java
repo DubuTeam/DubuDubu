@@ -30,5 +30,5 @@ public interface MaterialMapper {
 	public List<MaterialVO> getMaterialOrderList(MaterialVO materialVO);
 	
 	// 자재 발주 상세 리스트
-	public List<MaterialVO> getMaterialOrderListDetail();
+	public List<MaterialVO> getMaterialOrderListDetail(String ordrCd);
 }

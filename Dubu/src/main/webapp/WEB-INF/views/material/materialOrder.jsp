@@ -329,11 +329,6 @@
 	
 	let OrderCode = '${OrderCode}'; // 발주코드
 	let material = []; // 자재발주목록
-	let rscCds = ""; // 자재코드
-	let orderCode = ""; // 발주번호
-	let orderCount = ""; // 발주수량 
-	let requestDates= ""; // 납기요청일
-	let vendCd =""; // 거래처코드
 	
 	// 자재 검색 모달창에서 더블클릭시 작동하는 함수
 	function searchMaterial(materialName){
@@ -496,10 +491,17 @@
       for(let i = 0 ; i < material.length; i++){
           tbody.append(makeTr(material[i]));
         }
+      allCheck.checked = false;
 	});
 	
 	// 발주버튼을 눌렀을떄 실행하는 함수
 	$('#saveBtn').on('click',function() {
+	  let rscCds = ""; // 자재코드
+	  let orderCode = ""; // 발주번호
+	  let orderCount = ""; // 발주수량 
+	  let requestDates= ""; // 납기요청일
+	  let vendCd =""; // 거래처코드
+	  
 	  let chkObj = document.getElementsByName("RowCheck"); // name 속성이 RowCheck인것을 모두 가져옴
 	  for (let i = 0; i < chkObj.length; i++) {
 	    if (chkObj[i].checked == true) {
@@ -512,10 +514,10 @@
 	          requestDates = requestDates + material[j].requestDate + ","; // 납기요청일
 	          vendCd = vendCd + material[j].vendCd + ","; // 거래처코드
 	          material.splice(j, 1); // 발주한 자재목록 제거
-	        }
-	      }
-	    }
-	  }
+	        	}
+	     	 }
+	    	}
+	  	}
 	
 	  /* console.log(rscCds); // 자재코드
 	  console.log(orderCode); // 발주번호
@@ -530,7 +532,7 @@
 	    paprdCmndDt2 : requestDates, // 납기요청일
 	    vendCd : vendCd // 거래처코드
 	  }
-	
+	  
 	  $.ajax({
 	      url: 'materialOrderInsert',
 	      type: 'POST', 
@@ -544,7 +546,7 @@
                });
         	  
 	          //console.log(typeof(result));
-	          console.log("성공");
+	          //console.log("성공");
 	          
 	          let tbody = $("#order"); // tbody 선택
 	          
@@ -555,11 +557,14 @@
       		  
 	          for(let i = 0 ; i < material.length; i++){
         	  
-	            /* console.log(OrderCode);
-	            console.log(ordr);
-	            console.log(ordrNum); */
+	           // console.log(OrderCode);
+	           // console.log(ordr);
+	           // console.log(ordrNum);
 	            
 	            material[i].OrderCode = ordr + ordrNum;
+	            
+	            //console.log(material[i].OrderCode);
+	            
 	            tbody.append(makeTr(material[i]));
 	          }
       		  
