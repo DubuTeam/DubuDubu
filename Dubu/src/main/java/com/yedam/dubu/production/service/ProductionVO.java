@@ -5,6 +5,7 @@ import lombok.Data;
 
 @Data
 public class ProductionVO {
+	private int prcsNo;
 	public String prcsCd;
 	private String eqmCd;
 	private String prcsNm;
@@ -15,8 +16,9 @@ public class ProductionVO {
 	private List<ProductionVO> updatedRows;
 	private List<ProductionVO> deletedRows;
 	
-	// 주문서조회
-	private String opderNo;	// 주문번호
-	private String vendNM;	// 거래처 
-	private String prdtNm;	// 제품명
+	// 주문서 조회
+	public String orderNo;
+	public String vendNm;
+	public String prdtNm;
+
 }

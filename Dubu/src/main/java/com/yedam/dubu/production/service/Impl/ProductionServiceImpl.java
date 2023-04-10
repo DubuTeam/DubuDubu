@@ -51,11 +51,6 @@ public class ProductionServiceImpl implements ProductionService {
 	}
 
 	@Override
-	public List<ProductionVO> OrderList() {
-		return productionMapper.OrderList();
-	}
-
-	@Override
 	public int insertPrcsGrid(List<ProductionVO> list) {
 		int result = 0;
 		for(ProductionVO vo : list) {
@@ -68,8 +63,17 @@ public class ProductionServiceImpl implements ProductionService {
 	public int updatePrcsGrid(List<ProductionVO> update) {
 		int result = 0;
 		for(ProductionVO vo : update) {
-			result += productionMapper.insertPrcsGrid(vo);
+			result += productionMapper.updatePrcsGrid(vo);
 		}
 		return result;
 	}
+
+	@Override
+	public List<ProductionVO> selectOrderList() {
+		return productionMapper.selectOrderList();
+	}
+
+
+
+
 }

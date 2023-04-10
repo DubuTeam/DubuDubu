@@ -1,9 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 
-	<link href="${pageContext.request.contextPath}/resources/css/prodcss/plan.css" rel="stylesheet" type="text/css">
+<link href="${pageContext.request.contextPath}/resources/css/prodcss/plan.css" rel="stylesheet" type="text/css">
 <!-- JQuery -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-
+<!-- grid -->
+<link rel="stylesheet" href="https://uicdn.toast.com/grid/latest/tui-grid.css" />
+<script src="https://uicdn.toast.com/grid/latest/tui-grid.js"></script>
+<!-- SweetAlert -->
+<link rel="stylesheet"   href="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.css">
+<script   src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.js"></script>
 
 	<!-- Begin Page Content -->
 	<!-- 헤더부분 -->
@@ -219,42 +224,41 @@
 			</div>
 			<!-- End of Main Content -->
 <script>
-$(document).ready(function(){
+ $(document).ready(function(){
 	orderList();
-});
-function orderList() {
-	 
-	$.ajax({
-        url: "orderList",
-        method: "post",
-        data: { orderNo : orderNo },
-        success: function(data) {
-           grid.resetData(data);  //그리드 적용
-        },
-        error: function (reject) {
-          console.log(reject);
-        },
-    });
-} 
+}); 
+const orderList = [
+	<c:forEach items="${selectOrderList}" var="order">
+	{
+	orderNo : '${order.orderNo}',
+	vendNm : '${order.vendNm}',
+	prdtNm : '${opder.prdtNm}'	
+	},
+	</c:forEach>
+];
+
+console.log(orderList);
 		//그리드 선언
         var grid = new tui.Grid({
-             el: document.getElementById('orderGrid')
+             el: document.getElementById('orderGrid'),
              columns: [
 
                  {
                      header: '주문번호',
-                     name: 'OrderNo'
+                     name: 'orderNo'
                  },
                  {
                      header: '거래처명',
-                     name: 'VendNm'
+                     name: 'vendNm'
                  },
                  {
                      header: '제품명',
-                     name: 'PrdtNm'
+                     name: 'prdtNm'
                  }
                  
              ]
 
          });
+        grid.resetData(orderList);   // 그리드에 값 입력	
+       
 </script>

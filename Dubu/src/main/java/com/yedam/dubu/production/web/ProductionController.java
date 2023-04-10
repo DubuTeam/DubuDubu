@@ -49,7 +49,6 @@ public class ProductionController {
 	@ResponseBody
 	public int insertPrcsGrid(@RequestBody ProductionVO productionVO) {
 		
-		//System.out.println(productionVO.getCreatedRows());
 		System.out.println(productionVO.getCreatedRows());
 		
 		return productionService.insertPrcsGrid(productionVO.getCreatedRows());
@@ -59,15 +58,15 @@ public class ProductionController {
 	@ResponseBody
 	public int updatePrcsGrid(@RequestBody ProductionVO productionVO) {
 		
-		//System.out.println(productionVO.getCreatedRows());
 		System.out.println(productionVO.getUpdatedRows());
 		
-		return productionService.insertPrcsGrid(productionVO.getUpdatedRows());
+		return productionService.updatePrcsGrid(productionVO.getUpdatedRows());
 	}
 	
 	// 생산계획
 	@GetMapping("/plan")
 	public String getPlan(Model model){
+		model.addAttribute("selectOrderList", productionService.selectOrderList());
 		return "production/plan";
 	}
 	

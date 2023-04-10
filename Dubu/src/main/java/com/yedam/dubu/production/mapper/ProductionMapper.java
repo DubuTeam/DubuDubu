@@ -27,5 +27,7 @@ public interface ProductionMapper {
 	public String inesrtPrcsCode();
 	
 	// 주문서 조회
-	public List<ProductionVO> OrderList();
+	public List<ProductionVO> selectOrderList();
+	
+	
 }
