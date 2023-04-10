@@ -34,15 +34,33 @@ OR (pi.EDCTS_LOT_NO = 'LOT2')
 </select>
 -->
 <select id="selectQualityList" resultType="QualityVO">
-		SELECT p.EDCTS_LOT_NO "LOT번호", p.EDCTS_CD "제품코드", e.PRDT_NM "제품명", p.INSP_JM "최종판정", TO_CHAR(p.INSP_DT, 'YYYY-MM-DD') "검사날짜", p.INSP_PSCH "검사자"
+		SELECT p.*, e.PRDT_NM
 		FROM PRDT_INSP p, EDCTS e
 		WHERE p.EDCTS_CD = e.EDCTS_CD
 		AND INSP_JM IS NOT NULL
-		<if test="edctsLotNo != null and edctsLotNo !=''">and EDCTS_LOT_NO LIKE '%'||'LOT2'||'%'</if>
-		<if test="startDt != null"><![CDATA[and INSP_DT >= '2023-01-01']]></if>
-		<if test="endDt != null"><![CDATA[and INSP_DT <= '2023-05-02']]></if>
+		<if test="edctsLotNo != null and edctsLotNo !=''">and EDCTS_LOT_NO LIKE '%'||#{edctsLotNo}||'%'</if>
+		<if test="startDt != null"><![CDATA[and INSP_DT >= #{startDt}]]></if>
+		<if test="endDt != null"><![CDATA[and INSP_DT <= #{endDt}]]></if>
 		ORDER BY EDCTS_LOT_NO
 </select>
+
+<select id="getPrdtInsp" resultType="QualityVO">
+		SELECT p.*, e.PRDT_NM
+		FROM PRDT_INSP p, EDCTS e
+		WHERE p.EDCTS_CD = e.EDCTS_CD
+		AND INSP_JM IS NOT NULL
+		<if test="edctsLotNo != null and edctsLotNo !=''">and EDCTS_LOT_NO LIKE '%'||#{edctsLotNo}||'%'</if>
+		<if test="startDt != null"><![CDATA[and INSP_DT >= #{startDt}]]></if>
+		<if test="endDt != null"><![CDATA[and INSP_DT <= #{endDt}]]></if>
+		ORDER BY EDCTS_LOT_NO
+	</select>
+	
+	<select id="getPrdtInspDtl" resultType="QualityVO">
+		SELECT *
+		FROM PRDT_INSP_DTL
+		WHERE EDCTS_LOT_NO = #{edctsLotNo}
+	</select>
+
 
 
 

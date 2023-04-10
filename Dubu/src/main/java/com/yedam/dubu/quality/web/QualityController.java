@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.yedam.dubu.quality.service.QualityService;
@@ -29,7 +30,7 @@ public class QualityController {
 	@PostMapping("/prdtInsp")
 	@ResponseBody
 	public List<QualityVO>PrdtInsp2(QualityVO qualityVO) {
-		
+
 		return null;
 	}
 	
@@ -38,5 +39,18 @@ public class QualityController {
 	public String getMaterialInsp(Model model) {
 		return "quality/materialInsp";
 	}
+	//조회
+	@RequestMapping("getPrdtInsp")
+	@ResponseBody
+	public List<QualityVO> getPrdtInsp(QualityVO qualityVO) {
+		return qualityService.getPrdtInsp(qualityVO);
+	}
+
+	@RequestMapping("getPrdtInspDtl")
+	@ResponseBody
+	public List<QualityVO> getPrdtInspDtl(QualityVO qualityVO) {
+		return qualityService.getPrdtInspDtl(qualityVO);
+	}
+
 	
 }

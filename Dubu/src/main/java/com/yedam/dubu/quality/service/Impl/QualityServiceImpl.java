@@ -20,4 +20,20 @@ public class QualityServiceImpl implements QualityService {
 		
 		return qualityMapper.selectQualityList();
 	}
+
+	@Override
+	public List<QualityVO> getPrdtInsp(QualityVO qualityVO) {
+
+		return qualityMapper.getPrdtInsp(qualityVO);
+	}
+
+	@Override
+	public List<QualityVO> getPrdtInspDtl(QualityVO qualityVO) {
+	
+		return qualityMapper.getPrdtInspDtl(qualityVO);
+	}
+
+	
 }
+
+
