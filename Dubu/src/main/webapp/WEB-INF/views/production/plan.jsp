@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-
+<!-- JSTL -->
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <link href="${pageContext.request.contextPath}/resources/css/prodcss/plan.css" rel="stylesheet" type="text/css">
 <!-- JQuery -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
@@ -9,6 +11,7 @@
 <!-- SweetAlert -->
 <link rel="stylesheet"   href="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.css">
 <script   src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.js"></script>
+
 
 	<!-- Begin Page Content -->
 	<!-- 헤더부분 -->
@@ -224,9 +227,6 @@
 			</div>
 			<!-- End of Main Content -->
 <script>
- $(document).ready(function(){
-	orderList();
-}); 
 const orderList = [
 	<c:forEach items="${selectOrderList}" var="order">
 	{
@@ -236,6 +236,11 @@ const orderList = [
 	},
 	</c:forEach>
 ];
+
+//로드시 나타남
+$(document).ready(function(){
+    grid.resetData(orderList);   // 그리드에 값 입력	
+});
 
 console.log(orderList);
 		//그리드 선언
@@ -259,6 +264,9 @@ console.log(orderList);
              ]
 
          });
-        grid.resetData(orderList);   // 그리드에 값 입력	
+$('#searchBtn').click(function(){
+	document.getElementById('orderGrid');
+	setTimeout(()=>orderGrid.refreshLayout(),0);
+});
        
 </script>
