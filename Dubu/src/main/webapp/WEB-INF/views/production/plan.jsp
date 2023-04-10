@@ -227,22 +227,32 @@
 			</div>
 			<!-- End of Main Content -->
 <script>
-const orderList = [
+
+/*  const orderList = [
 	<c:forEach items="${selectOrderList}" var="order">
 	{
 	orderNo : '${order.orderNo}',
 	vendNm : '${order.vendNm}',
-	prdtNm : '${opder.prdtNm}'	
+	prdtNm : '${order.prdtNm}'	
 	},
 	</c:forEach>
-];
+];  */
 
-//로드시 나타남
-$(document).ready(function(){
-    grid.resetData(orderList);   // 그리드에 값 입력	
-});
-
-console.log(orderList);
+ function search() {
+	let orderNo = #{orderNo};
+	 
+	$.ajax({
+        url: "planOrderList",
+        method: "post",
+        data: { orderNo : orderNo },
+        success: function(data) {
+           grid.resetData(data);  //그리드 적용
+        },
+        error: function (reject) {
+          console.log(reject);
+        },
+    });
+}  
 		//그리드 선언
         var grid = new tui.Grid({
              el: document.getElementById('orderGrid'),
@@ -264,9 +274,17 @@ console.log(orderList);
              ]
 
          });
-$('#searchBtn').click(function(){
-	document.getElementById('orderGrid');
-	setTimeout(()=>orderGrid.refreshLayout(),0);
-});
+        searchBtn.addEventListener("click", search);
+
+/*        //로드시 나타남
+        $(document).ready(function(){
+            grid.resetData(orderList);   // 그리드에 값 입력	
+        });
+
+        $('#searchBtn').on('click','button',function(){
+        	$(document).getElementById('orderGrid');
+        	${'#exampleModal'}.modal('show');
+        	setTimeout(()=>orderGrid.refreshLayout(),0);
+        }); */ 
        
 </script>

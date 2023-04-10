@@ -164,7 +164,6 @@ function search() {
     	    type: 'POST',
     	    async: false,
     	    success: function(data) {
-    	        	console.log('성공');
     	        	search();  
     	    },
     	    error: function(reject) {
@@ -179,7 +178,6 @@ function search() {
     	    type: 'POST',
     	    async: false,
     	    success: function(data) {
-    	        	console.log('성공');
     	        	search();
         		    Swal.fire({
 	        		      icon: 'success',
@@ -219,7 +217,6 @@ function search() {
     		data:{prcsCd : str},
     		type:'POST',
     		success:function(data){
-    			console.log('성공')
     			search();
     		},error: function (reject) {
     	        console.log(reject);
