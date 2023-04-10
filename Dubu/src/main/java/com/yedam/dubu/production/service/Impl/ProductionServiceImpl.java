@@ -68,10 +68,15 @@ public class ProductionServiceImpl implements ProductionService {
 		return result;
 	}
 
-	@Override
-	public List<ProductionVO> selectOrderList() {
-		return productionMapper.selectOrderList();
-	}
+	/*
+	 * @Override public List<ProductionVO> selectOrderList() { return
+	 * productionMapper.selectOrderList(); }
+	 */
+
+	
+	  @Override public List<ProductionVO> selectOrderList(String orderNo) { return
+	  productionMapper.selectOrderList(orderNo); }
+	 
 
 
 

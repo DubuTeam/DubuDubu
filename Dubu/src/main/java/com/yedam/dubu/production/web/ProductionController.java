@@ -49,7 +49,6 @@ public class ProductionController {
 	@ResponseBody
 	public int insertPrcsGrid(@RequestBody ProductionVO productionVO) {
 		
-		System.out.println(productionVO.getCreatedRows());
 		
 		return productionService.insertPrcsGrid(productionVO.getCreatedRows());
 	}
@@ -58,7 +57,6 @@ public class ProductionController {
 	@ResponseBody
 	public int updatePrcsGrid(@RequestBody ProductionVO productionVO) {
 		
-		System.out.println(productionVO.getUpdatedRows());
 		
 		return productionService.updatePrcsGrid(productionVO.getUpdatedRows());
 	}
@@ -66,7 +64,7 @@ public class ProductionController {
 	// 생산계획
 	@GetMapping("/plan")
 	public String getPlan(Model model){
-		model.addAttribute("selectOrderList", productionService.selectOrderList());
+		//model.addAttribute("selectOrderList", productionService.selectOrderList());
 		return "production/plan";
 	}
 	
@@ -75,6 +73,14 @@ public class ProductionController {
 	public String getPlanSearch(Model model){
 		return "production/planSearch";
 	}
+	
+	
+	  // 생산계획 주문서 조회	  
+	  @PostMapping("/planOrderList")	  
+	  @ResponseBody public List<ProductionVO>
+	  getOrderList(@RequestParam(required=false) String orderNo) { return
+	  productionService.selectOrderList(orderNo); }
+	 
 	
 	
 	// 생산지시
