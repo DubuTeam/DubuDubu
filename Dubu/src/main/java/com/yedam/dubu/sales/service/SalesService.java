@@ -24,9 +24,12 @@ public interface SalesService {
 
 	// 주문서 수정 추가
 	public void saveOrdr(List<SalesVO> ordList);
-	
+
 	///////////////////////////////////////////////////////////////////////
-	//saleslst.jsp 페이지 
-	//제품 입고 목록 현재 날짜 기준으로 조회(첫페이지)
+	// saleslst.jsp 페이지
+	// 제품 입고 목록 현재 날짜 기준으로 조회(첫페이지)
 	public List<SalesIstVO> salesIstList(SalesIstVO vo);
+
+	// 제품 입고 목록 조건별 조회
+	public List<SalesIstVO> istOptionList(SalesIstVO vo);
 }

@@ -301,19 +301,41 @@
 		} ]
 	});
 
-	//제품 입고 전체 목록 - 현재 날짜 기준으로
+	//제품 입고 전체 목록 
 	function salesIstList() {
 		var IstData = $("#IstSearchFrm").serialize();
 		$.ajax({
 			url : "salesIstList",
 			dataType : "json",
-			method : "get",
+			method : "post",
 			data : IstData,
 			success : function(list) {
 				grid.resetData(list);
 			}
 		})
 	}
+	//제품 입고 목록 조건별 조회
+	function istOptionList() {
+		var optionIstData = $("#IstSearchFrm").serialize();
+		$.ajax({
+			url : "istOptionList",
+			method : "post",
+			dataType : "json",
+			data : optionIstData,
+			success : function(optionList) {
+				grid.resetData(optionList);
+			}
+		})
+	}
+
+	$("#dtSearchBtn").on("click", function() {
+		istOptionList();
+	})
+
+	//제품 입고일자 현재 날짜로 설정
+	var startDate = new Date('2013-01-01'); // 2013년 1월 1일을 startDate 변수에 저장합니다.
+	document.getElementById("edctsIstDtStart").valueAsDate = startDate; // 시작 날짜 필드에 startDate 값을 할당합니다.
+	document.getElementById("edctsIstDtEnd").valueAsDate = new Date();
 </script>
 </div>
 </div>

@@ -72,4 +72,10 @@ public class SalesServiceImpl implements SalesService {
 		return salesMapper.salesIstList(vo);
 	}
 
+	// 제품 입고 목록 조건별 조회
+	@Override
+	public List<SalesIstVO> istOptionList(SalesIstVO vo) {
+		return salesMapper.istOptionList(vo);
+	}
+
 }
