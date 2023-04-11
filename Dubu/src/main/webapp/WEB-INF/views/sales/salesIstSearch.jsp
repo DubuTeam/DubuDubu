@@ -3,6 +3,40 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page session="false"%>
 
+<link rel="stylesheet"
+	href="https://uicdn.toast.com/tui.date-picker/latest/tui-date-picker.css" />
+<script
+	src="https://uicdn.toast.com/tui.date-picker/latest/tui-date-picker.js"></script>
+<link rel="stylesheet"
+	href="https://uicdn.toast.com/grid/latest/tui-grid.css" />
+<script src="https://uicdn.toast.com/grid/latest/tui-grid.js"></script>
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<script
+	src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+
+<script
+	src="https://uicdn.toast.com/tui.code-snippet/latest/tui-code-snippet.min.js"></script>
+
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.css">
+<script
+	src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.js"></script>
+<link rel="stylesheet"
+	href="https://unpkg.com/ag-grid-community@25.3.0/dist/styles/ag-grid.css">
+<link rel="stylesheet"
+	href="https://unpkg.com/ag-grid-community@25.3.0/dist/styles/ag-theme-alpine.css">
+<script
+	src="https://unpkg.com/ag-grid-community@25.3.0/dist/ag-grid-community.min.noStyle.js"></script>
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css"
+	integrity="sha512-3pIirOrwegjM6erE5gPSwkUzO+3cTjpnV9lexlNZqvupR64iZBnOOTiiLPb9M36zpMScbmUNIcHUqKD47M719g=="
+	crossorigin="anonymous" referrerpolicy="no-referrer" />
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"
+	integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw=="
+	crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
 <link
 	href="${pageContext.request.contextPath}/resources/css/sales/salesIstSearch.css"
 	rel="stylesheet" type="text/css">
@@ -12,10 +46,10 @@
 	<div class="container-fluid px-4">
 		<h1 class="mt-4">제품입고조회</h1>
 		<ol class="breadcrumb mb-4">
-			<li class="breadcrumb-item"><a href="/"><i
+			<li ><a href="/"><i
 					class="fas fa-home"></i></a></li>
-			<li class="breadcrumb-item">> 영업관리</li>
-			<li class="breadcrumb-item active">> 제품입고조회</li>
+			<li >> 영업관리</li>
+			<li >> 제품입고조회</li>
 		</ol>
 
 		<div class="card mb-4">
@@ -113,5 +147,72 @@
 	</div>
 	<!-- /.container-fluid -->
 </div>
+<script>
+	const grid = new tui.Grid({
+		el : document.getElementById('grid'),
+		scrollX : false,
+		bodyHeight : 300,
+		rowHeight : 35,
+		rowHeaders : [ 'rowNum' ],
+		header : {
+			height : 40
+		},
+		columns : [ {
+			header : '제품 입고번호',
+			name : 'edctsIstNo',
+			align : 'center'
+		}, {
+			header : '제품 입고일자',
+			name : 'edctsIstDt',
+			align : 'center'
+		}, {
+			header : '제품 입고수량',
+			name : 'edctsIstCnt',
+			align : 'right'
+		}, {
+			header : '제품코드',
+			name : 'edctsCd',
+			align : 'center'
+		}, {
+			header : '완제품LOT번호',
+			name : 'edctsLotNo',
+			align : 'center'
+		}, {
+			header : '제품명',
+			name : 'prdtNm',
+			align : 'center'
+		} ]
+	});
+
+	// 완제품LOT번호 모달 그리드(조회)    
+	const lotNoGrid = new tui.Grid({
+		el : document.getElementById('lotNoGrid'),
+		scrollX : false,
+		scrollY : false,
+		rowHeaders : [ 'checkbox' ],
+		columns : [ {
+			header : '주문번호',
+			name : 'orderNo',
+			width : 120,
+			align : 'center'
+		}, {
+			header : '완제품LOT번호',
+			name : 'edctsLotNo',
+			align : 'center'
+		}, {
+			header : '제품코드',
+			name : 'edctsCd',
+			align : 'center'
+		}, {
+			header : '제품명',
+			name : 'prdtNm',
+			align : 'left'
+		}, {
+			header : '입고완료수량',
+			name : 'inspCnt',
+			align : 'right'
+		} ]
+	});
+</script>
 </div>
 <!-- End of Main Content -->

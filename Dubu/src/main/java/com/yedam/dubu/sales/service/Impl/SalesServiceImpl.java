@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.yedam.dubu.sales.mapper.SalesMapper;
+import com.yedam.dubu.sales.service.PrdtInspVO;
 import com.yedam.dubu.sales.service.SalesIstVO;
 import com.yedam.dubu.sales.service.SalesService;
 import com.yedam.dubu.sales.service.SalesVO;
@@ -66,16 +67,19 @@ public class SalesServiceImpl implements SalesService {
 
 ////////////////////////////////////////////////////////////////
 	// saleslst.jsp 페이지
-	// 제품 입고 목록 현재 날짜 기준으로 조회(첫페이지)
-	@Override
-	public List<SalesIstVO> salesIstList(SalesIstVO vo) {
-		return salesMapper.salesIstList(vo);
-	}
+
 
 	// 제품 입고 목록 조건별 조회
 	@Override
 	public List<SalesIstVO> istOptionList(SalesIstVO vo) {
 		return salesMapper.istOptionList(vo);
+	}
+
+	//lot 번호 조회
+	@Override
+	public List<PrdtInspVO> getLotList(PrdtInspVO vo) {
+		// TODO Auto-generated method stub
+		return salesMapper.getLotList(vo);
 	}
 
 }

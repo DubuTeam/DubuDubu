@@ -54,8 +54,8 @@
 		<ol class="breadcrumb mb-4">
 			<li class="breadcrumb-item"><a href="/dubu"><i
 					class="fas fa-home"></i></a></li>
-			<li class="breadcrumb-item">> 영업관리</li>
-			<li class="breadcrumb-item active">> 제품입고등록</li>
+			<li >> 영업관리</li>
+			<li >> 제품입고등록</li>
 		</ol>
 
 		<div class="card mb-4">
@@ -102,72 +102,20 @@
 									name="edctsIstNo" placeholder="등록시 자동생성" readonly
 									style="width: 150px; margin-left: 6px;"></td>
 								<th>완제품LOT번호</th>
-								<td><div style="display: flex;">
-										<input type="text" class="form-control" id="vendNm"
-											name="vendNm" style="width: 150px;" class="input" readonly>
-										<!-- Button trigger modal (4.6버젼) -->
-										<button type="button" style="margin-left: 3px"
-											class="btn btn-primary" data-toggle="modal"
-											data-target="#exampleModal222" id="searchBtn"
-											name="searchBtn">
-											<i class="fas fa-search"></i>
-										</button>
-
-										<!-- Modal -->
-										<div class="modal fade" id="exampleModal222" tabindex="-1"
-											aria-labelledby="exampleModalLabel" aria-hidden="true">
-											<!-- <div class="modal-dialog"> -->
-											<div class="modal-dialog modal-dialog-centered modal-lg">
-												<!-- 모달창 화면 중앙에  modal-dialog-centered, 모달 사이즈 변경 직접 불가해서 modal-lg 추가 -->
-												<div class="modal-content">
-													<div class="modal-header">
-														<h5 class="modal-title" id="exampleModalLabel">검사완료
-															완제품 LOT번호</h5>
-														<button type="button" class="close" data-dismiss="modal"
-															aria-label="Close">
-															<span aria-hidden="true">&times;</span>
-														</button>
-													</div>
-													<div class="modal-body" style="text-align: center;">
-														<div style="display: flex; margin-bottom: 10px;"></div>
-
-														<div id="list-body" class="table">
-															<table style="width: 100%;">
-																<thead>
-																	<tr>
-																		<th><input type="checkbox"></th>
-																		<th>주문번호</th>
-																		<th>완제품LOT번호</th>
-																		<th>제품코드</th>
-																		<th>제품명</th>
-																		<th>검사수량</th>
-																	</tr>
-																</thead>
-																<!-- ↓↓↓여기에 조회된 결과 출력 -->
-																<tbody id="list">
-																	<tr>
-																		<th><input type="checkbox"></th>
-																		<td>test</td>
-																		<td>test</td>
-																		<td>test</td>
-																		<td>test</td>
-																		<td>test</td>
-																	</tr>
-																</tbody>
-															</table>
-														</div>
-													</div>
-													<div class="modal-footer">
-														<button type="button" class="btn btn-secondary"
-															data-dismiss="modal">취소</button>
-														<button type="button" class="btn btn-primary">삭제</button>
-													</div>
-												</div>
-											</div>
+								<td style="width: 175px;">
+									<div class="input-group">
+										<input type="text" class="form-control" id="edctsLotNo"
+											name="edctsLotNo" readonly>
+										<div class="input-group-append">
+											<button type="button" class="btn btn-primary"
+												id="lotSearchBtn" data-toggle="modal"
+												data-target="#lotModal">
+												<i class="fas fa-search"></i>
+											</button>
 										</div>
+									</div>
+								</td>
 
-										<!-- ↑↑↑ 모달 -->
-									</div></td>
 								<th></th>
 								<td></td>
 								<th></th>
@@ -205,33 +153,35 @@
 </div>
 <!-- 완제품LOT번호 모달 -->
 <div class="modal fade" id="lotModal" tabindex="-1"
-	aria-labelledby="elLabel" aria-hidden="true">
+	aria-labelledby="lotModalLabel" aria-hidden="true">
 	<div class="modal-dialog modal-lg">
-		xampleModa
 		<div class="modal-content">
 			<div class="modal-header">
 				<h5 class="modal-title" id="lotModalLabel">검사완료 완제품LOT번호</h5>
-				<button type="button" class="btn-close" data-bs-dismiss="modal"
-					aria-label="Close"></button>
+				<button type="button" class="close" data-dismiss="modal"
+					aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
 			</div>
 			<div class="modal-body">
 				<div id="lotNoGrid"></div>
 			</div>
 			<div class="modal-footer">
 				<button type="button" id="confirmBtn" class="btn btn-primary"
-					data-bs-dismiss="modal">확인</button>
+					data-dismiss="modal">확인</button>
 				<button type="button" id="cancleLotBtn" class="btn btn-secondary"
-					data-bs-dismiss="modal">닫기</button>
+					data-dismiss="modal">닫기</button>
 			</div>
 		</div>
 	</div>
-	<!-- 모달 div끝 -->
+</div>
+<!-- 모달 div끝 -->
 </div>
 <!-- /.container-fluid -->
 </div>
 <script>
 	$(function() {
-		salesIstList();
+		istOptionList();
 	})
 
 	const grid = new tui.Grid({
@@ -301,19 +251,7 @@
 		} ]
 	});
 
-	//제품 입고 전체 목록 
-	function salesIstList() {
-		var IstData = $("#IstSearchFrm").serialize();
-		$.ajax({
-			url : "salesIstList",
-			dataType : "json",
-			method : "post",
-			data : IstData,
-			success : function(list) {
-				grid.resetData(list);
-			}
-		})
-	}
+
 	//제품 입고 목록 조건별 조회
 	function istOptionList() {
 		var optionIstData = $("#IstSearchFrm").serialize();
@@ -331,11 +269,64 @@
 	$("#dtSearchBtn").on("click", function() {
 		istOptionList();
 	})
+	 //제품 입고번호 칸 클릭 -> 폼에 상세값 출력
+		grid.on("click",(e) => {
+			const {columnName} = e;			
+			IstNoRowKey = e.rowKey;
+			let edctsIstNoResult = grid.getValue(IstNoRowKey ,'edctsIstNo');
+			let edctsLotNoResult = grid.getValue(IstNoRowKey, 'edctsLotNo');
+			let edctsIstCntResult = grid.getValue(IstNoRowKey, 'edctsIstCnt');
+			console.log(edctsIstNoResult);
+			if(columnName == 'edctsIstNo') {
+				edctsIstNo.value = edctsIstNoResult;
+				edctsLotNo.value = edctsLotNoResult;
+				edctsIstCnt.value = edctsIstCntResult;
+			}
+		})
+		
+		//완제품LOT번호 검색 버튼 클릭 -> 완제품LOT번호 목록 모달창
+		$("#lotSearchBtn").on("click",function(lotList) {
+			setTimeout(function () {
+							lotNoGrid.refreshLayout()
+							}, 300);
+				$.ajax({
+					url:"getLotList",
+					method:"get",
+					dataType:"json",
+					success:function(lotList) {
+						lotNoGrid.resetData(lotList);
+					}
+				})
+			})
 
-	//제품 입고일자 현재 날짜로 설정
-	var startDate = new Date('2013-01-01'); // 2013년 1월 1일을 startDate 변수에 저장합니다.
-	document.getElementById("edctsIstDtStart").valueAsDate = startDate; // 시작 날짜 필드에 startDate 값을 할당합니다.
-	document.getElementById("edctsIstDtEnd").valueAsDate = new Date();
+			//체크박스 선택시 완제품LOT번호 가져오기
+		lotNoGrid.on("click", e => {
+			let rowInfo = lotNoGrid.getCheckedRows(e);
+			edctsLotNo.value = rowInfo[0].edctsLotNo;
+			inspCnt.value = rowInfo[0].inspCnt;
+		})
+		//모달 그리드 더블클릭시 완제품LOT번호 가져오기
+		  lotNoGrid.on('dblclick', (ev) => {
+    					var rowKey = ev.rowKey;
+    					console.log(rowKey);
+    					lotNoGrid.check(rowKey);
+    					var rowKeyData = lotNoGrid.getCheckedRows(ev);
+    					console.log(rowKeyData);
+    					edctsLotNo.value = rowKeyData[0].edctsLotNo;
+    					inspCnt.value = rowKeyData[0].inspCnt;
+    					$("#lotModal").modal('hide');
+					});
+		//새자료 버튼 클릭 -> 폼 input 비우기
+		$("#ReBtn").on("click",function() {
+			$("#IstSearchFrm").each(function() {
+				this.reset();
+			})
+		})
+		
+		
+			
+	
+
 </script>
 </div>
 </div>

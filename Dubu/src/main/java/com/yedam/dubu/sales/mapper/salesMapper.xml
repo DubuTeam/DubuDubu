@@ -67,17 +67,11 @@
 		o.PROG_APPE, o.PAPRD_DT, o.PRDT_NM, o.ORDER_CNT)
 		VALUES(#{orderNo},#{edctsCd},#{vendCd},#{vendNm},#{orderDt},'InProgress',#{paprdDt},#{prdtNm},#{orderCnt})
 	</update>
+
+
 	<!-- ////////////////////////////////////////////////////////////// -->
 	<!-- saleslst.jsp -->
-	<!-- 입고 목록 날짜 기준 조회(첫페이지) -->
-	<select id="salesIstList" resultType="SalesIstVO">
-		SELECT i.edcts_ist_no,
-		i.edcts_ist_dt, i.edcts_ist_cnt, i.edcts_cd, i.edcts_lot_no, e.prdt_nm
-		FROM edcts_ist i JOIN edcts e
-		ON i.edcts_cd = e.edcts_cd
-		WHERE
-		i.edcts_ist_dt BETWEEN #{edctsIstDtStart} AND #{edctsIstDtEnd}
-	</select>
+
 	<!-- 입고 목록 조건별 조회 -->
 	<select id="istOptionList" resultType="SalesIstVO">
 		SELECT i.edcts_ist_no, i.edcts_ist_dt, i.edcts_ist_cnt, i.edcts_cd,
@@ -91,5 +85,12 @@
 		ORDER BY edcts_ist_no
 	</select>
 
+	<select id="getLotList" resultType="PrdtInspVO">
+		SELECT DISTINCT p.order_no, p.edcts_lot_no, p.edcts_cd, o.prdt_nm,
+		p.insp_cnt
+		FROM PRDT_INSP p JOIN ORDER_SHEET o
+		ON p.order_no = o.order_no
+		WHERE o.PROG_APPE = 'Completed'
+	</select>
 
 </mapper>

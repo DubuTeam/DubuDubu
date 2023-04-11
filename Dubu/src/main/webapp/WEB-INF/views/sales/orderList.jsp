@@ -53,8 +53,8 @@
 		<ol class="breadcrumb mb-4">
 			<li class="breadcrumb-item"><a href="/dubu"><i
 					class="fas fa-home"></i></a></li>
-			<li class="breadcrumb-item">> 영업관리</li>
-			<li class="breadcrumb-item active">> 주문서 관리</li>
+			<li >> 영업관리</li>
+			<li >> 주문서 관리</li>
 		</ol>
 
 		<div class="card mb-4">
