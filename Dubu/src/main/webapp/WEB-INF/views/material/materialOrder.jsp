@@ -10,8 +10,12 @@
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
 <!-- Grid -->
-<!-- <link rel="stylesheet" href="https://uicdn.toast.com/grid/latest/tui-grid.css" />
-<script src="https://uicdn.toast.com/grid/latest/tui-grid.js"></script> -->
+<link rel="stylesheet" href="https://uicdn.toast.com/grid/latest/tui-grid.css" />
+<script src="https://uicdn.toast.com/grid/latest/tui-grid.js"></script>
+
+<!-- DatePicker -->
+<link rel="stylesheet" href="https://uicdn.toast.com/tui.date-picker/latest/tui-date-picker.css" />
+<script src="https://uicdn.toast.com/tui.date-picker/latest/tui-date-picker.js"></script>
 
 <!-- SweetAlert -->
 <link rel="stylesheet"
@@ -19,14 +23,24 @@
 <script
 	src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.js"></script>
 
-
 <!-- CSS -->
 <link
 	href="${pageContext.request.contextPath}/resources/css/material/materialOrdr.css"
 	rel="stylesheet">
 
+<!-- 부트스트랩 -->
+<script
+	src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+	
 <!-- JS -->
 <%-- <script src="${pageContext.request.contextPath}/resources/js/material/materialOrder.js"></script> --%>
+
+<style>
+.tui-grid-cell.cell-red {background-color : #FFF0F5;
+						 color : red;
+						 font-weight: bold;
+}
+</style>
 
 <!-- Begin Page Content -->
 <div class="container-fluid">
@@ -184,7 +198,6 @@
 				
 				<br> <span><b>자재목록</b></span>
 
-				<div id="grid"></div>
 				<!-- 조회 시 나타나는 테이블 -->
 				<div id="listTable" class="table">
 					<table>
@@ -264,60 +277,127 @@
 			</div>
 		</div>
 		<br>
-		<%-- <div class="card mb-4">
+		
+		<!-- 자재 발주 목록 페이지 -->
+		<div class="card mb-4">
 			<div class="card-body">
-				<div class="linelist" style="float: right;">
-					<button type="button" class="btn btn-primary" id="minusBtn">
-						<i class="fas fa-minus"></i> 삭제
-					</button>
-					<button type="button" class="btn btn-primary" id="saveBtn">
-						<i class="fas fa-save"></i> 수정
+			<div class="linelist" style="float: right;">
+					<button type="button" class="btn btn-primary" id="listSearchBtn">
+						<i class="fas fa-search"></i> 조회
 					</button>
 					<br> <br>
-				</div>
-				<br><br>
-				<span><b>자재발주목록</b></span>
-				<!-- 조회 시 나타나는 테이블 -->
-				<div id="list" class="table">
-					<table>
-						<thead>
-							<tr>
-								<th><input type="checkbox"></th>
-								<th>자재코드</th>
-								<th>자재명</th>
-								<th>업체코드</th>
-								<th>업체명</th>
-								<th>발주코드</th>
-								<th>발주수량</th>
-								<th>현재재고</th>
-								<th>안전재고</th>
-								<th>예상재고량</th>
-								<th>납기요청일</th>
-							</tr>
-						</thead>
-						<!-- ↓↓↓여기에 조회된 결과 출력 -->
-						<tbody id="orderPrint">
-						<c:forEach items="${materialOrderList}" var="materialOrder">
-							<tr>
-								<td><input type="checkbox"></td>
-								<td>${materialOrder.rscCd}</td>
-								<td>${materialOrder.rscNm}</td>
-								<td>${materialOrder.vendCd}</td>
-								<td>${materialOrder.vendNm}</td>
-								<td>${materialOrder.ordrCd}</td>
-								<td>${materialOrder.ordrCnt}</td>
-								<td>${materialOrder.avalStc}</td>
-								<td>${materialOrder.safStc}</td>
-								<td>${materialOrder.expect}</td>
-								<td><fmt:formatDate value="${materialOrder.paprdCmndDt}" pattern = "yyyy-MM-dd"/></td>
-							</tr>
-						</c:forEach>
-						</tbody>
-					</table>
-				</div>
-				<!-- 조회시 나타나는 테이블 닫는 태그 -->
 			</div>
-		</div> --%>
+			<table>
+				<tr>
+					<th>업체명</th>
+					<td>
+						<input class="form-control" type="text" id="listVendNm" name="listVendNm" style="width: 150px">
+					</td>
+					<td>
+						<!-- 업체명 모달창 버튼 -->
+						<button type="button" style="margin-left: 3px; margin-right:10px;"
+							class="btn btn-primary" data-toggle="modal"
+							data-target="#listVendModal" id="listVendSearchBtn" name="listVendSearchBtn">
+							<i class="fas fa-search"></i>
+						</button>
+					</td>
+					<th>발주신청일</th>
+					<td>
+						<div style="display: flex;">
+							<input type="date" id="start" name="start" class="form-control" style="width: 150px;"> 
+							<span style="padding: 5px;">-</span> 
+							<input type="date" id="end" name="end" class="form-control" style="width: 150px;">
+						</div>
+					</td>
+				</tr>
+			</table>
+			<!-- 업체명 Modal -->
+				<div class="modal fade" id="listVendModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+					<!-- <div class="modal-dialog"> -->
+					<div class="modal-dialog modal-dialog-centered modal-lg">
+						<!-- 모달창 화면 중앙에  modal-dialog-centered, 모달 사이즈 변경 직접 불가해서 modal-lg 추가 -->
+						<div class="modal-content">
+							<div class="modal-header">
+								<h5 class="modal-title" id="exampleModalLabel">업체 검색</h5>
+								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+									<span aria-hidden="true">X</span>
+								</button>
+							</div>
+							<div class="modal-body" style="text-align: center;">
+								<!-- 조회 시 나타나는 테이블 -->
+								<div id="vendModalTable" class="table">
+									<table style="width:100%;">
+										<thead>
+											<tr>
+												<td>No.</td>
+												<th>업체코드</th>
+												<th>업체명</th>
+												<th>사업자번호</th>
+												<th>전화번호</th>
+											</tr>
+										</thead>
+
+										<!-- ↓↓↓여기에 조회된 결과 출력 (테스트용 더미 넣었음) -->
+										<tbody id="vendModallist">
+											<c:forEach items="${vendMoalList}" var="vendModal" varStatus="status">
+												<tr class='eachRow' ondblclick="searchVend2('${vendModal.vendNm}')">
+													<td>${status.count}</td>
+													<td>${vendModal.vendCd}</td>
+													<td>${vendModal.vendNm}</td>
+													<td>${vendModal.binzo}</td>
+													<td>${vendModal.telno}</td>
+												</tr>
+											</c:forEach>
+										</tbody>
+									</table>
+								</div>
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- ↑↑↑ 모달 -->
+				<br><br>
+				<div id="grid"></div> <!-- 그리드 -->
+			</div>
+		</div>
+
+		<!-- 자재발주 내역 조회 Modal -->
+		<div class="modal fade" id="detailModal" tabindex="-1" role="dialog"
+			aria-labelledby="exampleModalLabel" aria-hidden="true">
+			<div class="modal-dialog modal-xl" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="exampleModalLabel">자재발주내역조회</h5>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">X</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						<div class="row">
+							<div class="col-md-6">
+								<label style="margin-top: 5px; display:inline;">발주코드</label> 
+								<input class="form-control" type="text" id="ordrCd" name="ordrCd" style="width: 180px; margin-bottom: 10px; display:inline;" readonly />
+							</div>
+							<div class="col-md-4"></div>
+							<div class="linelist col-md-2" style="margin-bottom:10px; float:right;">
+								<button type="button" class="btn btn-primary" id="modifyBtn">
+									<i class="fas fa-save"></i> 수정
+								</button>
+								<button id="pdfBtn" name="pdfBtn" type="button"
+									class="btn btn-primary">
+									<i class="fas fa-download"></i> PDF
+								</button>
+							</div>
+						</div>
+						<div id="materialOrderDetailGrid"></div>
+					</div>
+				</div>
+			</div>
+		</div><!-- 모달창 끝 -->
+		
 	</div>
 </div>
 <!-- /.container-fluid -->
@@ -333,13 +413,17 @@
 	// 자재 검색 모달창에서 더블클릭시 작동하는 함수
 	function searchMaterial(materialName){
 		$('#rscNm').val(materialName); // 자재명 입력됨
-		$('.close').click(); // 모달창 닫기
+		$('#materialModal').modal('hide'); // 모달창 닫기
+		$('.modal-backdrop').remove(); // 모달창 닫을때 생기는 background배경 제거
+		//$('.close').click(); // 모달창 닫기
 	}
 	
 	// 업체 검색 모달창에서 더블클릭시 작동하는 함수
 	function searchVend(vendName){
 		$('#vendNm').val(vendName); // 거래처명 입력됨
-		$('.close').click(); // 모달창 닫기
+		$('#vendModal').modal('hide'); // 모달창 닫기
+		$('.modal-backdrop').remove(); // 모달창 닫을때 생기는 background배경 제거		
+		//$('.close').click(); // 모달창 닫기
 	}
 	
 	// 발주할 자재 더블클릭시 작동하는 함수
@@ -378,7 +462,7 @@
 		   data: {rscNm : $('#rscNm').val() , vendNm : $('#vendNm').val()}, // 쿼리스트링
 		   success: function (result) {
 			   
-			   console.log(result.result);
+			   //console.log(result.result);
 			   
 			   let tbody = $('#list');
 			   tbody.empty();
@@ -570,6 +654,7 @@
       		  
 	          OrderCode = ordr + ordrNum; // 다음에 오는 발주번호
 	          allCheck.checked = false;
+	          searchAll(); // 발주목록 페이지에 추가
 	          
 	        }else{
 	          console.log("INSERT 실패");
@@ -615,4 +700,223 @@
         allCheck.checked = false;
       }
     }
+    
+    
+// ==========================================  자재 신청한 발주 목록 리스트 ================================
+	 
+//업체 검색 모달창에서 더블클릭시 작동하는 함수
+function searchVend2(vendName){
+	$('#listVendNm').val(vendName); // 거래처명 입력됨
+	$('#listVendModal').modal('hide'); // 모달창 닫기
+	$('.modal-backdrop').remove(); // 모달창 닫을때 생기는 background배경 제거
+}
+
+// 그리드
+const grid = new tui.Grid({
+	  el: document.getElementById('grid'), // Container element
+	  scrollX: true,
+      scrollY: true,
+      rowHeaders: ['rowNum'],
+	  columns: [
+	    {
+	      header: '발주코드',
+	      name: 'ordrCd',
+	      align : 'center'
+	    },
+	    {
+	      header: '업체코드',
+	      name: 'vendCd',
+	      align : 'center'
+	    },
+	    {
+	      header: '업체명',
+	      name: 'vendNm',
+	      align : 'center'
+	    },
+	    {
+	      header: '발주신청일',
+	      name: 'ordrReqDt',
+	      align : 'center',
+	      formatter : function(data){ // 날짜형식 바꿔주는것
+              return dateFormat(data.value);
+         }
+
+	    }
+	  ]
+	  /* data: [
+	    {
+	      ordrCd: 'ordrCd',
+	      vendCd: 'Birdy',
+	      vendNm: '2016.03.26',
+	      ordrReqDt: 'Pop'
+	    }
+	  ] */
+	});
+
+// 로드시 나타남
+$(document).ready(function(){
+	searchAll();
+});
+
+//조회버튼 클릭시 작동하는 함수
+$('#listSearchBtn').on('click',function(){
+	 searchAll();
+});
+
+// 바로 화면에 나타나는 발주전체 목록
+function searchAll(){
+	let vendNm = $('#listVendNm').val();
+	let startOrdrReqDt = $('#start').val();
+	let endOrdrReqDt = $('#end').val();
+	
+	//console.log(vendNm + " " + startOrdrReqDt + " " + endOrdrReqDt);
+	
+	$.ajax({
+		   url: 'materialOrderSearch',
+		   type: 'post',
+		   data: {vendNm : vendNm, startOrdrReqDt : startOrdrReqDt, endOrdrReqDt : endOrdrReqDt}, // 쿼리스트링 */
+		   success: function (data) {
+			   grid.resetData(data);
+		   },
+	 	   error: function (reject) {	   
+		       console.log(reject);
+		}
+	});
+}
+
+//날짜 변환
+function dateFormat(date) {
+   let date1 = new Date(date);
+   let date2 = date1.getFullYear() + '-' 
+         + ((date1.getMonth()<10)?'0'+(date1.getMonth()+1):(date1.getMonth()+1)) + '-'
+         + ((date1.getDate()<10)?'0'+date1.getDate():date1.getDate());       
+   return date2;
+}
+
+
+// 그리드 셀 더블클릭시 나타나는 상세 자재 발주 모달창
+grid.on('dblclick', (e) => {
+	
+	let rscCdRowKey = '';
+	rscCdRowKey = e.rowKey; // 내가 더블클릭한 곳의 index 값
+	
+	// getRow(e.rowKey) : rowKey값의 행 정보(object)를 가져옴
+	// Return the object that contains all values in the specified row.
+	let ordrCd = grid.getRow(e.rowKey).ordrCd; 
+ 
+	$('#detailModal').modal('show'); // 모달창 show
+	
+	$.ajax({
+		url:"materialDetail",
+		data : {ordrCd:ordrCd},
+		method:"post",
+		success:function(result) {
+			//console.log(result);
+			setTimeout(function() {
+				detailGrid.refreshLayout(); // new tui.Grid의 refreshLayout()으로 해줘야함
+			},300);
+			$('#ordrCd').val(ordrCd);
+			detailGrid.resetData(result);
+		},
+		error: function (reject) {	   
+		       console.log(reject);
+		}
+	}) 
+});
+
+// 자재발주 내역 모달창 그리드  
+const detailGrid = new tui.Grid({
+	el : document.getElementById('materialOrderDetailGrid'),
+	scrollX : false,
+	scrollY : false,
+	rowHeaders : [ 'checkbox' ],
+	columns : [ 
+		{
+			header : '자재코드',
+			name : 'rscCd'
+		}, 
+		{
+			header : '자재명',
+			name : 'rscNm'
+		},
+		{
+			header : '업체코드',
+			name : 'rscNm'
+		},
+		{
+			header : '업체명',
+			name : 'vendNm'
+		},
+		{
+			header : '발주코드',
+			name : 'ordrCd'
+		},
+		{
+			header : '발주수량',
+			name : 'ordrCnt',
+			editor : 'text',
+			onAfterChange : function(data){ // 값이 변경되면 실행되는 함수
+	
+				let rowKey = data.rowKey; // 변경한 행의 index
+				let ordrCnt = parseInt(data.value); // 변경한 발주 수량
+				let avalStc = parseInt(detailGrid.getRow(rowKey).avalStc); // 현재 재고
+				let expect = ordrCnt + avalStc; // 현재 재고 + 발주 수량 = 예상 재고량
+				
+				detailGrid.setValue(rowKey, 'expect', expect, false) // 예상재고량 변경
+				detailGrid.addCellClassName(rowKey, 'expect', 'cell-red'); // CSS
+				detailGrid.check(rowKey); // 체크박스가 체크됨
+			}
+		},
+		{
+			header : '현재재고',
+			name : 'avalStc'
+		},
+		{
+			header : '안전재고',
+			name : 'safStc'
+		},
+		{
+			header : '예상재고량',
+			name : 'expect'
+		},
+		{
+			header : '납기요청일',
+			name : 'paprdCmndDt',
+			formatter : function(data){    
+	              return dateFormat(data.value);
+	       	}
+		},
+	]
+});
+
+// 수정 버튼 클릭시 실행하는 함수
+$('#modifyBtn').on('click', function(){
+	
+	let ordrCd = $('#ordrCd').val(); // 수정할 발주코드
+	let rscCd = ""; // 수정할 자재코드
+	let ordrCnt = ""; // 수정할 발주 수량
+	
+	console.log("발주코드 : " + ordrCd);
+	
+	let rowKeys = detailGrid.getCheckedRowKeys(); // 키값이 배열 형태로 들어감 : ex. [0,1]
+	
+	for(let i = 0; i< rowKeys.length ; i++){ // rowKeys만큼 for문을 돌림
+		console.log(rowKeys[i]);
+		rscCd = rscCd + detailGrid.getRow(rowKeys[i]).rscCd + ","; // 수정할 자재코드
+		ordrCnt = ordrCnt + detailGrid.getRow(rowKeys[i]).ordrCnt + "," // 수정할 발주수량
+	}
+	
+	$.ajax({
+		url:"materialDetailModify",
+		data : {ordrCd : ordrCd, rscCd : rscCd, ordrCnt: ordrCnt},
+		method:"post",
+		success:function(result) {
+			detailGrid.resetData(result);
+		},
+		error: function (reject) {	   
+		       console.log(reject);
+		}
+	}) 
+	
+});
 </script>

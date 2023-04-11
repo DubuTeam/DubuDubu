@@ -110,5 +110,12 @@
 	  	ON rc.RSC_CD = rd.RSC_CD
 	  	WHERE ro.ORDR_CD = #{ordrCd}
 	</select>
+	
+	<!-- 자재발주 상세 디테일 수정 -->
+	<!-- <update id="getMaterialOrderListDetailModify" parameterType="MaterialVO">
+		UPDATE RSC_ORDR_DTL 
+		SET ORDR_CNT = #{ordrCnt}, RMN_CNT = #{}
+		WHERE ORDR_CD = #{ordrCd} AND RSC_CD = #{rscCd}
+	</update> -->
 
 </mapper>

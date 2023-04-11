@@ -13,7 +13,6 @@
 <script
 	src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
 
-
 <!-- Grid -->
 <link rel="stylesheet" href="https://uicdn.toast.com/grid/latest/tui-grid.css" />
 <script src="https://uicdn.toast.com/grid/latest/tui-grid.js"></script>
@@ -34,7 +33,10 @@
 	rel="stylesheet">
 
 <style>
-.tui-grid-cell.cell-red {background-color : #FFF0F5;}
+.tui-grid-cell.cell-red {background-color : #FFF0F5;
+						 color : red;
+						 font-weight: bold;
+}
 </style>
 
 <!-- Begin Page Content -->
@@ -325,15 +327,25 @@ const detailGrid = new tui.Grid({
 			header : '발주수량',
 			name : 'ordrCnt',
 			editor : 'text',
-			onAfterChange : function(data){    
+			onAfterChange : function(data){ // 값이 변경되면 실행되는 함수
+				console.log(typeof(data.value));
+				if(typeof(data.value)=='number'){
+					let rowKey = data.rowKey; // 변견한 행의 index
+					let ordrCnt = parseInt(data.value); // 변경한 발주 수량
+					let avalStc = parseInt(detailGrid.getRow(rowKey).avalStc); // 현재 재고
+					let expect = ordrCnt + avalStc; // 현재 재고 + 발주 수량 = 예상 재고량
+					
+					detailGrid.setValue(rowKey, 'expect', expect, false) // 예상재고량 변경
+					detailGrid.addCellClassName(rowKey, 'expect', 'cell-red'); // CSS
+				}else{
+					 Swal.fire({
+		                  icon: 'error',
+		                  title: '문자를 입력하실수없습니다.',
+		                  text:  '숫자를 입력해주세요'
+		              });
+				}
 				
-				let rowKey = data.rowKey; // 변견한 행의 index
-				let ordrCnt = parseInt(data.value); // 변경한 발주 수량
-				let avalStc = parseInt(detailGrid.getRow(rowKey).avalStc); // 현재 재고
-				let expect = ordrCnt + avalStc; // 현재 재고 + 발주 수량 = 예상 재고량
 				
-				detailGrid.setValue(rowKey, 'expect', expect, false) // 예상재고량 변경
-				detailGrid.addCellClassName(rowKey, 'expect', 'cell-red'); // css
 			}
 		},
 		{
@@ -351,12 +363,19 @@ const detailGrid = new tui.Grid({
 		{
 			header : '납기요청일',
 			name : 'paprdCmndDt',
-			editor : 'text',
 			formatter : function(data){    
 	              return dateFormat(data.value);
 	       	}
 		},
 	]
+});
+
+// 수정 버튼 클릭시 실행하는 함수
+$('#saveBtn').on('click', function(){
+	
+	
+	
+	
 });
 
 
