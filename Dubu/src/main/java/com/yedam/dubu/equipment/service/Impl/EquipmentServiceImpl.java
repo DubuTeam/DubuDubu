@@ -16,8 +16,8 @@ public class EquipmentServiceImpl implements EquipmentService{
 	EquipmentMapper equipmentMapper;
 
 	@Override
-	public List<EquipmentVO> selectAllEquipmentList() {
-		return equipmentMapper.selectAllEquipmentList();
+	public List<EquipmentVO> selectAllEquipmentLineList() {
+		return equipmentMapper.selectAllEquipmentLineList();
 	}
 
 	@Override
@@ -26,27 +26,27 @@ public class EquipmentServiceImpl implements EquipmentService{
 	}
 
 	@Override
-	public int insertEquipment(EquipmentVO equipmentVO) {
-		int result = equipmentMapper.insertEquipment(equipmentVO);
+	public int insertEquipmentLine(EquipmentVO equipmentVO) {
+		int result = equipmentMapper.insertEquipmentLine(equipmentVO);
 		System.out.println("insert 출력 ->  " + result + "개");
 		
-		return equipmentMapper.insertEquipment(equipmentVO);
+		return equipmentMapper.insertEquipmentLine(equipmentVO);
 	}
 
 	@Override
-	public int updateEquipment(EquipmentVO equipmentVO) {
-		int result = equipmentMapper.updateEquipment(equipmentVO);
+	public int updateEquipmentLine(EquipmentVO equipmentVO) {
+		int result = equipmentMapper.updateEquipmentLine(equipmentVO);
 		System.out.println("업데이트 출력 ->  " + result + "개");
 		
-		return equipmentMapper.updateEquipment(equipmentVO);
+		return equipmentMapper.updateEquipmentLine(equipmentVO);
 	}
 
 	@Override
-	public int deleteEquipment(EquipmentVO equipmentVO) {
-		int result = equipmentMapper.deleteEquipment(equipmentVO);
+	public int deleteEquipmentLine(EquipmentVO equipmentVO) {
+		int result = equipmentMapper.deleteEquipmentLine(equipmentVO);
 		System.out.println("삭제 출력 ->  " + result + "개");
 		
-		return equipmentMapper.deleteEquipment(equipmentVO);
+		return equipmentMapper.deleteEquipmentLine(equipmentVO);
 	}
 
 	
@@ -59,5 +59,23 @@ public class EquipmentServiceImpl implements EquipmentService{
 	@Override
 	public List<EquipmentVO> selectAllProcessList() {
 		return equipmentMapper.selectAllProcessList();
+	}
+
+	@Override
+	public List<EquipmentVO> selectAllCommonDataList() {
+		return equipmentMapper.selectAllCommonDataList();
+	}
+
+	
+	///
+	
+	@Override
+	public List<EquipmentVO> selectAllEquipmentList() {
+		return equipmentMapper.selectAllEquipmentList();
+	}
+
+	@Override
+	public int insertEquipment(EquipmentVO equipmentVO) {
+		return equipmentMapper.insertEquipment(equipmentVO);
 	}
 }

@@ -18,8 +18,8 @@ public class EquipmentVO {
 	// 2. 설비 관리 테이블 (EQM 테이블)
 	
 	// 2-1. 설비 구분 탭에서 쓸 것  -  공통 코드 테이블 (CCDS 테이블)
-	// private String ccd;
-	// private String ccdNm;
+	 private String ccd;
+	 private String ccdNm;
 	
 	// 2-2. 라인 탭에서 쓸 것	(-> 이건 그냥 위의 lineNm 쓰면 됨)
 	
@@ -28,7 +28,14 @@ public class EquipmentVO {
 	public String prcsCd;	// 공정코드
 	public String prcsNm;	// 공정명
 	
-	// 2-4. 설비 관리 테이블
+
 	
-	
+	// 2-4. 설비 등록시 테이블에 출력할 컬럼들 (위에 존재하는 것들은 제외하고, 새로 추가함) - 입고일자랑 설비구분은 일부러 안 넣음 (어차피 안 쓴다)
+	private int idx;
+	private String eqmNm;
+	private String eqmCd;
+	private String eqmYn;
+	private int minTemp;
+	private int maxTemp;
+	private int chckPerd;
 }
