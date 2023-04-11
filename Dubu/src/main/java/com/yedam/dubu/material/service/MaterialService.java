@@ -31,5 +31,5 @@ public interface MaterialService {
 	public List<MaterialVO> getMaterialOrderListDetail(String ordrCd);
 	
 	// 자재 발주 상세 수정 UPDATE
-	public List<MaterialVO> getMaterialOrderListDetailModify(MaterialVO materialVO);
+	public int getMaterialOrderListDetailModify(MaterialVO materialVO);
 }

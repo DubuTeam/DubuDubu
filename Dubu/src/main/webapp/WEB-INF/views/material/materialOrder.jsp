@@ -9,6 +9,9 @@
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
+<!--  Excell -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.1/xlsx.full.min.js"></script>
+
 <!-- Grid -->
 <link rel="stylesheet" href="https://uicdn.toast.com/grid/latest/tui-grid.css" />
 <script src="https://uicdn.toast.com/grid/latest/tui-grid.js"></script>
@@ -386,9 +389,9 @@
 								<button type="button" class="btn btn-primary" id="modifyBtn">
 									<i class="fas fa-save"></i> 수정
 								</button>
-								<button id="pdfBtn" name="pdfBtn" type="button"
+								<button id="excelBtn" name="excelBtn" type="button"
 									class="btn btn-primary">
-									<i class="fas fa-download"></i> PDF
+									<i class="fas fa-download"></i> Excel
 								</button>
 							</div>
 						</div>
@@ -714,8 +717,10 @@ function searchVend2(vendName){
 // 그리드
 const grid = new tui.Grid({
 	  el: document.getElementById('grid'), // Container element
-	  scrollX: true,
+	  scrollX: false,
       scrollY: true,
+      bodyHeight: 300,
+      rowHeight: 30,
       rowHeaders: ['rowNum'],
 	  columns: [
 	    {
@@ -908,9 +913,14 @@ $('#modifyBtn').on('click', function(){
 	
 	$.ajax({
 		url:"materialDetailModify",
-		data : {ordrCd : ordrCd, rscCd : rscCd, ordrCnt: ordrCnt},
+		data : {ordrCd : ordrCd, rscCd : rscCd, ordrCnt2: ordrCnt},
 		method:"post",
 		success:function(result) {
+			Swal.fire({
+                icon: 'success',
+                title: '발주 수정이 완료되었습니다.',
+                text:  '발주코드 : ' + ordrCd + '의 발주 수정이 완료되었습니다.'
+            });
 			detailGrid.resetData(result);
 		},
 		error: function (reject) {	   
@@ -919,4 +929,19 @@ $('#modifyBtn').on('click', function(){
 	}) 
 	
 });
+
+//엑셀버튼 클릭 이벤트
+const options = {
+		includeHiddenColumns: true,
+		onlySelected: true,
+		fileName: 'myExport',
+};
+
+// 엑셀 버튼 클릭시 실행하는 함수
+$('#excelBtn').on('click', function(){
+	
+	detailGrid.export('xlsx', options);
+
+}); 
+
 </script>
