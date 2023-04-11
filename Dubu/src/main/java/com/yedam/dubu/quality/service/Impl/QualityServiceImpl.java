@@ -32,6 +32,18 @@ public class QualityServiceImpl implements QualityService {
 	
 		return qualityMapper.getPrdtInspDtl(qualityVO);
 	}
+	//입고검사등록
+	@Override
+	public List<QualityVO> getMatVendList(QualityVO qualityVO) {
+		// TODO Auto-generated method stub
+		return qualityMapper.getMatVendList(qualityVO) ;
+	}
+
+	@Override
+	public List<QualityVO> getMatOrdrList(QualityVO qualityVO) {
+		// TODO Auto-generated method stub
+		return qualityMapper.getMatOrdrList(qualityVO);
+	}
 
 	
 }

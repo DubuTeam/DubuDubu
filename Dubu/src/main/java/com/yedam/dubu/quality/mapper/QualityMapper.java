@@ -13,5 +13,10 @@ public interface QualityMapper {
 	public List<QualityVO> getPrdtInsp(QualityVO qualityVO);
 	
 	public List<QualityVO> getPrdtInspDtl(QualityVO qualityVO);
-
+	
+	
+	//입고검사등록
+	
+		List<QualityVO> getMatVendList(QualityVO qualityVO);
+	    List<QualityVO> getMatOrdrList(QualityVO qualityVO);
 }
