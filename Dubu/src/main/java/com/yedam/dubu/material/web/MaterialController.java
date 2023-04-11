@@ -108,10 +108,31 @@ public class MaterialController {
 	@PostMapping("/materialDetailModify")
 	@ResponseBody
 	public List<MaterialVO> getMaterialOrderDetailModify(MaterialVO materialVO){
-		return materialService.getMaterialOrderListDetailModify(materialVO);
+		
+		String ordrCd = materialVO.getOrdrCd(); // 발주코드
+		String[] rscCd = materialVO.getRscCd().split(","); // 자재코드
+		String[] ordrCnt = materialVO.getOrdrCnt2().split(","); // 발주수량
+		
+		int r = 0;
+		
+		MaterialVO material = new MaterialVO();
+		
+		for(int i = 0 ; i < rscCd.length; i++) {
+			material.setOrdrCd(ordrCd);
+			material.setRscCd(rscCd[i]);
+			material.setOrdrCnt(Integer.parseInt(ordrCnt[i]));
+			material.setRmnCnt(Integer.parseInt(ordrCnt[i]));
+			r = materialService.getMaterialOrderListDetailModify(material);
+		}
+		
+		if(r > 0) {
+			return materialService.getMaterialOrderListDetail(ordrCd);			
+		}else {
+			return null;
+		}
+		
 	}
 	
-
 	// 자재입고검사조회
 	@GetMapping("/materialInspList")
 	public String getMaterialInspList(Model model) {
