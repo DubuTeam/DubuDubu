@@ -66,7 +66,22 @@
 										</thead>
 
 										<!-- ↓↓↓여기에 조회된 결과 출력 -->
-										<tbody id="list"></tbody>
+										<tbody id="list">
+										<c:forEach items="${eqList }" var="eqm">
+											<tr class="eachRow">
+												<td>${eqm.idx }</td>
+												<td>${eqm.eqmNm }</td>
+												<td>${eqm.eqmCd }</td>
+												<td>${eqm.prcsCd }</td>					
+												<td>${eqm.prcsNm }</td>
+												<td>${eqm.eqmYn }</td>
+												<td>${eqm.minTemp }</td>
+												<td>${eqm.maxTemp }</td>
+												<td>${eqm.chckPerd }</td>
+												<td>${eqm.lineCd }</td>
+											</tr>
+										</c:forEach>
+										</tbody>
 									</table>
 								</div>
 							</div>
@@ -143,9 +158,9 @@
 												<select class="dataTable-selector" name="eqmFg" id="eqmFg"
 													style="width: 250px">
 													<option selected>==등록시필수선택==</option>
-													<option value=1>충전설비</option>
-													<option value=2>파쇄설비</option>
-													<option value=3>튀김설비</option>
+													<c:forEach var="list" items="${commonDataList}">
+														<option value="${list.ccd}">${list.ccdNm}</option>
+													</c:forEach>
 												</select>
 											</td>
 
@@ -171,7 +186,7 @@
 													<option selected value="">==등록시필수선택==</option>
 													<!-- 라인명 탭에서 쓸 옵션들 -->
 													<c:forEach var="list" items="${eqLineList}">
-														<option value="${list.lineNm}">${list.lineNm}</option>
+														<option value="${list.lineCd}">${list.lineNm}</option>
 													</c:forEach>
 												</select>
 											</td>
@@ -202,7 +217,7 @@
 														th:text="${value.prcsNm}"></option> -->
 													<!-- 라인명 탭에서 쓸 옵션들 -->
 													<c:forEach var="list" items="${processList}">
-														<option value="${list.prcsCd}" data-code="${list.prcsCd}">${list.prcsNm}</option>
+														<option value="${list.prcsCd}">${list.prcsNm}</option>
 													</c:forEach>
 												</select>
 											</td>
@@ -210,7 +225,7 @@
 											<th>공정코드</th>
 											<td>
 												<input class="form-control" name="prcsCd" id="prcsCd"
-													style="width: 250px" readonly value="hello">
+													style="width: 250px" readonly>
 											</td>
 
 											<th>온도</th>
@@ -231,8 +246,8 @@
 											</td>
 
 											<th>가동여부 *</th>
-											<td>
-												<input type="radio" name="useYN" value="Y"> 가동
+											<td id="useYNSet">
+												<input type="radio" name="useYN" value="Y"> 가동&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 												<input type="radio" name="useYN" value="N"> 미가동
 											</td>
 										</tr>
