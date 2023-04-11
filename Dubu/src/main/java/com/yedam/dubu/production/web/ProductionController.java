@@ -88,6 +88,14 @@ public class ProductionController {
 		 System.out.println(productVO.getOrderNo());
 		 return productionService.orderDetailGrid(productVO.getOrderNo());
 	 }
+	 // 생산계획 계획코드 부여
+	 @PostMapping("/updatePlan")
+	 @ResponseBody
+	 public int updatePlan(@RequestBody ProductionVO productionVO) {
+		 
+		 return productionService.updatePlan(productionVO.getUpdatedRows(), productionVO.getUpdatedRows());
+	 }
+	 
 	
 	// 생산지시
 	@GetMapping("/indica")

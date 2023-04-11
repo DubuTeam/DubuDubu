@@ -33,4 +33,10 @@ public interface ProductionMapper {
 	// 주문서 디테일 조회
 	public List<ProductionVO> orderDetailGrid(String[] array);
 	
+	// 생산계획 코드 부여
+	public int updatePlanCd(ProductionVO vo);
+	
+	// 생산등록
+	public int updatePlanYn(ProductionVO vo);
+	
 }

@@ -74,4 +74,16 @@
 		#{test}
 	</foreach>
 	</select>
+	<!-- 생산계획 코드 부여 -->
+	<update id="updatePlanCd" parameterType="ProductuionVO">
+		UPDATE PLAN
+		SET PLAN_CD = #{planCd}
+		WHERE ORDER_NO = #{orderNo}
+	</update>
+	<!-- 생산등록 -->
+		<update id="updatePlanYn" parameterType="ProductionVO">
+	 	UPDATE ORDER_SHEET
+	 	SET PLAN_YN = 'Y'
+	 	WHERE ORDER_NO = #{orderNo}
+	</update>
 </mapper>
