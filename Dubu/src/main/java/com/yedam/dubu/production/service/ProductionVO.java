@@ -22,7 +22,7 @@ public class ProductionVO {
 	
 	// 주문서 조회
 	public String orderNo;
-	public String vendNm;
+	public int orderCnt;
 	public String prdtNm;
 	
 	// 주문서 디테일 조회

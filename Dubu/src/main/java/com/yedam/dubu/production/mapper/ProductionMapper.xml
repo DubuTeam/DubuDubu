@@ -59,7 +59,9 @@
 	</update>
 	<!-- 주문서 조회 -->
 	<select id="selectOrderList" resultType="ProductionVO">
-		SELECT * FROM ORDER_SHEET
+		SELECT * FROM ORDER_SHEET 
+		WHERE PLAN_YN = 'N'
+		ORDER BY ORDER_DT
 	</select>
 	<!-- 주문서 디테일 조회 -->
 	<select id="orderDetailGrid" resultType="ProductionVO">
@@ -67,7 +69,9 @@
 	       	   R.AVAL_STC,
 	       	   P.PAPRD_DT
 		FROM PLAN P, RSC_STC R
-		WHERE P.RSC_CD = R.RSC_CD
-		AND P.ORDER_NO = #{orderNo}
+		WHERE P.RSC_CD = R.RSC_CD AND P.ORDER_NO IN
+	<foreach collection="array" item="test" open="(" close=")" separator="," >
+		#{test}
+	</foreach>
 	</select>
 </mapper>

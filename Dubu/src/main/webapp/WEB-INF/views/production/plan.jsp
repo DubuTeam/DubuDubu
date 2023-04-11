@@ -38,7 +38,7 @@
 						<!--</div>-->
 					</div>
 					<div class="linelist">
-						<button id="clearBtn" class="btn btn-primary" form="">
+						<button id="clearBtn" class="btn btn-primary" form="" onclick="reset()">
 							<i class="fas fa-file"></i> 초기화
 						</button>
 
@@ -69,7 +69,7 @@
 									</div>
 									<div class="modal-footer">
 										<button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
-										<button type="button" class="btn btn-primary">삭제</button>
+										<button type="button" class="btn btn-primary" onclick="addOrder()">등록</button>
 									</div>
 								</div>
 							</div>
@@ -77,7 +77,7 @@
 
 						<!-- ↑↑↑ 모달 -->
 						<!--  -->
-						<button class="btn btn-primary" id="regiBtn">
+						<button class="btn btn-primary" id="regiBtn" onclick="newPlan()">
 							<i class="fas fa-file"></i> 새계획
 						</button>
 						<button class="btn btn-primary" id="osBtn">
@@ -211,8 +211,9 @@
 			</div>
 			<!-- End of Main Content -->
 <script>
-let orderKey = '';
-let orderValue = '';
+/* let orderKey = '';
+let orderValue = ''; */
+let str = '';
 // 주문서 조회
 /*  const orderList = [
 	<c:forEach items="${selectOrderList}" var="order">
@@ -223,6 +224,11 @@ let orderValue = '';
 	},
 	</c:forEach>
 ];  */
+
+ function reset(){
+	location.reload();
+ };
+
 
  function search() {
 	 
@@ -249,12 +255,16 @@ let orderValue = '';
                      name: 'orderNo'
                  },
                  {
-                     header: '거래처명',
-                     name: 'vendNm'
+                     header: '납기일자',
+                     name: 'paprdDt'
                  },
                  {
                      header: '제품명',
                      name: 'prdtNm'
+                 },
+                 {
+                	 header: '제품수량',
+                	 name: 'orderCnt'
                  }
                  
              ]
@@ -272,24 +282,49 @@ let orderValue = '';
         	//${'#exampleModal'}.modal('show');
         	
         });  */ 
+     
+     // 모달창의 체크한 건만 가져오기
+     grid.on('check', (ev) => {
+   	      checkLen = grid.getCheckedRows().length;
+  	  });
+     grid.on('checkAll', (ev) => {
+  	      checkLen = grid.getCheckedRows().length;
+  	  });   
+     grid.on('unCheck', (ev) => {
+  	      checkLen = grid.getCheckedRows().length;
+  	  }); 
+     
+     function addOrder(){
+    	// 체크한 행만 가져오기
+    	 for (let i = 0; i < checkLen; i++) {
+    	        str += grid.getCheckedRows()[i].orderNo + ",";
+    	      };
+    	 console.log(str);
+    	 orderDetail();
+     
+    	  $('#exampleModal').modal('hide');
+          $('.modal-backdrop').remove();
       // 주문서 디테일 조회  
       // 더블 클릭시 모달창의 정보가 본페이지에 보임
-       grid.on('dblclick', (ev) => {
+/*        grid.on('dblclick', (ev) => {
         //console.log(ev);
         //console.log(ev.rowKey);
         orderKey = ev.rowKey
         orderValue = grid.getValue(orderKey,'orderNo');
+       	//orderValue = ev.rowKey
         console.log(orderValue);
-        orderDetail();
-        $('#exampleModal').modal('hide'); 
-        $('.modal-backdrop').remove(); // 모달창 닫을때 생기는 background배경 제거
-       });
+        
+        
+       }); */
         //console.log(orderValue);
+       
+    
+       
        function orderDetail(){
     	$.ajax({
             url: "planOrderDetail",
             method: "post",
-            data: { orderNo : orderValue},
+            data: { orderNo : str},
             success: function(data) {
             	console.log(data);
             	detailGrid.resetData(data);  //그리드 적용
@@ -298,8 +333,9 @@ let orderValue = '';
               console.log(reject);
             },
         });
-   
        };
+   
+     };
        
        
       //그리드 선언
@@ -319,15 +355,18 @@ let orderValue = '';
                  {
                      header: '원료수량',
                      name: 'avalStc'
-                 },
-                 {
-                     header: '납기일자',
-                     name: 'paprdDt'
                  }
                  
              ]
 
          });
       
-        
+        function newPlan(){
+     	   detailGrid.appendRow({
+     			 planCd: null,
+     			 orderNo: null,
+     			 avalStc: null
+     		})
+         		}
+     	 
 </script>
