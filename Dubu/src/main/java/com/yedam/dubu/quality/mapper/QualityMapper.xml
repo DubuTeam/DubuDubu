@@ -61,8 +61,30 @@ OR (pi.EDCTS_LOT_NO = 'LOT2')
 		WHERE EDCTS_LOT_NO = #{edctsLotNo}
 	</select>
 
-
-
+	<select id="getMatVendList" parameterType="QualityVO" resultType="QualityVO">
+        select VEND_CD, VEND_NM, BINZO, TELNO
+        from VEND
+        where VEND_NM like '%${vendNm}%'
+          and VEND_CD like '%${vendCd}%'
+    </select>
+	
+	<select id="getMatOrdrList" parameterType="QualityVO" resultType="QualityVO">
+        select rod.RSC_CD, rsc.RSC_NM, rod.ORDR_CD, rod.ORDR_CNT, rod.RMN_CNT, vend.VEND_NM, rsc.MNG_UNIT, rsc.RSC_SPEC
+        from RSC_ORDR ro,
+        RSC_ORDR_DTL rod,
+        VEND,
+        RSC
+        where ro.ORDR_CD = rod.ORDR_CD
+        and rod.RSC_CD = rsc.RSC_CD
+        and rod.RMN_CNT != 0
+        and ro.VEND_CD = vend.VEND_CD
+        <if test="vendCd != ''">and ro.VEND_CD = #{vendCd}</if>
+        <![CDATA[
+          and rod.PAPRD_CMND_DT >= #{startDt}
+          and rod.PAPRD_CMND_DT <= #{endDt}
+        ]]>
+        order by PAPRD_CMND_DT
+    </select>
 
 
 
