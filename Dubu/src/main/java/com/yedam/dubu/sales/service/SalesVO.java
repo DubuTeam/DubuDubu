@@ -35,7 +35,7 @@ public class SalesVO {
 	String prdtNm; // 제품명 
 	int orderCnt;
 	String checked;
-	String bizNo;
+	String binzo;
 	String telNo;
 	String index;
 	String defaultValue;

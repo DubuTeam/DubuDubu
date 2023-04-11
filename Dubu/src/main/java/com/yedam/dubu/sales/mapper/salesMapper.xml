@@ -84,7 +84,7 @@
 		<if test="edctsIstDtEnd != null"><![CDATA[and EDCTS_IST_DT <= #{edctsIstDtEnd}]]></if>
 		ORDER BY edcts_ist_no
 	</select>
-
+	<!-- 모델창에 PROG_APPE = 'Completed' 인 내용만 출력  -->
 	<select id="getLotList" resultType="PrdtInspVO">
 		SELECT DISTINCT p.order_no, p.edcts_lot_no, p.edcts_cd, o.prdt_nm,
 		p.insp_cnt
