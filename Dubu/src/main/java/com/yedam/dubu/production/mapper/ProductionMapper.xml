@@ -57,7 +57,17 @@
 					</set>
 		WHERE PRCS_NO = #{prcsNo}
 	</update>
+	<!-- 주문서 조회 -->
 	<select id="selectOrderList" resultType="ProductionVO">
 		SELECT * FROM ORDER_SHEET
+	</select>
+	<!-- 주문서 디테일 조회 -->
+	<select id="orderDetailGrid" resultType="ProductionVO">
+		SELECT P.ORDER_NO,
+	       	   R.AVAL_STC,
+	       	   P.PAPRD_DT
+		FROM PLAN P, RSC_STC R
+		WHERE P.RSC_CD = R.RSC_CD
+		AND P.ORDER_NO = #{orderNo}
 	</select>
 </mapper>

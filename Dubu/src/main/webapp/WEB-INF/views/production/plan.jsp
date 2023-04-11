@@ -11,7 +11,7 @@
 <!-- SweetAlert -->
 <link rel="stylesheet"   href="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.css">
 <script   src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.js"></script>
-
+<!-- 부트스트랩 --><script   src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
 
 	<!-- Begin Page Content -->
 	<!-- 헤더부분 -->
@@ -32,7 +32,7 @@
 					<div id="pDate">
 						<!--<div class="tui-datepicker-input tui-datetime-input tui-has-focus">-->
 						<label>생산계획일자</label> <input type="date" id="tui-date-picker-target"
-							name="tui-date-picker-target" class="form-control" style="width: 150px; display: inline;">
+							name="tui-date-picker-target" style="display: inline;">
 						<!--<span class="tui-ico-date"></span>-->
 						<!--<div id="tui-date-picker-container1" style="margin-top: -1px;"></div>-->
 						<!--</div>-->
@@ -65,9 +65,7 @@
 									<div class="modal-body" style="text-align: center;">
 
 										<!-- 조회 시 나타나는 테이블 -->
-										<div id="list-body" class="table">
-											<div id="orderGrid"></div>
-										</div>
+											<div id="orderGrid"></div>									
 									</div>
 									<div class="modal-footer">
 										<button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
@@ -91,21 +89,7 @@
 
 			<div class="card mb-4">
 				<div class="card-body">
-					<div id="list-body" class="table">
-						<table id="datatablesSimple" class="table">
-							<thead>
-								<tr>
-									<th>계획코드</th>
-									<th>주문번호</th>
-									<th>원료수량</th>
-									<th>납기일자</th>
-								</tr>
-							</thead>
-
-							<!-- ↓↓↓여기에 조회된 결과 출력 -->
-							<tbody id="list"></tbody>
-						</table>
-					</div>
+						<div id="orderDetailGrid"></div>
 					<div id="grid"></div>
 				</div>
 			</div>
@@ -227,7 +211,9 @@
 			</div>
 			<!-- End of Main Content -->
 <script>
-
+let orderKey = '';
+let orderValue = '';
+// 주문서 조회
 /*  const orderList = [
 	<c:forEach items="${selectOrderList}" var="order">
 	{
@@ -239,13 +225,12 @@
 ];  */
 
  function search() {
-	let orderNo = #{orderNo};
 	 
 	$.ajax({
         url: "planOrderList",
         method: "post",
-        data: { orderNo : orderNo },
         success: function(data) {
+           setTimeout(()=>grid.refreshLayout(),300);
            grid.resetData(data);  //그리드 적용
         },
         error: function (reject) {
@@ -256,6 +241,7 @@
 		//그리드 선언
         var grid = new tui.Grid({
              el: document.getElementById('orderGrid'),
+             rowHeaders: ['checkbox'],
              columns: [
 
                  {
@@ -276,15 +262,72 @@
          });
         searchBtn.addEventListener("click", search);
 
-/*        //로드시 나타남
+        /* //로드시 나타남
         $(document).ready(function(){
             grid.resetData(orderList);   // 그리드에 값 입력	
-        });
+        }); */
 
-        $('#searchBtn').on('click','button',function(){
+     /*    $('#searchBtn').on('click','button',function(){
         	$(document).getElementById('orderGrid');
-        	${'#exampleModal'}.modal('show');
-        	setTimeout(()=>orderGrid.refreshLayout(),0);
-        }); */ 
+        	//${'#exampleModal'}.modal('show');
+        	
+        });  */ 
+      // 주문서 디테일 조회  
+      // 더블 클릭시 모달창의 정보가 본페이지에 보임
+       grid.on('dblclick', (ev) => {
+        //console.log(ev);
+        //console.log(ev.rowKey);
+        orderKey = ev.rowKey
+        orderValue = grid.getValue(orderKey,'orderNo');
+        console.log(orderValue);
+        orderDetail();
+        $('#exampleModal').modal('hide'); 
+        $('.modal-backdrop').remove(); // 모달창 닫을때 생기는 background배경 제거
+       });
+        //console.log(orderValue);
+       function orderDetail(){
+    	$.ajax({
+            url: "planOrderDetail",
+            method: "post",
+            data: { orderNo : orderValue},
+            success: function(data) {
+            	console.log(data);
+            	detailGrid.resetData(data);  //그리드 적용
+            },
+            error: function (reject) {
+              console.log(reject);
+            },
+        });
+   
+       };
        
+       
+      //그리드 선언
+        var detailGrid = new tui.Grid({
+             el: document.getElementById('orderDetailGrid'),
+             columns: [
+
+                 {
+                     header: '계획코드',
+                     name: 'planCd',
+                     editor: 'text'
+                 },
+                 {
+                     header: '주문번호',
+                     name: 'orderNo'
+                 },
+                 {
+                     header: '원료수량',
+                     name: 'avalStc'
+                 },
+                 {
+                     header: '납기일자',
+                     name: 'paprdDt'
+                 }
+                 
+             ]
+
+         });
+      
+        
 </script>

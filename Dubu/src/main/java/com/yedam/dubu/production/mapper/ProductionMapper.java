@@ -30,5 +30,7 @@ public interface ProductionMapper {
 	public List<ProductionVO> selectOrderList(@Param("orderNo")String orderNo);
 	//public List<ProductionVO> selectOrderList();
 	
+	// 주문서 디테일 조회
+	public ProductionVO orderDetailGrid(String orderNo);
 	
 }
