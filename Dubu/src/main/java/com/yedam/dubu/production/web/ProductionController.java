@@ -84,8 +84,9 @@ public class ProductionController {
 	 // 생산계획 주문서 디테일 조회
 	 @PostMapping("/planOrderDetail")
 	 @ResponseBody 
-	 public ProductionVO getOrderDetail(@RequestParam(required=false) String orderNo) {
-		 return productionService.orderDetailGrid(orderNo);
+	 public List<ProductionVO> getOrderDetail(ProductionVO productVO) {
+		 System.out.println(productVO.getOrderNo());
+		 return productionService.orderDetailGrid(productVO.getOrderNo());
 	 }
 	
 	// 생산지시

@@ -1,10 +1,10 @@
 package com.yedam.dubu.production.service.Impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import com.yedam.dubu.production.mapper.ProductionMapper;
 import com.yedam.dubu.production.service.ProductionService;
@@ -75,15 +75,22 @@ public class ProductionServiceImpl implements ProductionService {
 
 	
 	  @Override public List<ProductionVO> selectOrderList(String orderNo) { 
-		  return productionMapper.selectOrderList(orderNo); }
+		  return productionMapper.selectOrderList(orderNo);
+		  }
 
 	@Override
-	public ProductionVO orderDetailGrid(String orderNo) {
-		return productionMapper.orderDetailGrid(orderNo);
+	public List<ProductionVO> orderDetailGrid(String orderNo) {
+		String[] array = orderNo.split(",");
+		 
+		 List<ProductionVO> list = new ArrayList<>();
+		list = productionMapper.orderDetailGrid(array);
+	
+		return list;
 	}
+}
 	 
 
 
 
 
-}
+
