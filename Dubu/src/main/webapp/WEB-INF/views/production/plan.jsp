@@ -80,7 +80,7 @@
 						<button class="btn btn-primary" id="regiBtn" onclick="newPlan()">
 							<i class="fas fa-file"></i> 새계획
 						</button>
-						<button class="btn btn-primary" id="osBtn">
+						<button class="btn btn-primary" id="osBtn" onclick="savePlan()">
 							<i class="fas fa-save"></i> 저장
 						</button>
 					</div>
@@ -354,7 +354,8 @@ let str = '';
                  },
                  {
                      header: '원료수량',
-                     name: 'avalStc'
+                     name: 'avalStc',
+                     editor: 'text'
                  }
                  
              ]
@@ -368,5 +369,25 @@ let str = '';
      			 avalStc: null
      		})
          		}
+       function savePlan(){
+    	   console.log(detailGrid.getModifiedRows().updatedRows);
+    	   $.ajax({
+       	    url: 'updatePlan',
+       	    data: JSON.stringify(detailGrid.getModifiedRows({ignoredColumns: ['_attributes', 'rowKey']})),
+       	    contentType : 'application/json',
+       	    type: 'POST',
+       	    async: false,
+       	    success: function(data) {
+       	        	search();
+           		    Swal.fire({
+   	        		      icon: 'success',
+   	        		      title: '입력 및 수정이 완료되었습니다.'
+   	        		 });
+       	    },
+       	    error: function(reject) {
+       	        console.log(reject);
+       	    }
+       	});
+       }
      	 
 </script>
