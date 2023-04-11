@@ -75,13 +75,18 @@ public class ProductionController {
 	}
 	
 	
-	  // 생산계획 주문서 조회	  
-	  @PostMapping("/planOrderList")	  
-	  @ResponseBody public List<ProductionVO>
-	  getOrderList(@RequestParam(required=false) String orderNo) { return
-	  productionService.selectOrderList(orderNo); }
+	 // 생산계획 주문서 조회	  
+	 @PostMapping("/planOrderList")	  
+	 @ResponseBody 
+	 public List<ProductionVO> getOrderList(@RequestParam(required=false) String orderNo) { 
+		 return productionService.selectOrderList(orderNo); }
 	 
-	
+	 // 생산계획 주문서 디테일 조회
+	 @PostMapping("/planOrderDetail")
+	 @ResponseBody 
+	 public ProductionVO getOrderDetail(@RequestParam(required=false) String orderNo) {
+		 return productionService.orderDetailGrid(orderNo);
+	 }
 	
 	// 생산지시
 	@GetMapping("/indica")

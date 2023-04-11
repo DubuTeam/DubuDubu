@@ -25,4 +25,7 @@ public interface ProductionService {
 	// 주문서 조회
 	public List<ProductionVO> selectOrderList(String orderNo);
 	//public List<ProductionVO> selectOrderList();
+	
+	// 주문서 디테일 조회
+	public ProductionVO orderDetailGrid(String orderNo);
 }	
