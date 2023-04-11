@@ -7,8 +7,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.yedam.dubu.sales.service.PrdtInspVO;
 import com.yedam.dubu.sales.service.SalesIstVO;
 import com.yedam.dubu.sales.service.SalesService;
 
@@ -24,18 +26,19 @@ public class SalesController {
 		return "sales/salesIst";
 	}
 
-	// 제품 입고 목록 현재 날짜 기준으로 조회(첫페이지)
-	@PostMapping("salesIstList")
-	@ResponseBody
-	public List<SalesIstVO> salesIstList(SalesIstVO vo) {
-		return salesService.salesIstList(vo);
-	}
 
 	// 제품 입고 목록 조건별 조회
 	@PostMapping("istOptionList")
 	@ResponseBody
 	public List<SalesIstVO> istOptionList(SalesIstVO vo) {
 		return salesService.istOptionList(vo);
+	}
+	
+	//완제품LOT번호 모달 조회
+	@RequestMapping("getLotList")
+	@ResponseBody
+	public List<PrdtInspVO> getLotList(PrdtInspVO vo) {
+		return salesService.getLotList(vo);
 	}
 
 	// 제품입고조회
