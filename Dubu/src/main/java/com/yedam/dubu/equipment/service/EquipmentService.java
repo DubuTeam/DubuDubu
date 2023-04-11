@@ -23,4 +23,13 @@ public interface EquipmentService {
 	
 	// 삭제
 	public int deleteEquipment(EquipmentVO equipmentVO);
+	
+	
+	/////////////////////////////////////////////////////////////////////////
+	
+	
+	// 설비관리 테이블
+	
+	// 공정명, 공정코드 가져오기 위한 것.
+	public List<EquipmentVO> selectAllProcessList();
 }

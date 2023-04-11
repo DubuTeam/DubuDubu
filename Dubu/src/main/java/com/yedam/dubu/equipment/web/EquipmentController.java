@@ -57,6 +57,10 @@ public class EquipmentController {
 	// 설비관리
 	@GetMapping("/eq")
 	public String getEq(Model model) {
+		// 라인명 탭에서 쓸 옵션들 받기 위해서 보냄
+		model.addAttribute("eqLineList", equipmentService.selectAllEquipmentList());
+		model.addAttribute("processList", equipmentService.selectAllProcessList());
+		
 		return "equip/eq";
 	}
 
