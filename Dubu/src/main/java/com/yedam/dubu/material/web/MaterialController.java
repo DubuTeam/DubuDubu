@@ -118,19 +118,44 @@ public class MaterialController {
 		MaterialVO material = new MaterialVO();
 		
 		for(int i = 0 ; i < rscCd.length; i++) {
-			material.setOrdrCd(ordrCd);
-			material.setRscCd(rscCd[i]);
-			material.setOrdrCnt(Integer.parseInt(ordrCnt[i]));
-			material.setRmnCnt(Integer.parseInt(ordrCnt[i]));
-			r = materialService.getMaterialOrderListDetailModify(material);
+			material.setOrdrCd(ordrCd); // 발주코드
+			material.setRscCd(rscCd[i]); // 자재코드
+			material.setOrdrCnt(Integer.parseInt(ordrCnt[i])); // 발주수량
+			material.setRmnCnt(Integer.parseInt(ordrCnt[i])); // 미입고잔량
+			r = materialService.getMaterialOrderListDetailModify(material); // 자재 발주 디테일 수정
 		}
 		
 		if(r > 0) {
-			return materialService.getMaterialOrderListDetail(ordrCd);			
+			return materialService.getMaterialOrderListDetail(ordrCd); // 수정한 리스트 다시 반환	
 		}else {
 			return null;
 		}
 		
+	}
+	
+	// 자재 발주 삭제 => 자주발주상세는 트리거를 이용하여 삭제함 MaterialMapper.xml에 적어놓음
+	@PostMapping("/materialOrderDelete")
+	@ResponseBody
+	public int getMaterialOrderDelete(MaterialVO materialVO){
+		
+		String[] ordrCd = materialVO.getOrdrCd().split(",");
+		int r = 0;
+		
+		for(int i=0; i < ordrCd.length; i++) {
+			r = materialService.getMaterialOrderDelete(ordrCd[i]);
+		}
+		return r;
+	}
+	
+	// 자재 발주 상세 자재 삭제
+	@PostMapping("/materialOrderDetailDelete")
+	@ResponseBody
+	public int getMaterialOrderDetailDelete(MaterialVO materialVO) {
+		
+		String ordrCd = materialVO.getOrdrCd();
+		String[] rscCd = materialVO.getRscCd().split(",");
+		
+		return 0;
 	}
 	
 	// 자재입고검사조회

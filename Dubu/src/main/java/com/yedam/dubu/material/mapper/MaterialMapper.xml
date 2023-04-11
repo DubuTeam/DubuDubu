@@ -117,5 +117,23 @@
 		SET ORDR_CNT = #{ordrCnt}, RMN_CNT = #{rmnCnt}
 		WHERE ORDR_CD = #{ordrCd} AND RSC_CD = #{rscCd}
 	</update>
+	
+	<!-- 자재발주 삭제 -->
+	<delete id="getMaterialOrderDelete" parameterType="String">
+		DELETE 
+		FROM RSC_ORDR
+		WHERE ORDR_CD = #{ordrCd}
+	</delete>
+	
+	<!-- 트리거를 이용하여 삭제함
+		create or replace trigger delete_material_detail
+   			after delete on RSC_ORDR
+   			for each row
+   			begin 
+      			delete from RSC_ORDR_DTL
+      			where ORDR_CD = :OLD.ORDR_CD;
+   			end;
+   		 / 
+   	-->
 
 </mapper>

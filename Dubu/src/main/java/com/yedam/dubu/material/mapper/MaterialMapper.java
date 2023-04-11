@@ -34,5 +34,7 @@ public interface MaterialMapper {
 	// 자재 발주 상세 수정 UPDATE
 	public int getMaterialOrderListDetailModify(MaterialVO materialVO);
 	
+	// 자재 발주 삭제
+	public int getMaterialOrderDelete(String ordrCd);
 	
 }
