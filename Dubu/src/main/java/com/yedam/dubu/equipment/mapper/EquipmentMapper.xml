@@ -52,4 +52,14 @@
 		DELETE FROM eqm_line
 			WHERE line_cd = #{lineCd}
 	</delete>
+	
+	
+	
+	<!-- ↓↓↓ 설비 관리 테이블! -->
+	
+	<!-- 공정 관리 테이블 조회 -->
+	<select id="selectAllProcessList" resultType="EquipmentVO">
+		SELECT * FROM PRCS ORDER BY prcs_cd
+	</select>
+	
 </mapper>

@@ -48,4 +48,16 @@ public class EquipmentServiceImpl implements EquipmentService{
 		
 		return equipmentMapper.deleteEquipment(equipmentVO);
 	}
+
+	
+	/////////////////////////////////////////////////////////////////////////
+	
+	
+	// 설비관리 테이블
+	
+	// 공정코드, 공정명 가져오기 위한 메서드
+	@Override
+	public List<EquipmentVO> selectAllProcessList() {
+		return equipmentMapper.selectAllProcessList();
+	}
 }
