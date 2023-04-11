@@ -68,18 +68,28 @@ public class SalesServiceImpl implements SalesService {
 ////////////////////////////////////////////////////////////////
 	// saleslst.jsp 페이지
 
-
 	// 제품 입고 목록 조건별 조회
 	@Override
 	public List<SalesIstVO> istOptionList(SalesIstVO vo) {
 		return salesMapper.istOptionList(vo);
 	}
 
-	//lot 번호 조회
+	// lot 번호 조회
 	@Override
 	public List<PrdtInspVO> getLotList(PrdtInspVO vo) {
 		// TODO Auto-generated method stub
 		return salesMapper.getLotList(vo);
 	}
 
+	// 제품 입고 목록 현재 날짜 기준으로 조회(첫페이지)
+	@Override
+	public List<SalesIstVO> salesIstList(SalesIstVO vo) {
+		return salesMapper.salesIstList(vo);
+	}
+
+	// 입고 등록,수정
+	@Override
+	public void saveIst(SalesIstVO vo) {
+		salesMapper.saveIst(vo);
+	}
 }

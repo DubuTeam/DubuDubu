@@ -58,6 +58,7 @@
 			<li >> 제품입고등록</li>
 		</ol>
 
+<form id = "submitFrm">
 		<div class="card mb-4">
 			<div id="cont" style="padding-bottom: 0px">
 				<div class="col">
@@ -323,7 +324,40 @@
 			})
 		})
 		
-		
+		//제품 입고 등록&수정
+	    $("#saveBtn").click(ev => {
+	    	//제품 입고 등록버튼 클릭 -> 제품 입고번호 자동생성 & 등록 시 출력
+	    	//var submitData = $("#submitFrm").serialize();
+	    	var inspData = lotNoGrid.getCheckedRows();
+	    	var edctsLotNo = $("#edctsLotNo").val();
+	    	console.log(edctsLotNo);
+	    	console.log(inspData);
+	    	var edctsCd = lotNoGrid.getValue(inspData[0].rowKey,'edctsCd');
+	    	console.log(edctsCd);
+	    	var edctsIstDt = $("#edctsIstDtStart").val();
+	    	var edctsIstCnt = $("#edctsIstCnt").val();
+	    	console.log(edctsIstCnt);
+	    	var edctsIstNo = $("#edctsIstNo").val();
+	    	var orderNo = lotNoGrid.getValue(inspData[0].rowKey,'orderNo');
+	    	//var orderNo = inspData[0].orderNo;
+			console.log(orderNo);
+			if($("#edctsIstCnt").val() == '') {
+				toastr.warning('입고수량을 입력해주세요');
+			}else{
+				$.ajax({
+	    		url:"saveIst",
+	    		dataType:"json",
+	    		method:"post",
+	    		async:false,
+	    		data:{"edctsCd":edctsCd,"edctsLotNo":edctsLotNo,"edctsIstDt":edctsIstDt,"edctsIstCnt":edctsIstCnt,"edctsIstNo":edctsIstNo},
+	    		success:function(result) {	
+	    			toastr.success('저장되었습니다');
+	    			salesIstList();
+
+	    		}
+	    	})
+			}	
+	   })
 			
 	
 

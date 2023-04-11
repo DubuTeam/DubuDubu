@@ -26,19 +26,26 @@ public class SalesController {
 		return "sales/salesIst";
 	}
 
-
 	// 제품 입고 목록 조건별 조회
 	@PostMapping("istOptionList")
 	@ResponseBody
 	public List<SalesIstVO> istOptionList(SalesIstVO vo) {
 		return salesService.istOptionList(vo);
 	}
-	
-	//완제품LOT번호 모달 조회
+
+	// 완제품LOT번호 모달 조회
 	@RequestMapping("getLotList")
 	@ResponseBody
 	public List<PrdtInspVO> getLotList(PrdtInspVO vo) {
 		return salesService.getLotList(vo);
+	}
+
+	// 제품 입고 등록&수정
+	@PostMapping("saveIst")
+	@ResponseBody
+	public List<SalesIstVO> saveIst(SalesIstVO vo) {
+		salesService.saveIst(vo);
+		return salesService.salesIstList(vo);
 	}
 
 	// 제품입고조회
