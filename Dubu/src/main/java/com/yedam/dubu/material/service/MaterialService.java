@@ -29,4 +29,7 @@ public interface MaterialService {
 	
 	// 자재 발주 상세 리스트
 	public List<MaterialVO> getMaterialOrderListDetail(String ordrCd);
+	
+	// 자재 발주 상세 수정 UPDATE
+	public List<MaterialVO> getMaterialOrderListDetailModify(MaterialVO materialVO);
 }

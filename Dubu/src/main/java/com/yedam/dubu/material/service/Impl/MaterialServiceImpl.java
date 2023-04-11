@@ -64,4 +64,9 @@ public class MaterialServiceImpl implements MaterialService{
 		return materialMapper.getMaterialOrderListDetail(ordrCd);
 	}
 
+	@Override
+	public List<MaterialVO> getMaterialOrderListDetailModify(MaterialVO materialVO) {
+		return materialMapper.getMaterialOrderListDetailModify(materialVO);
+	}
+
 }

@@ -81,14 +81,14 @@ public class MaterialController {
 		return r;
 	}
 	 
-	// 자재발주조회 페이지
+	// 자재발주조회 페이지 => 없어도됨
 	@GetMapping("/materialOrderSearch")
 	public String getMaterialOrderSearch(Model model) {
 		model.addAttribute("vendMoalList",materialService.getVendModal()); // 업체명 모달창
 		return "material/materialOrderSearch";
 	}
 	
-	// 자재발주한 목록들 받아오기
+	// 자재발주한 목록들 받아오기 => 없어오됨
 	@PostMapping("/materialOrderSearch")
 	@ResponseBody
 	public List<MaterialVO> getMaterialOrderList(MaterialVO materialVO){
@@ -97,11 +97,20 @@ public class MaterialController {
 		return materialService.getMaterialOrderList(materialVO);
 	}
 	
+	// 그리드 셀 더블클릭시 나타나는 자재 발주 상세 디테일 정보들
 	@PostMapping("/materialDetail")
 	@ResponseBody
 	public List<MaterialVO> getMaterialOrderDetail(MaterialVO materialVO){
 		return materialService.getMaterialOrderListDetail(materialVO.getOrdrCd());
 	}
+	
+	// 자재 발주 상세 디테일 수정
+	@PostMapping("/materialDetailModify")
+	@ResponseBody
+	public List<MaterialVO> getMaterialOrderDetailModify(MaterialVO materialVO){
+		return materialService.getMaterialOrderListDetailModify(materialVO);
+	}
+	
 
 	// 자재입고검사조회
 	@GetMapping("/materialInspList")
