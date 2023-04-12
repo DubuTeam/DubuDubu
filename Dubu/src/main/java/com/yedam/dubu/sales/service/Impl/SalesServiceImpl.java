@@ -106,4 +106,10 @@ public class SalesServiceImpl implements SalesService {
 		// TODO Auto-generated method stub
 		return salesMapper.getlstNo(vo);
 	}
+
+	@Override
+	public List<SalesVO> findOrder(SalesVO vo) {
+		// TODO Auto-generated method stub
+		return salesMapper.findOrder(vo);
+	}
 }

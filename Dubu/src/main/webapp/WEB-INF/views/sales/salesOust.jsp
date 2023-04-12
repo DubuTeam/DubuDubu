@@ -2,7 +2,36 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page session="false"%>
+<link rel="stylesheet"
+	href="https://uicdn.toast.com/tui.date-picker/latest/tui-date-picker.css" />
+<script
+	src="https://uicdn.toast.com/tui.date-picker/latest/tui-date-picker.js"></script>
+<link rel="stylesheet"
+	href="https://uicdn.toast.com/grid/latest/tui-grid.css" />
+<script src="https://uicdn.toast.com/grid/latest/tui-grid.js"></script>
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<script
+	src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
 
+<script
+	src="https://uicdn.toast.com/tui.code-snippet/latest/tui-code-snippet.min.js"></script>
+
+
+<link rel="stylesheet"
+	href="https://unpkg.com/ag-grid-community@25.3.0/dist/styles/ag-grid.css">
+<link rel="stylesheet"
+	href="https://unpkg.com/ag-grid-community@25.3.0/dist/styles/ag-theme-alpine.css">
+<script
+	src="https://unpkg.com/ag-grid-community@25.3.0/dist/ag-grid-community.min.noStyle.js"></script>
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css"
+	integrity="sha512-3pIirOrwegjM6erE5gPSwkUzO+3cTjpnV9lexlNZqvupR64iZBnOOTiiLPb9M36zpMScbmUNIcHUqKD47M719g=="
+	crossorigin="anonymous" referrerpolicy="no-referrer" />
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"
+	integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw=="
+	crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <link
 	href="${pageContext.request.contextPath}/resources/css/sales/salesOust.css"
 	rel="stylesheet" type="text/css">
@@ -13,7 +42,7 @@
 		<h1 class="mt-4" style="margin-left: 20px;">제품출고등록</h1>
 		<ol class="breadcrumb mb-4">
 			<li class="breadcrumb-item" style="margin-left: 25px;"><a
-				href="/"><i class="fas fa-home"></i></a></li>
+				href="/dubu"><i class="fas fa-home"></i></a></li>
 			<li class="breadcrumb-item">> 영업관리</li>
 			<li class="breadcrumb-item active">> 제품출고등록</li>
 		</ol>
@@ -83,4 +112,103 @@
 	<!-- /.container-fluid -->
 </div>
 </div>
+<script>
+	$(function() {
+		findOrder();
+	})
+	//생산완료 주문서 현황 그리드
+	const grid = new tui.Grid({
+		el : document.getElementById('grid'),
+		scrollX : false,
+		bodyHeight : 300,
+		rowHeight : 35,
+		rowHeaders : [ 'rowNum' ],
+		header : {
+			height : 40
+		},
+		columns : [ {
+			header : '주문번호',
+			name : 'orderNo',
+			align : 'center'
+		}, {
+			header : '거래처',
+			name : 'vendNm',
+			align : 'left'
+		}, {
+			header : '제품코드',
+			name : 'edctsCd',
+			align : 'center'
+		}, {
+			header : '제품명',
+			name : 'prdtNm',
+			align : 'left'
+		}, {
+			header : '주문수량',
+			name : 'orderCnt',
+			align : 'right'
+		} ]
+	});
+
+	//출고 등록 현황 그리드
+	const grid2 = new tui.Grid({
+		el : document.getElementById('grid2'),
+		scrollX : false,
+		bodyHeight : 300,
+		rowHeight : 35,
+		rowHeaders : [ 'rowNum' ],
+		columns : [ {
+			header : '제품코드',
+			name : 'edctsCd',
+			align : 'center'
+		}, {
+			header : '완제품LOT번호',
+			name : 'edctsLotNo',
+			align : 'center'
+		}, {
+			header : '출고일자',
+			name : 'edctsOustDt',
+			align : 'center'
+		}, {
+			header : '출고수량',
+			name : 'edctsOustCnt',
+			align : 'right'
+		} ]
+	});
+
+	//완제품 재고 현황 모달
+	const StcGrid = new tui.Grid({
+		el : document.getElementById('StcGrid'),
+		scrollX : false,
+		scrollY : false,
+		rowHeaders : [ 'checkbox' ],
+		columns : [ {
+			header : '제품코드',
+			name : 'edctsCd',
+			align : 'center'
+		}, {
+			header : '완제품LOT번호',
+			name : 'edctsLotNo',
+			align : 'center'
+		}, {
+			header : '제품명',
+			name : 'prdtNm',
+			align : 'left'
+		}, {
+			header : '완제품 재고량',
+			name : 'lotCnt',
+			align : 'right'
+		} ]
+	});
+	//진행중 주문서 현황 목록 불러오기
+	function findOrder() {
+		$.ajax({
+			url : "findOrder",
+			method : "get",
+			dataType : "json",
+			success : function(list) {
+				grid.resetData(list);
+			}
+		})
+	}
+</script>
 <!-- End of Main Content -->

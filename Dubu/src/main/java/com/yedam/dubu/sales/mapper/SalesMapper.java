@@ -47,6 +47,12 @@ public interface SalesMapper {
 
 	// 제품 입고후 상태 Completed 로 변경
 	public void modifyProg(SalesVO vo);
+
 	// lst 마지막 번호 생성
 	public SalesVO getlstNo(SalesVO vo);
+
+	///////////////////////////////////////////////////////////////////////
+	//oust.jsp 페이지
+	// 진행중 주문서 현황 목록 조회
+	public List<SalesVO> findOrder(SalesVO vo);
 }
