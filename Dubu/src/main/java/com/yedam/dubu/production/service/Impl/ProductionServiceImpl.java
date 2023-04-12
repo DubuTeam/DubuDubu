@@ -93,7 +93,7 @@ public class ProductionServiceImpl implements ProductionService {
 	//public int updatePlan(List<ProductionVO> updatePlanCd, List<ProductionVO> updatePlanYn) {
 		int result = 0;
 		for(ProductionVO vo : updatePlan) {
-				result += productionMapper.updatePlan(vo);
+				//result += productionMapper.updatePlan(vo);
 			}
 		//for(ProductionVO vo : updatePlanCd) {
 		//	result += productionMapper.updatePlanCd(vo);

@@ -75,7 +75,7 @@
 	</foreach>
 	</select>
 	<!-- 생산계획 코드 부여 -->
-	<update id="updatePlanCd" parameterType="ProductuionVO">
+	<update id="updatePlanCd" parameterType="ProductionVO">
 		UPDATE PLAN
 		SET PLAN_CD = #{planCd}
 		WHERE ORDER_NO = #{orderNo}
