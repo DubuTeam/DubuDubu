@@ -605,13 +605,8 @@
 				{
 					header: '불량수량',
 					name: 'infCnt',
-					editor: {
-						type: inputInferCnt,
-						options: {
-							maxLength: 10
-						}
-					},
-					align: 'center'
+					align: 'center'				
+					,
 				}
 			]
 			, editingEvent: 'click'
