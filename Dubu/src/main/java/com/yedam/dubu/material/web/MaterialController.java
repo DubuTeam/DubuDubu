@@ -112,6 +112,7 @@ public class MaterialController {
 		String ordrCd = materialVO.getOrdrCd(); // 발주코드
 		String[] rscCd = materialVO.getRscCd().split(","); // 자재코드
 		String[] ordrCnt = materialVO.getOrdrCnt2().split(","); // 발주수량
+		String[] paprdCmndDt = materialVO.getPaprdCmndDt2().split(","); // 납기요청일
 		
 		int r = 0;
 		
@@ -122,6 +123,7 @@ public class MaterialController {
 			material.setRscCd(rscCd[i]); // 자재코드
 			material.setOrdrCnt(Integer.parseInt(ordrCnt[i])); // 발주수량
 			material.setRmnCnt(Integer.parseInt(ordrCnt[i])); // 미입고잔량
+			material.setPaprdCmndDt2(paprdCmndDt[i]); // 납기 요청일
 			r = materialService.getMaterialOrderListDetailModify(material); // 자재 발주 디테일 수정
 		}
 		
@@ -155,7 +157,15 @@ public class MaterialController {
 		String ordrCd = materialVO.getOrdrCd();
 		String[] rscCd = materialVO.getRscCd().split(",");
 		
-		return 0;
+		int r = 0;
+		MaterialVO material = new MaterialVO();
+		
+		for(int i = 0; i < rscCd.length; i++) {
+			material.setOrdrCd(ordrCd);
+			material.setRscCd(rscCd[i]);
+			r = materialService.getDeleteProcedure(material);
+		}
+		return r;
 	}
 	
 	// 자재입고검사조회
