@@ -1,5 +1,9 @@
 package com.yedam.dubu.equipment.service;
 
+import java.util.Date;
+
+import org.springframework.format.annotation.DateTimeFormat;
+
 import lombok.Data;
 
 @Data
@@ -31,11 +35,19 @@ public class EquipmentVO {
 
 	
 	// 2-4. 설비 등록시 테이블에 출력할 컬럼들 (위에 존재하는 것들은 제외하고, 새로 추가함) - 입고일자랑 설비구분은 일부러 안 넣음 (어차피 안 쓴다)
-	private int idx;
+	private int idx;		// SQL 에서의 ROWNUM 값을 받을 변수
 	private String eqmNm;
 	private String eqmCd;
 	private String eqmYn;
 	private int minTemp;
 	private int maxTemp;
 	private int chckPerd;
+
+	@DateTimeFormat(pattern="yyyy-MM-dd")
+	private Date eqmIstDt;
+	
+	
+	//2-5. 검색 기능 시 필요한 변수명
+	private String keyword;			// 검색창에 입력한 값
+	private String type;			// 검색 시, 어떤 걸 기준으로 검색하는지 (설비명, 설비코드, 공정명)
 }

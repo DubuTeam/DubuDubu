@@ -27,8 +27,11 @@ public class EquipmentServiceImpl implements EquipmentService{
 
 	@Override
 	public int insertEquipmentLine(EquipmentVO equipmentVO) {
-		int result = equipmentMapper.insertEquipmentLine(equipmentVO);
-		System.out.println("insert 출력 ->  " + result + "개");
+		// int result = equipmentMapper.insertEquipmentLine(equipmentVO);
+		// ↑↑↑ 이거 주석 해제하면 에러 발생 (insert 2번 해서 제약조건 에러 뜸)   -> 위처럼 쓰려면, 아예 리턴문도 바꾸거나 알맞게 없애야 함.
+		// System.out.println("insert 출력 ->  " + result + "개");
+		
+		System.out.println("insert 출력!");
 		
 		return equipmentMapper.insertEquipmentLine(equipmentVO);
 	}
@@ -78,4 +81,22 @@ public class EquipmentServiceImpl implements EquipmentService{
 	public int insertEquipment(EquipmentVO equipmentVO) {
 		return equipmentMapper.insertEquipment(equipmentVO);
 	}
+
+	@Override
+	public int updateEquipment(EquipmentVO equipmentVO) {
+		return equipmentMapper.updateEquipment(equipmentVO);
+	}
+
+	@Override
+	public int deleteEquipment(String eqmCd) {
+		return equipmentMapper.deleteEquipment(eqmCd);
+	}
+
+	@Override
+	public List<EquipmentVO> selectSpecificEquipmentList() {
+		
+		return equipmentMapper.selectSpecificEquipmentList();
+	}
+	
+	
 }

@@ -57,3 +57,7 @@ label {
 #opN, #sTtn {
     margin: 0px 10px;
 }
+
+.eachRow:hover {
+	background-color: rgb(233, 233, 233);
+}

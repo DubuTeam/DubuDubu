@@ -53,4 +53,14 @@ public interface EquipmentMapper {
 		
 		// 설비 등록하기
 		public int insertEquipment(EquipmentVO equipmentVO);
+		
+		// 설비 수정하기
+		public int updateEquipment(EquipmentVO equipmentVO);
+		
+		// 설비 삭제하기
+		public int deleteEquipment(String eqmCd);
+		
+		// 설비 검색하기
+		public List<EquipmentVO> selectSpecificEquipmentList();
+		
 }

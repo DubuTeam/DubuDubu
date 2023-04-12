@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt_rt" %>
 <%@ page session="false" %>
 
 <link href="${pageContext.request.contextPath}/resources/css/eqcss/eq.css" rel="stylesheet" type="text/css">
@@ -30,18 +31,18 @@
 						<div class="card mr-4">
 							<div class="card-body">
 								<div id="searchBar">
-									<select class="dataTable-selector" id="opN" name="opN"
+									<select class="dataTable-selector" id="searchType" name="searchType"
 										style="width: 150px">
 										<option selected value="">==선택==</option>
-										<option value=1>설비코드</option>
-										<option value=2>설비명</option>
-										<option value=3>공정명</option>
+										<option value="eqmCd">설비코드</option>
+										<option value="eqmNm">설비명</option>
+										<option value="prcsNm">공정명</option>
 									</select>
 
 									<input class="form-control" type="text" id="keyword" name="keyword"
 										placeholder="설비명" style="width: 180px"></input>
 
-									<button type="button" id="sTtn" class="btn btn-primary"
+									<button type="button" id="searchBtn" class="btn btn-primary"
 										style="margin-bottom: 3px">
 										<i class="fas fa-search"></i> 검색
 									</button>
@@ -62,6 +63,7 @@
 												<th>최대온도</th>
 												<th>점검주기(일)</th>
 												<th>라인코드</th>
+												<th>입고일자</th>
 											</tr>
 										</thead>
 
@@ -79,6 +81,7 @@
 												<td>${eqm.maxTemp }</td>
 												<td>${eqm.chckPerd }</td>
 												<td>${eqm.lineCd }</td>
+												<td><fmt:formatDate value="${eqm.eqmIstDt }" pattern="yyyy-MM-dd" /></td>
 											</tr>
 										</c:forEach>
 										</tbody>
@@ -124,7 +127,7 @@
 											<div class="modal-footer" style="border-top: none;">
 												<button type="button" class="btn btn-secondary"
 													data-dismiss="modal">취소</button>
-												<button type="button" class="btn btn-primary">삭제</button>
+												<button type="button" class="btn btn-primary" id="delBtn">삭제</button>
 											</div>
 										</div>
 									</div>
@@ -209,7 +212,7 @@
 											<th>공정명 *</th>
 											<td>
 												<select name="prcsNm" aria-label="Default select example"
-													style="width: 250px" id='prcsNm' 
+													style="width: 250px" id="prcsNm" 
 													class="dataTable-selector">
 													<option selected value="">==등록시필수선택==</option>
 													<!-- <option th:each="value : ${prcsList}"
@@ -247,8 +250,8 @@
 
 											<th>가동여부 *</th>
 											<td id="useYNSet">
-												<input type="radio" name="useYN" value="Y"> 가동&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-												<input type="radio" name="useYN" value="N"> 미가동
+												<input type="radio" name="useYN" id="ynY" value="Y"> 가동&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+												<input type="radio" name="useYN" id="ynN" value="N"> 미가동
 											</td>
 										</tr>
 									</tbody>
