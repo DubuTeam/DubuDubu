@@ -28,7 +28,7 @@ public class EquipmentController {
 	
 	@PostMapping("/insertEqLine")
 	@ResponseBody			// ajax 랑 데이터를 주고 받을 때, 객체로 보내고 객체로 받기 위해서 @ResponseBody 사용
-	public String equipmentLineInsertProcess(EquipmentVO equipmentVO) {
+	public String eqLineInsertProcess(EquipmentVO equipmentVO) {
 		equipmentService.insertEquipmentLine(equipmentVO);		// <- 여기서..정보가 담긴 VO 객체를 가지고, 직접적인 DB 랑 연결.
 		
 		return "redirect:eqLine";
@@ -37,7 +37,7 @@ public class EquipmentController {
 
 	@PostMapping("/updateEqLine")
 	@ResponseBody
-	public String equipmentUpdateProcess(EquipmentVO equipmentVO) {
+	public String eqLineUpdateProcess(EquipmentVO equipmentVO) {
 		equipmentService.updateEquipmentLine(equipmentVO);
 		
 		return "redirect:eqLine";
@@ -65,18 +65,38 @@ public class EquipmentController {
 		// 설비 목록을 전체 출력하기 위해서 보냄
 		model.addAttribute("eqList", equipmentService.selectAllEquipmentList());
 		
+		// 설비 검색 시 필요한 거..? (기존 "eqList" 삭제 후, 아래의 "specificEqList" 를 불러야 하나..?)
+		model.addAttribute("specificEqList", equipmentService.selectSpecificEquipmentList());
+		
 		return "equip/eq";
 	}
 
 	
 	@PostMapping("/insertEq")
 	@ResponseBody
-	public String equipmentInsertProcess(EquipmentVO equipmentVO) {
+	public String eqInsertProcess(EquipmentVO equipmentVO) {
 		equipmentService.insertEquipment(equipmentVO);
 		
 		return "redirect:eq";
 	}
 	
+	
+	@PostMapping("/updateEq")
+	@ResponseBody
+	public String eqUpdateProcess(EquipmentVO equipmentVO) {
+		equipmentService.updateEquipment(equipmentVO);
+		
+		return "redirect:eq";
+	}
+	
+	@PostMapping("/deleteEq")
+	@ResponseBody
+	public String deleteEq(String eqmCd) {
+		equipmentService.deleteEquipment(eqmCd);
+		return "redirect:eq";
+	}
+	
+
 	
 	///////////////////////////////////////////////////////////////////////////
 	

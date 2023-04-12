@@ -50,7 +50,7 @@ $(document).ready(function () {
     //////////////////////////////////////////////////////////////////////////
 
 
-    // 등록 버튼 눌렀을 때
+    // 4. 등록 버튼 눌렀을 때
     $('#insertBtn').on("click", function() {
         // console.log(eqmNm.value);
 
@@ -104,17 +104,18 @@ $(document).ready(function () {
             let eqmCd = $('#eqmCd').val()
             let lineCd = $('#lineCd').val()
             let prcsCd = $('#prcsCd').val()
-            let prcsNm = $('#prcsNm').val()
+            let prcsNm = $('#prcsNm option:checked').text()     // val 이 아닌 .text (선택된 옵션의 텍스트값)
             let eqmNm = $('#eqmNm').val()
             let chckPerd = $('#chckPerd').val()
             let minTemp = $('#minTemp').val()
             let maxTemp = $('#maxTemp').val()
             let eqmYn = $('input[name=useYN]:checked').val()
+            let eqmIstDt = $('#eqmIstDt').val()
 
             // 출력 테스트
             console.log(eqmCd)
-            console.log(eqmNm)
-            console.log(eqmYn)
+            console.log("공정명 " + prcsNm)
+            console.log(eqmIstDt)
 
 
             $.ajax({
@@ -130,10 +131,12 @@ $(document).ready(function () {
                     chckPerd: chckPerd,
                     minTemp: minTemp,
                     maxTemp: maxTemp,
-                    eqmYn: eqmYn
+                    eqmYn: eqmYn,
+                    eqmIstDt: eqmIstDt
                 },
                 success: function (result) {
                     console.log('데이터 잘 보냄! -> ' + result);
+                    location.replace('eq');     // 등록 후, 다시 eq 페이지 (메인 페이지로)
                 },
                 error: function (err) {
                     console.log(err);
@@ -143,7 +146,176 @@ $(document).ready(function () {
     })
 
 
+    //////////////////////////////////////////////////////////////////////////
 
+
+    // 5. row 하나 클릭 시,
+    $('.eachRow').on("click", function (e) {
+        // 5-1. 해당 행에 입력된 데이터를 받아옴.     (가장 가까운 tr태그의 각 셀들)
+        let eqmNm = $(this).closest("tr").children().eq(1).text();
+        let eqmCd = $(this).closest("tr").children().eq(2).text();
+        let prcsCd = $(this).closest("tr").children().eq(3).text();
+        let useYnSet = $(this).closest("tr").children().eq(5).text();
+        let minTemp = $(this).closest("tr").children().eq(6).text();
+        let maxTemp = $(this).closest("tr").children().eq(7).text();
+        let chckPerd = $(this).closest("tr").children().eq(8).text();
+        let lineCd = $(this).closest("tr").children().eq(9).text();
+        let eqmIstDt = $(this).closest("tr").children().eq(10).text();
+        console.log(useYnSet);
+        console.log(eqmIstDt)
+
+
+        // 5-2. 그리고 jsp 파일의 input 태그에다가 위 데이터를 집어넣는다.
+        $('#eqmCd').val(eqmCd);
+        $('#eqmNm').val(eqmNm);
+        $('#lineCd').val(lineCd);
+        $('#chckPerd').val(chckPerd);
+        $('#prcsCd').val(prcsCd);
+        $('#minTemp').val(minTemp);
+        $('#maxTemp').val(maxTemp);
+
+        // 5-3. Yes or No 의 경우, radio 버튼 바꿔가면서 선택되도록!
+        if (useYnSet == "Y") {
+            $("#ynY").prop("checked", true);
+        } else if (useYnSet == "N") {
+            $("#ynN").prop("checked", true);
+        }
+
+        // 입고일자
+        // $('#eqmIstDt').val(eqmIstDt);
+        $('input[name=eqmIstDt]').attr('value', eqmIstDt);
+    })
     
 
+    //////////////////////////////////////////////////////////////////////////
+
+
+    // 6. row 하나 클릭 후, 데이터 수정 후 수정 버튼 눌렀을 때
+    $('#modBtn').on("click", function() {
+        // 설비명, 점검주기,입고일자, 가동여부 중 하나라도 입력 안하면 에러!
+        if ($('#eqmCd').val() == '' || $('#lineCd').val() == '' ||  $('#prcsCd').val() == '' || eqmNm.value == '' || chckPerd.value == '' || eqmIstDt.value == '' || $('input[name=useYN]:checked').val() == undefined) {
+            console.log('필수항목들을 전부 입력해라!')
+
+            $('#eqmFg').css('border', 'solid 2px red')
+            $('#lineNm').css('border', 'solid 2px red')
+            $('#prcsNm').css('border', 'solid 2px red')
+            $('#eqmNm').css('border', 'solid 2px red')
+            $('#chckPerd').css('border', 'solid 2px red')
+            $('#eqmIstDt').css('border', 'solid 2px red')
+            $('#useYNSet').css('border', 'solid 2px red')
+        }
+        else {  // 모두 다 작성이 잘 됐다면, 이제 등록
+            let eqmCd = $('#eqmCd').val()
+            let lineCd = $('#lineCd').val()
+            let prcsCd = $('#prcsCd').val()
+            let prcsNm = $('#prcsNm').val()
+            let eqmNm = $('#eqmNm').val()
+            let chckPerd = $('#chckPerd').val()
+            let minTemp = $('#minTemp').val()
+            let maxTemp = $('#maxTemp').val()
+            let eqmYn = $('input[name=useYN]:checked').val()
+            let eqmIstDt = $('#eqmIstDt').val()
+
+            // 출력 테스트
+            console.log(eqmCd)
+            console.log(eqmNm)
+            console.log(eqmYn)
+            console.log(eqmIstDt)
+
+
+            $.ajax({
+                url: 'updateEq',
+                method: 'post',
+                data: {
+                    // VO 클래스에 있는 eqmCd 에다가,   여기서 값을 받아온 eqmCd 를 넘긴다~
+                    eqmCd: eqmCd,
+                    lineCd: lineCd,
+                    prcsCd: prcsCd,
+                    prcsNm: prcsNm,
+                    eqmNm: eqmNm,
+                    chckPerd: chckPerd,
+                    minTemp: minTemp,
+                    maxTemp: maxTemp,
+                    eqmYn: eqmYn,
+                    eqmIstDt: eqmIstDt
+                },
+                success: function (result) {
+                    console.log('데이터 잘 보냄! -> ' + result);
+                    location.replace('eq');     // 등록 후, 다시 eq 페이지 (메인 페이지로)
+                },
+                error: function (err) {
+                    console.log(err);
+                }
+            })
+        }
+    })
+
+
+    //////////////////////////////////////////////////////////////////////////
+
+
+    // 7. row 하나 클릭 후, 삭제 버튼 눌렀을 때
+    $('#delBtn').on("click", function() {
+        
+        let eqmCd = $('#eqmCd').val()
+        // 출력 테스트
+        console.log(eqmCd)
+
+
+        $('#exampleModal').click();
+
+        $.ajax({
+            url: 'deleteEq',
+            method: 'post',
+            data: {
+                // VO 클래스에 있는 eqmCd 에다가,   여기서 값을 받아온 eqmCd 를 넘긴다~
+                eqmCd: eqmCd,
+            },
+            success: function (result) {
+                console.log('데이터 잘 보냄! -> ' + result);
+                $('#exampleModal').click();         // 모달창 닫기,  .click() 혹은 .hide() ..?
+                location.replace('eq');     // 등록 후, 다시 eq 페이지 (메인 페이지로)
+            },
+            error: function (err) {
+                console.log(err);
+            }
+        })
+    })
+
+
+    //////////////////////////////////////////////////////////////////////////
+
+
+    // 8. 검색 기능
+    $('#searchBtn').on("click", function() {
+        let keyword = $('#keyword').val()
+        let type = $('#searchType').val()
+
+        // console.log(keyword)
+        // console.log(type)
+
+		$.ajax({
+			url: "searchMemberManage.do",
+			data: {
+                keyword: keyword,
+                type: type
+            },
+			success: function (result) {
+				$('#keyword').val("");
+				$("#list").find("tr").remove();
+
+                // 이 밑에 코드 수정하기
+				$(result).each(function (idx, item) {
+					$('#list').append(makeRow(item));
+				});
+
+				$(result).each(function (idx, item) {
+					$('#list').append(makeRowUpd(item));
+				});
+			},
+			error: function (reject) {
+				console.log(reject);
+			}
+		})
+    })
 })

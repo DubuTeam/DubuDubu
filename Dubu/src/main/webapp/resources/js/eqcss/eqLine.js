@@ -85,6 +85,7 @@ $(document).ready(function () {
                 },
                 success: function (result) {
                     console.log('yaayyy');
+                    location.replace('eqLine');     // 등록 후, 다시 eqLine 페이지 (메인 페이지로)
                 }
             })
             // 존재하지 않는다면! (즉, 새로운 라인코드라면.. 데이터 insert)
@@ -103,6 +104,10 @@ $(document).ready(function () {
                 },
                 success: function (result) {
                     console.log('yaayyy');
+                    location.replace('eqLine');     // 등록 후, 다시 eqLine 페이지 (메인 페이지로)
+                },
+                error: function (err) {
+                    console.log(err);
                 }
             })
         }
@@ -149,6 +154,7 @@ $(document).ready(function () {
             success: function (result) {
                 console.log('삭제성공입니다~~~');
                 $('#exampleModal').click();         // 모달창 닫기,  .click() 혹은 .hide() ..?
+                location.replace('eqLine');     // 등록 후, 다시 eqLine 페이지 (메인 페이지로)
             }
         })
     })

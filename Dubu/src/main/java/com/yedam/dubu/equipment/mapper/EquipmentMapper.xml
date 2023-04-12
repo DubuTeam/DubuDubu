@@ -83,12 +83,14 @@
 			min_temp,
 			max_temp,
 			chck_perd,
-			line_cd
+			line_cd,
+			eqm_ist_dt
 		FROM eqm
+		ORDER BY eqm_cd
 	</select>
 	
 	<!-- 설비 등록하기 -->
-	<!-- 입고일자랑 설비구분은 일부러 안 넣음 (어차피 안 쓴다) -->
+	<!-- 설비구분은 일부러 안 넣음 (어차피 안 쓴다) -->
 	<insert id="insertEquipment" parameterType="equipmentVO">
 		INSERT INTO EQM 
 		                (
@@ -100,7 +102,8 @@
 		                 eqm_yn,
 		                 chck_perd,
 		                 min_temp,
-		                 max_temp
+		                 max_temp,
+		                 eqm_ist_dt
 		                )
 		        VALUES (
 		        		#{eqmCd},
@@ -111,7 +114,29 @@
 		                #{eqmYn},
 		                #{chckPerd},
 		                #{minTemp},
-		                #{maxTemp}
+		                #{maxTemp},
+		                #{eqmIstDt}
 		                )
 	</insert>
+	
+	<!-- 설비 수정하기 -->
+	<update id="updateEquipment" parameterType="equipmentVO">
+		UPDATE eqm
+		SET
+			eqm_nm = #{eqmNm},
+            line_cd = #{lineCd},
+            prcs_cd = #{prcsCd},
+            prcs_nm = #{prcsNm},
+            eqm_yn = #{eqmYn},
+            chck_perd = #{chckPerd},
+            min_temp = #{minTemp},
+            max_temp = #{maxTemp},
+            eqm_ist_dt = #{eqmIstDt}
+		WHERE eqm_cd = #{eqmCd}
+	</update>
+	
+	<!-- 설비 삭제하기 -->
+	<delete id="deleteEquipment" parameterType="String">
+		DELETE FROM eqm WHERE eqm_cd = #{eqmCd}
+	</delete>
 </mapper>
