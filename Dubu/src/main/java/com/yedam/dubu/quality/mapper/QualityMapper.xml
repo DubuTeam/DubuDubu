@@ -55,17 +55,17 @@ OR (pi.EDCTS_LOT_NO = 'LOT2')
 		ORDER BY EDCTS_LOT_NO
 	</select>
 	
-	<select id="getPrdtInspDtl" resultType="QualityVO">
+	<select id="getPrdtInspDtl" resultType="QualityVO">  
 		SELECT *
 		FROM PRDT_INSP_DTL
 		WHERE EDCTS_LOT_NO = #{edctsLotNo}
 	</select>
 
-	<select id="getMatVendList" parameterType="QualityVO" resultType="QualityVO">
+	<select id="getMatVendList" parameterType="QualityVO" resultType="QualityVO">   <!-- 업체명 조회 모달 -->
         select VEND_CD, VEND_NM, BINZO, TELNO
         from VEND
-        where VEND_NM like '%${vendNm}%'
-          and VEND_CD like '%${vendCd}%'
+        where UPPER(VEND_NM) like UPPER('%${vendNm}%')
+          and UPPER(VEND_CD) like UPPER('%${vendCd}%')
     </select>
 	
 	<select id="getMatOrdrList" parameterType="QualityVO" resultType="QualityVO">
