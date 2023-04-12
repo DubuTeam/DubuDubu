@@ -40,4 +40,7 @@ public interface SalesService {
 	// 제품 입고 목록 현재 날짜 기준으로 조회(첫페이지)
 	public List<SalesIstVO> salesIstList(SalesIstVO vo);
 
+	//제품 입고후 상태 Completed 로 변경 
+	public void modifyProg(SalesVO vo);
+
 }

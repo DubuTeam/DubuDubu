@@ -109,7 +109,16 @@
 		i.edcts_ist_dt, i.edcts_ist_cnt, i.edcts_cd, i.edcts_lot_no, e.prdt_nm
 		FROM edcts_ist i JOIN edcts e
 		ON i.edcts_cd = e.edcts_cd
-		WHERE i.edcts_ist_dt BETWEEN #{edctsIstDtStart} AND #{edctsIstDtEnd}
+		WHERE
+		i.edcts_ist_dt BETWEEN #{edctsIstDtStart} AND #{edctsIstDtEnd}
 	</select>
+
+	<!-- 입고등록 후 completed 로 변경 -->
+	<update id="modifyProg" parameterType="SalesVO">
+		UPDATE ORDER_SHEET
+		SET
+		PROG_APPE = 'Completed'
+		WHERE ORDER_NO = #{orderNo}
+	</update>
 
 </mapper>

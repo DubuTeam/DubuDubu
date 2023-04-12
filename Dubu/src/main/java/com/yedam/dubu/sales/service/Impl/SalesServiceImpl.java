@@ -92,4 +92,12 @@ public class SalesServiceImpl implements SalesService {
 	public void saveIst(SalesIstVO vo) {
 		salesMapper.saveIst(vo);
 	}
+
+	// 입고등록 후 진행상황 입고완료로 변경
+	@Override
+	public void modifyProg(SalesVO vo) {
+		// TODO Auto-generated method stub
+		salesMapper.modifyProg(vo);
+
+	}
 }
