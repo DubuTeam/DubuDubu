@@ -62,5 +62,8 @@ public interface EquipmentMapper {
 		
 		// 설비 검색하기
 		public List<EquipmentVO> selectSpecificEquipmentList();
+
+
+		public List<EquipmentVO> selectSpecificEquipmentList(EquipmentVO equipmentVO);
 		
 }

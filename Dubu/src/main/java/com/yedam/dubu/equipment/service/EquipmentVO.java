@@ -48,6 +48,6 @@ public class EquipmentVO {
 	
 	
 	//2-5. 검색 기능 시 필요한 변수명
+	private String searchType;			// 검색 시, 어떤 걸 기준으로 검색하는지 (설비명, 설비코드, 공정명)
 	private String keyword;			// 검색창에 입력한 값
-	private String type;			// 검색 시, 어떤 걸 기준으로 검색하는지 (설비명, 설비코드, 공정명)
 }
