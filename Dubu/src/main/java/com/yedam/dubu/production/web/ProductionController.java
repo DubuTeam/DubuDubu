@@ -92,8 +92,8 @@ public class ProductionController {
 	 @PostMapping("/updatePlan")
 	 @ResponseBody
 	 public int updatePlan(@RequestBody ProductionVO productionVO) {
-		 
-		 return productionService.updatePlan(productionVO.getUpdatedRows(), productionVO.getUpdatedRows());
+		 return 0;
+		 //return productionService.updatePlan(productionVO.getUpdatedRows(), productionVO.getUpdatedRows());
 	 }
 	 
 	
