@@ -142,12 +142,37 @@
 	
 	<!-- 설비 검색하기 -->
 	<select id="selectSpecificEquipmentList" resultType="EquipmentVO">
-		SELECT *
+<!-- 		SELECT *
 		FROM eqm
 		WHERE eqm_cd = #{keyword}
-<!-- 		WHERE type = #{type}
+		WHERE type = #{type}
 		<if test="search != ' '">
 		AND 컬럼 LIKE '%' || #{keyword} || '%'
 		</if> -->
+  	  SELECT
+		ROWNUM AS "idx",
+		eqm_nm,
+		eqm_cd,
+		prcs_cd,
+		prcs_nm,
+		eqm_yn,
+		min_temp,
+		max_temp,
+		chck_perd,
+		line_cd,
+		eqm_ist_dt
+	  FROM eqm
+	  WHERE
+	  <choose>
+	    <when test="searchType == 'eqmCd'">
+	      eqm_cd LIKE '%' || #{keyword} || '%'
+	    </when>
+	    <when test="searchType == 'eqmNm'">
+	      eqm_nm LIKE '%' || #{keyword} || '%'
+	    </when>
+	    <when test="searchType == 'prcsNm'">
+	      prcs_nm LIKE '%' || #{keyword} || '%'
+	    </when>
+	  </choose>
 	</select>
 </mapper>
