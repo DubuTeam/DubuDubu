@@ -266,7 +266,7 @@
 $('#addBtn').click(ev => {
     var row = grid.getRowCount();
     grid.appendRow();
-    //주문서 추가시 주문번호 자동 생성 ex.ORS202207151
+    //주문서 추가시 주문번호 자동 생성 
     let orderDt = $("input[name=start]").val();
     $.ajax({
         url:"getordrNo",

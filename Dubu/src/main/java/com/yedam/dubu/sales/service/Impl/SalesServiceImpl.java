@@ -100,4 +100,10 @@ public class SalesServiceImpl implements SalesService {
 		salesMapper.modifyProg(vo);
 
 	}
+
+	@Override
+	public SalesVO getlstNo(SalesVO vo) {
+		// TODO Auto-generated method stub
+		return salesMapper.getlstNo(vo);
+	}
 }
