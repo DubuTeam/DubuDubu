@@ -89,20 +89,37 @@ public class ProductionServiceImpl implements ProductionService {
 	}
 
 	@Override
-	public int updatePlan(List<ProductionVO> updatePlan) {
-	//public int updatePlan(List<ProductionVO> updatePlanCd, List<ProductionVO> updatePlanYn) {
+	//public int updatePlan(List<ProductionVO> updatePlan) {
+	public int updatePlan(List<ProductionVO> updatePlanCd, List<ProductionVO> updatePlanYn) {
 		int result = 0;
-		for(ProductionVO vo : updatePlan) {
+		//for(ProductionVO vo : updatePlan) {
 				//result += productionMapper.updatePlan(vo);
-			}
-		//for(ProductionVO vo : updatePlanCd) {
-		//	result += productionMapper.updatePlanCd(vo);
-		//}
-		//for(ProductionVO vo : updatePlanYn) {
-		//	result += productionMapper.updatePlanYn(vo);
-		//}
+			//}
+		for(ProductionVO vo : updatePlanCd) {
+			result += productionMapper.updatePlanCd(vo);
+		}
+		for(ProductionVO vo : updatePlanYn) {
+			result += productionMapper.updatePlanYn(vo);
+		}
 		return result;
 	}
+
+	@Override
+	public List<ProductionVO> selectPlanEquip(String planCd) {
+		return productionMapper.selectPlanEquip();
+	}
+
+	@Override
+	public List<ProductionVO> selectPlanMaterial(String planCd) {
+		return productionMapper.selectPlanMaterial();
+	}
+
+
+
+
+
+
+
 
 }
 	 

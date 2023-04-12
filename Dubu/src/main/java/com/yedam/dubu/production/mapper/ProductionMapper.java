@@ -36,7 +36,11 @@ public interface ProductionMapper {
 	// 생산계획 코드 부여
 	public int updatePlanCd(ProductionVO vo);
 	
-	// 생산등록
+	// 생산등록 - 수정
 	public int updatePlanYn(ProductionVO vo);
 	
+	// 생산계획 공정 조회
+	public List<ProductionVO> selectPlanEquip();
+	// 생산계획 자재 조회
+	public List<ProductionVO> selectPlanMaterial();
 }

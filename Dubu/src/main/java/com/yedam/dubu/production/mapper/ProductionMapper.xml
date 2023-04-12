@@ -65,11 +65,12 @@
 	</select>
 	<!-- 주문서 디테일 조회 -->
 	<select id="orderDetailGrid" resultType="ProductionVO">
-		SELECT P.ORDER_NO,
-	       	   R.AVAL_STC,
-	       	   P.PAPRD_DT
-		FROM PLAN P, RSC_STC R
-		WHERE P.RSC_CD = R.RSC_CD AND P.ORDER_NO IN
+		SELECT ORDER_NO,
+		       VEND_NM,
+		       PRDT_NM,
+		       ORDER_CNT
+		FROM ORDER_SHEET
+		WHERE ORDER_NO IN
 	<foreach collection="array" item="test" open="(" close=")" separator="," >
 		#{test}
 	</foreach>
@@ -81,9 +82,38 @@
 		WHERE ORDER_NO = #{orderNo}
 	</update>
 	<!-- 생산등록 -->
-		<update id="updatePlanYn" parameterType="ProductionVO">
+	<update id="updatePlanYn" parameterType="ProductionVO">
 	 	UPDATE ORDER_SHEET
 	 	SET PLAN_YN = 'Y'
 	 	WHERE ORDER_NO = #{orderNo}
 	</update>
+	<!-- 생산계획 공정 조회 -->
+	<select id="selectPlanEquip" resultType="ProductionVO">
+		SELECT O.PRDT_NM, 
+       P.LINE_CD,
+       P.WK_TO_DT,
+       P.WK_FR_DT,
+       P.INDICA_CNT,
+       P.PREF_RANK,
+       P.PLAN_CD
+FROM ORDER_SHEET O, PLAN_DTL P
+WHERE O.EDCTS_CD = P.EDCTS_CD
+AND PLAN_CD = #{planCd}
+		
+	</select>
+	<!-- 생산계획 자재 조회 -->
+	<select id="selectPlanMaterial" resultType="ProductionVO">
+		SELECT R.RSC_NM,
+       L.PRC_LOT_CD,
+       S.AVAL_STC,
+       H.OUST_CNT,
+       B.USE_YN
+FROM RSC R, RSC_LOT L, RSC_STC S, RSC_STC_HIST H, BOMR B, INDICA_DTL D
+WHERE R.RSC_CD = L.RSC_CD
+  AND R.RSC_CD = S.RSC_CD 
+  AND R.RSC_CD = H.RSC_CD
+  AND R.RSC_CD = B.RSC_CD
+  AND B.BOM_CD = D.BOM_CD
+  AND PLAN_CD = #{PLAN_CD}		
+	</select>
 </mapper>
