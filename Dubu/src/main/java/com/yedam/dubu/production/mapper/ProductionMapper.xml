@@ -90,30 +90,29 @@
 	<!-- 생산계획 공정 조회 -->
 	<select id="selectPlanEquip" resultType="ProductionVO">
 		SELECT O.PRDT_NM, 
-       P.LINE_CD,
-       P.WK_TO_DT,
-       P.WK_FR_DT,
-       P.INDICA_CNT,
-       P.PREF_RANK,
-       P.PLAN_CD
-FROM ORDER_SHEET O, PLAN_DTL P
-WHERE O.EDCTS_CD = P.EDCTS_CD
-AND PLAN_CD = #{planCd}
-		
+		       P.LINE_CD,
+		       P.WK_TO_DT,
+		       P.WK_FR_DT,
+		       SUM(O.ORDER_CNT) AS ORDER_CNT,
+		       P.PREF_RANK,
+		       P.PLAN_CD
+		FROM ORDER_SHEET O, PLAN_DTL P
+		WHERE O.EDCTS_CD = P.EDCTS_CD(+)
+        GROUP BY O.PRDT_NM, P.LINE_CD, P.WK_TO_DT, P.WK_FR_DT, P.PREF_RANK, P.PLAN_CD
 	</select>
 	<!-- 생산계획 자재 조회 -->
 	<select id="selectPlanMaterial" resultType="ProductionVO">
 		SELECT R.RSC_NM,
-       L.PRC_LOT_CD,
-       S.AVAL_STC,
-       H.OUST_CNT,
-       B.USE_YN
-FROM RSC R, RSC_LOT L, RSC_STC S, RSC_STC_HIST H, BOMR B, INDICA_DTL D
-WHERE R.RSC_CD = L.RSC_CD
-  AND R.RSC_CD = S.RSC_CD 
-  AND R.RSC_CD = H.RSC_CD
-  AND R.RSC_CD = B.RSC_CD
-  AND B.BOM_CD = D.BOM_CD
-  AND PLAN_CD = #{PLAN_CD}		
+		       L.PRC_LOT_CD,
+		       S.AVAL_STC,
+		       H.OUST_CNT,
+		       B.USE_YN
+		FROM RSC R, RSC_LOT L, RSC_STC S, RSC_STC_HIST H, BOMR B, INDICA_DTL D
+		WHERE R.RSC_CD = L.RSC_CD
+		  AND R.RSC_CD = S.RSC_CD 
+		  AND R.RSC_CD = H.RSC_CD
+		  AND R.RSC_CD = B.RSC_CD
+		  AND B.BOM_CD = D.BOM_CD
+		  AND PLAN_CD = #{PLAN_CD}		
 	</select>
 </mapper>

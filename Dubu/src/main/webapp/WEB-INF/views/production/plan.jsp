@@ -256,8 +256,19 @@ let planCd='';
         	     (date1.getMonth() < 10 ? "0" + (date1.getMonth() + 1): date1.getMonth() + 1) +"-" +
         	     (date1.getDate() < 10 ? "0" + date1.getDate() : date1.getDate());
         	   return date2;
-        	 }
-
+        	 };
+        
+        function getToday(){
+        	const date = new Date();
+        	const hours = String (date.getHours()).padStart(2,"0");
+        	const minutes = String(date.getMinutes()).padStart(2,"0");
+        	const seconds = String(date.getSeconds()).padStart(2,"0");
+        	const years = date.getFullYear();
+        	const month = String(date.getMonth()+1).padStart(2,"0");
+        	const day = String(date.getDate()).padStart(2,"0");
+        	return years + "-" + month + "-" + day;
+        };
+	
         /* //로드시 나타남
         $(document).ready(function(){
             grid.resetData(orderList);   // 그리드에 값 입력	
