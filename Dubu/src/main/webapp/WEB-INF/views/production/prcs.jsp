@@ -34,12 +34,20 @@
 					<div class="card-body">
 						<form>
 							<div class="mb-3">
-								<label for="name">공정구분</label> <select id="prcs"
+								<label for="name">공정구분</label> 
+								<select id="prcs"
 									class="dataTable-selector">
-									<option selected value=''>선택</option>
-									<c:forEach items="${selectPrcList }" var="prc">
-										<option value="${prc.prcsDiv }">${prc.prcsDiv }</option>
-									</c:forEach>
+									<option selected value='AOC'>AOC</option>
+									<option selected value='COL'>COL</option>
+									<option selected value='CSH'>CSH</option>
+									<option selected value='PRE'>PRE</option>
+									<option selected value='SHP'>SHP</option>
+									<option selected value='PCK'>PCK</option>
+									<option selected value='COL'>COL</option>
+									<option selected value='CEC'>CEC</option>
+									<option selected value='HST'>HST</option>
+									<option selected value='DTW'>DTW</option>
+									<option selected value='FIO'>FIO</option>
 								</select>
 								<button id="sBtn" class="btn btn-primary" form="">
 									<i class="fas fa-search"></i> 검색
@@ -141,7 +149,8 @@ function search() {
     // 행추가
     function appendl(prcsDiv){
     	var prcsValue =$("#prcs").val();
-    	
+    	prcsDiv = prcsDiv1.options[prcsDiv1.selectedIndex].value;
+    	console.log(prcsDiv);
     	grid.appendRow({
     		prcsDiv: prcsValue,
     		prcsCd: null,

@@ -85,18 +85,35 @@ public class ProductionController {
 	 @PostMapping("/planOrderDetail")
 	 @ResponseBody 
 	 public List<ProductionVO> getOrderDetail(ProductionVO productVO) {
-		 System.out.println(productVO.getOrderNo());
 		 return productionService.orderDetailGrid(productVO.getOrderNo());
 	 }
 	 // 생산계획 계획코드 부여
 	 @PostMapping("/updatePlan")
 	 @ResponseBody
 	 public int updatePlan(@RequestBody ProductionVO productionVO) {
-		 return 0;
-		 //return productionService.updatePlan(productionVO.getUpdatedRows(), productionVO.getUpdatedRows());
+		 return productionService.updatePlan(productionVO.getUpdatedRows(), productionVO.getUpdatedRows());
+	 }
+		/*
+		 * // 생산계획 새로운 계획
+		 * 
+		 * @PostMapping("/insertPlan")
+		 * 
+		 * @ResponseBody public int insertPlan(@ResponseBody ProductionVO)
+		 * productionVO){
+		 * 
+		 * }
+		 */
+	// 생산계획 공정 조회
+	 @PostMapping("/selectPlanEquip")
+	 @ResponseBody List<ProductionVO> getPlanEquip(@RequestParam(required = false) String planCd){
+		 return productionService.selectPlanEquip(planCd);
 	 }
 	 
-	
+	// 생산계획 자재 조회
+	 @PostMapping("/selectPlanMaterial")
+	 @ResponseBody List<ProductionVO> getPlanMaterial(@RequestParam(required = false) String planCd){
+		 return productionService.selectPlanMaterial(planCd);
+	 } 
 	// 생산지시
 	@GetMapping("/indica")
 	public String getIndica(Model model){

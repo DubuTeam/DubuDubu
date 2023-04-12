@@ -31,8 +31,21 @@ public class ProductionVO {
 	public String avalStc;
 	@DateTimeFormat(pattern="yyyy-MM-dd")
 	public Date paprdDt;
+	public String vnedNm;
 	
 	// 생상계획 등록
 	public String planYn;
-
+	
+	// 생산계획 조회
+	public String lineCd;
+	@DateTimeFormat(pattern="yyyy-MM--dd")
+	public Date wkToDt;
+	@DateTimeFormat(pattern="yyyy-MM--dd")
+	public Date wkFrDt;
+	public int indicaCnt;
+	public int prefRank;
+	public String rscNm;
+	public String prcLotCd;
+	public int oustCnt;
+	public String useYn;
 }

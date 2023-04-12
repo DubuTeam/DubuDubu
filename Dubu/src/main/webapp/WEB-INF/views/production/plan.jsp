@@ -98,24 +98,7 @@
 				<div class="card-body">
 					<div class="d-flex flex-row justify-content-between">
 						<div id="grid2" style="width: 65%;">제품
-							<div id="list-body" class="table">
-								<table id="datatablesSimple" class="table">
-									<thead>
-										<tr>
-											<th>제품명</th>
-											<th>라인번호</th>
-											<th>시작일자</th>
-											<th>종료일자</th>
-											<th>생산수량</th>
-											<th>작업우선순위</th>
-											<th>계획코드</th>
-										</tr>
-									</thead>
-
-									<!-- ↓↓↓여기에 조회된 결과 출력 -->
-									<tbody id="list"></tbody>
-								</table>
-							</div>
+							<div id="gridEquip"></div>
 						</div>
 						<div id="grid3" style="width: 30%;">제품공정확인
 							<div id="list-body" class="table">
@@ -141,24 +124,7 @@
 					<div class="card-body">
 						<div class="d-flex flex-row justify-content-between">
 							<div id="grid2" style="width: 65%;">사용가능자재
-								<div id="list-body" class="table">
-									<table id="datatablesSimple" class="table">
-										<thead>
-											<tr>
-												<th><input type="checkbox" /></th>
-												<th>자재명</th>
-												<th>자재LOT</th>
-												<th>사용가능수량</th>
-												<th>출고수량</th>
-												<th>사용량</th>
-
-											</tr>
-										</thead>
-
-										<!-- ↓↓↓여기에 조회된 결과 출력 -->
-										<tbody id="list"></tbody>
-									</table>
-								</div>
+								<div id="gridMaterial"></div>
 							</div>
 							<div id="grid3" style="width: 30%;">자재확인
 								<div id="list-body" class="table">
@@ -211,9 +177,11 @@
 			</div>
 			<!-- End of Main Content -->
 <script>
-/* let orderKey = '';
-let orderValue = ''; */
+let planKey = '';
+let planValue = ''; 
 let str = '';
+let planCd='';
+
 // 주문서 조회
 /*  const orderList = [
 	<c:forEach items="${selectOrderList}" var="order">
@@ -299,27 +267,13 @@ let str = '';
     	 for (let i = 0; i < checkLen; i++) {
     	        str += grid.getCheckedRows()[i].orderNo + ",";
     	      };
-    	 console.log(str);
+    	 //console.log(str);
     	 orderDetail();
      
     	  $('#exampleModal').modal('hide');
           $('.modal-backdrop').remove();
-      // 주문서 디테일 조회  
-      // 더블 클릭시 모달창의 정보가 본페이지에 보임
-/*        grid.on('dblclick', (ev) => {
-        //console.log(ev);
-        //console.log(ev.rowKey);
-        orderKey = ev.rowKey
-        orderValue = grid.getValue(orderKey,'orderNo');
-       	//orderValue = ev.rowKey
-        console.log(orderValue);
-        
-        
-       }); */
-        //console.log(orderValue);
-       
-    
-       
+      
+          // 주문서 디테일 조회       
        function orderDetail(){
     	$.ajax({
             url: "planOrderDetail",
@@ -344,17 +298,21 @@ let str = '';
              columns: [
 
                  {
-                     header: '계획코드',
-                     name: 'planCd',
-                     editor: 'text'
-                 },
-                 {
-                     header: '주문번호',
+                	 header: '주문번호',
                      name: 'orderNo'
                  },
                  {
-                     header: '원료수량',
-                     name: 'avalStc',
+                     header: '거래처명',
+                     name: 'vendNm'
+                 },
+                 {
+                     header: '제품명',
+                     name: 'prdtNm',
+                     editor: 'text'
+                 },
+                 {
+                     header: '제품수량',
+                     name: 'orderCnt',
                      editor: 'text'
                  }
                  
@@ -364,12 +322,29 @@ let str = '';
       
         function newPlan(){
      	   detailGrid.appendRow({
-     			 planCd: null,
-     			 orderNo: null,
-     			 avalStc: null
+     		  orderNo: null,
+     		  vendNm: null,
+     		  prdtNm: null,
+     		  orderCnt: null
      		})
          		}
        function savePlan(){
+    	   /* console.log(grid.getModifiedRows().createdRows);
+       	let data = { createdRows : grid.getModifiedRows({ignoredColumns: ['_attributes', 'rowKey']}).createdRows };
+       	console.log(JSON.stringify(data));
+       	$.ajax({
+       	    url: 'insertPrcs',
+       	    data: JSON.stringify(grid.getModifiedRows({ignoredColumns: ['_attributes', 'rowKey']})),
+       	    contentType : 'application/json',
+       	    type: 'POST',
+       	    async: false,
+       	    success: function(data) {
+       	        	search();  
+       	    },
+       	    error: function(reject) {
+       	        console.log(reject);
+       	    }
+       	}); */
     	   console.log(detailGrid.getModifiedRows().updatedRows);
     	   $.ajax({
        	    url: 'updatePlan',
@@ -389,5 +364,102 @@ let str = '';
        	    }
        	});
        }
-     	 
+       
+       // 더블 클릭시 주문서 디테일의 정보가 공정과 자재로 나눠서 보임
+               detailGrid.on('dblclick', (ev) => {
+				// 모달 창               
+              }); 
+       
+       function planEquipMaterial(){
+               $.ajax({
+                   url: "selectPlanEquip",
+                   method: "post",
+                   data: { planCd : planValue },
+                   success: function(data) {
+                	   console.log(data)
+                	  gridEquip.resetData(data);  //그리드 적용
+                   },
+                   error: function (reject) {
+                     console.log(reject);
+                   },
+               });
+               $.ajax({
+                   url: "selectPlanMaterial",
+                   method: "post",
+                   data: { planCd : planValue },
+                   success: function(data) {
+                	   console.log(data);
+                	  gridMaterial.resetData(data);  //그리드 적용
+                   },
+                   error: function (reject) {
+                     console.log(reject);
+                   },
+               });
+               
+           } 
+           		//그리드 선언
+                   var gridEquip = new tui.Grid({
+                        el: document.getElementById('gridEquip'),
+                        columns: [
+
+                            {
+                                header: '제품명',
+                                name: 'prdtNm'
+                            },
+                            {
+                                header: '라인번호',
+                                name: 'lineCd'
+                            },
+                            {
+                                header: '시작일자',
+                                name: 'wkToDt'
+                            },
+                            {
+                                header: '종료일자',
+                                name: 'wkFrDt'
+                            },
+                            {
+                                header: '생산수량',
+                                name: 'lndicaCnt'
+                            },
+                            {
+                                header: '작업우선순위',
+                                name: 'prefRank'
+                            },
+                            {
+                                header: '계획코드',
+                                name: 'planCd'
+                            },
+                        ]
+
+                    });
+                 //그리드 선언
+                   var gridMaterial = new tui.Grid({
+                        el: document.getElementById('gridMaterial'),
+                        columns: [
+
+                            {
+                                header: '자재명',
+                                name: 'rscNm'
+                            },
+                            {
+                                header: '자재LOT',
+                                name: 'prcLotCd'
+                            },
+                            {
+                                header: '사용가능수량',
+                                name: 'avalStc'
+                            },
+                            {
+                                header: '출고수량',
+                                name: 'oustCnt'
+                            },
+                            {
+                                header: '사용량',
+                                name: 'useYn'
+                            }
+                        ]
+
+                    });
+           		
 </script>
