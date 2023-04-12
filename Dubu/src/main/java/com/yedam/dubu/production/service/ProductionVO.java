@@ -31,7 +31,7 @@ public class ProductionVO {
 	public String avalStc;
 	@DateTimeFormat(pattern="yyyy-MM-dd")
 	public Date paprdDt;
-	public String vnedNm;
+	public String vendNm;
 	
 	// 생상계획 등록
 	public String planYn;
