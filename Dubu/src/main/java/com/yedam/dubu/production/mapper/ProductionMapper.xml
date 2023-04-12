@@ -102,17 +102,22 @@
 	</select>
 	<!-- 생산계획 자재 조회 -->
 	<select id="selectPlanMaterial" resultType="ProductionVO">
-		SELECT R.RSC_NM,
-		       L.PRC_LOT_CD,
-		       S.AVAL_STC,
-		       H.OUST_CNT,
-		       B.USE_YN
-		FROM RSC R, RSC_LOT L, RSC_STC S, RSC_STC_HIST H, BOMR B, INDICA_DTL D
-		WHERE R.RSC_CD = L.RSC_CD
-		  AND R.RSC_CD = S.RSC_CD 
-		  AND R.RSC_CD = H.RSC_CD
-		  AND R.RSC_CD = B.RSC_CD
-		  AND B.BOM_CD = D.BOM_CD
-		  AND PLAN_CD = #{PLAN_CD}		
+	  SELECT R.RSC_NM,
+	         L.PRC_LOT_CD,
+	         S.AVAL_STC,
+	         H.OUST_CNT,
+	         B.USE_YN
+	  FROM RSC R
+	 INNER JOIN RSC_LOT L
+	    ON R.RSC_CD = L.RSC_CD
+	 INNER JOIN RSC_STC S
+	    ON R.RSC_CD = S.RSC_CD
+	 LEFT OUTER JOIN RSC_STC_HIST H
+	    ON R.RSC_CD = H.RSC_CD
+	 LEFT OUTER JOIN BOMR B
+	    ON R.RSC_CD = B.RSC_CD
+	 LEFT OUTER JOIN INDICA_DTL D
+	    ON B.BOM_CD = D.BOM_CD
+	 <!-- WHERE PLAN_CD = #{PLAN_CD} -->		
 	</select>
 </mapper>
