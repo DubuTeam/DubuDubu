@@ -48,10 +48,10 @@
             <div class="bg-white py-2 collapse-inner rounded">
                 <a class="collapse-item" href="${pageContext.request.contextPath}/orderList">주문서관리</a>
                 <a class="collapse-item" href="${pageContext.request.contextPath}/salesIst">제품입고등록</a>
-                <a class="collapse-item" href="${pageContext.request.contextPath}/salesIstSearch">제품입고조회</a>
+                <%-- <a class="collapse-item" href="${pageContext.request.contextPath}/salesIstSearch">제품입고조회</a> --%>
                 <a class="collapse-item" href="${pageContext.request.contextPath}/salesOust">제품출고등록</a>
-                <a class="collapse-item" href="${pageContext.request.contextPath}/salesOustSearch">제품출고조회</a>
-                <a class="collapse-item" href="${pageContext.request.contextPath}/salesStc">완제품LOT재고조회</a>
+                <%-- <a class="collapse-item" href="${pageContext.request.contextPath}/salesOustSearch">제품출고조회</a>
+                <a class="collapse-item" href="${pageContext.request.contextPath}/salesStc">완제품LOT재고조회</a> --%>
             </div>
         </div>
     </li>
@@ -140,7 +140,7 @@
             <div class="bg-white py-2 collapse-inner rounded">
                 <a class="collapse-item" href="${pageContext.request.contextPath}/prdtInsp">제품검사관리</a>
                 <a class="collapse-item" href="${pageContext.request.contextPath}/materialInsp">자재입고검사관리</a>
-                <a class="collapse-item" href="${pageContext.request.contextPath}/materialInspList">자재입고검사조회</a>
+                <%-- <a class="collapse-item" href="${pageContext.request.contextPath}/materialInspList">자재입고검사조회</a> --%>
             </div>
         </div>
     </li>
