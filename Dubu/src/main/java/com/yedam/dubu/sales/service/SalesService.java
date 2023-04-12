@@ -43,4 +43,6 @@ public interface SalesService {
 	//제품 입고후 상태 Completed 로 변경 
 	public void modifyProg(SalesVO vo);
 
+	public SalesVO getlstNo(SalesVO vo);
+
 }

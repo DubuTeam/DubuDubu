@@ -47,4 +47,6 @@ public interface SalesMapper {
 
 	// 제품 입고후 상태 Completed 로 변경
 	public void modifyProg(SalesVO vo);
+	// lst 마지막 번호 생성
+	public SalesVO getlstNo(SalesVO vo);
 }

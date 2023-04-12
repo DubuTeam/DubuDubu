@@ -120,5 +120,12 @@
 		PROG_APPE = 'Completed'
 		WHERE ORDER_NO = #{orderNo}
 	</update>
+	
+	<select id="getlstNo" resultType="SalesVO">
+		SELECT
+		NVL(LPAD(MAX(SUBSTR(EDCTS_IST_NO, 4)+1),4,'0'), '001') AS "index"
+		FROM
+		edcts_ist;
+	</select>
 
 </mapper>

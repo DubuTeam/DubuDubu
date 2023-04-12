@@ -76,7 +76,7 @@
 								</button>
 							</div>
 
-							<form name="IstSearchFrm" id="IstSearchFrm">
+							<form name="IstSearchFrm" id="IstSearchFrm" action="#">
 								<label for="edctsIstDt" class="form-label">제품 입고일자</label>
 								<div style="display: flex;">
 									<input type="date" id="edctsIstDtStart" name="edctsIstDtStart"
@@ -100,8 +100,9 @@
 								<tr>
 									<th>제품 입고번호</th>
 									<td><input type="text" class="form-control"
-										id="edctsIstNo" name="edctsIstNo" 
-										 style="width: 150px; margin-left: 6px;"></td>
+										id="edctsIstNo" name="edctsIstNo"
+										style="width: 150px; margin-left: 6px;" readonly
+										value="${getlstNo}" readonly></td>
 									<th>완제품LOT번호</th>
 									<td style="width: 175px;">
 										<div class="input-group">
@@ -280,7 +281,8 @@
 			let edctsIstCntResult = grid.getValue(IstNoRowKey, 'edctsIstCnt');
 			console.log(edctsIstNoResult);
 			if(columnName == 'edctsIstNo') {
-				edctsIstNo.value = edctsIstNoResult;
+				let nextIstNo = (parseInt(edctsIstNoResult.substring(3)) + 1).toString().padStart(4, '0');
+			    edctsIstNo.value = 'IST' + nextIstNo;
 				edctsLotNo.value = edctsLotNoResult;
 				edctsIstCnt.value = edctsIstCntResult;
 			}
@@ -327,24 +329,23 @@
 		
 	
 		
-		    //제품 입고 등록&수정
+		  	    //제품 입고 등록&수정
 	    $("#saveBtn").click(ev => {
 	    	//제품 입고 등록버튼 클릭 -> 제품 입고번호 자동생성 & 등록 시 출력
 	    	//var submitData = $("#submitFrm").serialize();
 	    	var inspData = lotNoGrid.getCheckedRows();
 	    	var edctsLotNo = $("#edctsLotNo").val();
-	    	
 	    	console.log(edctsLotNo);
 	    	console.log(inspData);
 	    	var edctsCd = lotNoGrid.getValue(inspData[0].rowKey,'edctsCd');
 	    	console.log(edctsCd);
+	    	
 	    	var edctsIstDt = $("#edctsIstDtStart").val();
 	    	var edctsIstCnt = $("#edctsIstCnt").val();
 	    	console.log(edctsIstCnt);
-
 	    	var edctsIstNo = $("#edctsIstNo").val();
 	    	var orderNo = lotNoGrid.getValue(inspData[0].rowKey,'orderNo');
-	    	var orderNo = inspData[0].orderNo;
+	    	//var orderNo = inspData[0].orderNo;
 			console.log(orderNo);
 			if($("#edctsIstCnt").val() == '') {
 				toastr.warning('입고수량을 입력해주세요');
@@ -357,7 +358,7 @@
 	    		data:{"edctsCd":edctsCd,"edctsLotNo":edctsLotNo,"edctsIstDt":edctsIstDt,"edctsIstCnt":edctsIstCnt,"edctsIstNo":edctsIstNo},
 	    		success:function(result) {	
 	    			toastr.success('저장되었습니다');
-	    			istOptionList();
+	    			salesIstList();
 	    			//입고등록 후 진행상황 입고완료로 수정
 	    			$.ajax({
 	    				url:"modifyProg",

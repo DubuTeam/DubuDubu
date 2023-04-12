@@ -58,6 +58,13 @@ public class SalesController {
 		return vo;
 	}
 
+	// 주문번호 생성, 가져오기
+	@GetMapping("getlstNo")
+	@ResponseBody
+	public SalesVO getlstNo(SalesVO vo) {
+		return salesService.getlstNo(vo);
+	}
+
 	// 제품입고조회
 	@GetMapping("/salesIstSearch")
 	public String salesIstSearch(Model model) {
