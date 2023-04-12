@@ -7,12 +7,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.yedam.dubu.sales.service.PrdtInspVO;
 import com.yedam.dubu.sales.service.SalesIstVO;
 import com.yedam.dubu.sales.service.SalesService;
+import com.yedam.dubu.sales.service.SalesVO;
 
 @Controller
 public class SalesController {
@@ -48,6 +50,14 @@ public class SalesController {
 		return salesService.salesIstList(vo);
 	}
 
+	// 입고등록 후 진행상황 입고완료로 변경
+	@PutMapping("modifyProg")
+	@ResponseBody
+	public SalesVO modifyProg(SalesVO vo) {
+		salesService.modifyProg(vo);
+		return vo;
+	}
+
 	// 제품입고조회
 	@GetMapping("/salesIstSearch")
 	public String salesIstSearch(Model model) {
@@ -71,4 +81,5 @@ public class SalesController {
 	public String salesStc(Model model) {
 		return "sales/salesStc";
 	}
+
 }

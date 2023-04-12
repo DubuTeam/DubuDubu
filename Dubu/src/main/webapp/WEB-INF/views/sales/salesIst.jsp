@@ -54,102 +54,102 @@
 		<ol class="breadcrumb mb-4">
 			<li class="breadcrumb-item"><a href="/dubu"><i
 					class="fas fa-home"></i></a></li>
-			<li >> 영업관리</li>
-			<li >> 제품입고등록</li>
+			<li>> 영업관리</li>
+			<li>> 제품입고등록</li>
 		</ol>
 
-<form id = "submitFrm">
-		<div class="card mb-4">
-			<div id="cont" style="padding-bottom: 0px">
-				<div class="col">
-					<div class="card-body">
-						<div class="mb-4"></div>
-						<div class="linelist" style="float: right;">
-							<button type="button" class="btn btn-primary" id="dtSearchBtn">
-								<i class="fas fa-search"></i> 조회
-							</button>
-							<button type="button" class="btn btn-primary" id="saveBtn">
-								<i class="fas fa-save"></i> 등록
-							</button>
-							<button class="btn btn-primary" id="ReBtn">
-								<i class="fas fa-file"></i> 초기화
-							</button>
-						</div>
-
-						<form name="IstSearchFrm" id="IstSearchFrm">
-							<label for="edctsIstDt" class="form-label">제품 입고일자</label>
-							<div style="display: flex;">
-								<input type="date" id="edctsIstDtStart" name="edctsIstDtStart"
-									class="form-control" style="width: 150px; margin-left: 5px;">
-								- <input type="date" id="edctsIstDtEnd" name="edctsIstDtEnd"
-									class="form-control" style="width: 150px;">
+		<form id="submitFrm">
+			<div class="card mb-4">
+				<div id="cont" style="padding-bottom: 0px">
+					<div class="col">
+						<div class="card-body">
+							<div class="mb-4"></div>
+							<div class="linelist" style="float: right;">
+								<button type="button" class="btn btn-primary" id="dtSearchBtn">
+									<i class="fas fa-search"></i> 조회
+								</button>
+								<button type="button" class="btn btn-primary" id="saveBtn">
+									<i class="fas fa-save"></i> 등록
+								</button>
+								<button class="btn btn-primary" id="ReBtn">
+									<i class="fas fa-file"></i> 초기화
+								</button>
 							</div>
-					</div>
-					<table class="table" style="vertical-align: middle;">
-						<colgroup>
-							<col style="width: 150px;">
-							<col>
-							<col style="width: 150px;">
-							<col>
-							<col style="width: 150px;">
-							<col>
-							<col style="width: 150px;">
-							<col>
-						</colgroup>
-						<tbody>
-							<tr>
-								<th>제품 입고번호</th>
-								<td><input type="text" class="form-control" id="edctsIstNo"
-									name="edctsIstNo" placeholder="등록시 자동생성" readonly
-									style="width: 150px; margin-left: 6px;"></td>
-								<th>완제품LOT번호</th>
-								<td style="width: 175px;">
-									<div class="input-group">
-										<input type="text" class="form-control" id="edctsLotNo"
-											name="edctsLotNo" readonly>
-										<div class="input-group-append">
-											<button type="button" class="btn btn-primary"
-												id="lotSearchBtn" data-toggle="modal"
-												data-target="#lotModal">
-												<i class="fas fa-search"></i>
-											</button>
-										</div>
-									</div>
-								</td>
 
-								<th></th>
-								<td></td>
-								<th></th>
-								<td></td>
-								<th></th>
-								<td></td>
-							</tr>
-							<tr>
-								<th>검사수량</th>
-								<td><input type="text" class="form-control" id="inspCnt"
-									name="inspCnt" style="width: 150px; margin-left: 3px;" readonly></td>
-								<th>제품 입고수량</th>
-								<td><input type="text" class="form-control"
-									id="edctsIstCnt" name="edctsIstCnt"
-									style="width: 150px; margin-left: 0px;"></td>
-								<th></th>
-								<td></td>
-								<th></th>
-								<td></td>
-								<th></th>
-								<td></td>
-							</tr>
-						</tbody>
+							<form name="IstSearchFrm" id="IstSearchFrm">
+								<label for="edctsIstDt" class="form-label">제품 입고일자</label>
+								<div style="display: flex;">
+									<input type="date" id="edctsIstDtStart" name="edctsIstDtStart"
+										class="form-control" style="width: 150px; margin-left: 5px;">
+									- <input type="date" id="edctsIstDtEnd" name="edctsIstDtEnd"
+										class="form-control" style="width: 150px;">
+								</div>
 						</div>
-					</table>
+						<table class="table" style="vertical-align: middle;">
+							<colgroup>
+								<col style="width: 150px;">
+								<col>
+								<col style="width: 150px;">
+								<col>
+								<col style="width: 150px;">
+								<col>
+								<col style="width: 150px;">
+								<col>
+							</colgroup>
+							<tbody>
+								<tr>
+									<th>제품 입고번호</th>
+									<td><input type="text" class="form-control"
+										id="edctsIstNo" name="edctsIstNo" 
+										 style="width: 150px; margin-left: 6px;"></td>
+									<th>완제품LOT번호</th>
+									<td style="width: 175px;">
+										<div class="input-group">
+											<input type="text" class="form-control" id="edctsLotNo"
+												name="edctsLotNo" readonly>
+											<div class="input-group-append">
+												<button type="button" class="btn btn-primary"
+													id="lotSearchBtn" data-toggle="modal"
+													data-target="#lotModal">
+													<i class="fas fa-search"></i>
+												</button>
+											</div>
+										</div>
+									</td>
 
-					</form>
-				</div>
-			</div>
-
-		</div>
+									<th></th>
+									<td></td>
+									<th></th>
+									<td></td>
+									<th></th>
+									<td></td>
+								</tr>
+								<tr>
+									<th>검사수량</th>
+									<td><input type="text" class="form-control" id="inspCnt"
+										name="inspCnt" style="width: 150px; margin-left: 3px;"
+										readonly></td>
+									<th>제품 입고수량</th>
+									<td><input type="text" class="form-control"
+										id="edctsIstCnt" name="edctsIstCnt"
+										style="width: 150px; margin-left: 0px;"></td>
+									<th></th>
+									<td></td>
+									<th></th>
+									<td></td>
+									<th></th>
+									<td></td>
+								</tr>
+							</tbody>
+							</div>
+						</table>
+		</form>
 	</div>
-	<div id="grid" class="card mb-4"></div>
+</div>
+
+</div>
+</div>
+<div id="grid" class="card mb-4"></div>
 
 </div>
 <!-- 완제품LOT번호 모달 -->
@@ -252,6 +252,7 @@
 		} ]
 	});
 
+	
 
 	//제품 입고 목록 조건별 조회
 	function istOptionList() {
@@ -324,12 +325,15 @@
 			})
 		})
 		
-		//제품 입고 등록&수정
+	
+		
+		    //제품 입고 등록&수정
 	    $("#saveBtn").click(ev => {
 	    	//제품 입고 등록버튼 클릭 -> 제품 입고번호 자동생성 & 등록 시 출력
 	    	//var submitData = $("#submitFrm").serialize();
 	    	var inspData = lotNoGrid.getCheckedRows();
 	    	var edctsLotNo = $("#edctsLotNo").val();
+	    	
 	    	console.log(edctsLotNo);
 	    	console.log(inspData);
 	    	var edctsCd = lotNoGrid.getValue(inspData[0].rowKey,'edctsCd');
@@ -337,9 +341,10 @@
 	    	var edctsIstDt = $("#edctsIstDtStart").val();
 	    	var edctsIstCnt = $("#edctsIstCnt").val();
 	    	console.log(edctsIstCnt);
+
 	    	var edctsIstNo = $("#edctsIstNo").val();
 	    	var orderNo = lotNoGrid.getValue(inspData[0].rowKey,'orderNo');
-	    	//var orderNo = inspData[0].orderNo;
+	    	var orderNo = inspData[0].orderNo;
 			console.log(orderNo);
 			if($("#edctsIstCnt").val() == '') {
 				toastr.warning('입고수량을 입력해주세요');
@@ -352,8 +357,20 @@
 	    		data:{"edctsCd":edctsCd,"edctsLotNo":edctsLotNo,"edctsIstDt":edctsIstDt,"edctsIstCnt":edctsIstCnt,"edctsIstNo":edctsIstNo},
 	    		success:function(result) {	
 	    			toastr.success('저장되었습니다');
-	    			salesIstList();
-
+	    			istOptionList();
+	    			//입고등록 후 진행상황 입고완료로 수정
+	    			$.ajax({
+	    				url:"modifyProg",
+	    				method:"put",
+	    				dataType:"json",
+	    				data:{"orderNo":orderNo},
+	    				error:function(er) {
+	    					console.log('에러!');
+	    				},
+	    				success:function(ordrList) {
+	    					istOptionList();
+	    				}
+	    			})
 	    		}
 	    	})
 			}	
