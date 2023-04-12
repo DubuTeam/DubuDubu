@@ -9,16 +9,16 @@
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
+<!-- DatePicker -->
+<link rel="stylesheet" href="https://uicdn.toast.com/tui.date-picker/latest/tui-date-picker.css" />
+<script src="https://uicdn.toast.com/tui.date-picker/latest/tui-date-picker.js"></script>
+
 <!--  Excell -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.1/xlsx.full.min.js"></script>
 
 <!-- Grid -->
 <link rel="stylesheet" href="https://uicdn.toast.com/grid/latest/tui-grid.css" />
 <script src="https://uicdn.toast.com/grid/latest/tui-grid.js"></script>
-
-<!-- DatePicker -->
-<link rel="stylesheet" href="https://uicdn.toast.com/tui.date-picker/latest/tui-date-picker.css" />
-<script src="https://uicdn.toast.com/tui.date-picker/latest/tui-date-picker.js"></script>
 
 <!-- SweetAlert -->
 <link rel="stylesheet"
@@ -874,6 +874,7 @@ const detailGrid = new tui.Grid({
 				let expect = ordrCnt + avalStc; // 현재 재고 + 발주 수량 = 예상 재고량
 				
 				detailGrid.setValue(rowKey, 'expect', expect, false) // 예상재고량 변경
+				detailGrid.addCellClassName(rowKey, 'ordrCnt', 'cell-red'); // CSS
 				detailGrid.addCellClassName(rowKey, 'expect', 'cell-red'); // CSS
 				detailGrid.check(rowKey); // 체크박스가 체크됨
 			}
@@ -893,9 +894,24 @@ const detailGrid = new tui.Grid({
 		{
 			header : '납기요청일',
 			name : 'paprdCmndDt',
+			sortingType: 'asc',
+			sortable: true,
+			editor: {
+				type: 'datePicker',    //데이터피커 사용
+				options: {
+					format: 'yyyy-MM-dd',    //날짜포맷
+					language: 'ko',              //한국기준
+				}
+			},
 			formatter : function(data){    
 	              return dateFormat(data.value);
-	       	}
+	       	},
+	       	onAfterChange : function(data){ // 값이 변경되면 실행되는 함수
+				let rowKey = data.rowKey; // 변경한 행의 index
+				detailGrid.addCellClassName(rowKey, 'paprdCmndDt', 'cell-red'); // CSS
+				detailGrid.check(rowKey); // 체크박스가 체크됨
+			}
+	       	
 		},
 	]
 });
@@ -906,6 +922,7 @@ $('#modifyBtn').on('click', function(){
 	let ordrCd = $('#ordrCd').val(); // 수정할 발주코드
 	let rscCd = ""; // 수정할 자재코드
 	let ordrCnt = ""; // 수정할 발주 수량
+	let paprdCmndDt = ""; // 수정할 납기 요청일
 	
 	console.log("발주코드 : " + ordrCd);
 	
@@ -913,13 +930,15 @@ $('#modifyBtn').on('click', function(){
 	
 	for(let i = 0; i< rowKeys.length ; i++){ // rowKeys만큼 for문을 돌림
 		console.log(rowKeys[i]);
-		rscCd = rscCd + detailGrid.getRow(rowKeys[i]).rscCd + ","; // 수정할 자재코드
+		rscCd = rscCd + detailGrid.getRow(rowKeys[i]).rscCd + ","; // 수정할 자재코드	
 		ordrCnt = ordrCnt + detailGrid.getRow(rowKeys[i]).ordrCnt + "," // 수정할 발주수량
+		paprdCmndDt = paprdCmndDt + dateFormat(detailGrid.getRow(rowKeys[i]).paprdCmndDt) + ","; // 수정할 납기요청일 
 	}
+	console.log("납기요청일 " + paprdCmndDt);
 	
 	$.ajax({
 		url:"materialDetailModify",
-		data : {ordrCd : ordrCd, rscCd : rscCd, ordrCnt2: ordrCnt},
+		data : {ordrCd : ordrCd, rscCd : rscCd, ordrCnt2: ordrCnt, paprdCmndDt2 : paprdCmndDt},
 		method:"post",
 		success:function(result) {
 			Swal.fire({
@@ -1004,6 +1023,20 @@ $('#listDelBtn').on('click', function(){
 $('#DetailDelBtn').on('click', function(){
 	
 	let ordrCd = $('#ordrCd').val(); // 삭제할 발주코드
+	let rscCd = "";
+	let rowKeys = detailGrid.getCheckedRowKeys(); // 키값이 배열 형태로 들어감 : ex. [0,1]
+	
+	let totalCount = detailGrid.getRowCount(); // 전체 테이블의 행 갯수
+	//console.log("totalCount : " + totalCount);
+	
+	let checkCount = detailGrid.getCheckedRows().length; // 테이블에서 체크된 행 갯수
+	//console.log("checkCount : " + checkCount);
+	
+	//console.log(totalCount == checkCount);
+	
+	for(let i = 0; i< rowKeys.length ; i++){ // rowKeys만큼 for문을 돌림
+		rscCd = rscCd + detailGrid.getRow(rowKeys[i]).rscCd + ","; // 삭제할 자재코드
+	}
 	
 	Swal.fire({
 	   title: '해당 자재 발주를 삭제 하시겠습니까?',
@@ -1018,36 +1051,48 @@ $('#DetailDelBtn').on('click', function(){
 	}).then((result) => {
 			
 	  if (result.isConfirmed) {
-		let rscCd = "";
-		let rowKeys = detailGrid.getCheckedRowKeys(); // 키값이 배열 형태로 들어감 : ex. [0,1]
-				
-		for(let i = 0; i< rowKeys.length ; i++){ // rowKeys만큼 for문을 돌림
-			rscCd = rscCd + detailGrid.getRow(rowKeys[i]).rscCd + ","; // 삭제할 자재코드
-		
+		 
+		if(totalCount == checkCount){ // 전체 선택이 되었다면 모달창 끄고 화면 보여지기
+			 $.ajax({
+				url:"materialOrderDetailDelete",
+				data : {ordrCd : ordrCd, rscCd : rscCd},
+				method:"post",
+				success:function(result) {
+					Swal.fire({
+		                icon: 'success',
+		                title: '상세발주의 자재 삭제가 완료되었습니다.'
+		            });
+					$('#detailModal').modal('hide'); // 모달창 끄고
+					$('.modal-backdrop').remove(); // 모달창 닫을때 생기는 background배경 제거
+					searchAll(); // 조회가 발동중일때 화면에 뿌려주는 함수
+					// grid.resetData(result); // result값을 받아와서 grid에 뿌려주는 함수
+				},
+				error: function (reject) {	   
+					Swal.fire("실패", "작업수행에 실패하였습니다.", "error");
+				    console.log(reject);
+				}
+			});
+		} else{ // 일부 선택이 되었다면
+			$.ajax({
+				url:"materialOrderDetailDelete",
+				data : {ordrCd : ordrCd, rscCd : rscCd},
+				method:"post",
+				success:function(result) {
+					Swal.fire({
+		                icon: 'success',
+		                title: '상세발주의 자재 삭제가 완료되었습니다.'
+		            });
+					detailGrid.removeCheckedRows(); // 체크한것만 삭제
+					// grid.resetData(result); // result값을 받아와서 grid에 뿌려주는 함수
+				},
+				error: function (reject) {	   
+					Swal.fire("실패", "작업수행에 실패하였습니다.", "error");
+				    console.log(reject);
+				}
+			}); 
 		}
-		
-		$.ajax({
-			url:"materialOrderDetailDelete",
-			data : {ordrCd : ordrCd, rscCd : rscCd},
-			method:"post",
-			success:function(result) {
-				Swal.fire({
-	                icon: 'success',
-	                title: '상세발주의 자재 삭제가 완료되었습니다.'
-	            });
-				searchAll(); // 조회가 발동중일때 화면에 뿌려주는 함수
-				// grid.resetData(result); // result값을 받아와서 grid에 뿌려주는 함수
-			},
-			error: function (reject) {	   
-				Swal.fire("실패", "작업수행에 실패하였습니다.", "error");
-			    console.log(reject);
-			}
-		});
-		
 	  }
-	})
-	
-	
+	})	
 })
 
 

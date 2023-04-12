@@ -1,6 +1,7 @@
 package com.yedam.dubu.material.service;
 
 import java.util.List;
+import java.util.Map;
 
 public interface MaterialService {
 	
@@ -35,4 +36,7 @@ public interface MaterialService {
 	
 	// 자재 발주 삭제
 	public int getMaterialOrderDelete(String ordrCd);
+	
+	// 자재 발주 상세 삭제
+	public int getDeleteProcedure(MaterialVO material);
 }
