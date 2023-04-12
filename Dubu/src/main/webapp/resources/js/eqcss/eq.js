@@ -288,29 +288,59 @@ $(document).ready(function () {
 
     // 8. 검색 기능
     $('#searchBtn').on("click", function() {
+        let searchType = $('#searchType').val()
         let keyword = $('#keyword').val()
-        let type = $('#searchType').val()
 
-        // console.log(keyword)
-        // console.log(type)
+        console.log(searchType)
+        console.log(keyword)
 
 		$.ajax({
-			url: "searchMemberManage.do",
+			url: "searchEq",
 			data: {
-                keyword: keyword,
-                type: type
+                searchType: searchType,
+                keyword: keyword
             },
 			success: function (result) {
+                console.log(result)
+
 				$('#keyword').val("");
 				$("#list").find("tr").remove();
 
-                // 이 밑에 코드 수정하기
-				$(result).each(function (idx, item) {
-					$('#list').append(makeRow(item));
-				});
+                console.log("성공!")
 
-				$(result).each(function (idx, item) {
-					$('#list').append(makeRowUpd(item));
+
+                // ms 를 년-월-일 로 바꿈
+                function convertToyyyyMMdd(ms) {
+                    let date = new Date(ms); // 현재 날짜 및 시간
+                    let year = date.getFullYear();
+                    let month = new String(date.getMonth() + 1);
+                    let day = new String(date.getDate());
+
+                    let today = year +"-" + month + "-" + day; // 현재 날짜
+                    return today;
+                }
+
+                // idx 번째 행(item..?)
+                $(result).each(function (idx, item) {
+                    console.log(idx)
+                    console.log(item)
+
+                    
+
+                    let tr = $("<tr />");
+                    tr.append($('<td />').text(item.lineCd))
+                    tr.append($('<td />').text(item.eqmNm))
+                    tr.append($('<td />').text(item.eqmCd))
+                    tr.append($('<td />').text(item.prcsCd))
+                    tr.append($('<td />').text(item.prcsNm))
+                    tr.append($('<td />').text(item.eqmYn))
+                    tr.append($('<td />').text(item.minTemp))
+                    tr.append($('<td />').text(item.maxTemp))
+                    tr.append($('<td />').text(item.chckPerd))
+                    tr.append($('<td />').text(item.lineCd))
+                    tr.append($('<td />').text(convertToyyyyMMdd(item.eqmIstDt)))    // item.eqmIstDt => 밀리세컨드
+
+                    $('#list').append(tr)
 				});
 			},
 			error: function (reject) {

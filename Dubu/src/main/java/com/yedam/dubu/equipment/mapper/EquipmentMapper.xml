@@ -139,4 +139,15 @@
 	<delete id="deleteEquipment" parameterType="String">
 		DELETE FROM eqm WHERE eqm_cd = #{eqmCd}
 	</delete>
+	
+	<!-- 설비 검색하기 -->
+	<select id="selectSpecificEquipmentList" resultType="EquipmentVO">
+		SELECT *
+		FROM eqm
+		WHERE eqm_cd = #{keyword}
+<!-- 		WHERE type = #{type}
+		<if test="search != ' '">
+		AND 컬럼 LIKE '%' || #{keyword} || '%'
+		</if> -->
+	</select>
 </mapper>

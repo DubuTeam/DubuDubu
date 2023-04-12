@@ -1,10 +1,13 @@
 package com.yedam.dubu.equipment.web;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.yedam.dubu.equipment.service.EquipmentService;
@@ -65,9 +68,6 @@ public class EquipmentController {
 		// 설비 목록을 전체 출력하기 위해서 보냄
 		model.addAttribute("eqList", equipmentService.selectAllEquipmentList());
 		
-		// 설비 검색 시 필요한 거..? (기존 "eqList" 삭제 후, 아래의 "specificEqList" 를 불러야 하나..?)
-		model.addAttribute("specificEqList", equipmentService.selectSpecificEquipmentList());
-		
 		return "equip/eq";
 	}
 
@@ -85,7 +85,6 @@ public class EquipmentController {
 	@ResponseBody
 	public String eqUpdateProcess(EquipmentVO equipmentVO) {
 		equipmentService.updateEquipment(equipmentVO);
-		
 		return "redirect:eq";
 	}
 	
@@ -96,7 +95,20 @@ public class EquipmentController {
 		return "redirect:eq";
 	}
 	
-
+	// 설비 검색
+	@GetMapping("/searchEq")
+	@ResponseBody
+	public List<EquipmentVO> getSpecificEq(EquipmentVO equipmentVO, @RequestParam String searchType, @RequestParam String keyword) {
+		// 설비 검색 시 필요한 거..? (기존 "eqList" 삭제 후, 아래의 "specificEqList" 를 불러야 하나..?)
+//		model.addAttribute("specificEqList", equipmentService.selectSpecificEquipmentList());
+		equipmentVO.setSearchType(searchType);
+		equipmentVO.setKeyword(keyword);
+		
+		
+		
+		return equipmentService.selectSpecificEquipmentList(equipmentVO);
+		
+	}
 	
 	///////////////////////////////////////////////////////////////////////////
 	

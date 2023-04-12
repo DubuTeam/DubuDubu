@@ -93,9 +93,9 @@ public class EquipmentServiceImpl implements EquipmentService{
 	}
 
 	@Override
-	public List<EquipmentVO> selectSpecificEquipmentList() {
+	public List<EquipmentVO> selectSpecificEquipmentList(EquipmentVO equipmentVO) {
 		
-		return equipmentMapper.selectSpecificEquipmentList();
+		return equipmentMapper.selectSpecificEquipmentList(equipmentVO);
 	}
 	
 	
