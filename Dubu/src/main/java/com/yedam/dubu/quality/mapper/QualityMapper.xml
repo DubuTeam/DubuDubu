@@ -78,10 +78,10 @@ OR (pi.EDCTS_LOT_NO = 'LOT2')
         and rod.RSC_CD = rsc.RSC_CD
         and rod.RMN_CNT != 0
         and ro.VEND_CD = vend.VEND_CD
-        <if test="vendCd != ''">and ro.VEND_CD = #{vendCd}</if>
+        <if test=" vendCd !=null and !vendCd.equals('') ">and ro.VEND_CD = #{vendCd}</if>
         <![CDATA[
-          and rod.PAPRD_CMND_DT >= #{startDt}
-          and rod.PAPRD_CMND_DT <= #{endDt}
+          and rod.PAPRD_CMND_DT >= TO_CHAR(#{startDt}, 'YYYY-MM-DD')
+          and rod.PAPRD_CMND_DT <= TO_CHAR(#{endDt}, 'YYYY-MM-DD')
         ]]>
         order by PAPRD_CMND_DT
     </select>

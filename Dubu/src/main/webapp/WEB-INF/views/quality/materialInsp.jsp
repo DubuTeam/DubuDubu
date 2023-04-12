@@ -235,49 +235,6 @@
 		</div>
 	</div>
 
-	<!-- Modal for resource search -->
-	<div class="modal fade" id="rscModal" tabindex="-1" aria-labelledby="rscModal" aria-hidden="true">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h4 class="modal-title">자재검색</h4>
-					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-				</div>
-				<div class="modal-body">
-					<form id="rscSchForm">
-						<table>
-							<colgroup>
-								<col style="width: 400px;">
-								<col style="width: 10px">
-								<col style="width: 50px;">
-							</colgroup>
-							<tbody>
-								<tr>
-									<td><input type="text" id="rscNmInMod" name="rscNm" class="form-control"
-											placeholder="자재명"></td>
-									<td></td>
-									<td rowspan="2">
-										<button id="rscSch" class="btn btn-primary" type="button" style="height: 90px;">
-											<i class="fas fa-search"></i>
-										</button>
-									</td>
-								</tr>
-								<tr>
-									<td><input type="text" id="rscCdInMod" name="rscCd" class="form-control"
-											placeholder="자재코드"></td>
-								</tr>
-							</tbody>
-						</table>
-					</form>
-					<br>
-					<div id="rsc-grid"></div>
-					<div style="float: right">
-						<p>선택 : 더블클릭</p>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
 
 	<!--inspection detail modal-->
 	<div class="modal fade" id="infModal" tabindex="-1">
@@ -285,7 +242,8 @@
 			<div class="modal-content">
 				<div class="modal-header">
 					<b class="modal-title">검사상세</b>
-					<button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+					<button type="button" class="btn-close" data-bs-dismiss="modal"
+						aria-label="Close"></button>
 				</div>
 				<div class="modal-body">
 					<div id="inf-grid"></div>
@@ -360,21 +318,6 @@
 			, editingEvent: 'click'
 		});
 
-		// search vendors by keyword
-		/* let vendSch = document.getElementById('vendSch');
-		vendSch.addEventListener('click', function () {
-			let data = new FormData(vendSchForm);
-			let url = 'getVendors'
-
-			fetch(url, {
-				method: 'POST',
-				body: data
-			}).then(res => res.json()).then(res => {
-				vendGrid.innerHTML = '';
-				vendGrid.resetData(res);
-			})
-		}); */
-
 		$(document).ready(function () {
 			$('#vendSch').on('click', function () {
 				ssss();
@@ -418,11 +361,7 @@
 
 
 		// get vendor grid data
-		/*  function getVendListInit() {
-			 let url = 'getVendors'
-			 fetch(url).then(res => res.json())
-				 .then(res => vendGrid.resetData(res))
-		 } */
+
 
 		function getVendListInit() {
 			$.ajax({
@@ -457,6 +396,7 @@
 					header: '품명',
 					name: 'rscNm',
 					align: 'center',
+					width: 50,
 					sortingType: 'asc',
 					sortable: true
 				},
@@ -464,7 +404,7 @@
 					header: '규격',
 					name: 'rscSpec',
 					align: 'center',
-					width: 50
+					width: 80
 				},
 				{
 					header: '단위',
@@ -535,7 +475,7 @@
 					header: '검사',
 					name: 'rscInfBtn',
 					align: 'center',
-					renderer: { type: 'rscInfBtn' },
+					//renderer: { type: 'rscInfBtn' },
 					width: 50
 				},
 				{
@@ -631,8 +571,8 @@
 					url: 'getRscOrdrList',
 					type: 'POST',
 					data: searchDate,
-					dataType: 'json',
 					success: function (res) {
+
 						grid.resetData(res);
 					},
 					error: function (xhr, status, error) {
@@ -642,33 +582,63 @@
 			}
 		}
 
-		/* function getOrdrList() {
-			// initiate inf list
-			infData.clear();
-			getInfList();
 
-			// init conditions
-			saveFlag = 0;
-			grid.showColumn('rmnCnt');
 
-			if (startDt.value === '' || endDt.value === '') {
-				toastr.error('기간을 입력하세요.');
-			} else {
-				$.ajax({
-					url: 'getRscOrdrList',
-					type: 'POST',
-					data:  searchDate,
-					dataType: 'json',
-					success: function (res) {
-						grid.resetData(res);
+		//=====================infGrid=====================
+
+		let infGrid = new tui.Grid({
+			el: document.getElementById('inf-grid'),
+			bodyHeight: 300,
+			scrollX: false,
+			scrollY: true,
+			columns: [
+				{
+					header: '불량코드',
+					name: 'ccdDtl',
+					align: 'center'
+				},
+				{
+					header: '불량명',
+					name: 'ccdDtlNm',
+					align: 'center'
+				},
+				{
+					header: '불량수량',
+					name: 'infCnt',
+					editor: {
+						type: inputInferCnt,
+						options: {
+							maxLength: 10
+						}
 					},
-					error: function (xhr, status, error) {
-						console.error('Ajax Error:', error);
-					}
-				});
-			}
-		} */
+					align: 'center'
+				}
+			]
+			, editingEvent: 'click'
+		})
 
+		//제품코드 칸 클릭 -> 제품코드 모달창 띄우기
+		var infRowKey = '';
+		infGrid.on("click", (e) => {
+			console.log(suna);
+
+			const { columnName } = e;
+			infRowKey = e.rowKey;
+			let test = infGrid.getRow(infRowKey);
+			console.log(test);
+				$("#infModal").modal("show");
+				/* $.ajax({
+					url: "",
+					dataType: "json",
+					method: "get",
+					success: function (edctsCdList) {
+						setTimeout(function () {
+							infGrid.refreshLayout();
+						}, 300);
+						infGrid.resetData(edctsCdList);
+					}
+				}) */
+		})
 
 
 
