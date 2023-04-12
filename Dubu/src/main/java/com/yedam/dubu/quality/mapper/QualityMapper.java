@@ -21,5 +21,5 @@ public interface QualityMapper {
 	    List<QualityVO> getMatOrdrList(QualityVO qualityVO);
 	    
 	    //자재관련조회
-	    List<QualityVO> getResources(QualityVO qualityVO);
+	   // List<QualityVO> getResources(QualityVO qualityVO);
 }
