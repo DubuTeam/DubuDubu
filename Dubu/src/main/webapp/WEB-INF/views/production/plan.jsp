@@ -224,7 +224,16 @@ let planCd='';
                  },
                  {
                      header: '납기일자',
-                     name: 'paprdDt'
+                     name: 'paprdDt',
+                     formatter: function (data) {
+                         let dateVal = '';
+                         if(data.value != null ){
+                             dateVal = dateChange(data.value);
+                         }else{
+                             dateVal = getToday();
+                         }
+                         return dateVal;
+                       }
                  },
                  {
                      header: '제품명',
@@ -239,6 +248,15 @@ let planCd='';
 
          });
         searchBtn.addEventListener("click", search);
+        // 날짜변형
+        function dateChange(date) {
+        	   let date1 = new Date(date);
+        	   let date2 =
+        	     date1.getFullYear() + "-" + 
+        	     (date1.getMonth() < 10 ? "0" + (date1.getMonth() + 1): date1.getMonth() + 1) +"-" +
+        	     (date1.getDate() < 10 ? "0" + date1.getDate() : date1.getDate());
+        	   return date2;
+        	 }
 
         /* //로드시 나타남
         $(document).ready(function(){
@@ -269,6 +287,7 @@ let planCd='';
     	      };
     	 //console.log(str);
     	 orderDetail();
+    	 planEquipMaterial();
      
     	  $('#exampleModal').modal('hide');
           $('.modal-backdrop').remove();
@@ -280,7 +299,7 @@ let planCd='';
             method: "post",
             data: { orderNo : str},
             success: function(data) {
-            	console.log(data);
+            	//console.log(data);
             	detailGrid.resetData(data);  //그리드 적용
             },
             error: function (reject) {
@@ -412,11 +431,31 @@ let planCd='';
                             },
                             {
                                 header: '시작일자',
-                                name: 'wkToDt'
+                                name: 'wkToDt',
+                                editor: 'text',
+                                formatter: function (data) {
+                                    let dateVal = '';
+                                    if(data.value != null ){
+                                        dateVal = dateChange(data.value);
+                                    }else{
+                                        dateVal = getToday();
+                                    }
+                                    return dateVal;
+                                  }
                             },
                             {
                                 header: '종료일자',
-                                name: 'wkFrDt'
+                                name: 'wkFrDt',
+                                editor: 'text',
+                                formatter: function (data) {
+                                    let dateVal = '';
+                                    if(data.value != null ){
+                                        dateVal = dateChange(data.value);
+                                    }else{
+                                        dateVal = getToday();
+                                    }
+                                    return dateVal;
+                                  }
                             },
                             {
                                 header: '생산수량',
@@ -424,7 +463,8 @@ let planCd='';
                             },
                             {
                                 header: '작업우선순위',
-                                name: 'prefRank'
+                                name: 'prefRank',
+                                editor: 'text'
                             },
                             {
                                 header: '계획코드',
