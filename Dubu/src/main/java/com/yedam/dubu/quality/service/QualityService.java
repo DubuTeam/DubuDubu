@@ -15,4 +15,7 @@ public interface QualityService {
 	
 	List<QualityVO> getMatVendList(QualityVO qualityVO);
     List<QualityVO> getMatOrdrList(QualityVO qualityVO);
+    
+    //자재관련조회
+    List<QualityVO> getResources(QualityVO qualityVO);
 }

@@ -45,6 +45,12 @@ public class QualityServiceImpl implements QualityService {
 		return qualityMapper.getMatOrdrList(qualityVO);
 	}
 
+	@Override
+	public List<QualityVO> getResources(QualityVO qualityVO) {
+		// TODO Auto-generated method stub
+		return qualityMapper.getResources(qualityVO);
+	}
+
 	
 }
 

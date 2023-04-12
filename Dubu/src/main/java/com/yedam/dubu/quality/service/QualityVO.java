@@ -22,10 +22,10 @@ public class QualityVO {
 	
 	
 	
-	String edctsLotNo; 
-	String edctsCd;
-	String orderNo;
-	String inspPsch;
+	String edctsLotNo;  //LOT번호
+	String edctsCd;     //
+	String orderNo;     //주문서 번호
+	String inspPsch;	//
 	@DateTimeFormat(pattern="yyyy-MM-dd")
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
 	Date inspDt;

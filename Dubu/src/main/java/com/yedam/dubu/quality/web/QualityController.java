@@ -60,11 +60,19 @@ public class QualityController {
         return qualityService.getMatVendList(qualityVO);
     }
     
+    
+    
+    @RequestMapping("getResources")
+    @ResponseBody
+    public List<QualityVO> getResources(@ModelAttribute QualityVO qualityVO) {
+        return qualityService.getResources(qualityVO);
+    }
+
+    //검사내역 저장
     @RequestMapping("getRscOrdrList")
     @ResponseBody
     public List<QualityVO> getRscOrdrList(@ModelAttribute QualityVO qualityVO) {
         return qualityService.getMatOrdrList(qualityVO);
     }
-
 	
 }
