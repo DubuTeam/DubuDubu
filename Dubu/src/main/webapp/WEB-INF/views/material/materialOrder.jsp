@@ -281,14 +281,17 @@
 		</div>
 		<br>
 		
+		
 		<!-- 자재 발주 목록 페이지 -->
 		<div class="card mb-4">
 			<div class="card-body">
 			<div class="linelist" style="float: right;">
-					<button type="button" class="btn btn-primary" id="listSearchBtn">
-						<i class="fas fa-search"></i> 조회
-					</button>
-					<br> <br>
+				<button type="button" class="btn btn-primary" id="listSearchBtn">
+					<i class="fas fa-search"></i> 조회
+				</button>
+				<button type="button" class="btn btn-primary" id="listDelBtn">
+					<i class="fas fa-minus"></i> 삭제
+				</button>
 			</div>
 			<table>
 				<tr>
@@ -362,7 +365,7 @@
 					</div>
 				</div>
 				<!-- ↑↑↑ 모달 -->
-				<br><br>
+				<br><span><b>자재 발주 목록</b></span>
 				<div id="grid"></div> <!-- 그리드 -->
 			</div>
 		</div>
@@ -373,7 +376,7 @@
 			<div class="modal-dialog modal-xl" role="document">
 				<div class="modal-content">
 					<div class="modal-header">
-						<h5 class="modal-title" id="exampleModalLabel">자재발주내역조회</h5>
+						<h5 class="modal-title" id="exampleModalLabel">자재발주 상세내역조회</h5>
 						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 							<span aria-hidden="true">X</span>
 						</button>
@@ -384,10 +387,13 @@
 								<label style="margin-top: 5px; display:inline;">발주코드</label> 
 								<input class="form-control" type="text" id="ordrCd" name="ordrCd" style="width: 180px; margin-bottom: 10px; display:inline;" readonly />
 							</div>
-							<div class="col-md-4"></div>
-							<div class="linelist col-md-2" style="margin-bottom:10px; float:right;">
+							<div class="col-md-3"></div>
+							<div class="linelist col-md-3" style="margin-bottom:10px; float:right;">
 								<button type="button" class="btn btn-primary" id="modifyBtn">
 									<i class="fas fa-save"></i> 수정
+								</button>
+								<button type="button" class="btn btn-primary" id="DetailDelBtn">
+									<i class="fas fa-minus"></i> 삭제
 								</button>
 								<button id="excelBtn" name="excelBtn" type="button"
 									class="btn btn-primary">
@@ -719,9 +725,9 @@ const grid = new tui.Grid({
 	  el: document.getElementById('grid'), // Container element
 	  scrollX: false,
       scrollY: true,
-      bodyHeight: 300,
-      rowHeight: 30,
-      rowHeaders: ['rowNum'],
+      bodyHeight: 400,
+      rowHeight: 50,
+      rowHeaders: ['checkbox','rowNum'],
 	  columns: [
 	    {
 	      header: '발주코드',
@@ -930,12 +936,14 @@ $('#modifyBtn').on('click', function(){
 	
 });
 
+
 //엑셀버튼 클릭 이벤트
 const options = {
-		includeHiddenColumns: true,
-		onlySelected: true,
-		fileName: 'myExport',
+	includeHiddenColumns: true,
+	onlySelected: true,
+	fileName: 'myExport',
 };
+
 
 // 엑셀 버튼 클릭시 실행하는 함수
 $('#excelBtn').on('click', function(){
@@ -943,5 +951,104 @@ $('#excelBtn').on('click', function(){
 	detailGrid.export('xlsx', options);
 
 }); 
+
+
+// 자재발주목록에서 삭제 클릭시 실행되는 함수
+$('#listDelBtn').on('click', function(){
+
+	Swal.fire({
+	   title: '발주를 삭제 하시겠습니까?',
+	   icon: 'warning',
+	   showCancelButton: true, 
+	   confirmButtonColor: 'red', 
+	   cancelButtonColor: 'blue', 
+	   confirmButtonText: '삭제', 
+	   cancelButtonText: '취소', 
+	   reverseButtons: false,
+	   
+	}).then((result) => {
+			
+	  if (result.isConfirmed) {
+		let ordrCd = "";
+		let rowKeys = grid.getCheckedRowKeys(); // 키값이 배열 형태로 들어감 : ex. [0,1]
+				
+		for(let i = 0; i< rowKeys.length ; i++){ // rowKeys만큼 for문을 돌림
+			//console.log(rowKeys[i]);
+			ordrCd = ordrCd + grid.getRow(rowKeys[i]).ordrCd + ","; // 삭제할 발주코드
+		}
+		
+		//console.log(ordrCd);
+		
+		$.ajax({
+			url:"materialOrderDelete",
+			data : {ordrCd : ordrCd},
+			method:"post",
+			success:function(result) {
+				Swal.fire({
+	                icon: 'success',
+	                title: '발주 삭제가 완료되었습니다.'
+	            });
+				searchAll(); // 조회가 발동중일때 화면에 뿌려주는 함수
+				// grid.resetData(result); // result값을 받아와서 grid에 뿌려주는 함수
+			},
+			error: function (reject) {	   
+				Swal.fire("실패", "작업수행에 실패하였습니다.", "error");
+			    console.log(reject);
+				}
+		});
+	  }
+	})
+});
+
+// 자재발주 상세내역에서 삭제 클릭시 실행되는 함수
+$('#DetailDelBtn').on('click', function(){
+	
+	let ordrCd = $('#ordrCd').val(); // 삭제할 발주코드
+	
+	Swal.fire({
+	   title: '해당 자재 발주를 삭제 하시겠습니까?',
+	   icon: 'warning',
+	   showCancelButton: true, 
+	   confirmButtonColor: 'red', 
+	   cancelButtonColor: 'blue', 
+	   confirmButtonText: '삭제', 
+	   cancelButtonText: '취소', 
+	   reverseButtons: false,
+		   
+	}).then((result) => {
+			
+	  if (result.isConfirmed) {
+		let rscCd = "";
+		let rowKeys = detailGrid.getCheckedRowKeys(); // 키값이 배열 형태로 들어감 : ex. [0,1]
+				
+		for(let i = 0; i< rowKeys.length ; i++){ // rowKeys만큼 for문을 돌림
+			rscCd = rscCd + detailGrid.getRow(rowKeys[i]).rscCd + ","; // 삭제할 자재코드
+		
+		}
+		
+		$.ajax({
+			url:"materialOrderDetailDelete",
+			data : {ordrCd : ordrCd, rscCd : rscCd},
+			method:"post",
+			success:function(result) {
+				Swal.fire({
+	                icon: 'success',
+	                title: '상세발주의 자재 삭제가 완료되었습니다.'
+	            });
+				searchAll(); // 조회가 발동중일때 화면에 뿌려주는 함수
+				// grid.resetData(result); // result값을 받아와서 grid에 뿌려주는 함수
+			},
+			error: function (reject) {	   
+				Swal.fire("실패", "작업수행에 실패하였습니다.", "error");
+			    console.log(reject);
+			}
+		});
+		
+	  }
+	})
+	
+	
+})
+
 
 </script>

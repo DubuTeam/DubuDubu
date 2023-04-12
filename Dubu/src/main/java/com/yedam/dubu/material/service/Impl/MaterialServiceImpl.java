@@ -63,10 +63,17 @@ public class MaterialServiceImpl implements MaterialService{
 	public List<MaterialVO> getMaterialOrderListDetail(String ordrCd) {
 		return materialMapper.getMaterialOrderListDetail(ordrCd);
 	}
-
+	
+	// 자재 발주 상세 수정 
 	@Override
 	public int getMaterialOrderListDetailModify(MaterialVO materialVO) {
 		return materialMapper.getMaterialOrderListDetailModify(materialVO);
+	}
+
+	// 자재 발주 삭제
+	@Override
+	public int getMaterialOrderDelete(String ordrCd) {
+		return materialMapper.getMaterialOrderDelete(ordrCd);
 	}
 
 }
