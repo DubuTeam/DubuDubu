@@ -127,5 +127,14 @@
 		FROM
 		edcts_ist;
 	</select>
+	
+	
+	<!-- oust.jsp  -->
+	<!-- 생산완료 주문서 조회 -->
+ 	<select id="findOrder" resultType="SalesVO">
+ 		SELECT ORDER_NO, VEND_NM, EDCTS_CD, PRDT_NM, ORDER_CNT, PAPRD_DT
+		FROM ORDER_SHEET
+		WHERE PROG_APPE = 'Completed'
+ 	</select>
 
 </mapper>

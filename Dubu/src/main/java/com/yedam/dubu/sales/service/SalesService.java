@@ -45,4 +45,9 @@ public interface SalesService {
 
 	public SalesVO getlstNo(SalesVO vo);
 
+///////////////////////////////////////////////////////////////////////
+// oust.jsp 페이지
+	// 진행중 주문서 현황 목록 조회
+	public List<SalesVO> findOrder(SalesVO vo);
+
 }
