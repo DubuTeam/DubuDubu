@@ -90,6 +90,7 @@
 				<table>
 					<thead>
 						<tr>
+							<th><input type="checkbox"></th>
 							<th>비가동코드</th>
 							<th>설비코드</th>
 							<th>설비명</th>

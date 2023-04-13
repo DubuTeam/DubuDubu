@@ -113,10 +113,46 @@ public class EquipmentController {
 	///////////////////////////////////////////////////////////////////////////
 	
 	
-	// 설비점검관리
+	// 3. 설비 점검 관리 페이지
 	@GetMapping("/eqCheck")
 	public String getEqCheck(Model model) {
+		// 모달 내 설비 전체 출력
+		model.addAttribute("eqListInModal", equipmentService.selectAllEquipmentListInModal());
+		
+		// 모달 밖, 아래에다 점검 리스트 출력
+		model.addAttribute("checkList", equipmentService.selectAllCheckList());
+		
+		// 자동 점검코드
+		model.addAttribute("getCheckCode", equipmentService.getCheckCode());
 		return "equip/eqCheck";
+	}
+	
+	
+	// 모달 내 설비 검색
+	@GetMapping("/searchEqInModal")
+	@ResponseBody
+	public List<EquipmentVO> getSpecificEqInModal(EquipmentVO equipmentVO, @RequestParam String keyword) {
+		System.out.println(keyword + " 받았습니다!");
+		equipmentVO.setKeyword(keyword);
+		return equipmentService.selectSpecificEquipmentListInModal(equipmentVO);
+	}
+	
+	
+	// 점검 목록 추가
+	@PostMapping("/insertCheckList")
+	@ResponseBody
+	public String checkInsertProcess(EquipmentVO equipmentVO) {
+		equipmentService.insertCheckList(equipmentVO);		// <- 여기서..정보가 담긴 VO 객체를 가지고, 직접적인 DB 랑 연결.
+		
+		return "redirect:eqCheck";
+	}
+	
+	// 점검 목록 수정
+	@PostMapping("/updateCheckList")
+	@ResponseBody
+	public String checkUpdateProcess(EquipmentVO equipmentVO) {
+		equipmentService.updateCheckList(equipmentVO);
+		return "redirect:eqCheck";
 	}
 	
 	

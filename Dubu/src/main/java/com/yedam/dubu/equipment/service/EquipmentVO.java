@@ -49,5 +49,16 @@ public class EquipmentVO {
 	
 	//2-5. 검색 기능 시 필요한 변수명
 	private String searchType;			// 검색 시, 어떤 걸 기준으로 검색하는지 (설비명, 설비코드, 공정명)
-	private String keyword;			// 검색창에 입력한 값
+	private String keyword;				// 검색창에 입력한 값
+	
+	
+	// 설비점검내역 페이지에서 쓰이는 변수들
+	private String chckCd;				// 점검코드
+	@DateTimeFormat(pattern="yyyy-MM-dd")
+	private Date chckDt;				// 점검일자
+	private String dispoMatter;			// 조치사항
+	private String dispoCtnt;			// 조치내역
+	private String jdgmnt;				// 판정
+	private String chckPsch;			// 점검담당자
+	private String chckFg;
 }

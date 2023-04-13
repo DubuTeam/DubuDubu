@@ -62,7 +62,6 @@
 				<div class="card mb-4">
 					<div class="card-body">
 						<div class="linelist" style="float: right;">
-							<button class="btn btn-primary" id="initBtn"><i class="fas fa-file"></i> 초기화</button>
 							<button class="btn btn-primary" id="saveBtn"><i class="fas fa-save"></i> 저장
 							</button>
 							<!-- <button class="btn btn-primary" id="delBtn"><i class="fas fa-trash"></i> 삭제 </button> -->
@@ -72,7 +71,9 @@
 							<button type="button" class="btn btn-primary" id="delBtn" data-toggle="modal" data-target="#exampleModal">
 								<i class="fas fa-trash"></i> 삭제
 							</button>
-
+							<button class="btn btn-primary" id="initBtn"><i class="fas fa-file"></i> 초기화</button>
+							
+							
 							<!-- Modal -->
 							<div class="modal fade" id="exampleModal" tabindex="-1"
 								aria-labelledby="exampleModalLabel" aria-hidden="true">

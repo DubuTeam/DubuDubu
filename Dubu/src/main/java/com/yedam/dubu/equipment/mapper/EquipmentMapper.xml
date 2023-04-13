@@ -5,6 +5,7 @@
  
 <mapper namespace="com.yedam.dubu.equipment.mapper.EquipmentMapper">
 
+	<!-- ↓↓↓ 설비 라인 페이지 -->
 	<!-- 라인 관리 - 전체 조회 -->
 	<select id="selectAllEquipmentLineList" resultType="EquipmentVO">
 		SELECT * FROM EQM_LINE ORDER BY line_cd
@@ -12,7 +13,10 @@
 	
 	<!-- 부여될 라인 코드를 미리 조회 (등록과 관련)  -  라인명은 LINE0002, LINE0003  이런식으로 문자열이다. -->
 	<select id="getLineCode" resultType="String">
-		SELECT NVL2(MAX(line_cd), 'LINE'||LPAD(REPLACE(MAX(line_cd), 'LINE') + 1, 4, '0'), 'LINE0001') FROM eqm_line
+		SELECT
+			NVL2(MAX(line_cd),
+			'LINE'||LPAD(REPLACE(MAX(line_cd), 'LINE') + 1, 4, '0'), 'LINE0001')
+		FROM eqm_line
 	</select>
 	
 	
@@ -55,7 +59,7 @@
 	</delete>
 	
 	
-	
+	<!-- ↑↑↑ 설비 라인 페이지 -->
 	<!-- ↓↓↓ 설비 관리 페이지 -->
 	
 	
@@ -175,4 +179,105 @@
 	    </when>
 	  </choose>
 	</select>
+	
+	
+	<!-- ↑↑↑ 설비 관리 페이지 -->
+	<!-- ↓↓↓ 설비 점검 내역 페이지 -->
+	
+	
+	<!-- 모달 내 설비 목록 출력 -->
+	<select id="selectAllEquipmentListInModal" resultType="EquipmentVO">
+		SELECT
+			ROWNUM AS "idx",
+			eqm_nm,
+			eqm_cd,
+			prcs_cd,
+			prcs_nm,
+			eqm_yn
+		FROM eqm
+		ORDER BY eqm_cd
+	</select>
+	
+	<!-- 모달 내 설비 검색 -->
+	<select id="selectSpecificEquipmentListInModal" resultType="EquipmentVO">
+		SELECT
+		    ROWNUM AS "idx",
+		    eqm_nm,
+		    eqm_cd,
+		    prcs_cd,
+		    prcs_nm,
+		    eqm_yn
+		FROM eqm
+		WHERE eqm_nm LIKE '%' || #{keyword} || '%'
+	</select>
+	
+	
+	<!-- 모달 밖의, 아래 부분에 있는 점검 리스트 출력 -->
+	<select id="selectAllCheckList" resultType="EquipmentVO">
+		SELECT
+			chck_cd,
+			eqm_cd,
+			eqm_nm,
+			chck_dt,
+			dispo_matter,
+			jdgmnt,
+			chck_psch
+		FROM eqm_chck
+		ORDER BY chck_cd
+	</select>
+	
+	<!-- 부여될 점검 코드를 미리 조회 (등록과 관련)  -  라인명은 CHCK0002, CHCK0003  이런식으로 문자열이다. -->
+	<select id="getCheckCode" resultType="String">
+		SELECT
+			NVL2(MAX(chck_cd),
+    		'CHCK'||LPAD(REPLACE(MAX(chck_cd), 'CHCK') + 1, 4, '0'), 'CHCK0001')
+    	FROM eqm_chck
+	</select>
+	
+	
+	<!-- 설비 점검 등록하기 -->
+	<insert id="insertCheckList" parameterType="equipmentVO">
+		INSERT INTO eqm_chck 
+		                (
+						chck_cd,
+						eqm_cd,
+						eqm_nm,
+						chck_dt,
+						dispo_matter,
+						jdgmnt,
+						chck_psch,
+						chck_fg,
+						dispo_ctnt
+		                )
+		        VALUES (
+		        		#{chckCd},
+		                #{eqmCd},
+		                #{eqmNm},
+		                #{chckDt},
+		                #{dispoMatter},
+		                #{jdgmnt},
+		                #{chckPsch},
+		                #{chckFg},
+		                #{dispoCtnt}
+		                )
+	</insert>
+	
+	<!-- 설비 점검 수정하기 -->
+	<update id="updateCheckList" parameterType="equipmentVO">
+		UPDATE eqm_chck
+		SET
+			chck_cd = #{chckCd},
+			eqm_cd = #{eqmCd},
+			eqm_nm = #{eqmNm},
+			chck_dt = #{chckDt},
+			dispo_matter = #{dispoMatter},
+			jdgmnt = #{jdgmnt},
+			chck_psch = #{chckPsch},
+			chck_fg = #{chckFg},
+			dispo_ctnt = #{dispoCtnt}
+		WHERE chck_cd = #{chckCd}
+	</update>
+	
+	
+	<!-- ↑↑↑ 설비 점검 내역 페이지 -->
 </mapper>

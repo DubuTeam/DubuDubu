@@ -93,10 +93,44 @@ public class EquipmentServiceImpl implements EquipmentService{
 	}
 
 	@Override
-	public List<EquipmentVO> selectSpecificEquipmentList(EquipmentVO equipmentVO) {
-		
+	public List<EquipmentVO> selectSpecificEquipmentList(EquipmentVO equipmentVO) {		
 		return equipmentMapper.selectSpecificEquipmentList(equipmentVO);
 	}
+
 	
+	/////////////////////////////////////////////////////////////////////////
+	
+	
+	@Override
+	public List<EquipmentVO> selectAllEquipmentListInModal() {
+		return equipmentMapper.selectAllEquipmentListInModal();
+	}
+
+	@Override
+	public List<EquipmentVO> selectSpecificEquipmentListInModal(EquipmentVO equipmentVO) {
+		return equipmentMapper.selectSpecificEquipmentListInModal(equipmentVO);
+	}
+
+	@Override
+	public List<EquipmentVO> selectAllCheckList() {
+		return equipmentMapper.selectAllCheckList();
+	}
+
+	@Override
+	public String getCheckCode() {
+		return equipmentMapper.getCheckCode();
+	}
+	
+	@Override
+	public int insertCheckList(EquipmentVO equipmentVO) {
+		return equipmentMapper.insertCheckList(equipmentVO);
+	}
+
+	@Override
+	public int updateCheckList(EquipmentVO equipmentVO) {
+		return equipmentMapper.updateCheckList(equipmentVO);
+	}
+		
+
 	
 }

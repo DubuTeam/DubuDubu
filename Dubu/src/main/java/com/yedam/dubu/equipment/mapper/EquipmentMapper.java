@@ -35,7 +35,7 @@ public interface EquipmentMapper {
 		// <<< 설비 관리 페이지 >>>
 		
 		
-		// 설비관리 테이블
+		// 설비 관리 테이블
 		// 공정명, 공정코드 가져오기 위한 것.
 		public List<EquipmentVO> selectAllProcessList();
 		
@@ -45,7 +45,7 @@ public interface EquipmentMapper {
 		public List<EquipmentVO> selectAllCommonDataList();
 		
 		
-		///////////////////////////////////////////
+		//////////////////////////////////////
 		
 		
 		// 설비 목록 출력하기
@@ -61,9 +61,32 @@ public interface EquipmentMapper {
 		public int deleteEquipment(String eqmCd);
 		
 		// 설비 검색하기
-		public List<EquipmentVO> selectSpecificEquipmentList();
-
-
+		// public List<EquipmentVO> selectSpecificEquipmentList();		// <- 이거 아님
 		public List<EquipmentVO> selectSpecificEquipmentList(EquipmentVO equipmentVO);
 		
+		
+		/////////////////////////////////////////////////////////////////////////
+		
+		
+		// <<< 설비 점검 내역 페이지 >>>
+		
+		
+		// 1. 모달 내에서 설비 목록 출력하기
+		public List<EquipmentVO> selectAllEquipmentListInModal();
+		
+		// 2. 모달 내에서 설비 검색 기능
+		public List<EquipmentVO> selectSpecificEquipmentListInModal(EquipmentVO equipmentVO);
+		
+		
+		// 3. 전체 점검 조회
+		public List<EquipmentVO> selectAllCheckList();
+		
+		// 4. 자동으로 부여될 점검코드
+		public String getCheckCode();
+		
+		// 5. 설비 점검 등록하기
+		public int insertCheckList(EquipmentVO equipmentVO);
+		
+		// 6. 설비 점검 수정하기
+		public int updateCheckList(EquipmentVO equipmentVO);
 }
