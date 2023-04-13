@@ -341,7 +341,7 @@ $(document).ready(function () {
 
                         let tr = $("<tr />");
 
-                        tr.append($('<td />').text(item.lineCd))
+                        tr.append($('<td />').text(item.idx))
                         tr.append($('<td />').text(item.eqmNm))
                         tr.append($('<td />').text(item.eqmCd))
                         tr.append($('<td />').text(item.prcsCd))
