@@ -1,262 +1,274 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 
-	<head>
-		<style>
-			tr {
-				height: 50px;
-			}
+<head>
+<style>
+tr {
+	height: 50px;
+}
 
-			.inspBtn {
-				border-width: 0.01em;
-				border-radius: 5px;
-				border-color: #4f5050;
-				color: black;
-				height: 25px;
-			}
+.inspBtn {
+	border-width: 0.01em;
+	border-radius: 5px;
+	border-color: #4f5050;
+	color: black;
+	height: 25px;
+}
 
-			.layout {
-				width: 1628px;
-				height: 750px;
-				display: grid;
-				grid: "header header header" 85px "ordr ordr ordr" 85px "body body rightside" auto/auto auto 350px;
-				gap: 8px;
-			}
+.layout {
+	width: 1628px;
+	height: 750px;
+	display: grid;
+	grid: "header header header" 85px "ordr ordr ordr" 85px
+		"body body rightside" auto/auto auto 350px;
+	gap: 8px;
+}
 
-			.header {
-				grid-area: header;
-			}
+.header {
+	grid-area: header;
+}
 
-			.ordr {
-				grid-area: ordr;
-			}
+.ordr {
+	grid-area: ordr;
+}
 
-			.rightside {
-				grid-area: rightside;
-			}
+.rightside {
+	grid-area: rightside;
+}
 
-			.body {
-				grid-area: body;
-			}
+.body {
+	grid-area: body;
+}
 
-			.highlight {
-				background-color: rgba(19, 78, 94, 0.2) !important;
-			}
-		</style>
-
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-
-		<link rel="stylesheet" href="https://uicdn.toast.com/grid/latest/tui-grid.css" />
-		<script src="https://uicdn.toast.com/grid/latest/tui-grid.js"></script>
-
-
-
-
-	</head>
+.highlight {
+	background-color: rgba(19, 78, 94, 0.2) !important;
+}
+</style>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<script
+	src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
 
 
-	<!-- Begin Page Content -->
-	<div class="container-fluid"></div>
-	<!-- Page Heading -->
-	<div class="container-fluid px-4">
-		<h1 class="mt-4">자재입고검사</h1>
-		<ol class="breadcrumb mb-4">
-			<li class="breadcrumb-item"><a href="home.do"><i class="fas fa-home"></i></a></li>
-			<li class="breadcrumb-item">> 자재관리</li>
-			<li class="breadcrumb-item active">> 자재입고검사</li>
-		</ol>
+<link rel="stylesheet"
+	href="https://uicdn.toast.com/grid/latest/tui-grid.css" />
+<script src="https://uicdn.toast.com/grid/latest/tui-grid.js"></script>
 
-		<section class="layout">
-			<div class="header">
-				<div class="card" id="card-1">
-					<div class="card-body">
-						<div style="display: inline-block; margin: auto 0; float: right;">
-							<button class="btn btn-primary" id="saveBtn">
-								<i class="fas fa-save"></i> 저장
-							</button>
-							<button class="btn btn-primary" id="delDataBtn">
-								<i class="fas fa-file"></i> 삭제
-							</button>
-							<button class="btn btn-primary" id="reloadBtn">
-								<i class="fas fa-file"></i> 새자료
-							</button>
-						</div>
+
+
+
+</head>
+
+
+<!-- Begin Page Content -->
+<div class="container-fluid"></div>
+<!-- Page Heading -->
+<div class="container-fluid px-4">
+	<h1 class="mt-4">자재입고검사</h1>
+	<ol class="breadcrumb mb-4">
+		<li class="breadcrumb-item"><a href="home.do"><i
+				class="fas fa-home"></i></a></li>
+		<li class="breadcrumb-item">> 자재관리</li>
+		<li class="breadcrumb-item active">> 자재입고검사</li>
+	</ol>
+
+	<section class="layout">
+		<div class="header">
+			<div class="card" id="card-1">
+				<div class="card-body">
+					<div style="display: inline-block; margin: auto 0; float: right;">
+						<button class="btn btn-primary" id="saveBtn">
+							<i class="fas fa-save"></i> 저장
+						</button>
+						<button class="btn btn-primary" id="delDataBtn">
+							<i class="fas fa-file"></i> 삭제
+						</button>
+						<button class="btn btn-primary" id="reloadBtn">
+							<i class="fas fa-file"></i> 새자료
+						</button>
+					</div>
+					<table style="vertical-align: middle; text-align: center">
+						<colgroup>
+							<col style="width: 120px">
+							<col style="width: 30px">
+							<col style="width: 80px">
+							<col style="width: 180px">
+							<col style="width: 20px">
+							<col style="width: 80px">
+							<col style="width: 180px">
+						</colgroup>
+						<tbody>
+							<tr>
+								<th><b>자재검사등록</b></th>
+								<td></td>
+								<th><b>검사일자</b></th>
+								<td>
+									<div>
+
+										<input type="date" id="inspDt" name="inspDt"
+											class="form-control" style="width: 150px;">
+									</div>
+									<div id="wrapper" style="margin-top: -1px;"></div>
+								</td>
+								<td></td>
+								<th><b>검사자</b></th>
+								<td><input type="text" id="inspTstr" class="form-control"
+									style="width: 168px;"></td>
+							</tr>
+
+						</tbody>
+					</table>
+
+				</div>
+			</div>
+		</div>
+
+		<div class="ordr">
+			<div class="card">
+				<div class="card-body">
+					<form id="ordrListFrm">
 						<table style="vertical-align: middle; text-align: center">
 							<colgroup>
 								<col style="width: 120px">
 								<col style="width: 30px">
 								<col style="width: 80px">
-								<col style="width: 180px">
+								<col style="width: 250px">
 								<col style="width: 20px">
-								<col style="width: 80px">
-								<col style="width: 180px">
+								<col style="width: 100px">
+								<col style="width: 350px">
 							</colgroup>
-							<tbody>
-								<tr>
-									<th><b>자재검사등록</b></th>
-									<td></td>
-									<th><b>검사일자</b></th>
-									<td>
-										<div>
-
-											<input type="date" id="inspDt" name="inspDt" class="form-control"
-												style="width: 150px;">
-										</div>
-										<div id="wrapper" style="margin-top: -1px;"></div>
-									</td>
-									<td></td>
-									<th><b>검사자</b></th>
-									<td><input type="text" id="inspTstr" class="form-control" style="width: 168px;">
-									</td>
-								</tr>
-
-							</tbody>
-						</table>
-
-					</div>
-				</div>
-			</div>
-
-			<div class="ordr">
-				<div class="card">
-					<div class="card-body">
-						<form id="ordrListFrm">
-							<table style="vertical-align: middle; text-align: center">
-								<colgroup>
-									<col style="width: 120px">
-									<col style="width: 30px">
-									<col style="width: 80px">
-									<col style="width: 250px">
-									<col style="width: 20px">
-									<col style="width: 100px">
-									<col style="width: 350px">
-								</colgroup>
-								<tr>
-									<th><b>발주자료 조회</b></th>
-									<td></td>
-									<th><label for="vendNm"><b>업체명</b></label></th>
-									<td style="display: flex;"><input id="vendNm" type="text" class="form-control"
-											placeholder="검색버튼을 이용하세요" style="width: 200px;" required readonly> <input
-											id="vendCd" type="hidden" name="vendCd">
-										<button id="modalBtn" type="button" class="btn btn-primary" data-toggle="modal"
-											data-target="#vendModal" onclick="setTime()">
-											<i class="fas fa-search"></i>
-										</button>
-									</td>
-									<td></td>
-									<th><b>납기예정일</b></th>
-									<td>
-										<div style="display: flex;">
-											<input type="date" id="startDt" name="startDt" class="form-control"
-												style="width: 150px;"> <span style="padding: 5px;">-</span> <input
-												type="date" id="endDt" name="endDt" class="form-control"
-												style="width: 150px;">
-										</div>
-									</td>
-									<th></th>
-									<td><input id="getOrdrList" type="button" class="btn btn-primary" value="가져오기" />
-									</td>
-								</tr>
-							</table>
-						</form>
-					</div>
-				</div>
-			</div>
-			<div class="body" style="margin-top: 40px;">
-				<div class="card">
-					<div class="card-body">
-						<div class="linelist" style="float: right">
-							<button class="btn btn-primary" id="addRow" style="height: 30px">
-								<i class="fas fa-plus"></i> 추가
-							</button>
-							<button class="btn btn-primary" id="delRow" style="height: 30px">
-								<i class="fas fa-minus"></i> 삭제
-							</button>
-						</div>
-						<br> <br>
-
-					</div>
-					<div id="grid"></div>
-				</div>
-			</div>
-
-			<div class="rightside" style="margin-top: 40px;">
-				<div class="card">
-					<div class="card-body">
-						<b>검사목록</b> <br>
-						<br>
-						<div id="mdfy-grid"></div>
-					</div>
-				</div>
-			</div>
-		</section>
-	</div>
-
-	<div class="modal fade" id="vendModal" tabindex="-1">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h4 class="modal-title">업체검색</h4>
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					</button>
-				</div>
-				<div class="modal-body">
-					<form id="vendSchForm">
-						<table>
-							<colgroup>
-								<col style="width: 400px;">
-								<col style="width: 10px">
-								<col style="width: 50px;">
-							</colgroup>
-							<tbody>
-								<tr>
-									<td><input type="text" name="vendNm" class="form-control" placeholder="업체명"></td>
-									<td></td>
-									<td rowspan="2">
-										<button id="vendSch" class="btn btn-primary" type="button"
-											style="height: 90px;">
-											<i class="fas fa-search"></i>
-										</button>
-									</td>
-								</tr>
-								<tr>
-									<td><input type="text" name="vendCd" class="form-control" placeholder="업체코드"></td>
-								</tr>
-							</tbody>
+							<tr>
+								<th><b>발주자료 조회</b></th>
+								<td></td>
+								<th><label for="vendNm"><b>업체명</b></label></th>
+								<td style="display: flex;"><input id="vendNm" type="text"
+									class="form-control" placeholder="검색버튼을 이용하세요"
+									style="width: 200px;" required readonly> <input
+									id="vendCd" type="hidden" name="vendCd">
+									<button id="modalBtn" type="button" class="btn btn-primary"
+										data-toggle="modal" data-target="#vendModal"
+										onclick="setTime()">
+										<i class="fas fa-search"></i>
+									</button></td>
+								<td></td>
+								<th><b>납기예정일</b></th>
+								<td>
+									<div style="display: flex;">
+										<input type="date" id="startDt" name="startDt"
+											class="form-control" style="width: 150px;"> <span
+											style="padding: 5px;">-</span> <input type="date" id="endDt"
+											name="endDt" class="form-control" style="width: 150px;">
+									</div>
+								</td>
+								<th></th>
+								<td><input id="getOrdrList" type="button"
+									class="btn btn-primary" value="가져오기" /></td>
+							</tr>
 						</table>
 					</form>
-					<br>
-					<div id="vendgrid"></div>
-					<div style="float: right">
-						<p>선택 : 더블클릭</p>
+				</div>
+			</div>
+		</div>
+		<div class="body" style="margin-top: 40px;">
+			<div class="card">
+				<div class="card-body">
+					<div class="linelist" style="float: right">
+						<button class="btn btn-primary" id="delRow" style="height: 30px">
+							<i class="fas fa-minus"></i> 삭제
+						</button>
 					</div>
+					<br> <br>
+
+				</div>
+				<div id="grid"></div>
+			</div>
+		</div>
+
+		<div class="rightside" style="margin-top: 40px;">
+			<div class="card">
+				<div class="card-body">
+					<b>검사목록</b> <br> <br>
+					<div id="mdfy-grid"></div>
+				</div>
+			</div>
+		</div>
+	</section>
+</div>
+
+<div class="modal fade" id="vendModal" tabindex="-1">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title">업체검색</h4>
+				<button type="button" class="close" data-dismiss="modal"
+					aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<form id="vendSchForm">
+					<table>
+						<colgroup>
+							<col style="width: 400px;">
+							<col style="width: 10px">
+							<col style="width: 50px;">
+						</colgroup>
+						<tbody>
+							<tr>
+								<td><input type="text" name="vendNm" class="form-control"
+									placeholder="업체명"></td>
+								<td></td>
+								<td rowspan="2">
+									<button id="vendSch" class="btn btn-primary" type="button"
+										style="height: 90px;">
+										<i class="fas fa-search"></i>
+									</button>
+								</td>
+							</tr>
+							<tr>
+								<td><input type="text" name="vendCd" class="form-control"
+									placeholder="업체코드"></td>
+							</tr>
+						</tbody>
+					</table>
+				</form>
+				<br>
+				<div id="vendgrid"></div>
+				<div style="float: right">
+					<p>선택 : 더블클릭</p>
 				</div>
 			</div>
 		</div>
 	</div>
+</div>
 
 
-	<!--inspection detail modal-->
-	<div class="modal fade" id="infModal" tabindex="-1">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">
-					<b class="modal-title">검사상세</b>
-					<button type="button" class="btn-close" data-bs-dismiss="modal"
-						aria-label="Close"></button>
-				</div>
-				<div class="modal-body">
-					<div id="inf-grid"></div>
-					<br>
-					<div style="float: right">
-						<input type="button" id="calInfCnt" value="입력" class="btn btn-primary">
-					</div>
+<!--inspection detail modal-->
+<div class="modal fade" id="infModal" tabindex="-1">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<b class="modal-title">검사상세</b>
+				<button type="button" class="close" data-dismiss="modal"
+					aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<div id="inf-grid"></div>
+				<br>
+				<div style="float: right">
+					<input type="button" id="calInfCnt" value="입력"
+						class="btn btn-primary">
 				</div>
 			</div>
 		</div>
 	</div>
+</div>
 
-	<script>
+<script>
 		/* document.addEventListener('load', function () {
 			getVendListInit();
 			//getRscListInit();
@@ -354,7 +366,8 @@
 			let vendInfo = `${rowInfo.vendNm} - ${rowInfo.vendCd}`
 			vendNm.value = vendInfo;
 			vendCd.value = rowInfo.vendCd;
-			vModal.hide(vendModal);
+			$(vendModal).modal('hide');
+			$('.modal-backdrop').remove(); // 
 		})
 
 
@@ -374,7 +387,8 @@
 			});
 		}
 
-
+		//===========================main grid =========================================
+			
 
 		// main grid section
 
@@ -441,6 +455,7 @@
 				{
 					header: '가입고량',
 					name: 'preIstCnt',
+					editor: 'text',
 					validation: {
 						dataType: 'number',
 						required: true
@@ -605,8 +620,9 @@
 				{
 					header: '불량수량',
 					name: 'infCnt',
-					align: 'center'				
-					,
+					editor: 'text',
+					align: 'center'
+					
 				}
 			]
 			, editingEvent: 'click'
@@ -614,16 +630,28 @@
 
 		//제품코드 칸 클릭 -> 제품코드 모달창 띄우기
 		var infRowKey = '';
-		infGrid.on("click", (e) => {
-			console.log(suna);
+		 grid.on("dblclick", (e) => {
 
 			const { columnName } = e;
 			infRowKey = e.rowKey;
-			let test = infGrid.getRow(infRowKey);
-			console.log(test);
+			console.log('TEST');
+			let data = grid.getRow(infRowKey);
+			console.log(data);
+			/*  let rowKey = $('#infModal').data('rowKey');
+			  let data = infData.get(rowKey);
+			  if (data === undefined) { // initiate
+			    infGrid.setColumnValues('infCnt', '');
+			  } else if (data.length !== 0) {
+			    infGrid.resetData(data);
+			  } else {
+			    infGrid.setColumnValues('infCnt', '');
+			  }
+			  infGrid.refreshLayout(); */
+			
+			if(columnName == 'rscInfBtn'){
 				$("#infModal").modal("show");
-				/* $.ajax({
-					url: "",
+				$.ajax({
+					url: 'getInfCdList',
 					dataType: "json",
 					method: "get",
 					success: function (edctsCdList) {
@@ -632,12 +660,39 @@
 						}, 300);
 						infGrid.resetData(edctsCdList);
 					}
-				}) */
-		})
-
-
+				}) 
+			}
+		}) 
+ 
+ 
+//=================================mdfygrid==================================
+	  let mdfyGrid = new tui.Grid({
+            el: document.getElementById('mdfy-grid'),
+            bodyHeight: 450,
+            scrollX: false,
+            scrollY: true,
+            columns: [
+                {
+                    header: '검사코드',
+                    name: 'rscInspCd',
+                    align: 'center'
+                },
+                {
+                    header: '검사일자',
+                    name: 'inspDt',
+                    align: 'center'
+                },
+                {
+                    header: '건수',
+                    name: 'inspCnt',
+                    align: 'center',
+                    width: 50
+                }
+            ]
+            , editingEvent: 'click'
+        })
 
 	</script>
-	</div>
-	</div>
-	</div>
+</div>
+</div>
+</div>

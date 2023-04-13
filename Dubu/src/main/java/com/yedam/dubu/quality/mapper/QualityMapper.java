@@ -1,7 +1,8 @@
 package com.yedam.dubu.quality.mapper;
 
 import java.util.List;
-import java.util.Map;
+
+import org.apache.ibatis.annotations.Param;
 
 import com.yedam.dubu.quality.service.QualityVO;
 
@@ -22,4 +23,8 @@ public interface QualityMapper {
 	    
 	    //자재관련조회
 	   // List<QualityVO> getResources(QualityVO qualityVO);
+	    
+	    // 검사상세
+	    List<QualityVO> getInfCdList();
+	    void setRscInfList(@Param("insp") QualityVO insp, @Param("inf") QualityVO inf);
 }
