@@ -304,12 +304,14 @@ const grid = new tui.Grid({
 	  {
 	      header: '검사번호',
 	      name: 'rscInspCd',
-	      align : 'center'
+	      align : 'center',
+	      sortable : true
 	    },
 	    {
 	      header: '자재코드',
 	      name: 'rscCd',
-	      align : 'center'
+	      align : 'center',
+	      sortable : true
 	    },
 	    {
 	      header: '자재명',
@@ -334,7 +336,8 @@ const grid = new tui.Grid({
 	    {
 	      header: '발주번호',
 	      name: 'ordrCd',
-	      align : 'center'
+	      align : 'center',
+	      sortable : true
 	    },
 	    {
 	      header: '입고가능수량',
@@ -344,10 +347,20 @@ const grid = new tui.Grid({
 	    {
 	      header: '입고수량',
 	      name: 'istCnt',
-	      editor : 'text',
+	      formatter: function (data) {
+	    	  let result = '';
+	    	  if(data.value == 0){
+	    		  result = data.row.__storage__.psQuantity;
+	    	  }else{
+	    		  result = data.value;
+	    	  }
+	    	  return result;
+	      },
+	      editor: 'text',
 	      align : 'center',
 	      onAfterChange : function(data){ // 값이 변경되면 실행되는 함수		
 			let rowKey = data.rowKey; // 변경한 행의 index
+			grid.setValue(rowKey, 'istCnt', data.value, true);
 			grid.addCellClassName(rowKey, 'istCnt', 'cell-red'); // CSS
 			grid.check(rowKey); // 체크박스가 체크됨
 	      }
@@ -413,12 +426,12 @@ function searchAll(){
 		   data: {vendNm : vendNm}, // 쿼리스트링 */
 		   success: function (data) {
 			   grid.resetData(data);
-			   //console.log(data);
 		   },
 	 	   error: function (reject) {	   
 		       console.log(reject);
 		}
 	});
+
 }
 
 //날짜 변환
@@ -437,7 +450,7 @@ function getToday() {
     let seconds = String(date.getSeconds()).padStart(2, "0");
     let years = date.getFullYear();
     let month = String(date.getMonth() + 1).padStart(2, "0");
-    let day = String(date.getDate()).padStart(2, "0");
+    let day = String(date.getDate()+7).padStart(2, "0");
     
     return years + "-" + month + "-" + day;
  }

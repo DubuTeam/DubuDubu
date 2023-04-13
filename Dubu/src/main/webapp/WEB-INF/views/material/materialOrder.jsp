@@ -262,7 +262,7 @@
 								<th>자재명</th>
 								<th>업체코드</th>
 								<th>업체명</th>
-								<th>발주코드</th>
+								<!-- <th>발주코드</th> -->
 								<th>발주수량</th>
 								<th>현재재고</th>
 								<th>안전재고</th>
@@ -518,9 +518,9 @@
 	  row.append($("<td>").text(datas.vendCd)); // 업체코드
 	  row.append($("<td>").text(datas.vendNm)); // 업체명
 	
-	  checktd = $("<td>").css('color','blue').text(datas.OrderCode); // 발주코드
+	  //checktd = $("<td>").css('color','blue').text(datas.OrderCode); // 발주코드
 	  //checktd.append($('<input>', {type: 'text', class : datas.OrderCode , value : datas.OrderCode})); // 발주코드
-	  row.append(checktd);
+	  //row.append(checktd);
 	
 	  checktd = $("<td>");
 	  checktd.append($('<input>', {id :datas.rscCd ,type: 'text', value : datas.orderCount , onchange : "expected(this)"})); // 발주수량
@@ -732,22 +732,26 @@ const grid = new tui.Grid({
 	    {
 	      header: '발주코드',
 	      name: 'ordrCd',
-	      align : 'center'
+	      align : 'center',
+	      sortable : true
 	    },
 	    {
 	      header: '업체코드',
 	      name: 'vendCd',
-	      align : 'center'
+	      align : 'center',
+	      sortable : true
 	    },
 	    {
 	      header: '업체명',
 	      name: 'vendNm',
-	      align : 'center'
+	      align : 'center',
+	      sortable : true
 	    },
 	    {
 	      header: '발주신청일',
 	      name: 'ordrReqDt',
 	      align : 'center',
+	      sortable : true,
 	      formatter : function(data){ // 날짜형식 바꿔주는것
               return dateFormat(data.value);
          }
