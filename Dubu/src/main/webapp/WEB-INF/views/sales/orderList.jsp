@@ -687,25 +687,33 @@ function comList() {
 		//주문서 수정 저장
 		var okBtn = document.getElementById('okBtn');
 		okBtn.addEventListener('click',function(result) {
-			var data = grid.getCheckedRows();
-			if(data == '') {
-				toastr.warning('주문서 작성을 완료해주세요');
-			}else {
-				$.ajax({
-				url:"saveOrdr",
-				method:"post",
-				data:JSON.stringify(data),
-				contentType:"application/json",
-				success:function() {
-					grid.uncheckAll();
-					toastr.success('저장되었습니다');
-					console.log(data);
-					},
-					error:function(er){
-						console.log(er);
-					}
-				})
-			}
-			
-			})
+		    var data = grid.getCheckedRows();
+
+		    // 모든 필드가 값이 존재하는지 검사
+		    for (var i = 0; i < data.length; i++) {
+		        var row = data[i];
+		        console.log(row)
+		        if (!row.orderNo || !row.edctsCd || !row.vendCd || !row.vendNm || !row.prdtNm || !row.orderCnt) {
+		            toastr.warning('모든 필드를 채워주세요');
+		            return; // 중단
+		        }
+		    }
+
+		    // 값이 모두 존재하면 저장
+		    $.ajax({
+		        url:"saveOrdr",
+		        method:"post",
+		        data:JSON.stringify(data),
+		        contentType:"application/json",
+		        success:function() {
+		            grid.uncheckAll();
+		            toastr.success('저장되었습니다');
+		            console.log(data);
+		        },
+		        error:function(er){
+		            console.log(er);
+		            toastr.warning('저장에 실패했습니다');
+		        }
+		    })
+		});
 </script>
