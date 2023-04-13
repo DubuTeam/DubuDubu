@@ -126,8 +126,8 @@ public class EquipmentController {
 		model.addAttribute("getCheckCode", equipmentService.getCheckCode());
 		return "equip/eqCheck";
 	}
-	
-	
+
+
 	// 모달 내 설비 검색
 	@GetMapping("/searchEqInModal")
 	@ResponseBody
