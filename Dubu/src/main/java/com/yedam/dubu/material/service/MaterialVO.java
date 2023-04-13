@@ -48,4 +48,17 @@ public class MaterialVO {
 	// 별칭
 	private int expect; // 자재발주시 예상재고량
 	
+	// 자재 검사 상세 테이블
+	private String rscInspCd; // 자재 검사 코드(번호)
+	private String istCheck; // 입고여부 'Y', 'N'
+	private int psQuantity; // 입고 가능 수량
+	
+	
+	// 자재 입고 테이블
+	private int istCnt; // 입고수량
+	
+	// 자재 LOT 테이블
+	@DateTimeFormat(pattern="yyyy-MM-dd")
+	private Date expDt; // 유통기한
+	
 }

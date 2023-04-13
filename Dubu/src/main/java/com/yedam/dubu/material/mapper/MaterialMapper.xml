@@ -144,5 +144,24 @@
                )
              }
 	</delete>
+	
+	<!-- ////////////////////////////// -->
+	
+	<!-- 입고 리스트 -->
+	<!-- 자재 입고 검사 부여된것만  -->
+	<select id="getMaterialIstList" resultType="MaterialVO">
+		SELECT rid.RSC_INSP_CD, r.RSC_CD, r.RSC_NM, r.RSC_SPEC, 
+       		   r.MNG_UNIT, r.RSC_TYP ,v.VEND_CD, v.VEND_NM, rid.ORDR_CD,
+       		   rid.IST_CHECK, rid.PS_QUANTITY
+		FROM RSC_INSP_DTL rid LEFT JOIN RSC r 
+		ON r.RSC_CD = rid.RSC_CD
+		JOIN vend v
+		ON r.VEND_CD = v.VEND_CD
+		WHERE rid.RSC_INSP_CD IS NOT NULL AND rid.IST_CHECK='N'
+	    <if test="vendNm != null and !vendNm.equals('')">
+	       AND UPPER(v.VEND_NM) LIKE '%' || UPPER(#{vendNm}) || '%'
+	    </if>
+		ORDER BY RSC_INSP_CD
+	</select>
 
 </mapper>

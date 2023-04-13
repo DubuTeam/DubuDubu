@@ -168,17 +168,20 @@ public class MaterialController {
 		return r;
 	}
 	
-	// 자재입고검사조회
-	@GetMapping("/materialInspList")
-	public String getMaterialInspList(Model model) {
-		return "material/materialInspList";
-	}
-
 	// 자재입고관리
 	@GetMapping("/materialIst")
 	public String getMaterialIist(Model model) {
+		model.addAttribute("vendMoalList",materialService.getVendModal()); // 업체명 모달창
 		return "material/materialIst";
 	}
+	
+	// 자재 입고 가능 리스트
+	@PostMapping("/materialIstList")
+	@ResponseBody
+	public List<MaterialVO> getMaterialIistList(MaterialVO materialVO) {
+		return materialService.getMaterialIstList(materialVO);
+	}
+
 
 	// 자재입고조회
 	@GetMapping("/materialIstList")
@@ -214,6 +217,12 @@ public class MaterialController {
 	@GetMapping("/materialIOList")
 	public String getMaterialIOList(Model model) {
 		return "material/materialIOList";
+	}
+	
+	// 자재입고검사조회
+	@GetMapping("/materialInspList")
+	public String getMaterialInspList(Model model) {
+		return "material/materialInspList";
 	}
 
 }
