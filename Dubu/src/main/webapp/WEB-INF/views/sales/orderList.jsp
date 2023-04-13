@@ -322,9 +322,9 @@ $(function() {
 			editor : 'text',
 			align : 'center'
 		}, {
-			header : '제품코드',
-			name : 'edctsCd',
-			editor : 'text',
+			header : '주문일자',
+			name : 'orderDt',
+			editor : 'datePicker',
 			align : 'center'
 		}, {
 			header : '거래처코드',
@@ -336,32 +336,32 @@ $(function() {
 			name : 'vendNm',
 			editor : 'text',
 			align : 'left'
-		}, {
-			header : '주문일자',
-			name : 'orderDt',
-			editor : 'datePicker',
+		},{
+			header : '제품코드',
+			name : 'edctsCd',
+			editor : 'text',
 			align : 'center'
 		}, {
-			header : '진행상황',
-			name : 'progAppe',
-			align : 'left',
-			defaultValue : 'InProgress'
-		}, {
-			header : '납기일자',
-			name : 'paprdDt',
-			editor : 'datePicker',
-			align : 'center'
-		}, {
-			header : '제품명',
-			name : 'prdtNm',
-			editor : 'text',
-			align : 'left'
-		}, {
-			header : '주문수량',
-			name : 'orderCnt',
-			editor : 'text',
-			align : 'right'
-		}, ]
+		header : '제품명',
+		name : 'prdtNm',
+		editor : 'text',
+		align : 'left'
+	}, {
+		header : '주문수량',
+		name : 'orderCnt',
+		editor : 'text',
+		align : 'right'
+	}, {
+		header : '납기일자',
+		name : 'paprdDt',
+		editor : 'datePicker',
+		align : 'center'
+	}, {
+		header : '진행상황',
+		name : 'progAppe',
+		align : 'left',
+		defaultValue : 'InProgress'
+	}]
 	});
 
 	// 제품명 모달 그리드(조회)    
@@ -634,6 +634,7 @@ function comList() {
 			$("#searchFrm").each(function() {
 				this.reset();
 				grid.clear();
+				search();
 			})
 		})
 
