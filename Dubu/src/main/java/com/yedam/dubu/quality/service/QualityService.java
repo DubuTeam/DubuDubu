@@ -18,4 +18,6 @@ public interface QualityService {
     
     //자재관련조회
   //  List<QualityVO> getResources(QualityVO qualityVO);
+    // 검사상세
+    List<QualityVO> getInfCdList();
 }

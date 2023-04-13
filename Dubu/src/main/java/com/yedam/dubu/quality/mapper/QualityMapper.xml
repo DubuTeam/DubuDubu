@@ -85,6 +85,13 @@ OR (pi.EDCTS_LOT_NO = 'LOT2')
         ]]>
         order by PAPRD_CMND_DT
     </select>
+    
+    <select id="getInfCdList" resultType="QualityVO">
+        SELECT *
+        FROM CCDS_DTL
+        WHERE CCD = 'INF'
+        ORDER BY CCD_DTL
+    </select>
 
 
 

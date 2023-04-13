@@ -74,5 +74,12 @@ public class QualityController {
     public List<QualityVO> getRscOrdrList(QualityVO qualityVO) {
         return qualityService.getMatOrdrList(qualityVO);
     }
+    
+    // 검사상세
+    @RequestMapping("getInfCdList")
+    @ResponseBody
+    public List<QualityVO> getInfCdList() {
+        return qualityService.getInfCdList();
+    }
 	
 }

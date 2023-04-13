@@ -23,31 +23,30 @@ public class QualityVO {
 	
 	
 	String edctsLotNo;  //LOT번호
-	String edctsCd;     //
+	String edctsCd;     //제품코드
 	String orderNo;     //주문서 번호
-	String inspPsch;	//
+	String inspPsch;	//검사담당자
 	@DateTimeFormat(pattern="yyyy-MM-dd")
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
-	Date inspDt;
-	Integer inspCnt;
-	String inspJm;
+	Date inspDt;   //제품검사일자
+	Integer inspCnt; //제품검사수량
+	String inspJm;	//최종판정
 	
 	
-	String inspCd;	
-	String inspNm;
-	String inspSd;	
-	String inspRsltDtl;
-	String inspJmDtl;
+	String inspCd;	//검사코드
+	String inspNm;	//검사명
+	String inspSd;	//검사기준
+	String inspRsltDtl;  //검사결과
+	String inspJmDtl;  //검사결과판정
 	
 	@DateTimeFormat(pattern="yyyy-MM-dd")
-	Date startDt;
+	Date startDt;    //날짜조회 시작날짜
 	@DateTimeFormat(pattern="yyyy-MM-dd")
-	Date endDt;
+	Date endDt;		//조회 마지막 날짜
 	
 	
-	String edctsNm;
+	String edctsNm; 
 	
-	String prdtNm;
+	String prdtNm;  //제품명
 	
 	
 	// 자재정보 테이블
@@ -88,6 +87,21 @@ public class QualityVO {
 		
 		// 별칭
 		private int expect; // 자재발주시 예상재고량
+		
+		//불량 테이블
+		
+		private String defectCd; //불량코드
+		private String processCd; //공정진행코드
+		private String defectName; //불량명
+		private String defectDesc; //불량내용
+		private int infCnt; //불량수량
+		
+		private String ccdDtl;//공통코트상세
+		private String ccd;//공통코드
+		private String ccdDtlNm;//공통코드상세명
+		private String ccdDtlDesct;//공통코드상세설명
+		private String dtlUseYn; //상세코드사용여부
+	
 	
 	
 }
