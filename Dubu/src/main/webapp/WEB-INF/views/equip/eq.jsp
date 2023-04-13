@@ -33,14 +33,14 @@
 								<div id="searchBar">
 									<select class="dataTable-selector" id="searchType" name="searchType"
 										style="width: 150px">
-										<option selected value="">==선택==</option>
+										<option selected value="all">==선택==</option>
 										<option value="eqmCd">설비코드</option>
 										<option value="eqmNm">설비명</option>
 										<option value="prcsNm">공정명</option>
 									</select>
 
 									<input class="form-control" type="text" id="keyword" name="keyword"
-										placeholder="설비명" style="width: 180px"></input>
+										placeholder="검색어 입력" style="width: 180px"></input>
 
 									<button type="button" id="searchBtn" class="btn btn-primary"
 										style="margin-bottom: 3px">
@@ -95,7 +95,7 @@
 
 				<div class="col-12">
 					<div class="card mb-4">
-						<div class="card-body">
+						<div class="card-body" id="lower-card-body">
 							<div class="linelist" style="float: right;">
 								<button class="btn btn-primary" id="modBtn"><i
 										class="fa-solid fa-paintbrush"></i> 수정</button>
@@ -136,13 +136,6 @@
 								<!-- ↑↑↑ 모달 -->
 							</div>
 
-							<form id="dataForm" name="dataForm" action="#" method="post">
-								<input type="file" style="display: none" id="eqmImg" name="file"
-									onchange="readURL(this);">
-								<img id="preview" style="width: 150px;" />
-								<br> <br>
-								<label class="btn btn-primary" for="eqmImg" style="width: 110px"><i
-										class="fa-solid fa-file-arrow-up"></i> 첨부파일 </label><br><br>
 
 								<table class="table" style="vertical-align: middle;">
 									<colgroup>
@@ -215,10 +208,6 @@
 													style="width: 250px" id="prcsNm" 
 													class="dataTable-selector">
 													<option selected value="">==등록시필수선택==</option>
-													<!-- <option th:each="value : ${prcsList}"
-														th:value="${value.prcsCd}"
-														th:text="${value.prcsNm}"></option> -->
-													<!-- 라인명 탭에서 쓸 옵션들 -->
 													<c:forEach var="list" items="${processList}">
 														<option value="${list.prcsCd}">${list.prcsNm}</option>
 													</c:forEach>
