@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.yedam.dubu.sales.mapper.SalesMapper;
+import com.yedam.dubu.sales.service.OustVO;
 import com.yedam.dubu.sales.service.PrdtInspVO;
 import com.yedam.dubu.sales.service.SalesIstVO;
 import com.yedam.dubu.sales.service.SalesService;
@@ -111,5 +112,17 @@ public class SalesServiceImpl implements SalesService {
 	public List<SalesVO> findOrder(SalesVO vo) {
 		// TODO Auto-generated method stub
 		return salesMapper.findOrder(vo);
+	}
+
+	@Override
+	public List<OustVO> getOustList(OustVO vo) {
+		// TODO Auto-generated method stub
+		return salesMapper.getOustList(vo);
+	}
+
+	@Override
+	public List<OustVO> getmodalList(OustVO vo) {
+		// TODO Auto-generated method stub
+		return salesMapper.getmodalList(vo);
 	}
 }

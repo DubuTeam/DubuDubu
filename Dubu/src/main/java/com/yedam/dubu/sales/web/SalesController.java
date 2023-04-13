@@ -28,6 +28,13 @@ public class SalesController {
 		return "sales/salesIst";
 	}
 
+	// 첫페이지 날짜별 조회
+	@PostMapping("salesIstList")
+	@ResponseBody
+	public List<SalesIstVO> salesIstList(SalesIstVO vo) {
+		return salesService.salesIstList(vo);
+	}
+	
 	// 제품 입고 목록 조건별 조회
 	@PostMapping("istOptionList")
 	@ResponseBody

@@ -71,14 +71,12 @@
 
 	<!-- ////////////////////////////////////////////////////////////// -->
 	<!-- saleslst.jsp -->
-
 	<!-- 입고 목록 조건별 조회 -->
 	<select id="istOptionList" resultType="SalesIstVO">
 		SELECT i.edcts_ist_no, i.edcts_ist_dt, i.edcts_ist_cnt, i.edcts_cd,
 		i.edcts_lot_no, e.prdt_nm
 		FROM edcts_ist i JOIN edcts e
-		ON i.edcts_cd =
-		e.edcts_cd
+		ON i.edcts_cd = e.edcts_cd
 		<if test="edctsLotNo != null and edctsLotNo != ''">and EDCTS_LOT_NO = #{edctsLotNo}</if>
 		<if test="edctsIstDtStart != null"><![CDATA[and EDCTS_IST_DT >= #{edctsIstDtStart}]]></if>
 		<if test="edctsIstDtEnd != null"><![CDATA[and EDCTS_IST_DT <= #{edctsIstDtEnd}]]></if>
@@ -120,21 +118,40 @@
 		PROG_APPE = 'Completed'
 		WHERE ORDER_NO = #{orderNo}
 	</update>
-	
+
 	<select id="getlstNo" resultType="SalesVO">
 		SELECT
 		NVL(LPAD(MAX(SUBSTR(EDCTS_IST_NO, 4)+1),4,'0'), '001') AS "index"
 		FROM
 		edcts_ist;
 	</select>
-	
-	
-	<!-- oust.jsp  -->
+
+
+	<!-- oust.jsp -->
 	<!-- 생산완료 주문서 조회 -->
- 	<select id="findOrder" resultType="SalesVO">
- 		SELECT ORDER_NO, VEND_NM, EDCTS_CD, PRDT_NM, ORDER_CNT, PAPRD_DT
-		FROM ORDER_SHEET
-		WHERE PROG_APPE = 'Completed'
+	<select id="findOrder" resultType="SalesVO">
+		SELECT ORDER_NO, VEND_NM,
+		EDCTS_CD, PRDT_NM, ORDER_CNT, PAPRD_DT
+		FROM
+		ORDER_SHEET
+		WHERE PROG_APPE =
+		'Completed'
+	</select>
+
+	<select id="getOustList" resultType="OustVO">
+		SELECT EDCTS_CD,
+		EDCTS_LOT_NO, EDCTS_OUST_DT,EDCTS_OUST_CNT
+		FROM edcts_oust
+	</select>
+	
+	<!-- 완제품 재고 현황 모달로 조회(주문서에 해당하는 제품의 재고만 조회하도록 함)-->
+ 	<select id="getmodalList" resultType="OustVO">
+		SELECT E.EDCTS_CD, S.EDCTS_LOT_NO, E.PRDT_NM, S.LOT_CNT
+		FROM EDCTS E JOIN EDCTS_STC S
+		ON E.EDCTS_CD = S.EDCTS_CD
+		WHERE E.EDCTS_CD = #{edctsCd} AND S.LOT_CNT != 0
+		
  	</select>
+	
 
 </mapper>

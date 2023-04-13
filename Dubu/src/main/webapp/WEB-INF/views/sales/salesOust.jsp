@@ -87,8 +87,10 @@
 					<div class="modal-header">
 						<h5 class="modal-title" id="exampleModalLabel">완제품 재고</h5>
 
-						<button type="button" class="btn-close" data-bs-dismiss="modal"
-							aria-label="Close"></button>
+						<button type="button" class="close" data-dismiss="modal"
+							aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
 					</div>
 					<div class="modal-body">
 						<div id="StcGrid"></div>
@@ -98,11 +100,11 @@
 							class="form-control" style="width: 150px" disabled> <input
 							type="text" id="edctsOustCntOut" class="form-control"
 							placeholder="출고수량 입력" style="width: 150px">
-						<button class="btn btn-primary" id="addBtn">
+						<button class="btn btn-primary" id="addBtn" data-dismiss="modal">
 							<i class="fas fa-save"></i> 등록
 						</button>
 						<button type="button" class="btn btn-secondary"
-							data-bs-dismiss="modal">닫기</button>
+							data-dismiss="modal">닫기</button>
 					</div>
 				</div>
 			</div>
@@ -115,6 +117,7 @@
 <script>
 	$(function() {
 		findOrder();
+		findOustList();
 	})
 	//생산완료 주문서 현황 그리드
 	const grid = new tui.Grid({
@@ -210,5 +213,57 @@
 			}
 		})
 	}
+	// 출고등록 현황조회
+	function findOustList() {
+		$.ajax({
+			url : "getOustList",
+			method : "get",
+			dataType : "json",
+			success : function(list) {
+				grid2.resetData(list);
+			}
+		})
+	}
+	  //진행중 주문서 주문번호 칸 클릭 -> 완제품 재고 목록 모달 띄우기
+	  
+	  	  //진행중 주문서 주문번호 칸 클릭 -> 완제품 재고 목록 모달 띄우기
+	  let orderNo = '';
+	  grid.on("click", (e) => {
+	  	const{ columnName } = e;
+	  	OustRowKey = e.rowKey;
+	  	if(columnName == 'orderNo') {
+		  	orderNo = grid.getValue(OustRowKey, 'orderNo');	
+	  		let edctsCd = grid.getValue(OustRowKey,'edctsCd');
+	  		let orderCnt = grid.getValue(OustRowKey, 'orderCnt');
+
+
+	  		$("#StcGridModal").modal('show');
+	  			$.ajax({
+	  			url:"getmodalList",
+	  			dataType:"json",
+	  			method:"post",
+	  			data:{"edctsCd":edctsCd},
+	  			success:function(result) {
+	  				setTimeout(function () {
+						StcGrid.refreshLayout()
+						}, 300);
+	  				StcGrid.resetData(result);
+	  				$("#orderCntOut").val(orderCnt);
+	  			}
+	  		})
+	  	}
+	  });
+	  
+	  console.log(".           |");
+	  console.log("　╲　　　　　　　　　　　╱");
+	  console.log("　　　　　　　　　/");
+	  console.log("　　　╲　　　　　　　　╱");
+	  console.log("　　╲　　    설마...　　　╱");
+	  console.log("-　-　　　제 목소리가　　-　-　-");
+	  console.log("　　╱　   들리시나요?　　╲");
+	  console.log("　╱　　/               .");
+	  console.log("　　╱　　　　　　　　╲");
+	  console.log("　　　　　/　|　　　");
+	  console.log("　　　　　　　.");
 </script>
 <!-- End of Main Content -->

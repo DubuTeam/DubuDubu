@@ -49,5 +49,9 @@ public interface SalesService {
 // oust.jsp 페이지
 	// 진행중 주문서 현황 목록 조회
 	public List<SalesVO> findOrder(SalesVO vo);
+	// 출고등록 현황조회
+	public List<OustVO> getOustList(OustVO vo);
+	// 진행주문서 모달조회
+	public List<OustVO> getmodalList(OustVO vo);
 
 }

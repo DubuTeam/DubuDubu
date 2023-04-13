@@ -20,6 +20,8 @@ public class orderController {
 	@Autowired
 	SalesService salesService;
 
+	//전체목록조회()
+	
 	// 제품입고등록
 	@GetMapping("/orderList")
 	public String orderlist(Model model) {
