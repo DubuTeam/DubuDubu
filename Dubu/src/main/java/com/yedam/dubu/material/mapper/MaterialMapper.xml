@@ -80,7 +80,7 @@
 				AND <![CDATA[ORDR_REQ_DT <= #{endOrdrReqDt}]]>
 			</if>
 		</where>
-		ORDER BY r.ORDR_CD
+		ORDER BY r.ORDR_REQ_DT DESC
 
 		<!-- SELECT r.ORDR_CD, r.VEND_CD, v.VEND_NM, r.ORDR_REQ_DT
 		FROM RSC_ORDR r JOIN VEND v
