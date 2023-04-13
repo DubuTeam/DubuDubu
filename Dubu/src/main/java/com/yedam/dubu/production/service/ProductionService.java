@@ -35,6 +35,7 @@ public interface ProductionService {
 	
 	// 생산계획 공정 조회
 	public List<ProductionVO> selectPlanEquip(String planCd);
+	
 	// 생산계획 자재 조회
 	public List<ProductionVO> selectPlanMaterial(String planCd);
 }	

@@ -406,7 +406,7 @@ let planCd='';
                    method: "post",
                    data: { planCd : planValue },
                    success: function(data) {
-                	   console.log(data)
+                	   //console.log(data)
                 	  gridEquip.resetData(data);  //그리드 적용
                    },
                    error: function (reject) {
@@ -470,7 +470,7 @@ let planCd='';
                             },
                             {
                                 header: '생산수량',
-                                name: 'lndicaCnt'
+                                name: 'orderCnt'
                             },
                             {
                                 header: '작업우선순위',
@@ -479,7 +479,8 @@ let planCd='';
                             },
                             {
                                 header: '계획코드',
-                                name: 'planCd'
+                                name: 'planCd',
+                                editor: 'text'
                             },
                         ]
 
