@@ -47,6 +47,6 @@ textarea {
 }
 
 /* 검색 기능으로 찾은 목록들 위에다가 커서 올렸을 때 */
-.eachRow:hover, #list > .selectedRows:hover {
+.eachRow:hover, .eachRowInModal:hover, #list > .selectedRows:hover {
 	background-color: rgb(233, 233, 233);
 }

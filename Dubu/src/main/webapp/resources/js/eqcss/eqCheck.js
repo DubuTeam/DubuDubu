@@ -1,4 +1,5 @@
 $(document).ready(function () {
+
     $('#modal-searchBtn').on("click", function() {
         let keyword = $('#modal-keyword').val();
         console.log(keyword)
@@ -59,13 +60,14 @@ $(document).ready(function () {
     */
 
     // 즉, 모달창 내에서 특정 행(tr) 을 클릭했을 때, 그 행의 n번째 td 태그(cell) 을 추출해서, 외부 input 에 넣는 코드
+        // 모달창 안에 있는 tr 태그의 class명은 eachRowInModal  이다!
+        // 모달창 밖에 있는 목록의 tr 태그 클래스명인,  eachRow 랑 똑같이 하면, 점검코드에서 출력 이상하게 됨.
     $(document).on("click", "#modal-eqList tr", function() {
         let eqmNm = $(this).find("td").eq(1).text();
         let eqmCd = $(this).find("td").eq(2).text();
-
+        
         $('#eqmNm').val(eqmNm);
         $('#eqmCd').val(eqmCd);
-
         
         $('#exampleModal222').click();          // 모달 창 닫기
     });
@@ -186,7 +188,7 @@ $(document).ready(function () {
     // 5. row 하나 클릭 시,
     $('.eachRow').on("click", function (ev) {
         // 5-1. 해당 행에 입력된 데이터를 받아옴.     (가장 가까운 tr태그의 각 셀들)
-        let chckCd = $(this).closest("tr").children().eq(1).text();
+        let chckCdEachRow = $(this).closest("tr").children().eq(1).text();
         let eqmCd = $(this).closest("tr").children().eq(2).text();
         let eqmNm = $(this).closest("tr").children().eq(3).text();
         let dispoMatterSet = $(this).closest("tr").children().eq(4).text();
@@ -195,8 +197,10 @@ $(document).ready(function () {
         let chckDt = $(this).closest("tr").children().eq(7).text();
 
 
+        console.log("점검코드는 => " + chckCdEachRow);
+
         // 5-2. 그리고 jsp 파일의 input 태그에다가 위 데이터를 집어넣는다.
-        $('#chckCd').val(chckCd);
+        $('#chckCd').val(chckCdEachRow);
         $('#eqmCd').val(eqmCd);
         $('#eqmNm').val(eqmNm);
 

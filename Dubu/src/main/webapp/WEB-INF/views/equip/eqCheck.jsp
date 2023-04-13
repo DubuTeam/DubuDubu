@@ -119,7 +119,7 @@
 																			<!-- ↓↓↓여기에 조회된 결과 출력 (테스트용 더미 넣었음) -->
 																			<tbody id="list">
 																				<c:forEach items="${eqListInModal }" var="eqm">
-																					<tr class="eachRow">
+																					<tr class="eachRowInModal">
 																						<td>${eqm.idx }</td>
 																						<td>${eqm.eqmNm }</td>
 																						<td>${eqm.eqmCd }</td>
