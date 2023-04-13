@@ -101,21 +101,7 @@
 							<div id="gridEquip"></div>
 						</div>
 						<div id="grid3" style="width: 30%;">제품공정확인
-							<div id="list-body" class="table">
-								<table id="datatablesSimple" class="table">
-									<thead>
-										<tr>
-											<th>제품코드</th>
-											<th>라인번호</th>
-											<th>공정코드</th>
-											<th>계획코드</th>
-										</tr>
-									</thead>
-
-									<!-- ↓↓↓여기에 조회된 결과 출력 -->
-									<tbody id="list"></tbody>
-								</table>
-							</div>
+							<div id = "gridEquipCheck"></div>
 						</div>
 					</div>
 				</div>
@@ -127,22 +113,7 @@
 								<div id="gridMaterial"></div>
 							</div>
 							<div id="grid3" style="width: 30%;">자재확인
-								<div id="list-body" class="table">
-									<table id="datatablesSimple" class="table">
-										<thead>
-											<tr>
-												<th>자재코드</th>
-												<th>공정코드</th>
-												<th>출고수량</th>
-												<th>계획코드</th>
-
-											</tr>
-										</thead>
-
-										<!-- ↓↓↓여기에 조회된 결과 출력 -->
-										<tbody id="list"></tbody>
-									</table>
-								</div>
+								<div id = "gridMateralCheck"></div>
 							</div>
 						</div>
 					</div>
@@ -177,8 +148,12 @@
 			</div>
 			<!-- End of Main Content -->
 <script>
-let planKey = '';
-let planValue = ''; 
+let equipKey = '';
+let equipValue1 = ''; 
+let equipValue = '';
+let materialKey = '';
+let materialValue = '';
+let materialValue1 = '';
 let str = '';
 let planCd='';
 
@@ -302,6 +277,7 @@ let planCd='';
      
     	  $('#exampleModal').modal('hide');
           $('.modal-backdrop').remove();
+     };
       
           // 주문서 디테일 조회       
        function orderDetail(){
@@ -319,7 +295,7 @@ let planCd='';
         });
        };
    
-     };
+     
        
        
       //그리드 선언
@@ -395,35 +371,34 @@ let planCd='';
        	});
        }
        
-       // 더블 클릭시 주문서 디테일의 정보가 공정과 자재로 나눠서 보임
-               detailGrid.on('dblclick', (ev) => {
-				// 모달 창               
-              }); 
-       
+   
+       // 제품, 사용가능자재 그리드
        function planEquipMaterial(){
+    	   
                $.ajax({
                    url: "selectPlanEquip",
                    method: "post",
-                   data: { planCd : planValue },
+                   data: { orderNo : str },
                    success: function(data) {
                 	   //console.log(data)
                 	  gridEquip.resetData(data);  //그리드 적용
                    },
                    error: function (reject) {
                      console.log(reject);
-                   },
+                   }
                });
+               
                $.ajax({
                    url: "selectPlanMaterial",
                    method: "post",
-                   data: { planCd : planValue },
+                   data: { orderNo : str },
                    success: function(data) {
-                	   console.log(data);
+                	   //console.log(data);
                 	  gridMaterial.resetData(data);  //그리드 적용
                    },
                    error: function (reject) {
                      console.log(reject);
-                   },
+                   }
                });
                
            } 
@@ -481,7 +456,7 @@ let planCd='';
                                 header: '계획코드',
                                 name: 'planCd',
                                 editor: 'text'
-                            },
+                            }
                         ]
 
                     });
@@ -508,10 +483,110 @@ let planCd='';
                             },
                             {
                                 header: '사용량',
-                                name: 'useYn'
+                                name: 'useCnt'
                             }
                         ]
 
                     });
+                 
+                    // 제품 그리드의 행을 더블클릭하면 제품공정확인 그리드가 살행
+                    gridEquip.on('click', (ev) => {
+                	   //console.log(ev);
+                	   equipKey = ev.rowKey;
+                	   //console.log(equipKey);
+                	   equipValue1 = gridEquip.getRow(equipKey);
+                	   equipValue = equipValue1.planCd;
+                	   //console.log(equipValue);
+                	   planEquipCheck();
+                  });   
+            
+                 
+                 // 제품공정확인
+                   function planEquipCheck(){
+                	   //console.log(equipValue);
+                       $.ajax({
+                           url: "selectPlanEquipCheck",
+                           method: "post",
+                           data: { planCd : equipValue },
+                           success: function(data) {
+                        	   //console.log(data)
+                        	  gridEquipCheck.resetData(data);  //그리드 적용
+                           },
+                           error: function (reject) {
+                             console.log(reject);
+                           }
+                       });                                       
+                   }   
+                 
+                  //그리드 선언
+                     var gridEquipCheck = new tui.Grid({
+                         el: document.getElementById('gridEquipCheck'),
+                         columns: [
+
+                             {
+                                 header: '제품코드',
+                                 name: 'edctsCd'
+                             },
+                             {
+                                 header: '라인번호',
+                                 name: 'lineCd'
+                             },
+                             {
+                                 header: '공정코드',
+                                 name: 'prcsCd'
+                             },
+                             {
+                                 header: '계획코드',
+                                 name: 'planCd'
+                             }
+                         ]
+                     }); 
+                     // 제품 그리드의 행을 더블클릭하면 자재확인 그리드가 살행
+                      gridMaterial.on('click', (e) => {
+                       materialKey = e.rowKey;
+                       console.log(materialKey);
+                       materialValue = gridMaterial.getValue(materialKey, 'prcLotCd');              
+                	   console.log(materialValue);
+                	   planMaterialCheck();
+                   });  
+                    // 자재확인
+                      function planMaterialCheck(){
+                        $.ajax({
+                            url: "selectPlanMaterialCheck",
+                            method: "post",
+                            data: { prcLotCd : materialValue },
+                            success: function(data) {
+                         	   console.log(data)
+                         	  gridMaterialCheck.resetData(data);  //그리드 적용
+                            },
+                            error: function (reject) {
+                              console.log(reject);
+                            }
+                        });                                       
+                    }   
+                  
+                   //그리드 선언
+                     var gridMaterialCheck = new tui.Grid({
+                          el: document.getElementById('gridMateralCheck'),
+                          columns: [
+
+                              {
+                                  header: '자재코드',
+                                  name: 'rscCd'
+                              },
+                              {
+                                  header: '공정코드',
+                                  name: 'prcsCd'
+                              },
+                              {
+                                  header: '출고수량',
+                                  name: 'oustCnt'
+                              },
+                              {
+                                  header: '계획코드',
+                                  name: 'planCd'
+                              }
+                          ]
+                      });  
            		
 </script>

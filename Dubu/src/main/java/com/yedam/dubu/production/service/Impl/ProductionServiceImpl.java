@@ -105,13 +105,33 @@ public class ProductionServiceImpl implements ProductionService {
 	}
 
 	@Override
-	public List<ProductionVO> selectPlanEquip(String planCd) {
-		return productionMapper.selectPlanEquip();
+	public List<ProductionVO> selectPlanEquip(String orderNo) {
+		String[] array = orderNo.split(",");
+		 
+		 List<ProductionVO> list = new ArrayList<>();
+		list = productionMapper.selectPlanEquip(array);
+	
+		return list;
 	}
 
 	@Override
-	public List<ProductionVO> selectPlanMaterial(String planCd) {
-		return productionMapper.selectPlanMaterial();
+	public List<ProductionVO> selectPlanMaterial(String orderNo) {
+		String[] array = orderNo.split(",");
+		 
+		 List<ProductionVO> list = new ArrayList<>();
+		list = productionMapper.selectPlanMaterial(array);
+	
+		return list;
+	}
+
+	@Override
+	public List<ProductionVO> planEquipCheck(String planCd) {
+		return productionMapper.planEquipCheck(planCd);
+	}
+
+	@Override
+	public List<ProductionVO> planMaterialCheck(String prcLotCd) {
+		return productionMapper.planMaterialCheck(prcLotCd);
 	}
 
 

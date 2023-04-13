@@ -34,8 +34,13 @@ public interface ProductionService {
 	public int updatePlan (List<ProductionVO> updatePlanCd, List<ProductionVO> updatePlanYn);
 	
 	// 생산계획 공정 조회
-	public List<ProductionVO> selectPlanEquip(String planCd);
+	public List<ProductionVO> selectPlanEquip(String orderNo);
 	
 	// 생산계획 자재 조회
-	public List<ProductionVO> selectPlanMaterial(String planCd);
+	public List<ProductionVO> selectPlanMaterial(String orderNo);
+	
+	// 제품공정확인 조회
+	public List<ProductionVO> planEquipCheck(String planCd);
+	// 제품자재확인 조회
+	public List<ProductionVO> planMaterialCheck(String prcLotCd);
 }	

@@ -26,7 +26,8 @@ public class ProductionVO {
 	public String prdtNm;
 	
 	// 주문서 디테일 조회
-	public String planDt;
+	@DateTimeFormat(pattern="yyyy-MM--dd")
+	public Date planDt;
 	public String planCd;
 	public String avalStc;
 	@DateTimeFormat(pattern="yyyy-MM-dd")
@@ -47,5 +48,8 @@ public class ProductionVO {
 	public String rscNm;
 	public String prcLotCd;
 	public int oustCnt;
-	public String useYn;
+	public String useCnt;
+	public String edctsCd;
+	public String rscCd;
+	public String oustcnt;
 }
