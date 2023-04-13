@@ -81,6 +81,11 @@ public class MaterialServiceImpl implements MaterialService{
 	public int getDeleteProcedure(MaterialVO material) {
 		return materialMapper.getDeleteProcedure(material);
 	}
+
+	@Override
+	public List<MaterialVO> getMaterialIstList(MaterialVO materialVO) {
+		return materialMapper.getMaterialIstList(materialVO);
+	}
 	
 	
 

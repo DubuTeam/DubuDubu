@@ -14,3 +14,7 @@
 .rightside {
 	flex: 1;
 }
+
+.eachRow:hover {
+	background-color: rgb(233, 233, 233);
+}

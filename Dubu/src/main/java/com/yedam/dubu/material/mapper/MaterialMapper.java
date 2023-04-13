@@ -41,4 +41,8 @@ public interface MaterialMapper {
 	// 자재 발주 상세 삭제
 	public int getDeleteProcedure(MaterialVO material);
 	
+	// 자재 입고 리스트
+	public List<MaterialVO> getMaterialIstList(MaterialVO materialVO);
+	
+	
 }

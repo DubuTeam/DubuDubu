@@ -1,8 +1,45 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 
+<!-- JSTL -->
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+
+<!-- JQuery -->
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<!-- DatePicker -->
+<link rel="stylesheet" href="https://uicdn.toast.com/tui.date-picker/latest/tui-date-picker.css" />
+<script src="https://uicdn.toast.com/tui.date-picker/latest/tui-date-picker.js"></script>
+
+<!--  Excell -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.1/xlsx.full.min.js"></script>
+
+<!-- Grid -->
+<link rel="stylesheet" href="https://uicdn.toast.com/grid/latest/tui-grid.css" />
+<script src="https://uicdn.toast.com/grid/latest/tui-grid.js"></script>
+
+<!-- SweetAlert -->
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.css">
+<script
+	src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.js"></script>
+
+<!-- 부트스트랩 -->
+<script
+	src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+	
+<!-- CSS -->
 <link href="${pageContext.request.contextPath}/resources/css/material/materialIst.css" rel="stylesheet">
 
+<style>
+.tui-grid-cell.cell-red {
+	background-color : #FFF0F5;
+	color : red;
+	font-weight: bold;
+}
+</style>
 
 <!-- Begin Page Content -->
 <div class="container-fluid">
@@ -25,9 +62,6 @@
 							<button class="btn btn-primary" id="saveBtn">
 								<i class="fas fa-save"></i> 저장
 							</button>
-							<button class="btn btn-primary" id="reloadBtn">
-								<i class="fas fa-file"></i> 새자료
-							</button>
 						</div>
 
 						<table style="vertical-align: middle; text-align: center">
@@ -46,19 +80,12 @@
 									<td></td>
 									<th><b>입고일자</b></th>
 									<td>
-										<div
-											class="tui-datepicker-input tui-datetime-input tui-has-focus"
-											style="height: 40px; border-radius: 5px;">
-
-											<input type="date" id="istDt" aria-label="Date-Time"
-												class="form-control"> <span class="tui-ico-date"></span>
+										<div style="height: 40px; border-radius: 5px;">
+											<input type="date" id="istDt" class="form-control">
 										</div>
 										<div id="wrapper" style="margin-top: -1px;"></div>
 									</td>
 									<td></td>
-									<th><b>입고유형</b></th>
-									<td><input type="text" id="istTyp" class="form-control"
-										style="width: 168px;"></td>
 								</tr>
 							</tbody>
 						</table>
@@ -87,28 +114,24 @@
 									<th><label for="vendNm"><b>업체명</b></label></th>
 									<td>
 										<div style="display: flex;">
-											<input id="vendNm" type="text" class="form-control"
-												placeholder="검색버튼을 이용하세요" style="width: 200px;" required
-												readonly> <input id="vendCd" type="hidden"
-												name="vendCd">
-											<button id="modalBtn" type="button" class="btn btn-primary"
-												style="margin-left: 10px;">
+											<input id="vendNm" type="text" class="form-control" placeholder="검색버튼을 이용하세요" style="width: 200px;" required readonly> 
+											<input id="vendCd" type="hidden" name="vendCd">
+											<button id="modalBtn" type="button" class="btn btn-primary" style="margin-left: 10px;">
 												<i class="fas fa-search"></i>
 											</button>
 										</div>
 									</td>
 									<td></td>
-									<th><b>검사자료</b></th>
+									<!-- <th><b>검사자료</b></th>
 									<td>
 										<div style="display: flex;">
 											<input type="date" id="start" name="start"
 												class="form-control" style="width: 150px;"> <span
 												style="padding: 5px;">-</span> <input type="date" id="end"
 												name="end" class="form-control" style="width: 150px;">
-											<input id="getInspList" type="button" class="btn btn-primary"
-												value="가져오기" />
+											<input id="getInspList" type="button" class="btn btn-primary" value="가져오기" />
 										</div>
-									</td>
+									</td> -->
 								</tr>
 							</table>
 						</form>
@@ -128,8 +151,9 @@
 								</button>
 							</div>
 							<br> <br>
+							<div id="grid"></div> <!-- 그리드 -->
 							<!-- 조회 시 나타나는 테이블 -->
-							<div id="list-body" class="table">
+							<!-- <div id="list-body" class="table">
 								<table>
 									<thead>
 										<tr>
@@ -145,7 +169,7 @@
 											<th>유통기한</th>
 										</tr>
 									</thead>
-									<!-- ↓↓↓여기에 조회된 결과 출력 -->
+									↓↓↓여기에 조회된 결과 출력
 									<tbody id="list">
 										<tr>
 											<td><input type="checkbox"></td>
@@ -161,7 +185,7 @@
 										</tr>
 									</tbody>
 								</table>
-							</div>
+							</div> -->
 							<!-- 조회시 나타나는 테이블 닫는 태그 -->
 						</div>
 					</div>
@@ -198,101 +222,243 @@
 			</div>
 			<!-- 플렉스넣은태그 닫는태그 -->
 	</div>
+	<br><br>
 
-	<!-- Modal for vend search -->
-	<div class="modal fade" id="vendModal" tabindex="-1">
-		<div class="modal-dialog">
+	<!-- 업체명 Modal -->
+	<div class="modal fade" id="vendModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<!-- <div class="modal-dialog"> -->
+		<div class="modal-dialog modal-dialog-centered modal-lg">
+			<!-- 모달창 화면 중앙에  modal-dialog-centered, 모달 사이즈 변경 직접 불가해서 modal-lg 추가 -->
 			<div class="modal-content">
 				<div class="modal-header">
-					<h4 class="modal-title">업체검색</h4>
-					<button type="button" class="btn-close" data-bs-dismiss="modal"
-						aria-label="Close"></button>
+					<h5 class="modal-title" id="exampleModalLabel">업체 검색</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">X</span>
+					</button>
 				</div>
-				<div class="modal-body">
-					<form id="vendSchForm">
-						<table>
-							<colgroup>
-								<col style="width: 400px;">
-								<col style="width: 10px">
-								<col style="width: 50px;">
-							</colgroup>
-							<tbody>
+				<div class="modal-body" style="text-align: center;">
+					<!-- 조회 시 나타나는 테이블 -->
+					<div id="vendModalTable" class="table">
+						<table style="width:100%;">
+							<thead>
 								<tr>
-									<td><input type="text" name="vendNm" class="form-control"
-										placeholder="업체명"></td>
-									<td></td>
-									<td rowspan="2">
-										<button id="vendSch" class="btn btn-primary" type="button"
-											style="height: 90px;">
-											<i class="fas fa-search"></i>
-										</button>
-									</td>
+									<td>No.</td>
+									<th>업체코드</th>
+									<th>업체명</th>
+									<th>사업자번호</th>
+									<th>전화번호</th>
 								</tr>
-								<tr>
-									<td><input type="text" name="vendCd" class="form-control"
-										placeholder="업체코드"></td>
-								</tr>
+							</thead>
+
+							<!-- ↓↓↓여기에 조회된 결과 출력 (테스트용 더미 넣었음) -->
+							<tbody id="vendModallist">
+								<c:forEach items="${vendMoalList}" var="vendModal" varStatus="status">
+									<tr class='eachRow' ondblclick="searchVend('${vendModal.vendNm}')">
+										<td>${status.count}</td>
+										<td>${vendModal.vendCd}</td>
+										<td>${vendModal.vendNm}</td>
+										<td>${vendModal.binzo}</td>
+										<td>${vendModal.telno}</td>
+									</tr>
+								</c:forEach>
 							</tbody>
 						</table>
-					</form>
-					<br>
-					<div id="vend-grid"></div>
-					<div style="float: right">
-						<p>선택 : 더블클릭</p>
 					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
 				</div>
 			</div>
 		</div>
 	</div>
+	<!-- ↑↑↑ 모달 -->
 
-	<!-- Modal for resource search -->
-	<div class="modal fade" id="rscModal" tabindex="-1"
-		aria-labelledby="rscModal" aria-hidden="true">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h4 class="modal-title">자재검색</h4>
-					<button type="button" class="btn-close" data-bs-dismiss="modal"
-						aria-label="Close"></button>
-				</div>
-				<div class="modal-body">
-					<form id="rscSchForm">
-						<table>
-							<colgroup>
-								<col style="width: 400px;">
-								<col style="width: 10px">
-								<col style="width: 50px;">
-							</colgroup>
-							<tbody>
-								<tr>
-									<td><input type="text" id="rscNmInMod" name="rscNm"
-										class="form-control" placeholder="자재명"></td>
-									<td></td>
-									<td rowspan="2">
-										<button id="rscSch" class="btn btn-primary" type="button"
-											style="height: 90px;">
-											<i class="fas fa-search"></i>
-										</button>
-									</td>
-								</tr>
-								<tr>
-									<td><input type="text" id="rscCdInMod" name="rscCd"
-										class="form-control" placeholder="자재코드"></td>
-								</tr>
-							</tbody>
-						</table>
-					</form>
-					<br>
-					<div id="rsc-grid"></div>
-					<div style="float: right">
-						<p>선택 : 더블클릭</p>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
 </div>
 <!-- /.container-fluid -->
 
 </div>
 <!-- End of Main Content -->
+
+<script>
+
+function today(){
+	  let date = new Date(); // 현재 날짜 및 시간
+	  let year = date.getFullYear();
+	  let month = new String(date.getMonth() + 1);
+	  let day = new String(date.getDate());
+	  if (month.length == 1) month = "0" + month;
+	  if (day.length == 1) day = "0" + day;
+	  let today = year +"-" + month + "-" + day; // 현재날짜
+	  $('#istDt').val(today);
+}
+
+//그리드
+const grid = new tui.Grid({
+	  el: document.getElementById('grid'), // Container element
+	  scrollX: false,
+      scrollY: true,
+      bodyHeight: 400,
+      rowHeight: 50,
+      rowHeaders: ['checkbox'],
+	  columns: [
+	  {
+	      header: '검사번호',
+	      name: 'rscInspCd',
+	      align : 'center'
+	    },
+	    {
+	      header: '자재코드',
+	      name: 'rscCd',
+	      align : 'center'
+	    },
+	    {
+	      header: '자재명',
+	      name: 'rscNm',
+	      align : 'center'
+	    },
+	    {
+	      header: '규격',
+	      name: 'rscSpec',
+	      align : 'center'
+	    },
+	    {
+	      header: '단위',
+	      name: 'mngUnit',
+	      align : 'center'
+		},
+		{
+	      header: '자재유형',
+	      name: 'rscTyp',
+	      align : 'center'
+	    },
+	    {
+	      header: '발주번호',
+	      name: 'ordrCd',
+	      align : 'center'
+	    },
+	    {
+	      header: '입고가능수량',
+	      name: 'psQuantity',
+	      align : 'center'
+	    },
+	    {
+	      header: '입고수량',
+	      name: 'istCnt',
+	      editor : 'text',
+	      align : 'center',
+	      onAfterChange : function(data){ // 값이 변경되면 실행되는 함수		
+			let rowKey = data.rowKey; // 변경한 행의 index
+			grid.addCellClassName(rowKey, 'istCnt', 'cell-red'); // CSS
+			grid.check(rowKey); // 체크박스가 체크됨
+	      }
+	    },
+	    {
+	      header: '유통기한',
+	      name: 'expDt',
+	      align : 'center',
+	      formatter: function (data) {
+            let dateVal = '';
+            if(data.value != null ){
+               dateVal = dateFormat(data.value);
+            }else{
+               dateVal = getToday();
+            }
+             return dateVal;
+           },
+           editor: {
+               type: 'datePicker',
+               options: {
+                 format: 'yyyy-MM-dd',
+                 //selectableRanges: [[todayForgrid,threeMonthsLater ]]
+                date : getToday()
+               }
+           },
+           onAfterChange : function(data){ // 값이 변경되면 실행되는 함수		
+   			let rowKey = data.rowKey; // 변경한 행의 index
+   			grid.addCellClassName(rowKey, 'expDt', 'cell-red'); // CSS
+   			grid.check(rowKey); // 체크박스가 체크됨
+   	      }
+	    }
+	  ]
+	  /* data: [
+	    {
+	      ordrCd: 'ordrCd',
+	      vendCd: 'Birdy',
+	      vendNm: '2016.03.26',
+	      ordrReqDt: 'Pop'
+	    }
+	  ] */
+	});
+
+
+//로드시 나타남
+$(document).ready(function(){
+	today();
+	searchAll();
+});
+
+//바로 화면에 나타나는 발주전체 목록
+function searchAll(){
+	/* let vendNm = $('#listVendNm').val();
+	let startOrdrReqDt = $('#start').val();
+	let endOrdrReqDt = $('#end').val(); */
+	
+	let vendNm = $('#vendNm').val();
+	console.log(vendNm);
+	//console.log(vendNm + " " + startOrdrReqDt + " " + endOrdrReqDt);
+	
+	$.ajax({
+		   url: 'materialIstList',
+		   type: 'post',
+		   data: {vendNm : vendNm}, // 쿼리스트링 */
+		   success: function (data) {
+			   grid.resetData(data);
+			   //console.log(data);
+		   },
+	 	   error: function (reject) {	   
+		       console.log(reject);
+		}
+	});
+}
+
+//날짜 변환
+function dateFormat(date) {
+   let date1 = new Date(date);
+   let date2 = date1.getFullYear() + '-' 
+         + ((date1.getMonth()<10)?'0'+(date1.getMonth()+1):(date1.getMonth()+1)) + '-'
+         + ((date1.getDate()<10)?'0'+date1.getDate():date1.getDate());       
+   return date2;
+}
+
+function getToday() {
+    let date = new Date();
+    let hours = String(date.getHours()).padStart(2, "0");
+    let minutes = String(date.getMinutes()).padStart(2, "0");
+    let seconds = String(date.getSeconds()).padStart(2, "0");
+    let years = date.getFullYear();
+    let month = String(date.getMonth() + 1).padStart(2, "0");
+    let day = String(date.getDate()).padStart(2, "0");
+    
+    return years + "-" + month + "-" + day;
+ }
+
+ 
+ $('#modalBtn').on('click', function(){
+	 $('#vendModal').modal('show');
+	 
+ });
+ 
+ // 업체 검색 모달창에서 더블클릭시 작동하는 함수
+function searchVend(vendName){
+	$('#vendNm').val(vendName); // 거래처명 입력됨
+	$('#vendModal').modal('hide'); // 모달창 닫기
+	$('.modal-backdrop').remove(); // 모달창 닫을때 생기는 background배경 제거		
+	//$('.close').click(); // 모달창 닫기
+	searchAll();
+}
+ 
+
+ 
+
+</script>
+
