@@ -100,8 +100,8 @@
 							<tr>
 								<th>제품 입고번호</th>
 								<td><input type="text" class="form-control" id="edctsIstNo"
-									name="edctsIstNo" style="width: 150px; margin-left: 6px;"
-									readonly></td>
+									name="edctsIstNo" style="width: 150px; margin-left: 6px; color : transparent;"
+									readonly ></td>
 								<th>완제품LOT번호</th>
 								<td style="width: 175px;">
 									<div class="input-group">

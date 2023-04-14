@@ -66,7 +66,7 @@
 					<div class="col-lg-6">
 						<div class="card mb-4">
 							<div class="card-header">
-								<i class="fas fa-chart-pie me-1"></i> 출고 등록 현황
+								<i class="fas fa-chart-pie me-1"></i> 출고 등록 현황(한달)
 
 							</div>
 							<div class="card-body">
@@ -254,16 +254,65 @@
 	  	}
 	  });
 	  
-	  console.log(".           |");
-	  console.log("　╲　　　　　　　　　　　╱");
-	  console.log("　　　　　　　　　/");
-	  console.log("　　　╲　　　　　　　　╱");
-	  console.log("　　╲　　    설마...　　　╱");
-	  console.log("-　-　　　제 목소리가　　-　-　-");
-	  console.log("　　╱　   들리시나요?　　╲");
-	  console.log("　╱　　/               .");
-	  console.log("　　╱　　　　　　　　╲");
-	  console.log("　　　　　/　|　　　");
-	  console.log("　　　　　　　.");
+	  //더블클릭 하면 체크박스 체크
+	  StcGrid.on('dblclick', (e) => {
+    				var rowKey = e.rowKey;
+    				StcGrid.check(rowKey);
+				});
+	  
+	   grid.on("click",(e) => {
+	   	const {columnName} = e;
+	   	ordrRowKey = e.rowKey;
+	   	console.log(ordrRowKey);
+	   	if(columnName == 'orderNo') {
+	   		edctsCd = grid.getValue(ordrRowKey,'edctsCd');
+	   		orderNo = grid.getValue(ordrRowKey,'orderNo');
+	   		console.log(orderNo);
+	   		}
+	   	})
+	  //완제품 재고 목록 모달에서 출고량 입력하여 완제품 출고 테이블에 저장
+$("#addBtn").click(ev => {
+    if (StcGrid.getCheckedRows().length == 0) {
+        toastr.warning('출고할 제품을 선택해주세요');
+    } else if ($("#edctsOustCntOut").val() == '') {
+        toastr.warning('출고수량을 선택해주세요');
+    } else {
+        console.log(edctsCd);
+        var edctsOustCnt = $("#edctsOustCntOut").val();
+        console.log(edctsOustCnt);
+        var edctsRow = StcGrid.getCheckedRows();
+        console.log(edctsRow);
+        var edctsLotNo = edctsRow[0].edctsLotNo;
+        console.log(edctsLotNo);
+        $.ajax({
+            url: "saveSalesOust",
+            method: "post",
+            data: {
+                "edctsOustCnt": edctsOustCnt,
+                "edctsCd": edctsRow[0].edctsCd,
+                "edctsLotNo": edctsLotNo,
+                "orderNo": edctsRow[0].orderNo
+            },
+            success: function(list) {
+                grid2.resetData(list);
+                findOustList()
+                $("#StcGridModal").modal('hide');
+            }
+        })
+    }
+
+  /*   $.ajax({
+        url: "updateProg",
+        method: "put",
+        dataType: "json",
+        data: { "orderNo": orderNo },
+        success: function(result) {
+            findOrder();
+            toastr.success('출고등록되었습니다');
+        }
+    }) */
+})
+	  
+
 </script>
 <!-- End of Main Content -->

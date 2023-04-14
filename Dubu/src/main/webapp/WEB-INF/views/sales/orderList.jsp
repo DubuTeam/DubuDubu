@@ -321,11 +321,11 @@ $(function() {
 			name : 'orderNo',
 			editor : 'text',
 			align : 'center'
-		}, {
-			header : '주문일자',
-			name : 'orderDt',
-			editor : 'datePicker',
-			align : 'center'
+		},{
+			header : '진행상황',
+			name : 'progAppe',
+			align : 'left',
+			defaultValue : 'InProgress'
 		}, {
 			header : '거래처코드',
 			name : 'vendCd',
@@ -352,15 +352,15 @@ $(function() {
 		editor : 'text',
 		align : 'right'
 	}, {
+		header : '주문일자',
+		name : 'orderDt',
+		editor : 'datePicker',
+		align : 'center'
+	}, {
 		header : '납기일자',
 		name : 'paprdDt',
 		editor : 'datePicker',
 		align : 'center'
-	}, {
-		header : '진행상황',
-		name : 'progAppe',
-		align : 'left',
-		defaultValue : 'InProgress'
 	}]
 	});
 
@@ -556,13 +556,14 @@ $(function() {
 	}
 
 	
-	//거래처코드 칸 클릭 -> 거래처 목록 모달창 띄우기
+ 	//거래처코드 칸 클릭 -> 거래처 목록 모달창 띄우기
 		var vendCdRowKey = '';
 		grid.on("click",(e) => {
 	const {columnName} = e;
 	vendCdRowKey = e.rowKey;
 	if(columnName == 'vendCd') {
 		$("#vendGridModal").modal("show");
+		$("#edctsCdModal").modal("show");
 		$.ajax({
 			url:"comSearch",
 			dataType:"json",
@@ -575,7 +576,27 @@ $(function() {
 			}
 		})
 	}
-})
+}) 
+	 //제품코드 칸 클릭 -> 제품코드 모달창 띄우기
+		var edctsCdRowKey = '';
+		grid.on("click",(e) => {
+			const {columnName} = e;
+			edctsCdRowKey = e.rowKey;
+			if(columnName == 'vendCd') {
+				$("#edctsCdModal").modal("show");
+				$.ajax({
+					url:"proSearch",
+					dataType:"json",
+					method:"get",
+					success:function(edctsCdList) {
+						setTimeout(function() {
+							CdModal.refreshLayout();
+						},300);
+						CdModal.resetData(edctsCdList);
+					}
+				})
+			}
+		}) 
 //거래처 목록 모달창으로 가져오기
 function comList() {
 	$("#openCompany").on("click",function(comlist) {
@@ -608,26 +629,8 @@ function comList() {
 					grid.check(rowKey);
 				});
 		
-		//제품코드 칸 클릭 -> 제품코드 모달창 띄우기
-		var edctsCdRowKey = '';
-		grid.on("click",(e) => {
-			const {columnName} = e;
-			edctsCdRowKey = e.rowKey;
-			if(columnName == 'edctsCd') {
-				$("#edctsCdModal").modal("show");
-				$.ajax({
-					url:"proSearch",
-					dataType:"json",
-					method:"get",
-					success:function(edctsCdList) {
-						setTimeout(function() {
-							CdModal.refreshLayout();
-						},300);
-						CdModal.resetData(edctsCdList);
-					}
-				})
-			}
-		})
+	 
+	
 	
 		//새자료 버튼 클릭 -> 폼 input 비우기
 		$("#ReBtn").on("click",function() {
@@ -684,7 +687,7 @@ function comList() {
 			$("#vendGridModal").modal('hide');
 		});
 		
-		//주문서 수정 저장
+//주문서 수정 저장
 		var okBtn = document.getElementById('okBtn');
 		okBtn.addEventListener('click',function(result) {
 		    var data = grid.getCheckedRows();
@@ -693,7 +696,7 @@ function comList() {
 		    for (var i = 0; i < data.length; i++) {
 		        var row = data[i];
 		        console.log(row)
-		        if (!row.orderNo || !row.edctsCd || !row.vendCd || !row.vendNm || !row.prdtNm || !row.orderCnt) {
+		        if (!row.orderNo || !row.edctsCd || !row.vendCd || !row.vendNm || !row.prdtNm || !row.orderCnt ||!row.paprdDt) {
 		            toastr.warning('모든 필드를 채워주세요');
 		            return; // 중단
 		        }
@@ -706,7 +709,6 @@ function comList() {
 		        data:JSON.stringify(data),
 		        contentType:"application/json",
 		        success:function() {
-		            grid.uncheckAll();
 		            toastr.success('저장되었습니다');
 		            console.log(data);
 		        },
@@ -715,5 +717,9 @@ function comList() {
 		            toastr.warning('저장에 실패했습니다');
 		        }
 		    })
-		});
+		}); 
+		$('#grid').mouseleave(ev=>{
+			grid.finishEditing();
+		})	
+
 </script>

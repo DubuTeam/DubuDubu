@@ -11,16 +11,33 @@ import lombok.Data;
 @Data
 public class OustVO {
 
-	String edctsOustNo;// 출고번호
-	String edctsCd; // 제품코드
-	String edctsLotNo; // 완제품Lot번호
+	String edctsOustNo;
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
-	Date edctsOustDt; // 출고일자
-	Integer edctsOustCnt; // 출고수량
-	String orderNo; // 주문번호
-	
-	String prdtNm; // 상품명
-	Integer lotCnt; // 완제품 재고량  
-	Integer orderCnt; // 주문수량
+	Date edctsOustDt;
+	Integer edctsOustCnt;
+	String edctsCd;
+
+	String orderNo;
+	String vendNm;
+	String prdtNm;
+	int orderCnt;
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
+	Date oustStart;
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
+	Date oustEnd;
+
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
+	Date makeDt;
+	int stcCnt;
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
+	Date distbTerm;
+	String edctsLotNo;
+	String bizNo;
+	String telNo;
+	int lotCnt;
 }
