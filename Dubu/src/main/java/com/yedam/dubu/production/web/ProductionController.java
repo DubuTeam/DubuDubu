@@ -103,13 +103,13 @@ public class ProductionController {
 		 * 
 		 * }
 		 */
-	// 생산계획 공정 조회
+	// 생산계획 제품 조회
 	 @PostMapping("/selectPlanEquip")
 	 @ResponseBody List<ProductionVO> getPlanEquip(ProductionVO productionVO){
 		 return productionService.selectPlanEquip(productionVO.getOrderNo());
 	 }
 	 
-	// 생산계획 자재 조회
+	// 생산계획 사용가능자재 조회
 	 @PostMapping("/selectPlanMaterial")
 	 @ResponseBody List<ProductionVO> getPlanMaterial(ProductionVO productionVO){
 		 return productionService.selectPlanMaterial(productionVO.getOrderNo());
@@ -120,11 +120,16 @@ public class ProductionController {
 	 @ResponseBody List<ProductionVO> getEquipCheck(@RequestParam(required = false) String planCd){
 		 return productionService.planEquipCheck(planCd);
 	 }
-	// 생산계획 자재확인 조회
-		 @PostMapping("/selectPlanMaterialCheck")
-		 @ResponseBody List<ProductionVO> getMaterialCheck(@RequestParam(required = false) String prcLotCd){
-			 return productionService.planMaterialCheck(prcLotCd);
-		 }
+
+		/*
+		 * // 생산계획 자재확인 조회
+		 * 
+		 * @PostMapping("/selectPlanMaterialCheck")
+		 * 
+		 * @ResponseBody List<ProductionVO> getMaterialCheck(@RequestParam(required =
+		 * false) String prcLotCd){ return
+		 * productionService.planMaterialCheck(prcLotCd); }
+		 */
 	// 생산지시
 	@GetMapping("/indica")
 	public String getIndica(Model model){

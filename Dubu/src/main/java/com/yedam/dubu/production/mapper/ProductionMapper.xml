@@ -77,18 +77,17 @@
 	ORDER BY VEND_NM
 	</select>
 	<!-- 생산계획 코드 부여 -->
-	<update id="updatePlanCd" parameterType="ProductionVO">
-		UPDATE PLAN
-		SET PLAN_CD = #{planCd}
-		WHERE ORDER_NO = #{orderNo}
-	</update>
+	<select id="getPlanCd" resultType="ProductionVO">
+		SELECT 'PLAN_CD' || PLAN_CODE_SEQ.NEXTVAL AS PLAN_CD
+		FROM PLAN
+	</select>
 	<!-- 생산등록 -->
 	<update id="updatePlanYn" parameterType="ProductionVO">
 	 	UPDATE ORDER_SHEET
 	 	SET PLAN_YN = 'Y'
 	 	WHERE ORDER_NO = #{orderNo}
 	</update>
-	<!-- 생산계획 공정 조회 -->
+	<!-- 생산계획 제품 조회 -->
 	<select id="selectPlanEquip" resultType="ProductionVO">
 		SELECT O.PRDT_NM, 
 		       P.LINE_CD,
@@ -104,20 +103,15 @@
 		</foreach>
         GROUP BY O.PRDT_NM, P.LINE_CD, P.WK_TO_DT, P.WK_FR_DT, P.PREF_RANK, P.PLAN_CD
 	</select>
-	<!-- 생산계획 자재 조회 -->
+	<!-- 생산계획 사용가능자재 조회 -->
 	<select id="selectPlanMaterial" resultType="ProductionVO">
-	  SELECT R.RSC_NM,
-	         L.PRC_LOT_CD,
+	  SELECT R.RSC_CD,
+             R.RSC_NM,
 	         S.AVAL_STC,
-	         H.OUST_CNT,
 	         SUM(B.USE_CNT) AS USE_CNT
 	  FROM RSC R
-	 INNER JOIN RSC_LOT L
-	    ON R.RSC_CD = L.RSC_CD
 	 INNER JOIN RSC_STC S
 	    ON R.RSC_CD = S.RSC_CD
-	 LEFT OUTER JOIN RSC_STC_HIST H
-	    ON R.RSC_CD = H.RSC_CD
 	 INNER JOIN BOMR B
 	    ON R.RSC_CD = B.RSC_CD
      INNER JOIN ORDER_SHEET O
@@ -126,7 +120,7 @@
 		<foreach collection="array" item="material" open="(" close=")" separator="," >
 		#{material}
 		</foreach>
-	GROUP BY R.RSC_NM, L.PRC_LOT_CD, S.AVAL_STC, H.OUST_CNT
+	GROUP BY R.RSC_CD, R.RSC_NM, S.AVAL_STC
 	</select>
 	<!-- 생산계획 제품공정확인 -->
 	<select id="planEquipCheck" resultType="ProductionVO">
@@ -139,7 +133,7 @@
 	        ON I.INDICA_DT = P.INDICA_DT
 	WHERE I.PLAN_CD = #{planCd}
 	</select>
-	<!-- 생산계획 자재확인 -->
+<!-- 	 생산계획 자재확인 
 	<select id="planMaterialCheck" resultType="ProductionVO">
 		SELECT B.RSC_CD,
 	           B.PRCS_CD,
@@ -153,5 +147,5 @@
         INNER JOIN RSC_LOT L
         ON B.RSC_CD = L.RSC_CD
 	    WHERE L.PRC_LOT_CD = #{prcLotCd}
-	</select>
+	</select -->
 </mapper>

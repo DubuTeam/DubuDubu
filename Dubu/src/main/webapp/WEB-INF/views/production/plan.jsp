@@ -112,9 +112,9 @@
 							<div id="grid2" style="width: 65%;">사용가능자재
 								<div id="gridMaterial"></div>
 							</div>
-							<div id="grid3" style="width: 30%;">자재확인
+							<!-- <div id="grid3" style="width: 30%;">자재확인
 								<div id = "gridMateralCheck"></div>
-							</div>
+							</div> -->
 						</div>
 					</div>
 
@@ -460,26 +460,22 @@ let planCd='';
                         ]
 
                     });
-                 //그리드 선언
+                 //사용가능 자재 그리드 선언
                    var gridMaterial = new tui.Grid({
                         el: document.getElementById('gridMaterial'),
                         columns: [
 
                             {
+                                header: '자재코드',
+                                name: 'rscCd'
+                            },
+                            {
                                 header: '자재명',
                                 name: 'rscNm'
                             },
                             {
-                                header: '자재LOT',
-                                name: 'prcLotCd'
-                            },
-                            {
                                 header: '사용가능수량',
                                 name: 'avalStc'
-                            },
-                            {
-                                header: '출고수량',
-                                name: 'oustCnt'
                             },
                             {
                                 header: '사용량',
@@ -524,25 +520,21 @@ let planCd='';
                          columns: [
 
                              {
-                                 header: '제품코드',
-                                 name: 'edctsCd'
-                             },
-                             {
-                                 header: '라인번호',
-                                 name: 'lineCd'
+                                 header: '공정순서',
+                                 name: ''
                              },
                              {
                                  header: '공정코드',
                                  name: 'prcsCd'
                              },
                              {
-                                 header: '계획코드',
-                                 name: 'planCd'
+                                 header: '공정명',
+                                 name: 'prcsNm'
                              }
                          ]
                      }); 
                      // 제품 그리드의 행을 더블클릭하면 자재확인 그리드가 살행
-                      gridMaterial.on('click', (e) => {
+                      /* gridMaterial.on('click', (e) => {
                        materialKey = e.rowKey;
                        console.log(materialKey);
                        materialValue = gridMaterial.getValue(materialKey, 'prcLotCd');              
@@ -587,6 +579,6 @@ let planCd='';
                                   name: 'planCd'
                               }
                           ]
-                      });  
+                      });  */ 
            		
 </script>

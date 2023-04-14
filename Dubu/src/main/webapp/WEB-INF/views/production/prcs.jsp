@@ -37,7 +37,6 @@
 								<label for="name">공정구분</label> 
 								<select id="prcs"
 									class="dataTable-selector">
-									<option selected value='AOC'>AOC</option>
 									<option selected value='COL'>COL</option>
 									<option selected value='CSH'>CSH</option>
 									<option selected value='PRE'>PRE</option>
@@ -125,7 +124,6 @@ function search() {
                  {
                      header: '공정코드',
                      name: 'prcsCd',
-                     editor: 'text'
                  },
                  {
                      header: '공정명',
