@@ -58,7 +58,10 @@ public interface SalesService {
 
 	// 완제품 재고현황 모달에서 출고량 입력 후 출고등록
 	public void saveSalesOust(OustVO vo);
-	
+
 	// 출고현황 조회
 	public List<OustVO> findOust(OustVO vo);
+
+	// 출고등록 후 출고완료로 변경
+	public void updateProg(SalesVO vo);
 }

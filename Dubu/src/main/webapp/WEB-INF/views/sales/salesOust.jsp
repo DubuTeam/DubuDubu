@@ -301,7 +301,7 @@ $("#addBtn").click(ev => {
         })
     }
 
-  /*   $.ajax({
+   $.ajax({
         url: "updateProg",
         method: "put",
         dataType: "json",
@@ -310,7 +310,7 @@ $("#addBtn").click(ev => {
             findOrder();
             toastr.success('출고등록되었습니다');
         }
-    }) */
+    }) 
 })
 	  
 

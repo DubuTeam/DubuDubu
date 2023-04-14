@@ -68,4 +68,7 @@ public interface SalesMapper {
 
 	// 완제품 재고현황 모달에서 출고량 이력 후 출고등록
 	public void saveSalesOust(OustVO vo);
+
+	// 출고등록 후 출고완료로 변경
+	public void updateProg(SalesVO vo);
 }
