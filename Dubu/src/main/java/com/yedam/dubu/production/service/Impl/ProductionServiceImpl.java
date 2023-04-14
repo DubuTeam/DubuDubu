@@ -129,10 +129,10 @@ public class ProductionServiceImpl implements ProductionService {
 		return productionMapper.planEquipCheck(planCd);
 	}
 
-	@Override
-	public List<ProductionVO> planMaterialCheck(String prcLotCd) {
-		return productionMapper.planMaterialCheck(prcLotCd);
-	}
+	/*
+	 * @Override public List<ProductionVO> planMaterialCheck(String prcLotCd) {
+	 * return productionMapper.planMaterialCheck(prcLotCd); }
+	 */
 
 
 

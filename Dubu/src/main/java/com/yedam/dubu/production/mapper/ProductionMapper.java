@@ -39,12 +39,12 @@ public interface ProductionMapper {
 	// 생산등록 - 수정
 	public int updatePlanYn(ProductionVO vo);
 	
-	// 생산계획 공정 조회
+	// 생산계획 제품 조회
 	public List<ProductionVO> selectPlanEquip(String[] array);
-	// 생산계획 자재 조회
+	// 생산계획 사용가능자재 조회
 	public List<ProductionVO> selectPlanMaterial(String[] array);
 	// 생산계획 제품공정확인 조회
 	public List<ProductionVO> planEquipCheck(@Param("planCd")String planCd);
 	// 생산계획 자재확인 조회
-	public List<ProductionVO> planMaterialCheck(@Param("prcLotCd")String prcLotCd);
+	//public List<ProductionVO> planMaterialCheck(@Param("prcLotCd")String prcLotCd);
 }
