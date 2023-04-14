@@ -86,6 +86,23 @@ OR (pi.EDCTS_LOT_NO = 'LOT2')
         order by PAPRD_CMND_DT
     </select>
     
+    <insert id="setRscInfList">  <!--  수량 인서트 -->
+        merge into RSC_INFER
+        using dual
+        on (RSC_CD = #{insp.rscCd} and RSC_INSP_CD = #{insp.rscInspCd}
+            and ORDR_CD = #{insp.ordrCd} and CCD_DTL = #{inf.ccdDtl})
+        when matched then
+            update
+            set INF_CNT = #{inf.infCnt}
+        when not matched then
+            insert (CCD_DTL, RSC_CD, RSC_INSP_CD, INF_CNT, ORDR_CD)
+            values (#{inf.ccdDtl}, #{insp.rscCd}, #{insp.rscInspCd}, to_number(#{inf.infCnt}), #{insp.ordrCd})
+    </insert>
+    
+
+    
+    <!-- 자재검사관리 검사상세 불량코드 리스트 출력 -->
+    
     <select id="getInfCdList" resultType="QualityVO">
         SELECT *
         FROM CCDS_DTL
