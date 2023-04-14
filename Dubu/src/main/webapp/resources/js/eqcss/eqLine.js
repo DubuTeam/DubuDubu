@@ -1,4 +1,8 @@
 $(document).ready(function () {
+
+    console.log("다음 설비 라인 코드 => " + $('#lineCd').val())
+
+
     // 라인 관리 페이지
     // 1. row 하나 클릭 시,
     $('.eachRow').on("click", function (e) {

@@ -1,5 +1,7 @@
 $(document).ready(function () {
     // alert('연결테스트');
+    console.log("다음 설비코드 => " + $('#eqmCd').val())
+
 
 
     // . 초기화 버튼 눌렀을 때..
@@ -10,9 +12,9 @@ $(document).ready(function () {
 
 
     // 1. 설비구분 옵션 선택 시, 설비코드 자동 입력
-    $("select[name=eqmFg]").change(function () {
-        $('#eqmCd').val(this.value);
-    });
+    // $("select[name=eqmFg]").change(function () {
+    //     $('#eqmCd').val(this.value);
+    // });
 
 
     // 2. 라인명 옵션 선택 시, 라인코드 자동 입력
@@ -52,9 +54,17 @@ $(document).ready(function () {
             console.log(cdArr);             // 테스트용 출력
         }
 
+
         if (cdArr.indexOf(currentCd) > -1) {
+
             // 설비명, 점검주기,입고일자, 가동여부 중 하나라도 입력 안하면 에러!
-            if ($('#eqmCd').val() == '' || $('#lineCd').val() == '' || $('#prcsCd').val() == '' || eqmNm.value == '' || chckPerd.value == '' || eqmIstDt.value == '' || $('input[name=useYN]:checked').val() == undefined) {
+            let eqmFgSelectBox = document.getElementById("eqmFg");
+            let lineNmSelectBox = document.getElementById("lineNm");
+            let prcsNmSelectBox = document.getElementById("prcsNm");
+
+
+            if (eqmFgSelectBox.selectedIndex === 0 || lineNmSelectBox.selectedIndex === 0 || prcsNmSelectBox.selectedIndex === 0 || eqmNm.value == '' || chckPerd.value == '' || eqmIstDt.value == '' || $('input[name=useYN]:checked').val() == undefined) {
+            // if (eqmFgSelectBox.selectedIndex === 0 || lineNmSelectBox.selectedIndex === 0 || eqmNm.value == '' || chckPerd.value == '' || eqmIstDt.value == '' || $('input[name=useYN]:checked').val() == undefined) {
                 console.log('필수항목들을 전부 입력해라!')
 
                 $('#eqmFg').css('border', 'solid 2px red')
@@ -116,8 +126,13 @@ $(document).ready(function () {
         }
         else {
             // 설비명, 점검주기,입고일자, 가동여부 중 하나라도 입력 안하면 에러!
-            if ($('#eqmCd').val() == '' || $('#lineCd').val() == '' || $('#prcsCd').val() == '' || eqmNm.value == '' || chckPerd.value == '' || eqmIstDt.value == '' || $('input[name=useYN]:checked').val() == undefined) {
-                console.log('필수항목들을 전부 입력해라!')
+            let eqmFgSelectBox = document.getElementById("eqmFg");
+            let lineNmSelectBox = document.getElementById("lineNm");
+            let prcsNmSelectBox = document.getElementById("prcsNm");
+
+            if (eqmFgSelectBox.selectedIndex === 0 || lineNmSelectBox.selectedIndex === 0 || prcsNmSelectBox.selectedIndex === 0 || eqmNm.value == '' || chckPerd.value == '' || eqmIstDt.value == '' || $('input[name=useYN]:checked').val() == undefined) {
+            // if (eqmFgSelectBox.selectedIndex === 0 || lineNmSelectBox.selectedIndex === 0 || eqmNm.value == '' || chckPerd.value == '' || eqmIstDt.value == '' || $('input[name=useYN]:checked').val() == undefined) {
+                console.log('필수항목들을 전부 입력해라!');
 
                 $('#eqmFg').css('border', 'solid 2px red')
                 $('#lineNm').css('border', 'solid 2px red')
@@ -187,8 +202,8 @@ $(document).ready(function () {
         let eqmFg = $(this).closest("tr").children().eq(1).text();
         let eqmNm = $(this).closest("tr").children().eq(2).text();
         let eqmCd = $(this).closest("tr").children().eq(3).text();
-        let prcsCd = $(this).closest("tr").children().eq(4).text();
-        let prcsNm = $(this).closest("tr").children().eq(5).text();
+        let prcsNm = $(this).closest("tr").children().eq(4).text();
+        let prcsCd = $(this).closest("tr").children().eq(5).text();
 
         let useYnSet = $(this).closest("tr").children().eq(6).text();
         let minTemp = $(this).closest("tr").children().eq(7).text();
@@ -211,7 +226,7 @@ $(document).ready(function () {
         // 하나의 row(행) 클릭 시
         // select 태그에서 prcsCd/eqmCd/lineCd 인 value 에 대응하는 option 태그를 선택하고 변경 이벤트 발생시킴
         $("#prcsNm").val(prcsCd).change();
-        $("#eqmFg").val(eqmCd).change();
+        $("#eqmFg").val(eqmFg).change();
         $("#lineNm").val(lineCd).change();
 
 
@@ -384,8 +399,8 @@ $(document).ready(function () {
                         tr.append($('<td />').text(item.eqmFg))
                         tr.append($('<td />').text(item.eqmNm))
                         tr.append($('<td />').text(item.eqmCd))
-                        tr.append($('<td />').text(item.prcsCd))
                         tr.append($('<td />').text(item.prcsNm))
+                        tr.append($('<td />').text(item.prcsCd))
                         tr.append($('<td />').text(item.eqmYn))
                         tr.append($('<td />').text(item.minTemp))
                         tr.append($('<td />').text(item.maxTemp))
@@ -406,8 +421,8 @@ $(document).ready(function () {
                             let eqmFg = $(this).closest("tr").children().eq(1).text();
                             let eqmNm = $(this).closest("tr").children().eq(2).text();
                             let eqmCd = $(this).closest("tr").children().eq(3).text();
-                            let prcsCd = $(this).closest("tr").children().eq(4).text();
-                            let prcsNm = $(this).closest("tr").children().eq(5).text();
+                            let prcsNm = $(this).closest("tr").children().eq(4).text();
+                            let prcsCd = $(this).closest("tr").children().eq(5).text();
 
                             let useYnSet = $(this).closest("tr").children().eq(6).text();
                             let minTemp = $(this).closest("tr").children().eq(7).text();
@@ -430,7 +445,7 @@ $(document).ready(function () {
                             // 하나의 row(행) 클릭 시
                             // select 태그에서 prcsCd/eqmCd/lineCd 인 value 에 대응하는 option 태그를 선택하고 변경 이벤트 발생시킴
                             $("#prcsNm").val(prcsCd).change();
-                            $("#eqmFg").val(eqmCd).change();
+                            $("#eqmFg").val(eqmFg).change();
                             $("#lineNm").val(lineCd).change();
 
 
