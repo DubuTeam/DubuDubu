@@ -130,6 +130,11 @@ public class EquipmentServiceImpl implements EquipmentService{
 	public int updateCheckList(EquipmentVO equipmentVO) {
 		return equipmentMapper.updateCheckList(equipmentVO);
 	}
+
+	@Override
+	public int deleteCheckList(String chckCd) {
+		return equipmentMapper.deleteCheckList(chckCd);
+	}
 		
 
 	

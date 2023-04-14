@@ -82,4 +82,6 @@ public interface EquipmentService {
 	// 설비 점검 수정하기
 	public int updateCheckList(EquipmentVO equipmentVO);
 	
+	// 설비 점검 삭제하기
+	public int deleteCheckList(String chckCd);
 }

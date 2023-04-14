@@ -80,6 +80,7 @@
 		SELECT
 			ROWNUM AS "idx",
 			eqm_nm,
+			eqm_fg,
 			eqm_cd,
 			prcs_cd,
 			prcs_nm,
@@ -94,11 +95,11 @@
 	</select>
 	
 	<!-- 설비 등록하기 -->
-	<!-- 설비구분은 일부러 안 넣음 (어차피 안 쓴다) -->
 	<insert id="insertEquipment" parameterType="equipmentVO">
 		INSERT INTO EQM 
 		                (
 		                 eqm_cd,
+		                 eqm_fg,
 		                 line_cd,
 		                 prcs_cd,
 		                 prcs_nm,
@@ -111,6 +112,7 @@
 		                )
 		        VALUES (
 		        		#{eqmCd},
+		        		#{eqmFg},
 		                #{lineCd},
 		                #{prcsCd},
 		                #{prcsNm},
@@ -128,6 +130,7 @@
 		UPDATE eqm
 		SET
 			eqm_nm = #{eqmNm},
+			eqm_fg = #{eqmFg},
             line_cd = #{lineCd},
             prcs_cd = #{prcsCd},
             prcs_nm = #{prcsNm},
@@ -155,6 +158,7 @@
 		</if> -->
   	  SELECT
 		ROWNUM AS "idx",
+		eqm_fg,
 		eqm_nm,
 		eqm_cd,
 		prcs_cd,
@@ -220,8 +224,10 @@
 			eqm_nm,
 			chck_dt,
 			dispo_matter,
+			dispo_ctnt,
 			jdgmnt,
-			chck_psch
+			chck_psch,
+			chck_fg
 		FROM eqm_chck
 		ORDER BY chck_cd
 	</select>
@@ -278,6 +284,10 @@
 		WHERE chck_cd = #{chckCd}
 	</update>
 	
+	<!-- 설비 점검 목록 삭제하기 -->
+	<delete id="deleteCheckList" parameterType="String">
+		DELETE FROM eqm_chck WHERE chck_cd = #{chckCd}
+	</delete>
 	
 	<!-- ↑↑↑ 설비 점검 내역 페이지 -->
 </mapper>

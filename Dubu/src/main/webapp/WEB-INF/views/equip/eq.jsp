@@ -54,6 +54,7 @@
 										<thead>
 											<tr>
 												<th>No.</th>
+												<th>설비구분</th>
 												<th>설비명</th>
 												<th>설비코드</th>
 												<th>공정코드</th>
@@ -72,6 +73,7 @@
 										<c:forEach items="${eqList }" var="eqm">
 											<tr class="eachRow">
 												<td>${eqm.idx }</td>
+												<td>${eqm.eqmFg }</td>
 												<td>${eqm.eqmNm }</td>
 												<td>${eqm.eqmCd }</td>
 												<td>${eqm.prcsCd }</td>					
@@ -97,8 +99,8 @@
 					<div class="card mb-4">
 						<div class="card-body" id="lower-card-body">
 							<div class="linelist" style="float: right;">
-								<button class="btn btn-primary" id="modBtn"><i
-										class="fa-solid fa-paintbrush"></i> 수정</button>
+								<!-- <button class="btn btn-primary" id="modBtn"><i
+										class="fa-solid fa-paintbrush"></i> 수정</button> -->
 								<button class="btn btn-primary" id="insertBtn"><i class="fas fa-save"></i>
 									등록</button>
 
@@ -107,6 +109,7 @@
 									data-target="#exampleModal">
 									<i class="fas fa-trash"></i> 삭제
 								</button>
+								<button class="btn btn-primary" id="initBtn"><i class="fas fa-file"></i> 초기화</button>
 
 								<!-- Modal -->
 								<div class="modal fade" id="exampleModal" tabindex="-1"
@@ -137,6 +140,7 @@
 							</div>
 
 
+							<form id="dataForm" action="#">
 								<table class="table" style="vertical-align: middle;">
 									<colgroup>
 										<col style="width: 150px">
@@ -154,9 +158,11 @@
 												<select class="dataTable-selector" name="eqmFg" id="eqmFg"
 													style="width: 250px">
 													<option selected>==등록시필수선택==</option>
-													<c:forEach var="list" items="${commonDataList}">
-														<option value="${list.ccd}">${list.ccdNm}</option>
-													</c:forEach>
+													<option value="">포장파트</option>
+													<option value="">살균파트</option>
+													<option value="">응고파트</option>
+													<option value="">튀김파트</option>
+													<option value="">냉각파트</option>
 												</select>
 											</td>
 
