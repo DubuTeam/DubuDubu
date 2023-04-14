@@ -37,6 +37,7 @@ public class MaterialVO {
 	private String endOrdrReqDt; // 발주 신청일 end
 	
 	// 자재발주 디테일
+	private String ordrDtlCd; // 자재 상세코드
 	private int ordrCnt; // 발주량
 	private String ordrCnt2; // 발주량 String
 	private int rmnCnt; // 미입고 잔량

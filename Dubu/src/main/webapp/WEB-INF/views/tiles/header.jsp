@@ -74,7 +74,7 @@
                 <%-- <a class="collapse-item" href="${pageContext.request.contextPath}/planSearch">생산계획조회XXX</a> --%>
                 <a class="collapse-item" href="${pageContext.request.contextPath}/indica">생산지시</a>
                 <%-- <a class="collapse-item" href="${pageContext.request.contextPath}/indicaSearch">생산지시조회XXX</a> --%>
-                <a class="collapse-item" href="${pageContext.request.contextPath}/progMng">생산관리</a>
+                <a class="collapse-item" href="${pageContext.request.contextPath}/progMng">공정실적관리</a>
                 <%-- <a class="collapse-item" href="${pageContext.request.contextPath}/prcsSearch">생산실적조회XXX</a> --%>
             </div>
         </div>
