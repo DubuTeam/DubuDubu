@@ -33,6 +33,8 @@
 							<div class="card-body">
 								<div class="linelist" style="float: right;">
 									<button class="btn btn-primary" id="saveBtn"><i class="fas fa-save"></i> 저장</button>
+									<!-- Button trigger modal (4.6버젼) -->
+									<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal"><i class="fas fa-trash"></i> 삭제</button>
 									<button class="btn btn-primary" id="initBtn"><i class="fas fa-file"></i> 초기화</button>
 								</div>
 
@@ -117,7 +119,7 @@
 																			</thead>
 
 																			<!-- ↓↓↓여기에 조회된 결과 출력 (테스트용 더미 넣었음) -->
-																			<tbody id="list">
+																			<tbody id="listInModal">
 																				<c:forEach items="${eqListInModal }" var="eqm">
 																					<tr class="eachRowInModal">
 																						<td>${eqm.idx }</td>
@@ -151,39 +153,40 @@
 												</td>
 
 
-												<th>점검코드</th>
+												<!-- <th>점검코드</th> -->
 												<td>
-													<input class="form-control" type="text" id="chckCd"
+													<input class="form-control" type="hidden" id="chckCd"
 														name="chckCd" style="width: 250px" readonly value="${getCheckCode }" />
 												</td>
 											</tr>
 
 
 											<tr>
-												<th>판정</th>
-												<td id="jdgmntSet">
-													<input type="radio" name="jdgmnt" value="적합" id="jdgmnt1">
-													적합&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-													<input type="radio" name="jdgmnt" value="부적합" id="jdgmnt2"> 부적합
+												<th>점검구분</th>
+												<td id="chckFgSet">
+													<input type="radio" name="chckFg" value="정기점검" id="chckFg1"> 정기점검&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+													<input type="radio" name="chckFg" value="수시점검" id="chckFg2"> 수시점검
 												</td>
-
 												<th>조치사항</th>
 												<td id="dispoMatterSet">
 													<input type="radio" name="dispoMatter" value="수리" id="dispoMatter1">
 													수리&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 													<input type="radio" name="dispoMatter" value="점검" id="dispoMatter2"> 점검
 												</td>
-
-												<th>점검구분</th>
-												<td>
-													<input type="radio" name="chckFg" value="정기점검">
-													정기점검&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-													<input type="radio" name="chckFg" value="수시점검"> 수시점검
+												<th>판정</th>
+												<td id="jdgmntSet">
+													<input type="radio" name="jdgmnt" value="적합" id="jdgmnt1">
+													적합&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+													<input type="radio" name="jdgmnt" value="부적합" id="jdgmnt2"> 부적합
 												</td>
 											</tr>
 
-
 											<tr>
+												<th>점검일자</th>
+												<td>
+													<input class="form-control" type="date" id="chckDt"
+														name="chckDt" style="width: 250px" />
+												</td>
 												<th>조치내역</th>
 												<td>
 													<textarea name="dispoCtnt" id="dispoCtnt"
@@ -195,12 +198,6 @@
 												<td>
 													<input class="form-control" name="chckPsch"
 														id="chckPsch" style="width: 250px">
-												</td>
-
-												<th>점검일자</th>
-												<td>
-													<input class="form-control" type="date" id="chckDt"
-														name="chckDt" style="width: 250px" />
 												</td>
 
 												<!-- 얜 뭐임? -->
@@ -230,13 +227,6 @@
 								<button type="button" style="margin-bottom: 3px" class="btn btn-primary"
 									id="bSearchBtn"><i class="fas fa-search"></i> 검색 </button>
 
-								<!-- Button trigger modal (4.6버젼) -->
-								<button type="button" style="width: 85px; height: 38px; margin-bottom: 4px"
-									class="btn btn-primary" data-toggle="modal" data-target="#exampleModal"
-									id="delBtn">
-									<i class="fas fa-trash"></i> 삭제
-								</button>
-
 								<!-- Modal -->
 								<div class="modal fade" id="exampleModal" tabindex="-1"
 									aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -256,7 +246,7 @@
 											<div class="modal-footer" style="border-top: none;">
 												<button type="button" class="btn btn-secondary"
 													data-dismiss="modal">취소</button>
-												<button type="button" class="btn btn-primary">삭제</button>
+												<button type="button" class="btn btn-primary" id="delBtn">삭제</button>
 											</div>
 										</div>
 									</div>
@@ -272,14 +262,16 @@
 							<table>
 								<thead>
 									<tr>
-										<th><input type="checkbox"></th>
+										<!-- <th><input type="checkbox"></th> -->
 										<th>점검코드</th>
 										<th>설비코드</th>
 										<th>설비명</th>
+										<th>점검구분</th>
 										<th>조치사항</th>
 										<th>판정</th>
-										<th>점검담당자</th>
 										<th>점검일자</th>
+										<th>점검담당자</th>
+										<th></th>
 									</tr>
 								</thead>
 
@@ -287,14 +279,16 @@
 								<tbody id="list">
 									<c:forEach items="${checkList }" var="chck">
 										<tr class="eachRow">
-											<td><input type="checkbox"></td>
+											<!-- <td><input type="checkbox"></td> -->
 											<td>${chck.chckCd }</td>
 											<td>${chck.eqmCd }</td>
 											<td>${chck.eqmNm }</td>
+											<td>${chck.chckFg}</td>
 											<td>${chck.dispoMatter }</td>
 											<td>${chck.jdgmnt }</td>
-											<td>${chck.chckPsch }</td>
 											<td><fmt:formatDate value="${chck.chckDt }" pattern="yyyy-MM-dd" /></td>
+											<td>${chck.chckPsch }</td>
+											<td><input type="hidden" value="${chck.dispoCtnt}" id="dispoCtnt" name="dispoCtnt"></td>
 										</tr>
 									</c:forEach>
 								</tbody>

@@ -42,7 +42,8 @@ public class EquipmentVO {
 	private int minTemp;
 	private int maxTemp;
 	private int chckPerd;
-
+	private String eqmFg;						// 설비 구분
+	
 	@DateTimeFormat(pattern="yyyy-MM-dd")
 	private Date eqmIstDt;
 	

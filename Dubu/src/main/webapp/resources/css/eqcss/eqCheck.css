@@ -50,3 +50,7 @@ textarea {
 .eachRow:hover, .eachRowInModal:hover, #list > .selectedRows:hover {
 	background-color: rgb(233, 233, 233);
 }
+
+/* tr {
+	border-top: 1px solid rgba(0,0,0,.1);
+} */

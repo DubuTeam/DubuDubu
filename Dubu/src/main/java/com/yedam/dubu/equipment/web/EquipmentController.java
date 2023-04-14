@@ -156,6 +156,13 @@ public class EquipmentController {
 	}
 	
 	
+	@PostMapping("/deleteCheckList")
+	@ResponseBody
+	public String deleteCheckList(String chckCd) {
+		equipmentService.deleteCheckList(chckCd);
+		return "redirect:eqCheck";
+	}
+	
 	///////////////////////////////////////////////////////////////////////////
 	
 	

@@ -1,5 +1,8 @@
 $(document).ready(function () {
 
+    // console.log("Next => " + $('#chckCd').val())
+
+
     $('#modal-searchBtn').on("click", function() {
         let keyword = $('#modal-keyword').val();
         console.log(keyword)
@@ -16,7 +19,7 @@ $(document).ready(function () {
                     console.log(result)
 
                     $('#modal-keyword').val("");
-                    $("#list").find("tr").remove();
+                    $("#listInModal").find("tr").remove();
 
                     console.log("성공!")
 
@@ -34,7 +37,7 @@ $(document).ready(function () {
                         tr.append($('<td />').text(item.prcsNm))
                         tr.append($('<td />').text(item.eqmYn))
 
-                        $('#list').append(tr)
+                        $('#listInModal').append(tr)
                         $('tr').attr("class", "selectedRows");
                     });
                 }
@@ -79,6 +82,7 @@ $(document).ready(function () {
     // 2. 초기화 버튼 눌렀을 때..
     $('#initBtn').on("click", function (e) {
         $("#dataForm")[0].reset();      // id 가 dataForm 인 form 태그 전체 초기화
+        $('#chckDt').val(null);       // 달력도 초기화
     })
 
 
@@ -188,15 +192,18 @@ $(document).ready(function () {
     // 5. row 하나 클릭 시,
     $('.eachRow').on("click", function (ev) {
         // 5-1. 해당 행에 입력된 데이터를 받아옴.     (가장 가까운 tr태그의 각 셀들)
-        let chckCdEachRow = $(this).closest("tr").children().eq(1).text();
-        let eqmCd = $(this).closest("tr").children().eq(2).text();
-        let eqmNm = $(this).closest("tr").children().eq(3).text();
+        let chckCdEachRow = $(this).closest("tr").children().eq(0).text();
+        let eqmCd = $(this).closest("tr").children().eq(1).text();
+        let eqmNm = $(this).closest("tr").children().eq(2).text();
+        let chckFgSet = $(this).closest("tr").children().eq(3).text();
         let dispoMatterSet = $(this).closest("tr").children().eq(4).text();
         let jdgmntSet = $(this).closest("tr").children().eq(5).text();
-        let chckPsch = $(this).closest("tr").children().eq(6).text();
-        let chckDt = $(this).closest("tr").children().eq(7).text();
-
-
+        let chckDt = $(this).closest("tr").children().eq(6).text();
+        let chckPsch = $(this).closest("tr").children().eq(7).text();
+        // let dispoCtnt = $(this).closest("tr").children().eq(7).text();
+        let dispoCtnt = $(this).closest("tr").find("input[name='dispoCtnt']").val();
+        
+        console.log("점검구분?" + chckFgSet)
         console.log("점검코드는 => " + chckCdEachRow);
 
         // 5-2. 그리고 jsp 파일의 input 태그에다가 위 데이터를 집어넣는다.
@@ -218,8 +225,57 @@ $(document).ready(function () {
         } else if (jdgmntSet == "부적합") {
             $("#jdgmnt2").prop("checked", true);
         }
+        
+        // 점검구분
+        if (chckFgSet == "정기점검") {
+            $("#chckFg1").prop("checked", true);
+        } else if (chckFgSet == "수시점검") {
+            $("#chckFg2").prop("checked", true);
+        }
+
+
+        // let selectedValue = $("input[name='your_radio_button_name']:checked").val();
+        // $("#your_hidden_input_id").val(selectedValue);
+
+        let selectedValue = $("input[name='chckFg']:checked").val();
+        $("#chckFg").val(selectedValue);
 
         // 점검일자
         $('input[name=chckDt]').attr('value', chckDt);
+
+        // 조치내역
+        $('#dispoCtnt').val(dispoCtnt);
+    })
+
+
+    ///////////////////////////////////////////////////////////////////////////////
+
+
+    // 7. row 하나 클릭 후, 삭제 버튼 눌렀을 때
+    $('#delBtn').on("click", function () {
+
+        let chckCd = $('#chckCd').val()
+        // 출력 테스트
+        console.log(chckCd)
+
+
+        $('#exampleModal').click();
+
+        $.ajax({
+            url: 'deleteCheckList',
+            method: 'post',
+            data: {
+                // VO 클래스에 있는 chckCd 에다가,   여기서 값을 받아온 eqmCd 를 넘긴다~
+                chckCd: chckCd,
+            },
+            success: function (result) {
+                console.log('데이터 잘 보냄! -> ' + result);
+                $('#exampleModal').click();         // 모달창 닫기,  .click() 혹은 .hide() ..?
+                location.replace('eqCheck');     // 등록 후, 다시 eq 페이지 (메인 페이지로)
+            },
+            error: function (err) {
+                console.log(err);
+            }
+        })
     })
 })

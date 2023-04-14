@@ -107,8 +107,8 @@
 
 						<form id="dataForm" action="#">
 							<div class="mb-3">
-								<label for="lineCd" class="form-label">라인코드</label>
-								<input type="text" class="form-control" id="lineCd" name="lineCd" value="${getLineCode }" readonly>
+								<!-- <label for="lineCd" class="form-label">라인코드</label> -->
+								<input type="hidden" class="form-control" id="lineCd" name="lineCd" value="${getLineCode }" readonly>
 							</div>
 
 							<div class="mb-3"></div>
