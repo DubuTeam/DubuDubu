@@ -125,4 +125,16 @@ public class SalesServiceImpl implements SalesService {
 		// TODO Auto-generated method stub
 		return salesMapper.getmodalList(vo);
 	}
+
+	// 완제품 재고현황 모달에서 출고량 입력 후 출고등록
+	@Override
+	public void saveSalesOust(OustVO vo) {
+		salesMapper.saveSalesOust(vo);
+	}
+
+	// 출고현황 조회
+	@Override
+	public List<OustVO> findOust(OustVO vo) {
+		return salesMapper.findOust(vo);
+	}
 }

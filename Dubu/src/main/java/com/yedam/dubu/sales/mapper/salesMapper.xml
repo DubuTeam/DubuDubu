@@ -76,7 +76,8 @@
 		SELECT i.edcts_ist_no, i.edcts_ist_dt, i.edcts_ist_cnt, i.edcts_cd,
 		i.edcts_lot_no, e.prdt_nm
 		FROM edcts_ist i JOIN edcts e
-		ON i.edcts_cd = e.edcts_cd
+		ON i.edcts_cd =
+		e.edcts_cd
 		<if test="edctsLotNo != null and edctsLotNo != ''">and EDCTS_LOT_NO = #{edctsLotNo}</if>
 		<if test="edctsIstDtStart != null"><![CDATA[and EDCTS_IST_DT >= #{edctsIstDtStart}]]></if>
 		<if test="edctsIstDtEnd != null"><![CDATA[and EDCTS_IST_DT <= #{edctsIstDtEnd}]]></if>
@@ -137,21 +138,34 @@
 		WHERE PROG_APPE =
 		'Completed'
 	</select>
-
+	<!-- 출고 목록조회 -->
 	<select id="getOustList" resultType="OustVO">
 		SELECT EDCTS_CD,
-		EDCTS_LOT_NO, EDCTS_OUST_DT,EDCTS_OUST_CNT
+		EDCTS_LOT_NO, EDCTS_OUST_DT, EDCTS_OUST_CNT
 		FROM edcts_oust
+		WHERE
+		EDCTS_OUST_DT BETWEEN ADD_MONTHS(SYSDATE, -1) AND SYSDATE
 	</select>
-	
-	<!-- 완제품 재고 현황 모달로 조회(주문서에 해당하는 제품의 재고만 조회하도록 함)-->
- 	<select id="getmodalList" resultType="OustVO">
-		SELECT E.EDCTS_CD, S.EDCTS_LOT_NO, E.PRDT_NM, S.LOT_CNT
+
+	<!-- 완제품 재고 현황 모달로 조회(주문서에 해당하는 제품의 재고만 조회하도록 함) -->
+	<select id="getmodalList" resultType="OustVO">
+		SELECT E.EDCTS_CD,
+		S.EDCTS_LOT_NO, E.PRDT_NM, S.LOT_CNT
 		FROM EDCTS E JOIN EDCTS_STC S
-		ON E.EDCTS_CD = S.EDCTS_CD
-		WHERE E.EDCTS_CD = #{edctsCd} AND S.LOT_CNT != 0
-		
- 	</select>
-	
+		ON
+		E.EDCTS_CD = S.EDCTS_CD
+		WHERE E.EDCTS_CD = #{edctsCd} AND S.LOT_CNT !=
+		0
+
+	</select>
+	<!-- 출고현황 조회 -->
+	<select id="findOust" resultType="OustVO">
+		select * from edcts_oust
+	</select>
+
+	<!-- 완제품 재고 모달에서 출고량 입력하여 출고테이블에 저장 -->
+ 	<insert id="saveSalesOust" parameterType="OustVO" statementType="CALLABLE">
+ 		<![CDATA[call proc_edctsOust_save(#{edctsOustNo}, #{edctsOustCnt}, #{edctsCd}, #{edctsLotNo},#{orderNo})]]>
+ 	</insert>
 
 </mapper>

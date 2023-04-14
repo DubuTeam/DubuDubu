@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -23,17 +24,33 @@ public class OustController {
 	public List<SalesVO> findOrder(SalesVO vo) {
 		return salesService.findOrder(vo);
 	}
-	
+
 	// 출고등록 현황조회
 	@RequestMapping("getOustList")
 	@ResponseBody
 	public List<OustVO> getOustList(OustVO vo) {
 		return salesService.getOustList(vo);
 	}
+
 	// 진행주문서 모달조회
 	@RequestMapping("getmodalList")
 	@ResponseBody
-		public List<OustVO> getmodalList(OustVO vo) {
-			return salesService.getmodalList(vo);
-		}
+	public List<OustVO> getmodalList(OustVO vo) {
+		return salesService.getmodalList(vo);
+	}
+
+	// 완제품 재고현황 모달에서 출고량 입력 후 출고등록
+	@PostMapping("saveSalesOust")
+	@ResponseBody
+	public List<OustVO> saveSalesOust(OustVO vo) {
+		salesService.saveSalesOust(vo);
+		return salesService.findOust(vo);
+	}
+
+	// 출고현황 목록 불러오기
+	@RequestMapping("findOust")
+	@ResponseBody
+	public List<OustVO> findOust(OustVO vo) {
+		return salesService.findOust(vo);
+	}
 }
