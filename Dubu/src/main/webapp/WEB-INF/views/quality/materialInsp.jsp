@@ -55,6 +55,14 @@ tr {
 <link rel="stylesheet"
 	href="https://uicdn.toast.com/grid/latest/tui-grid.css" />
 <script src="https://uicdn.toast.com/grid/latest/tui-grid.js"></script>
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css"
+	integrity="sha512-3pIirOrwegjM6erE5gPSwkUzO+3cTjpnV9lexlNZqvupR64iZBnOOTiiLPb9M36zpMScbmUNIcHUqKD47M719g=="
+	crossorigin="anonymous" referrerpolicy="no-referrer" />
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"
+	integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw=="
+	crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
 
 
@@ -363,9 +371,11 @@ tr {
 		// action in vendor modal
 		vendGrid.on('dblclick', e => {
 			let rowInfo = vendGrid.getRow(e.rowKey)
-			let vendInfo = `${rowInfo.vendNm} - ${rowInfo.vendCd}`
+			let vendInfo = rowInfo.vendNm
 			vendNm.value = vendInfo;
 			vendCd.value = rowInfo.vendCd;
+			console.log(vendNm.value)
+			console.log(vendCd.value)
 			$(vendModal).modal('hide');
 			$('.modal-backdrop').remove(); // 
 		})
@@ -496,6 +506,7 @@ tr {
 				{
 					header: '합격량',
 					name: 'inspPassCnt',
+					editor: 'text',
 					validation: {
 						dataType: 'number',
 						required: true
@@ -533,7 +544,7 @@ tr {
 
 		///////////////////////////// get ordr list ////////////////////////////////
 		// get order list
-
+		
 
 
 		/*   function getOrdrList() {
@@ -565,11 +576,12 @@ tr {
 
 			})
 		});
-
+		
 		function getOrdr() {
 			var searchDate = {
 				startDt: $('#startDt').val(),
-				endDt: $('#endDt').val()
+				endDt: $('#endDt').val(),
+				vendCd: $('#vendCd').val()
 			}
 			console.log(searchDate)
 			//infData.clear();
@@ -580,7 +592,7 @@ tr {
 			//grid.showColumn('rmnCnt');
 
 			if (startDt.value === '' || endDt.value === '') {
-				//toastr.error('기간을 입력하세요.');
+				toastr.error('기간을 입력하세요.');
 			} else {
 				$.ajax({
 					url: 'getRscOrdrList',
@@ -597,7 +609,7 @@ tr {
 			}
 		}
 
-
+	
 
 		//=====================infGrid=====================
 
@@ -627,6 +639,8 @@ tr {
 			]
 			, editingEvent: 'click'
 		})
+		let infData = new Map();
+        let infModal = document.getElementById('infModal');
 
 		//제품코드 칸 클릭 -> 제품코드 모달창 띄우기
 		var infRowKey = '';
@@ -691,6 +705,111 @@ tr {
             ]
             , editingEvent: 'click'
         })
+		 
+//=================================검사량 가입고량 등등 처리 ================================
+	
+	 let rModal;
+        let rscModalState = 0;
+
+        class customInput {
+            constructor(props) {
+                const el = document.createElement('input');
+                let {rowKey} = props;
+                this.rowKey = rowKey
+                el.type = 'text';
+                el.value = String(props.value);
+                el.addEventListener('dblclick', function () {
+                    rModal = new bootstrap.Modal(document.getElementById('rscModal'), {})
+                    rModal.show('rscModal');
+                    rscModal.dataset.rowKey = rowKey;
+                    rscModalState = 1;
+                })
+                this.el = el;
+            }
+
+            getElement() {
+                this.el.value = '';
+                return this.el;
+            }
+
+            getValue() {0
+            	
+                if (rscModalState === 0) {
+                    getRscSingle(this.el.value, this.rowKey)
+                }
+                return this.el.value;
+            }
+
+            mounted() {
+                this.el.select();
+            }
+        }
+
+        class inputPreIstCnt {
+            constructor(props) {
+                let el = document.createElement('input');
+                let {rowKey} = props;
+                this.rowKey = rowKey;
+                el.type = 'text';
+                el.value = String(props.value);
+                this.el = el;
+            }
+
+            getValue() {
+                let val = this.el.value.replace(/[^0-9]/g, '')
+                grid.setValue(this.rowKey, 'inspCnt', val);
+                grid.setValue(this.rowKey, 'inspPassCnt', val);
+                grid.setValue(this.rowKey, 'inspFailCnt', '');
+                return val;
+            }
+
+            mounted() {
+                this.el.select();
+            }
+        }
+
+        class inputInspCnt {
+            constructor(props) {
+                let el = document.createElement('input');
+                let {rowKey} = props;
+                this.rowKey = rowKey;
+                el.type = 'text';
+                el.value = String(props.value);
+                this.el = el;
+            }
+
+            getElement() {
+                let preIstCnt = grid.getValue(this.rowKey, 'preIstCnt')
+                if (preIstCnt === '' || preIstCnt == null) {
+                    toastr.error('가입고량을 먼저 입력하세요');
+                } else {
+                    this.el.value = ''
+                    return this.el;
+                }
+            }
+
+            getValue() {
+                let val = this.el.value.replace(/[^0-9]/g, '')
+                let preIstCnt = grid.getValue(this.rowKey, 'preIstCnt')
+                if (parseInt(val) > parseInt(preIstCnt)) {
+                    toastr.error('검사량이 입고량 보다 많습니다.');
+                    grid.setValue(this.rowKey, 'inspPassCnt', '');
+                    grid.setValue(this.rowKey, 'inspFailCnt', '');
+                    return '';
+                } else {
+                    grid.setValue(this.rowKey, 'inspPassCnt', val);
+                    if (val === '') {
+                        return val;
+                    } else {
+                        return parseInt(val);
+                    }
+                }
+            }
+
+            mounted() {
+                this.el.select();
+            }
+        }
 
 	</script>
 </div>

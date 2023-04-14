@@ -27,4 +27,6 @@ public interface QualityMapper {
 	    // 검사상세
 	    List<QualityVO> getInfCdList();
 	    void setRscInfList(@Param("insp") QualityVO insp, @Param("inf") QualityVO inf);
+	    
+	    
 }
