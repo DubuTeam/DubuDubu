@@ -64,11 +64,16 @@ public class EquipmentServiceImpl implements EquipmentService{
 		return equipmentMapper.selectAllProcessList();
 	}
 
-	@Override
-	public List<EquipmentVO> selectAllCommonDataList() {
-		return equipmentMapper.selectAllCommonDataList();
-	}
+//	@Override
+//	public List<EquipmentVO> selectAllCommonDataList() {
+//		return equipmentMapper.selectAllCommonDataList();
+//	}
 
+	
+	@Override
+	public String getEqCode() {
+		return equipmentMapper.getEqCode();
+	}
 	
 	///
 	
@@ -135,7 +140,4 @@ public class EquipmentServiceImpl implements EquipmentService{
 	public int deleteCheckList(String chckCd) {
 		return equipmentMapper.deleteCheckList(chckCd);
 	}
-		
-
-	
 }

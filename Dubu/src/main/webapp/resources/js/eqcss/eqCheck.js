@@ -1,6 +1,6 @@
 $(document).ready(function () {
 
-    // console.log("Next => " + $('#chckCd').val())
+    console.log("다음 설비 점검 코드 => " + $('#chckCd').val())
 
 
     $('#modal-searchBtn').on("click", function() {

@@ -42,7 +42,12 @@ public interface EquipmentMapper {
 		
 		// 공통코드 테이블 (CCDS)
 		// 설비구분 탭의 설비구분 코드 및 설비코드 가져오기 위함.
-		public List<EquipmentVO> selectAllCommonDataList();
+		// public List<EquipmentVO> selectAllCommonDataList();
+		
+		
+		// 테스트 - 자동으로 부여될 설비 코드
+		public String getEqCode();
+		
 		
 		
 		//////////////////////////////////////

@@ -61,10 +61,13 @@ public class EquipmentController {
 	@GetMapping("/eq")
 	public String getEq(Model model) {
 		// 설비구분/라인명/공정명 탭에서 쓸 옵션들 받기 위해서 보냄
-		model.addAttribute("commonDataList", equipmentService.selectAllCommonDataList());
+		// model.addAttribute("commonDataList", equipmentService.selectAllCommonDataList());
 		model.addAttribute("eqLineList", equipmentService.selectAllEquipmentLineList());
 		model.addAttribute("processList", equipmentService.selectAllProcessList());
 		
+		// 테스트
+		model.addAttribute("getEqCode", equipmentService.getEqCode());				// 다음 설비 코드를 input 태그에 미리 적어줌
+
 		// 설비 목록을 전체 출력하기 위해서 보냄
 		model.addAttribute("eqList", equipmentService.selectAllEquipmentList());
 		

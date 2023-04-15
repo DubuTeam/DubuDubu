@@ -57,8 +57,8 @@
 												<th>설비구분</th>
 												<th>설비명</th>
 												<th>설비코드</th>
-												<th>공정코드</th>
 												<th>공정명</th>
+												<th>공정코드</th>
 												<th>사용여부</th>
 												<th>최소온도</th>
 												<th>최대온도</th>
@@ -76,8 +76,8 @@
 												<td>${eqm.eqmFg }</td>
 												<td>${eqm.eqmNm }</td>
 												<td>${eqm.eqmCd }</td>
-												<td>${eqm.prcsCd }</td>					
 												<td>${eqm.prcsNm }</td>
+												<td>${eqm.prcsCd }</td>					
 												<td>${eqm.eqmYn }</td>
 												<td>${eqm.minTemp }</td>
 												<td>${eqm.maxTemp }</td>
@@ -157,25 +157,25 @@
 											<td>
 												<select class="dataTable-selector" name="eqmFg" id="eqmFg"
 													style="width: 250px">
-													<option selected>==등록시필수선택==</option>
-													<option value="">포장파트</option>
-													<option value="">살균파트</option>
-													<option value="">응고파트</option>
-													<option value="">튀김파트</option>
-													<option value="">냉각파트</option>
+													<option value="" selected>==등록시필수선택==</option>
+													<option value="포장파트">포장파트</option>
+													<option value="살균파트">살균파트</option>
+													<option value="응고파트">응고파트</option>
+													<option value="튀김파트">튀김파트</option>
+													<option value="냉각파트">냉각파트</option>
 												</select>
-											</td>
-
-											<th>설비코드</th>
-											<td>
-												<input class="form-control" name="eqmCd" id="eqmCd"
-													style="width: 250px" readonly placeholder="등록시 자동 입력">
 											</td>
 
 											<th>설비명 *</th>
 											<td>
 												<input class="form-control" type="text" id="eqmNm"
 													name="eqmNm" style="width: 250px">
+											</td>
+
+                                            <!-- <th>설비코드</th> -->
+											<td>
+												<input type="text" class="form-control" name="eqmCd" id="eqmCd"
+													style="width: 250px" readonly value="${getEqCode}">
 											</td>
 										</tr>
 
