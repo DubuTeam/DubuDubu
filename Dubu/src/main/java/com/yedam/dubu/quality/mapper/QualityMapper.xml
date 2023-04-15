@@ -4,112 +4,113 @@
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.yedam.dubu.quality.mapper.QualityMapper">
 
-<!-- 조회 -->
+	<!-- 조회 -->
 
-<!--  <select id="selectQualityList" resultType="QualityVO">
-		SELECT pi.EDCTS_LOT_NO                               
-      , COALESCE(pi.EDCTS_CD, 'N/A') AS EDCTS_CD           
-      , os.PRDT_NM                                          
-      , COALESCE(pi.INSP_JM, 'N/A') AS INSP_JM              
-      , pi.INSP_DT                                          
-      , COALESCE(pi.INSP_PSCH, ' N/A') AS INSP_PSCH        
-FROM PRDT_INSP pi                                        
-JOIN ORDER_SHEET os
-ON pi.ORDER_NO = os.ORDER_NO     
-WHERE (pi.INSP_DT BETWEEN '2023-01-01' AND '2023-05-02')
-OR (pi.EDCTS_LOT_NO = 'LOT2')
+	<!-- <select id="selectQualityList" resultType="QualityVO"> SELECT pi.EDCTS_LOT_NO 
+		, COALESCE(pi.EDCTS_CD, 'N/A') AS EDCTS_CD , os.PRDT_NM , COALESCE(pi.INSP_JM, 
+		'N/A') AS INSP_JM , pi.INSP_DT , COALESCE(pi.INSP_PSCH, ' N/A') AS INSP_PSCH 
+		FROM PRDT_INSP pi JOIN ORDER_SHEET os ON pi.ORDER_NO = os.ORDER_NO WHERE 
+		(pi.INSP_DT BETWEEN '2023-01-01' AND '2023-05-02') OR (pi.EDCTS_LOT_NO = 
+		'LOT2') </select> -->
 
-	</select>  
---> 
-
-<!--  <select id="selectQualityList" resultType="QualityVO">
-		SELECT p.EDCTS_LOT_NO "LOT번호", p.EDCTS_CD "제품코드", e.PRDT_NM "제품명", p.INSP_JM "최종판정", TO_CHAR(p.INSP_DT, 'YYYY-MM-DD') "검사날짜", p.INSP_PSCH "검사자"
-		FROM PRDT_INSP p, EDCTS e
-		WHERE p.EDCTS_CD = e.EDCTS_CD
-		AND INSP_JM IS NOT NULL
-		<if test="edctsLotNo != null and edctsLotNo !=''">and EDCTS_LOT_NO LIKE '%'||'LOT2'||'%'</if>
-		<if test="startDt != null"><![CDATA[and INSP_DT >= '2023-01-01']]></if>
-		<if test="endDt != null"><![CDATA[and INSP_DT <= '2023-05-02']]></if>
-		ORDER BY EDCTS_LOT_NO
-</select>
--->
-<select id="selectQualityList" resultType="QualityVO">
+	<!-- <select id="selectQualityList" resultType="QualityVO"> SELECT p.EDCTS_LOT_NO 
+		"LOT번호", p.EDCTS_CD "제품코드", e.PRDT_NM "제품명", p.INSP_JM "최종판정", TO_CHAR(p.INSP_DT, 
+		'YYYY-MM-DD') "검사날짜", p.INSP_PSCH "검사자" FROM PRDT_INSP p, EDCTS e WHERE p.EDCTS_CD 
+		= e.EDCTS_CD AND INSP_JM IS NOT NULL <if test="edctsLotNo != null and edctsLotNo 
+		!=''">and EDCTS_LOT_NO LIKE '%'||'LOT2'||'%'</if> <if test="startDt != null"><![CDATA[and 
+		INSP_DT >= '2023-01-01']]></if> <if test="endDt != null"><![CDATA[and INSP_DT 
+		<= '2023-05-02']]></if> ORDER BY EDCTS_LOT_NO </select> -->
+	<select id="selectQualityList" resultType="QualityVO">
 		SELECT p.*, e.PRDT_NM
 		FROM PRDT_INSP p, EDCTS e
-		WHERE p.EDCTS_CD = e.EDCTS_CD
-		AND INSP_JM IS NOT NULL
-		<if test="edctsLotNo != null and edctsLotNo !=''">and EDCTS_LOT_NO LIKE '%'||#{edctsLotNo}||'%'</if>
-		<if test="startDt != null"><![CDATA[and INSP_DT >= #{startDt}]]></if>
-		<if test="endDt != null"><![CDATA[and INSP_DT <= #{endDt}]]></if>
-		ORDER BY EDCTS_LOT_NO
-</select>
-
-<select id="getPrdtInsp" resultType="QualityVO">
-		SELECT p.*, e.PRDT_NM
-		FROM PRDT_INSP p, EDCTS e
-		WHERE p.EDCTS_CD = e.EDCTS_CD
+		WHERE p.EDCTS_CD =
+		e.EDCTS_CD
 		AND INSP_JM IS NOT NULL
 		<if test="edctsLotNo != null and edctsLotNo !=''">and EDCTS_LOT_NO LIKE '%'||#{edctsLotNo}||'%'</if>
 		<if test="startDt != null"><![CDATA[and INSP_DT >= #{startDt}]]></if>
 		<if test="endDt != null"><![CDATA[and INSP_DT <= #{endDt}]]></if>
 		ORDER BY EDCTS_LOT_NO
 	</select>
-	
-	<select id="getPrdtInspDtl" resultType="QualityVO">  
+
+	<select id="getPrdtInsp" resultType="QualityVO">
+		SELECT p.*, e.PRDT_NM
+		FROM PRDT_INSP p, EDCTS e
+		WHERE p.EDCTS_CD =
+		e.EDCTS_CD
+		AND INSP_JM IS NOT NULL
+		<if test="edctsLotNo != null and edctsLotNo !=''">and EDCTS_LOT_NO LIKE '%'||#{edctsLotNo}||'%'</if>
+		<if test="startDt != null"><![CDATA[and INSP_DT >= #{startDt}]]></if>
+		<if test="endDt != null"><![CDATA[and INSP_DT <= #{endDt}]]></if>
+		ORDER BY EDCTS_LOT_NO
+	</select>
+
+	<select id="getPrdtInspDtl" resultType="QualityVO">
 		SELECT *
 		FROM PRDT_INSP_DTL
 		WHERE EDCTS_LOT_NO = #{edctsLotNo}
 	</select>
 
-	<select id="getMatVendList" parameterType="QualityVO" resultType="QualityVO">   <!-- 업체명 조회 모달 -->
-        select VEND_CD, VEND_NM, BINZO, TELNO
-        from VEND
-        where UPPER(VEND_NM) like UPPER('%${vendNm}%')
-          and UPPER(VEND_CD) like UPPER('%${vendCd}%')
-    </select>
-	
-	<select id="getMatOrdrList" parameterType="QualityVO" resultType="QualityVO">
-        select rod.RSC_CD, rsc.RSC_NM, rod.ORDR_CD, rod.ORDR_CNT, rod.RMN_CNT, vend.VEND_NM, rsc.MNG_UNIT, rsc.RSC_SPEC
-        from RSC_ORDR ro,
-        RSC_ORDR_DTL rod,
-        VEND,
-        RSC
-        where ro.ORDR_CD = rod.ORDR_CD
-        and rod.RSC_CD = rsc.RSC_CD
-        and rod.RMN_CNT != 0
-        and ro.VEND_CD = vend.VEND_CD
-        <if test=" vendCd !=null and !vendCd.equals('') ">and ro.VEND_CD = #{vendCd}</if>
+	<select id="getMatVendList" parameterType="QualityVO"
+		resultType="QualityVO">   <!-- 업체명 조회 모달 -->
+		select VEND_CD, VEND_NM, BINZO, TELNO
+		from VEND
+		where UPPER(VEND_NM) like UPPER('%${vendNm}%')
+		and UPPER(VEND_CD) like UPPER('%${vendCd}%')
+	</select>
+
+	<select id="getMatOrdrList" parameterType="QualityVO"
+		resultType="QualityVO">
+		select rod.RSC_CD, rsc.RSC_NM, rod.ORDR_CD, rod.ORDR_CNT, rod.RMN_CNT,
+		vend.VEND_NM, rsc.MNG_UNIT, rsc.RSC_SPEC
+		from RSC_ORDR ro,
+		RSC_ORDR_DTL rod,
+		VEND,
+		RSC
+		where ro.ORDR_CD = rod.ORDR_CD
+		and rod.RSC_CD = rsc.RSC_CD
+		and rod.RMN_CNT != 0
+		and ro.VEND_CD = vend.VEND_CD
+		<if test=" vendCd !=null and !vendCd.equals('') ">and ro.VEND_CD = #{vendCd}</if>
         <![CDATA[
           and rod.PAPRD_CMND_DT >= TO_CHAR(#{startDt}, 'YYYY-MM-DD')
           and rod.PAPRD_CMND_DT <= TO_CHAR(#{endDt}, 'YYYY-MM-DD')
         ]]>
-        order by PAPRD_CMND_DT
-    </select>
-    
-    <insert id="setRscInfList">  <!--  수량 인서트 -->
-        merge into RSC_INFER
-        using dual
-        on (RSC_CD = #{insp.rscCd} and RSC_INSP_CD = #{insp.rscInspCd}
-            and ORDR_CD = #{insp.ordrCd} and CCD_DTL = #{inf.ccdDtl})
-        when matched then
-            update
-            set INF_CNT = #{inf.infCnt}
-        when not matched then
-            insert (CCD_DTL, RSC_CD, RSC_INSP_CD, INF_CNT, ORDR_CD)
-            values (#{inf.ccdDtl}, #{insp.rscCd}, #{insp.rscInspCd}, to_number(#{inf.infCnt}), #{insp.ordrCd})
-    </insert>
-    
+		order by PAPRD_CMND_DT
+	</select>
 
-    
-    <!-- 자재검사관리 검사상세 불량코드 리스트 출력 -->
-    
-    <select id="getInfCdList" resultType="QualityVO">
-        SELECT *
-        FROM CCDS_DTL
-        WHERE CCD = 'INF'
-        ORDER BY CCD_DTL
-    </select>
+	<insert id="setRscInfList">  <!-- 수량 인서트 -->
+		merge into RSC_INFER
+		using dual
+		on (RSC_CD = #{insp.rscCd} and RSC_INSP_CD = #{insp.rscInspCd}
+		and ORDR_CD = #{insp.ordrCd} and CCD_DTL = #{inf.ccdDtl})
+		when matched then
+		update
+		set INF_CNT = #{inf.infCnt}
+		when not matched then
+		insert (CCD_DTL, RSC_CD, RSC_INSP_CD, INF_CNT, ORDR_CD)
+		values (#{inf.ccdDtl}, #{insp.rscCd}, #{insp.rscInspCd},
+		to_number(#{inf.infCnt}), #{insp.ordrCd})
+	</insert>
 
 
+
+	<!-- 자재검사관리 검사상세 불량코드 리스트 출력 -->
+
+	<select id="getInfCdList" resultType="QualityVO">
+		SELECT *
+		FROM CCDS_DTL
+		WHERE CCD = 'INF'
+		ORDER BY CCD_DTL
+	</select>
+
+	<insert id="setRscInspList" parameterType="QualityVO"> 전체정보 인서트
+		insert into RSC_INSP_DTL (RSC_CD, RSC_INSP_CD, ORDR_CD, INSP_CNT,
+		INSP_PASS_CNT, PASS_RMN_CNT,
+		INSP_FAIL_CNT, PRE_IST_CNT)
+		values (#{rscCd}, #{rscInspCd}, #{ordrCd}, #{inspCnt},
+		to_number(#{inspPassCnt}), to_number(#{inspPassCnt}),
+		to_number(#{inspFailCnt}),
+		#{preIstCnt})
+	</insert>
 
 </mapper>

@@ -237,7 +237,7 @@ tr {
 							</tr>
 							<tr>
 								<td><input type="text" name="vendCd" class="form-control"
-									placeholder="업체코드"></td>
+									placeholder="업체코드" ></td>
 							</tr>
 						</tbody>
 					</table>
@@ -269,7 +269,7 @@ tr {
 				<br>
 				<div style="float: right">
 					<input type="button" id="calInfCnt" value="입력"
-						class="btn btn-primary">
+						class="btn btn-primary" data-dismiss="modal">
 				</div>
 			</div>
 		</div>
@@ -374,6 +374,7 @@ tr {
 			let vendInfo = rowInfo.vendNm
 			vendNm.value = vendInfo;
 			vendCd.value = rowInfo.vendCd;
+			getOrdr();
 			console.log(vendNm.value)
 			console.log(vendCd.value)
 			$(vendModal).modal('hide');
@@ -529,7 +530,7 @@ tr {
 				.then(res => rscGrid.resetData(res))
 		} */
 
-		function getRscListInit() {
+/* 		function getRscListInit() {
 			$.ajax({
 				url: 'getResources',
 				dataType: 'json',
@@ -540,7 +541,7 @@ tr {
 					console.error('Error:', error);
 				}
 			});
-		}
+		} */
 
 		///////////////////////////// get ordr list ////////////////////////////////
 		// get order list
@@ -576,12 +577,16 @@ tr {
 
 			})
 		});
-		
+		  getOrdr();
 		function getOrdr() {
+			document.getElementById('startDt').valueAsDate = new Date(2023,03,01);
+	        document.getElementById('endDt').valueAsDate = new Date();
 			var searchDate = {
+					
 				startDt: $('#startDt').val(),
 				endDt: $('#endDt').val(),
 				vendCd: $('#vendCd').val()
+				
 			}
 			console.log(searchDate)
 			//infData.clear();
@@ -810,7 +815,9 @@ tr {
                 this.el.select();
             }
         }
+      
 
+        
 	</script>
 </div>
 </div>
