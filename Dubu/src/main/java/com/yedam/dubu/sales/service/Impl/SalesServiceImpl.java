@@ -137,4 +137,10 @@ public class SalesServiceImpl implements SalesService {
 	public List<OustVO> findOust(OustVO vo) {
 		return salesMapper.findOust(vo);
 	}
+
+	// 출고등록 후 출고완료로 변경
+	@Override
+	public void updateProg(SalesVO vo) {
+		salesMapper.updateProg(vo);
+	}
 }

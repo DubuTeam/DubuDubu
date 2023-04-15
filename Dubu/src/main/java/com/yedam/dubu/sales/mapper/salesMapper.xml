@@ -164,8 +164,15 @@
 	</select>
 
 	<!-- 완제품 재고 모달에서 출고량 입력하여 출고테이블에 저장 -->
- 	<insert id="saveSalesOust" parameterType="OustVO" statementType="CALLABLE">
+	<insert id="saveSalesOust" parameterType="OustVO"
+		statementType="CALLABLE">
  		<![CDATA[call proc_edctsOust_save(#{edctsOustNo}, #{edctsOustCnt}, #{edctsCd}, #{edctsLotNo},#{orderNo})]]>
- 	</insert>
+	</insert>
 
+	<!-- 출고등록 후 출고완료로 변경 -->
+	<update id="updateProg" parameterType="SalesVO">
+		UPDATE ORDER_SHEET
+		SET PROG_APPE = 'Completed'
+		WHERE ORDER_NO = #{orderNo}
+	</update>
 </mapper>

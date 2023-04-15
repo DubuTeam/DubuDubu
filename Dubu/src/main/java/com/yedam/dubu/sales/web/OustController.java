@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -52,5 +53,13 @@ public class OustController {
 	@ResponseBody
 	public List<OustVO> findOust(OustVO vo) {
 		return salesService.findOust(vo);
+	}
+
+	// 출고등록 후 출고완료로 변경
+	@PutMapping("updateProg")
+	@ResponseBody
+	public SalesVO updateProg(SalesVO vo) {
+		salesService.updateProg(vo);
+		return vo;
 	}
 }
