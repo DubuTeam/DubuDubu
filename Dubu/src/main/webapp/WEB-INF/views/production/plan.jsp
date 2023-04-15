@@ -412,38 +412,6 @@ let planCd='';
                                 name: 'prdtNm'
                             },
                             {
-                                header: '라인번호',
-                                name: 'lineCd'
-                            },
-                            {
-                                header: '시작일자',
-                                name: 'wkToDt',
-                                editor: 'text',
-                                formatter: function (data) {
-                                    let dateVal = '';
-                                    if(data.value != null ){
-                                        dateVal = dateChange(data.value);
-                                    }else{
-                                        dateVal = getToday();
-                                    }
-                                    return dateVal;
-                                  }
-                            },
-                            {
-                                header: '종료일자',
-                                name: 'wkFrDt',
-                                editor: 'text',
-                                formatter: function (data) {
-                                    let dateVal = '';
-                                    if(data.value != null ){
-                                        dateVal = dateChange(data.value);
-                                    }else{
-                                        dateVal = getToday();
-                                    }
-                                    return dateVal;
-                                  }
-                            },
-                            {
                                 header: '생산수량',
                                 name: 'orderCnt'
                             },

@@ -79,7 +79,7 @@
 	<!-- 생산계획 코드 부여 -->
 	<select id="getPlanCd" resultType="ProductionVO">
 		SELECT 'PLAN_CD' || PLAN_CODE_SEQ.NEXTVAL AS PLAN_CD
-		FROM PLAN
+		FROM DUAL
 	</select>
 	<!-- 생산등록 -->
 	<update id="updatePlanYn" parameterType="ProductionVO">
@@ -89,19 +89,14 @@
 	</update>
 	<!-- 생산계획 제품 조회 -->
 	<select id="selectPlanEquip" resultType="ProductionVO">
-		SELECT O.PRDT_NM, 
-		       P.LINE_CD,
-		       P.WK_TO_DT,
-		       P.WK_FR_DT,
-		       SUM(O.ORDER_CNT) AS ORDER_CNT,
-		       P.PREF_RANK,
-		       P.PLAN_CD
-		FROM ORDER_SHEET O, PLAN_DTL P
-		WHERE O.EDCTS_CD = P.EDCTS_CD(+) AND O.ORDER_NO IN 
+		 SELECT PRDT_NM,
+               SUM(ORDER_CNT) AS ORDER_CNT
+        FROM ORDER_SHEET
+        WHERE ORDER_NO IN 
 		<foreach collection="array" item="equip" open="(" close=")" separator="," >
 		#{equip}
 		</foreach>
-        GROUP BY O.PRDT_NM, P.LINE_CD, P.WK_TO_DT, P.WK_FR_DT, P.PREF_RANK, P.PLAN_CD
+        GROUP BY PRDT_NM
 	</select>
 	<!-- 생산계획 사용가능자재 조회 -->
 	<select id="selectPlanMaterial" resultType="ProductionVO">
@@ -124,14 +119,14 @@
 	</select>
 	<!-- 생산계획 제품공정확인 -->
 	<select id="planEquipCheck" resultType="ProductionVO">
-	    SELECT I.EDCTS_CD,
+	    <!-- SELECT I.EDCTS_CD,
 	           I.LINE_CD,
 	           P.PRCS_CD,
 	           I.PLAN_CD
 	    FROM INDICA_DTL I
 	INNER JOIN PRCS_PROG P
 	        ON I.INDICA_DT = P.INDICA_DT
-	WHERE I.PLAN_CD = #{planCd}
+	WHERE I.PLAN_CD = #{planCd} -->
 	</select>
 <!-- 	 생산계획 자재확인 
 	<select id="planMaterialCheck" resultType="ProductionVO">
