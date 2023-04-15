@@ -180,25 +180,28 @@ tr {
 			</div>
 		</div>
 		<div class="body" style="margin-top: 40px;">
-			<div class="card">
-				<div class="card-body">
-					<div class="linelist" style="float: right">
-						<button class="btn btn-primary" id="delRow" style="height: 30px">
-							<i class="fas fa-minus"></i> 삭제
-						</button>
-					</div>
-					<br> <br>
-
+			<div class="card-body" style="height: 100%; border: 1px solid #ccc;">
+				<div class="d-flex justify-content-between align-items-center"
+					style="height: 40px;">
+					<h5 class="card-title" style="margin: 0; padding-left: 10px;"></h5>
+					<button class="btn btn-primary" id="delRow"
+						style="margin-right: 10px;">
+						<i class="fas fa-minus"></i> 삭제
+					</button>
 				</div>
-				<div id="grid"></div>
+				<hr style="margin: 0;">
+				<div id="grid" style="height: calc(100% - 40px);"></div>
 			</div>
 		</div>
 
 		<div class="rightside" style="margin-top: 40px;">
-			<div class="card">
-				<div class="card-body">
-					<b>검사목록</b> <br> <br>
-					<div id="mdfy-grid"></div>
+			<div class="card" style="height: 100%; border: 1px solid #ccc;">
+				<div class="card-body"
+					style="height: 100%; display: flex; flex-direction: column; justify-content: space-between; padding: 10px;">
+					<div style="overflow-y: auto; height: calc(100% - 20px);">
+						<b style="margin: 0;">검사목록</b> <br> <br>
+						<div id="mdfy-grid"></div>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -237,7 +240,7 @@ tr {
 							</tr>
 							<tr>
 								<td><input type="text" name="vendCd" class="form-control"
-									placeholder="업체코드" ></td>
+									placeholder="업체코드"></td>
 							</tr>
 						</tbody>
 					</table>
