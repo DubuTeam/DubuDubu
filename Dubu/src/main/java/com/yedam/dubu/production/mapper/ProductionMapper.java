@@ -33,11 +33,23 @@ public interface ProductionMapper {
 	// 주문서 디테일 조회
 	public List<ProductionVO> orderDetailGrid(String[] array);
 	
-	// 생산계획 코드 부여
+	// 생산계획 코드 부여 PLAN
 	public int updatePlanCd(ProductionVO vo);
 	
-	// 생산등록 - 수정
-	public int updatePlanYn(ProductionVO vo);
+	// 생산계획 코드 부여 PLAN_DTL
+	public int updatePlanDtl(ProductionVO vo);
+	
+	// 생산계획 코드 부여 INDICA
+	public int updateIndicac(ProductionVO vo);
+	
+	// 생산계획 작업 우선 순위 EQ_BOM
+	public int updateEqBom(ProductionVO vo);
+	
+	// 계획코드
+	public String planCode();
+	
+	// 생산계획코드 부여 여부 - 수정
+	//public int updatePlanYn(ProductionVO vo);
 	
 	// 생산계획 제품 조회
 	public List<ProductionVO> selectPlanEquip(String[] array);

@@ -351,10 +351,10 @@ let planCd='';
        	        console.log(reject);
        	    }
        	}); */
-    	   console.log(detailGrid.getModifiedRows().updatedRows);
+    	   console.log(gridEquip.getModifiedRows().updatedRows);
     	   $.ajax({
        	    url: 'updatePlan',
-       	    data: JSON.stringify(detailGrid.getModifiedRows({ignoredColumns: ['_attributes', 'rowKey']})),
+       	    data: JSON.stringify(gridEquip.getModifiedRows({ignoredColumns: ['_attributes', 'rowKey']})),
        	    contentType : 'application/json',
        	    type: 'POST',
        	    async: false,
@@ -422,8 +422,7 @@ let planCd='';
                             },
                             {
                                 header: '계획코드',
-                                name: 'planCd',
-                                editor: 'text'
+                                name: 'planCd'
                             }
                         ]
 

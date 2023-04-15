@@ -52,4 +52,5 @@ public class ProductionVO {
 	public String edctsCd;
 	public String rscCd;
 	public String oustcnt;
+	public int eqSq;
 }
