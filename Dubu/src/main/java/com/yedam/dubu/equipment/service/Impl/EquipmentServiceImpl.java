@@ -140,4 +140,10 @@ public class EquipmentServiceImpl implements EquipmentService{
 	public int deleteCheckList(String chckCd) {
 		return equipmentMapper.deleteCheckList(chckCd);
 	}
+	
+	// 설비 점검 검색
+	@Override
+	public List<EquipmentVO> selectSpecificEqCheckList(EquipmentVO equipmentVO) {
+		return equipmentMapper.selectSpecificEqCheckList(equipmentVO);
+	}
 }

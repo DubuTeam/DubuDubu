@@ -97,4 +97,8 @@ public interface EquipmentMapper {
 		
 		// 7. 설비 점검 삭제하기
 		public int deleteCheckList(String chckCd);
+		
+		
+		// 8. 설비 점검 검색하기
+		public List<EquipmentVO> selectSpecificEqCheckList(EquipmentVO equipmentVO);
 }

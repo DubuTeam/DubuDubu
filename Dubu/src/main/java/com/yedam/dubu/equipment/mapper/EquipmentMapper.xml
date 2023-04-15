@@ -299,5 +299,18 @@
 		DELETE FROM eqm_chck WHERE chck_cd = #{chckCd}
 	</delete>
 	
+	
+	<!-- 설비 점검 검색하기 (모달 아님) -->
+	<select id="selectSpecificEqCheckList" resultType="EquipmentVO">
+		SELECT e.prcs_cd, e.eqm_ist_dt, e.chck_perd, e.use_yn, e.prcs_nm, c.chck_cd, c.eqm_cd, c.eqm_nm, c.chck_fg, c.chck_dt, c.jdgmnt, c.dispo_matter, c.dispo_ctnt, c.chck_psch
+		FROM eqm e
+		INNER JOIN eqm_chck c
+		ON e.eqm_cd = c.eqm_cd
+		WHERE 1=1
+		<if test="stDt != null"><![CDATA[ AND c.chck_dt >= #{frDt}]]></if>
+		<if test="toDt != null"><![CDATA[ AND c.chck_dt < TO_DATE(#{toDt}+2)]]></if>
+		<if test="eqmNm != null"> AND e.eqm_nm LIKE '%'||#{keyword3}||'%'</if>
+	</select>
+
 	<!-- ↑↑↑ 설비 점검 내역 페이지 -->
 </mapper>

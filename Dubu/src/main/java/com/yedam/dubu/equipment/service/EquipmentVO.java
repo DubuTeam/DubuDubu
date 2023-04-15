@@ -62,4 +62,12 @@ public class EquipmentVO {
 	private String jdgmnt;				// 판정
 	private String chckPsch;			// 점검담당자
 	private String chckFg;
+	
+	
+	// 설비점검내역 페이지에서 검색
+	private String keyword3;				// 검색 키워드
+	@DateTimeFormat(pattern="yyyy-MM-dd")
+	private Date frDt;						// 해당 일자(~부터)
+	@DateTimeFormat(pattern="yyyy-MM-dd")
+	private Date toDt;						// 해당 일자(~까지)
 }

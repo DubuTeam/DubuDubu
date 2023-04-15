@@ -1,5 +1,6 @@
 package com.yedam.dubu.equipment.web;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -106,11 +107,8 @@ public class EquipmentController {
 //		model.addAttribute("specificEqList", equipmentService.selectSpecificEquipmentList());
 		equipmentVO.setSearchType(searchType);
 		equipmentVO.setKeyword(keyword);
-		
-		
-		
+
 		return equipmentService.selectSpecificEquipmentList(equipmentVO);
-		
 	}
 	
 	///////////////////////////////////////////////////////////////////////////
@@ -165,6 +163,19 @@ public class EquipmentController {
 		equipmentService.deleteCheckList(chckCd);
 		return "redirect:eqCheck";
 	}
+	
+	
+	// 설비 점검 검색 (모달 아님)
+	@GetMapping("/searchEqCheck")
+	@ResponseBody
+	public List<EquipmentVO> getSpecificEqCheck(EquipmentVO equipmentVO, @RequestParam String keyword3, @RequestParam Date frDt, @RequestParam Date toDt) {
+		equipmentVO.setKeyword3(keyword3);
+		equipmentVO.setFrDt(frDt);
+		equipmentVO.setToDt(toDt);
+
+		return equipmentService.selectSpecificEqCheckList(equipmentVO);
+	}
+	
 	
 	///////////////////////////////////////////////////////////////////////////
 	
