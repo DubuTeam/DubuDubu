@@ -50,9 +50,9 @@ public class MaterialVO {
 	private int expect; // 자재발주시 예상재고량
 	
 	// 자재 검사 상세 테이블
-	private String rscInspCd; // 자재 검사 코드(번호)
+	private String inspCd; // 자재 검사 코드(번호)
 	private String istCheck; // 입고여부 'Y', 'N'
-	private int psQuantity; // 입고 가능 수량
+	private int inspPassCnt; // 입고 가능 수량 (합격수량) 
 	
 	
 	// 자재 입고 테이블
