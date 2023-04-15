@@ -219,13 +219,13 @@
 							<div id="searchEqmSet">
 								설비명 <input class="form-control" type="text" id="keyword3" name="eqmNm"
 									style="width: 150px">
-								해당일자 <input type="date" class="form-control" id="stDt" name="stDt"
+								해당일자 <input type="date" class="form-control" id="frDt" name="frDt"
 									style="width: 150px;">
 								~ <input type="date" class="form-control" id="toDt" name="toDt"
-									style="width: 150px;">
+								style="width: 150px;">
 
 								<button type="button" style="margin-bottom: 3px" class="btn btn-primary"
-									id="bSearchBtn"><i class="fas fa-search"></i> 검색 </button>
+									id="chckSearchBtn"><i class="fas fa-search"></i> 검색 </button>
 
 								<!-- Modal -->
 								<div class="modal fade" id="exampleModal" tabindex="-1"

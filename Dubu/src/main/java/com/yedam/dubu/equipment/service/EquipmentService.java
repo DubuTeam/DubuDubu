@@ -87,4 +87,7 @@ public interface EquipmentService {
 	
 	// 설비 점검 삭제하기
 	public int deleteCheckList(String chckCd);
+	
+	// 설비 점검 검색하기
+	public List<EquipmentVO> selectSpecificEqCheckList(EquipmentVO equipmentVO);
 }

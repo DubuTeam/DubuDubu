@@ -43,13 +43,8 @@
 								<i class="fas fa-search"></i> 조회
 							</button>
 
-							<button type="submit" formaction="eqmOprExelView" style="width: 85px; height: 38px; margin-bottom: 4px" class="btn btn-primary" id="excelBtn">
-								<i class="fas fa-download"></i> Excel
-							</button>
-
-							<button type="button" data-bs-toggle="modal" class="btn btn-primary" id="modalBtn" data-bs-target="#insertModal" style="width: 85px; height: 38px; margin-bottom: 4px">
-								<i class="fas fa-save"></i> 등록
-							</button>
+							<button type="button" data-bs-toggle="modal" class="btn btn-primary" id="modalBtn" data-bs-target="#insertModal" style="width:85px; height:38px; margin-bottom:4px"><i
+										class="fas fa-save"></i> 등록</button>
 
 							<!-- Button trigger modal (4.6버젼) -->
 							<button type="button" style="width: 85px; height: 38px; margin-bottom: 4px" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" id="delBtn">
@@ -90,7 +85,6 @@
 				<table>
 					<thead>
 						<tr>
-							<th><input type="checkbox"></th>
 							<th>비가동코드</th>
 							<th>설비코드</th>
 							<th>설비명</th>

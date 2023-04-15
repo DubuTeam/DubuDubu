@@ -2,6 +2,92 @@ $(document).ready(function () {
 
     console.log("다음 설비 점검 코드 => " + $('#chckCd').val())
 
+    ///////////////// 설비 점검 검색 /////////////////////
+    $('#chckSearchBtn').on("click", function() {
+        // console.log($('#keyword3').val())
+        // console.log($('#frDt').val())
+        // console.log($('#toDt').val())
+
+        // if($('#frDt').val() == "") {
+        //     alert('Hello')
+        // }
+
+        let keyword3 = $('#keyword3').val()
+        let frDt = $('#frDt').val()
+        let toDt = $('#toDt').val()
+
+        console.log(keyword3)
+        console.log(frDt)
+        console.log(toDt)
+
+        // 날짜가 둘 중 하나만 입력되었을 때 (키워드 입력 유무는 상관 X)
+        if((frDt == "" && toDt != "") || (toDt == "" && frDt != "")) {
+            alert('두 날짜 모두 입력해라. 조패기전에')
+        }
+        // 날짜가 둘 다 입력되었을 때! (키워드 입력 유무는 상관 X)
+        else {
+            $.ajax({
+                url: 'searchEqCheck',
+                data: {
+                    keyword3: keyword3,
+                    frDt: frDt,
+                    toDt: toDt
+                },
+                success: function(result) {
+                    console.log(result)
+
+                    $('#keyword3').val("");
+                    $("#list").find("tr").remove();
+
+                    console.log("성공!")
+
+                    // idx 번째 행(item..?)
+                    $(result).each(function (idx, item) {
+                        console.log(idx)
+                        console.log(item)
+
+                        let tr = $("<tr />");
+
+                        tr.append($('<td />').text(item.chckCd))
+                        tr.append($('<td />').text(item.eqmCd))
+                        tr.append($('<td />').text(item.eqmNm))
+                        tr.append($('<td />').text(item.chckFg))
+                        tr.append($('<td />').text(item.dispoMatter))
+                        tr.append($('<td />').text(item.jdgmnt))
+
+                        // 체크 날짜를 yyyy-MM-dd 형식으로 변환하여 새로운 td 엘리먼트에 추가합니다.
+                        const formattedDate = $.format.date(item.chckDt, "yyyy-MM-dd");
+                        const dateTd = $('<td />').text(formattedDate);
+                        tr.append(dateTd);
+
+
+                        // 점검담당자
+                        tr.append($('<td />').text(item.chckPsch))
+
+
+                        // dispoCtnt 값을 가지는 hidden input 엘리먼트를 생성하여 새로운 td 엘리먼트에 추가합니다.
+                        const dispoInput = $('<input />', {
+                            type: 'hidden',
+                            value: item.dispoCtnt,
+                            id: 'dispoCtnt',
+                            name: 'dispoCtnt'
+                        });
+
+                        const dispoTd = $('<td />').append(dispoInput);
+                        tr.append(dispoTd);
+
+
+                        $('#list').append(tr)
+                        $('tr').attr("class", "eachRow");
+                    });
+                }
+            })
+        }
+    })
+    ///////////////// 설비 점검 검색 /////////////////////
+    
+
+    /////////////////////////////////////////////////////////////////////////////////////////
 
     $('#modal-searchBtn').on("click", function() {
         let keyword = $('#modal-keyword').val();
