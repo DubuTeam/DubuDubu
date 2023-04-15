@@ -88,21 +88,7 @@ public class ProductionServiceImpl implements ProductionService {
 		return list;
 	}
 
-	@Override
-	//public int updatePlan(List<ProductionVO> updatePlan) {
-	public int updatePlan(List<ProductionVO> updatePlanCd, List<ProductionVO> updatePlanYn) {
-		int result = 0;
-		//for(ProductionVO vo : updatePlan) {
-				//result += productionMapper.updatePlan(vo);
-			//}
-		for(ProductionVO vo : updatePlanCd) {
-			result += productionMapper.updatePlanCd(vo);
-		}
-		for(ProductionVO vo : updatePlanYn) {
-			result += productionMapper.updatePlanYn(vo);
-		}
-		return result;
-	}
+
 
 	@Override
 	public List<ProductionVO> selectPlanEquip(String orderNo) {
@@ -127,6 +113,34 @@ public class ProductionServiceImpl implements ProductionService {
 	@Override
 	public List<ProductionVO> planEquipCheck(String planCd) {
 		return productionMapper.planEquipCheck(planCd);
+	}
+
+	@Override
+	public int updatePlan(List<ProductionVO> updatePlanCd, List<ProductionVO> updateIndicac,
+						  List<ProductionVO> updatePlanDtl, List<ProductionVO> updateEqBom) {	
+		int result = 0;
+		
+		String plancd = productionMapper.planCode(); 
+		System.out.println(plancd);
+		for(ProductionVO vo : updatePlanCd) {
+			vo.setPlanCd(plancd);
+			result += productionMapper.updatePlanCd(vo);
+		}
+		for(ProductionVO vo : updateIndicac) {
+			vo.setPlanCd(plancd);
+			result += productionMapper.updateIndicac(vo);
+		}
+		for(ProductionVO vo : updatePlanDtl) {
+			vo.setPlanCd(plancd);
+			result += productionMapper.updatePlanDtl(vo);
+		}
+		for(ProductionVO vo : updateEqBom) {
+			result += productionMapper.updateEqBom(vo);
+		}
+		for(ProductionVO vo : updateEqBom) {
+			result += productionMapper.updateEqBom(vo);
+		}
+		return result;
 	}
 
 	/*

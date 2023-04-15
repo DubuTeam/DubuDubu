@@ -76,17 +76,28 @@
 	</foreach>
 	ORDER BY VEND_NM
 	</select>
-	<!-- 생산계획 코드 부여 -->
-	<select id="getPlanCd" resultType="ProductionVO">
-		SELECT 'PLAN_CD' || PLAN_CODE_SEQ.NEXTVAL AS PLAN_CD
-		FROM DUAL
+	<!-- 생산계획코드, 작업우선순위 업데이트 -->
+	<select id="planCode" resultType="String">
+		SELECT 'PLAN_CD' || PLAN_CODE_SEQ.NEXTVAL AS PLAN_CD FROM DUAL
 	</select>
+	<update id="updatePlanCd" parameterType="ProductionVO">
+		UPDATE PLAN SET PLAN_CD = #{planCd}
+	</update>
+	<update id="updatePlanDtl" parameterType="ProductionVO">
+		UPDATE PLAN_DTL SET PLAN_CD = #{planCd}
+	</update>
+	<update id="updateIndicac" parameterType="ProductionVO">
+		UPDATE INDICA SET PLAN_CD = #{planCd}
+	</update>
+	<update id="updateEqBom" parameterType="ProductionVO">
+		UPDATE EQ_BOM SET EQ_SQ	= #{eqSq}
+	</update>
 	<!-- 생산등록 -->
-	<update id="updatePlanYn" parameterType="ProductionVO">
+	<!-- <update id="updatePlanYn" parameterType="ProductionVO">
 	 	UPDATE ORDER_SHEET
 	 	SET PLAN_YN = 'Y'
 	 	WHERE ORDER_NO = #{orderNo}
-	</update>
+	</update> --> 
 	<!-- 생산계획 제품 조회 -->
 	<select id="selectPlanEquip" resultType="ProductionVO">
 		 SELECT PRDT_NM,

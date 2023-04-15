@@ -30,8 +30,8 @@ public interface ProductionService {
 	public List<ProductionVO> orderDetailGrid(String orderNo);
 	
 	// 생산계획 코드 부여
-	//public int updatePlan (List<ProductionVO> updatePlan);
-	public int updatePlan (List<ProductionVO> updatePlanCd, List<ProductionVO> updatePlanYn);
+	public int updatePlan (List<ProductionVO> updatePlanCd, List<ProductionVO> updateIndicac, 
+						   List<ProductionVO> updatePlanDtl, List<ProductionVO> updateEqBom);
 	
 	// 생산계획 제품 조회
 	public List<ProductionVO> selectPlanEquip(String orderNo);
