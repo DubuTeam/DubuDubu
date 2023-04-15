@@ -303,10 +303,16 @@ const grid = new tui.Grid({
 	  columns: [
 	  {
 	      header: '검사번호',
-	      name: 'rscInspCd',
+	      name: 'inspCd',
 	      align : 'center',
 	      sortable : true
 	    },
+	    {
+		      header: '발주번호',
+		      name: 'ordrCd',
+		      align : 'center',
+		      sortable : true
+		},
 	    {
 	      header: '자재코드',
 	      name: 'rscCd',
@@ -334,14 +340,8 @@ const grid = new tui.Grid({
 	      align : 'center'
 	    },
 	    {
-	      header: '발주번호',
-	      name: 'ordrCd',
-	      align : 'center',
-	      sortable : true
-	    },
-	    {
 	      header: '입고가능수량',
-	      name: 'psQuantity',
+	      name: 'inspPassCnt',
 	      align : 'center'
 	    },
 	    {
@@ -350,7 +350,7 @@ const grid = new tui.Grid({
 	      formatter: function (data) {
 	    	  let result = '';
 	    	  if(data.value == 0){
-	    		  result = data.row.__storage__.psQuantity;
+	    		  result = data.row.__storage__.inspPassCnt;
 	    	  }else{
 	    		  result = data.value;
 	    	  }

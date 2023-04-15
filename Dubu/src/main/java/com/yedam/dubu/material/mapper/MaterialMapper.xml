@@ -142,11 +142,11 @@
    	
    	<!-- 자재 발주 상세 삭제 => 프로시저 사용함 --> 
    	<delete id="getDeleteProcedure" statementType="CALLABLE" parameterType="MaterialVO">
-			{ call delete_material_order(
+			{ call delete_material_order (
 			    #{ordrCd, mode=IN, jdbcType=VARCHAR, javaType=String},
                 #{rscCd, mode=IN, jdbcType=VARCHAR, javaType=String}
                )
-             }
+            }
 	</delete>
 	
 	<!-- ////////////////////////////// -->
@@ -154,18 +154,18 @@
 	<!-- 입고 리스트 -->
 	<!-- 자재 입고 검사 부여된것만  -->
 	<select id="getMaterialIstList" resultType="MaterialVO">
-		SELECT rid.RSC_INSP_CD, r.RSC_CD, r.RSC_NM, r.RSC_SPEC, 
+		SELECT rid.INSP_CD, r.RSC_CD, r.RSC_NM, r.RSC_SPEC, 
        		   r.MNG_UNIT, r.RSC_TYP ,v.VEND_CD, v.VEND_NM, rid.ORDR_CD,
-       		   rid.IST_CHECK, rid.PS_QUANTITY
+       		   rid.IST_CHECK, rid.INSP_PASS_CNT
 		FROM RSC_INSP_DTL rid LEFT JOIN RSC r 
 		ON r.RSC_CD = rid.RSC_CD
 		JOIN vend v
 		ON r.VEND_CD = v.VEND_CD
-		WHERE rid.RSC_INSP_CD IS NOT NULL AND rid.IST_CHECK='N'
+		WHERE rid.INSP_CD IS NOT NULL AND rid.IST_CHECK='N'
 	    <if test="vendNm != null and !vendNm.equals('')">
 	       AND UPPER(v.VEND_NM) LIKE '%' || UPPER(#{vendNm}) || '%'
 	    </if>
-		ORDER BY RSC_INSP_CD
+		ORDER BY rid.INSP_CD, rid.ORDR_CD, rid.RSC_CD
 	</select>
 
 </mapper>
