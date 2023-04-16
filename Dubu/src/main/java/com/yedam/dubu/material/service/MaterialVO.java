@@ -20,7 +20,8 @@ public class MaterialVO {
 	private String userYn; // 사용여부
 	
 	// 자재재고테이블
-	private int avalStc; // 현재재고
+	private int rscStc; // 자재 재고 수량
+	private int avalStc; // 재고 가용 수량
 	
 	// 거래처 테이블
 	private String vendNm; // 거래처명
@@ -35,6 +36,7 @@ public class MaterialVO {
 	private String ordrReqDt2; // 발주신청일 String
 	private String startOrdrReqDt; // 발주 신청일 start
 	private String endOrdrReqDt; // 발주 신청일 end
+	private String rscProgress; // 발주 진행사항
 	
 	// 자재발주 디테일
 	private String ordrDtlCd; // 자재 상세코드
@@ -56,10 +58,17 @@ public class MaterialVO {
 	
 	
 	// 자재 입고 테이블
+	private String istCd; // 입고 코드
+	@DateTimeFormat(pattern="yyyy-MM-dd")
+	private Date istDt; // 입고 일자 
 	private int istCnt; // 입고수량
 	
 	// 자재 LOT 테이블
+	private String prcLotCd; // 자재 LOT 코드
+	private int lotCnt; // 자재 LOT 등록 수량
 	@DateTimeFormat(pattern="yyyy-MM-dd")
 	private Date expDt; // 유통기한
+	private String expDt2; // 유통기한
+	
 	
 }

@@ -86,6 +86,32 @@ public class MaterialServiceImpl implements MaterialService{
 	public List<MaterialVO> getMaterialIstList(MaterialVO materialVO) {
 		return materialMapper.getMaterialIstList(materialVO);
 	}
+
+	// 다음에 오는 입고 코드
+	@Override
+	public MaterialVO getMaterialIstCode() {
+		return materialMapper.getMaterialIstCode();
+	}
+	
+	// 입고 테이블 등록
+	@Override
+	public int getMaterialIstInsert(MaterialVO materialVO) {
+		return materialMapper.getMaterialIstInsert(materialVO);
+	}
+
+	// 입고 등록시 실행하는 프로시저
+	@Override
+	public int getIstInsertProcedure(MaterialVO materialVO) {
+		return materialMapper.getIstInsertProcedure(materialVO);
+	}
+
+	// 입고 테이블 리스트
+	@Override
+	public MaterialVO getMaterialTotalIstList() {
+		return materialMapper.getMaterialTotalIstList();
+	}
+	
+	
 	
 	
 

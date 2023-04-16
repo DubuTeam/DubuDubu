@@ -59,9 +59,7 @@
 				<div class="card">
 					<div class="card-body">
 						<div style="display: inline-block; margin: auto 0; float: right">
-							<button class="btn btn-primary" id="saveBtn">
-								<i class="fas fa-save"></i> 저장
-							</button>
+							
 						</div>
 
 						<table style="vertical-align: middle; text-align: center">
@@ -114,7 +112,7 @@
 									<th><label for="vendNm"><b>업체명</b></label></th>
 									<td>
 										<div style="display: flex;">
-											<input id="vendNm" type="text" class="form-control" placeholder="검색버튼을 이용하세요" style="width: 200px;" required readonly> 
+											<input id="vendNm" type="text" class="form-control" placeholder="검색버튼을 이용하세요" style="width: 200px;" required> 
 											<input id="vendCd" type="hidden" name="vendCd">
 											<button id="modalBtn" type="button" class="btn btn-primary" style="margin-left: 10px;">
 												<i class="fas fa-search"></i>
@@ -146,8 +144,11 @@
 					<div class="card">
 						<div class="card-body">
 							<div class="linelist" style="float: right;">
-								<button class="btn btn-primary" id="delRow" style="height: 30px">
+								<button class="btn btn-primary" id="delRow">
 									<i class="fas fa-minus"></i> 삭제
+								</button>
+								<button class="btn btn-primary" id="saveBtn">
+									<i class="fas fa-save"></i> 등록
 								</button>
 							</div>
 							<br> <br>
@@ -195,9 +196,11 @@
 					<div class="card">
 						<div class="card-body">
 							<b>입고목록</b> <br> <br>
+							<div id="istGrid"></div>
 							<!-- 조회 시 나타나는 테이블 -->
-							<div id="list-body" class="table">
-								<table>
+							<!-- <div id="list-body" class="table">
+								
+								 <table>
 									<thead>
 										<tr>
 											<th>입고코드</th>
@@ -205,7 +208,7 @@
 											<th>건수</th>
 										</tr>
 									</thead>
-									<!-- ↓↓↓여기에 조회된 결과 출력 -->
+									↓↓↓여기에 조회된 결과 출력
 									<tbody id="list">
 										<tr>
 											<td>test</td>
@@ -213,8 +216,8 @@
 											<td>test</td>
 										</tr>
 									</tbody>
-								</table>
-							</div>
+								</table> 
+							</div>-->
 							<!-- 조회시 나타나는 테이블 닫는 태그 -->
 						</div>
 					</div>
@@ -301,12 +304,19 @@ const grid = new tui.Grid({
       rowHeight: 50,
       rowHeaders: ['checkbox'],
 	  columns: [
-	  {
+	  	{
 	      header: '검사번호',
 	      name: 'inspCd',
 	      align : 'center',
 	      sortable : true
-	    },
+	  	},
+	  	{
+		      header: '자재상세번호',
+		      name: 'ordrDtlCd',
+		      align : 'center',
+		      hidden : true,
+		      sortable : true
+		},
 	    {
 		      header: '발주번호',
 		      name: 'ordrCd',
@@ -367,8 +377,19 @@ const grid = new tui.Grid({
 	    },
 	    {
 	      header: '유통기한',
-	      name: 'expDt',
+	      name: 'expDt2',
 	      align : 'center',
+	      sortingType: 'asc',
+		  sortable: true,
+		  editor: {
+              type: 'datePicker',
+              options: {
+                format: 'yyyy-MM-dd',
+                //selectableRanges: [[todayForgrid,threeMonthsLater ]]
+                language: 'ko',   //한국기준
+               date : getToday()
+              }
+          },
 	      formatter: function (data) {
             let dateVal = '';
             if(data.value != null ){
@@ -376,19 +397,13 @@ const grid = new tui.Grid({
             }else{
                dateVal = getToday();
             }
+            data.value = dateVal;
              return dateVal;
            },
-           editor: {
-               type: 'datePicker',
-               options: {
-                 format: 'yyyy-MM-dd',
-                 //selectableRanges: [[todayForgrid,threeMonthsLater ]]
-                date : getToday()
-               }
-           },
+           
            onAfterChange : function(data){ // 값이 변경되면 실행되는 함수		
    			let rowKey = data.rowKey; // 변경한 행의 index
-   			grid.addCellClassName(rowKey, 'expDt', 'cell-red'); // CSS
+   			grid.addCellClassName(rowKey, 'expDt2', 'cell-red'); // CSS
    			grid.check(rowKey); // 체크박스가 체크됨
    	      }
 	    }
@@ -408,6 +423,7 @@ const grid = new tui.Grid({
 $(document).ready(function(){
 	today();
 	searchAll();
+	istTotalList();
 });
 
 //바로 화면에 나타나는 발주전체 목록
@@ -471,6 +487,88 @@ function searchVend(vendName){
 }
  
 
+//그리드
+const istGrid = new tui.Grid({
+	  el: document.getElementById('istGrid'), // Container element
+	  scrollX: false,
+      scrollY: true,
+      bodyHeight: 400,
+      rowHeight: 50,
+      rowHeaders: ['checkbox'],
+	  columns: [
+	  	{
+	      header: '입고번호',
+	      name: 'istCd',
+	      align : 'center',
+	      sortable : true
+	  	},
+	  	{
+	      header: '입고일자',
+	      name: 'istDt',
+	      align : 'center',
+	      sortable : true
+		},
+		{
+	      header: '건수',
+	      name: 'istCnt',
+	      align : 'center',
+	      sortable : true
+		}
+	  ]
+});
+	    
+ 
+ 
+ 
+// 등록 버튼을 눌렀을때
+$('#saveBtn').on('click', function(){
+	
+	Swal.fire({
+	   title: '해당 자재를 입고 하시겠습니까?',
+	   icon: 'warning',
+	   showCancelButton: true, 
+	   confirmButtonColor: 'red', 
+	   cancelButtonColor: 'blue', 
+	   confirmButtonText: '등록', 
+	   cancelButtonText: '취소', 
+	   reverseButtons: false
+	   
+	}).then((result) => {
+		if (result.isConfirmed) {
+			
+			let data = grid.getCheckedRows();
+			console.log(data);
+			$.ajax({
+			   url: 'materialIstInsert',
+			   type: 'post',
+			   data: JSON.stringify(data),
+			   contentType : 'application/json',
+			   success: function (data) {
+				   console.log('성공');
+				   searchAll();
+				   istTotalList();
+				   
+			   },
+		 	   error: function (reject) {	   
+			       console.log(reject);
+				}
+			});
+		}
+	})
+});
+
+function istTotalList(){
+	$.ajax({
+		   url: 'materialTotalIstList',
+		   type: 'post',
+		   success: function (data) {
+			   istGrid.resetData(data);
+		   },
+	 	   error: function (reject) {	   
+		       console.log(reject);
+		}
+	});
+}
  
 
 </script>

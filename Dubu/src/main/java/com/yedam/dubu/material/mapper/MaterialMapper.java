@@ -44,5 +44,17 @@ public interface MaterialMapper {
 	// 자재 입고 리스트
 	public List<MaterialVO> getMaterialIstList(MaterialVO materialVO);
 	
+	// 다음에 오는 입고 코드
+	public MaterialVO getMaterialIstCode();
+	
+	// 입고 테이블 등록 INSERT
+	public int getMaterialIstInsert(MaterialVO materialVO);
+	
+	// 입고 등록시 실행하는 프로시저
+	public int getIstInsertProcedure(MaterialVO materialVO);
+	
+	// 입고 테이블 리스트
+	public MaterialVO getMaterialTotalIstList();
+	
 	
 }
