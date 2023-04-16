@@ -158,11 +158,16 @@
 												<select class="dataTable-selector" name="eqmFg" id="eqmFg"
 													style="width: 250px">
 													<option value="" selected>==등록시필수선택==</option>
-													<option value="포장파트">포장파트</option>
-													<option value="살균파트">살균파트</option>
 													<option value="응고파트">응고파트</option>
-													<option value="튀김파트">튀김파트</option>
+													<option value="파쇄파트">파쇄파트</option>
+													<option value="압착파트">압착파트</option>
+													<option value="성형파트">성형파트</option>
+													<option value="포장파트">포장파트</option>
 													<option value="냉각파트">냉각파트</option>
+													<option value="냉각파트">용기증진파트</option>
+													<option value="가열살균파트">가열살균파트</option>
+													<option value="물빼기파트">물빼기파트</option>
+													<option value="튀김파트">튀김파트</option>
 												</select>
 											</td>
 
