@@ -70,7 +70,7 @@
 	<!-- *자재 발주 조회 페이지* -->
 	<!-- 자재 발주 조회 -->
 	<select id="getMaterialOrderList" resultType="MaterialVO">
-		SELECT r.ORDR_CD, r.VEND_CD, v.VEND_NM, r.ORDR_REQ_DT
+		SELECT r.ORDR_CD, r.VEND_CD, v.VEND_NM, r.ORDR_REQ_DT, r.RSC_PROGRESS
 		FROM RSC_ORDR r JOIN VEND v
 		ON r.VEND_CD = v.VEND_CD
 		<where>
@@ -154,10 +154,10 @@
 	<!-- 입고 리스트 -->
 	<!-- 자재 입고 검사 부여된것만  -->
 	<select id="getMaterialIstList" resultType="MaterialVO">
-		SELECT rid.INSP_CD, r.RSC_CD, r.RSC_NM, r.RSC_SPEC, 
-       		   r.MNG_UNIT, r.RSC_TYP ,v.VEND_CD, v.VEND_NM, rid.ORDR_CD,
+		SELECT rid.INSP_CD, rid.ORDR_DTL_CD, rid.ORDR_CD, r.RSC_CD, r.RSC_NM, r.RSC_SPEC, 
+       		   r.MNG_UNIT, r.RSC_TYP ,v.VEND_CD, v.VEND_NM, 
        		   rid.IST_CHECK, rid.INSP_PASS_CNT
-		FROM RSC_INSP_DTL rid LEFT JOIN RSC r 
+		FROM RSC_INSP_DTL rid JOIN RSC r 
 		ON r.RSC_CD = rid.RSC_CD
 		JOIN vend v
 		ON r.VEND_CD = v.VEND_CD
@@ -167,5 +167,31 @@
 	    </if>
 		ORDER BY rid.INSP_CD, rid.ORDR_CD, rid.RSC_CD
 	</select>
+	
+	<!-- 입고 코드 부여 -->
+	<select id="getMaterialIstCode" resultType="MaterialVO">
+	    SELECT 'IST' || RSC_IST_SEQ.NEXTVAL as istCd
+	    FROM DUAL
+	</select>
+	
+	<!-- 입고 테이블에 등록 -->
+	<insert id="getMaterialIstInsert" parameterType="MaterialVO">
+		INSERT INTO RSC_IST(IST_CD,IST_DT,IST_CNT)
+    	VALUES(#{istCd}, sysdate, #{inspPassCnt})
+    </insert>
+    
+    <!-- 자재입고시(등록) 실행하는 프로시저 --> 
+   	<insert id="getIstInsertProcedure" statementType="CALLABLE" parameterType="MaterialVO">
+			{ call material_Ist_Insert (
+			    #{istCd}, #{ordrDtlCd}, #{ordrCd}, #{rscCd},#{inspCd},#{inspPassCnt},#{expDt2}
+              )
+            }
+	</insert>
+	
+	<select id="getMaterialTotalIstList" resultType="MaterialVO">
+		SELECT *
+		FROM RSC_IST
+	</select>
+	
 
 </mapper>

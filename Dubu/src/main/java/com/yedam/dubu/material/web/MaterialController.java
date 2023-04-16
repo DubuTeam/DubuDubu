@@ -1,5 +1,6 @@
 package com.yedam.dubu.material.web;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.yedam.dubu.material.service.MaterialService;
@@ -181,7 +183,42 @@ public class MaterialController {
 	public List<MaterialVO> getMaterialIistList(MaterialVO materialVO) {
 		return materialService.getMaterialIstList(materialVO);
 	}
-
+	
+	
+	@PostMapping("/materialIstInsert")
+	@ResponseBody
+	public int getMaterialIstInsert(@RequestBody List<MaterialVO> materialVO) {
+		
+		MaterialVO material = new MaterialVO();
+		int istCnt = materialVO.size(); // 입고 건수
+		int r = 0;
+		
+		material.setIstCd(materialService.getMaterialIstCode().getIstCd()); // 입고 코드
+		material.setIstCnt(istCnt); // 입고 건수
+		r = materialService.getMaterialIstInsert(material);
+		
+		for(int i = 0 ; i < istCnt; i++) {
+			material.setOrdrDtlCd(materialVO.get(i).getOrdrDtlCd()); // 자재 상세코드
+			material.setOrdrCd(materialVO.get(i).getOrdrCd()); // 발주코드
+			material.setRscCd(materialVO.get(i).getRscCd()); // 자재코드
+			material.setInspCd(materialVO.get(i).getInspCd()); // 검사코드
+			material.setInspPassCnt(materialVO.get(i).getInspPassCnt()); // 입고수량
+			material.setExpDt2(materialVO.get(i).getExpDt2()); // 유통기한
+			r += materialService.getIstInsertProcedure(material);
+		}
+		
+		return r;
+		
+	}
+	
+	
+	@PostMapping("/materialTotalIstList")
+	@ResponseBody
+	public MaterialVO getMaterialTotalIstList() {
+		return materialService.getMaterialTotalIstList();
+	}
+	
+	//////////////////////////////////////////////////////////////
 
 	// 자재입고조회
 	@GetMapping("/materialIstList")

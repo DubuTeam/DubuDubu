@@ -753,10 +753,14 @@ const grid = new tui.Grid({
 	      align : 'center',
 	      sortable : true,
 	      formatter : function(data){ // 날짜형식 바꿔주는것
-              return dateFormat(data.value);
-         }
-
-	    }
+              return dateFormat(data.value); 
+         	}
+	     },
+         {
+   	      header: '발주진행사항',
+   	      name: 'rscProgress',
+   	      align : 'center'
+   	    }
 	  ]
 	  /* data: [
 	    {
@@ -987,13 +991,30 @@ $('#listDelBtn').on('click', function(){
 	   cancelButtonColor: 'blue', 
 	   confirmButtonText: '삭제', 
 	   cancelButtonText: '취소', 
-	   reverseButtons: false,
+	   reverseButtons: false
 	   
 	}).then((result) => {
 			
 	  if (result.isConfirmed) {
+		  let rowKeys = grid.getCheckedRowKeys(); // 키값이 배열 형태로 들어감 : ex. [0,1]
+		  let progress = "";
+		  for(let i = 0; i < rowKeys.length; i++){  // rowKeys만큼 for문을 돌림
+			  progress = grid.getRow(rowKeys[i]).rscProgress;
+		  	  //console.log(progress);
+			  if(progress !="발주신청"){
+				  //console.log('if' + progress);
+				  Swal.fire({
+					   title: '해당 자재 발주는 삭제 할 수 없습니다.',
+					   text:  '해당 발주는 ' + grid.getRow(rowKeys[i]).rscProgress + '상태이므로 삭제 할수 없습니다',
+					   icon: 'error',
+					   showCancelButton: true
+				})
+			  	return; // for문 함수종료
+			  }
+		  }
+		  
 		let ordrCd = "";
-		let rowKeys = grid.getCheckedRowKeys(); // 키값이 배열 형태로 들어감 : ex. [0,1]
+		
 				
 		for(let i = 0; i< rowKeys.length ; i++){ // rowKeys만큼 for문을 돌림
 			//console.log(rowKeys[i]);
