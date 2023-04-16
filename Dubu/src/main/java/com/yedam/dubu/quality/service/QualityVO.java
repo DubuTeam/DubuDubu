@@ -77,6 +77,7 @@ public class QualityVO {
 		private String endOrdrReqDt; // 발주 신청일 end
 		
 		// 자재발주 디테일
+		private String ordrDtlCd; //자재상세코드
 		private int ordrCnt; // 발주량
 		private String ordrCnt2; // 발주량 String
 		private int rmnCnt; // 미입고 잔량
@@ -101,6 +102,7 @@ public class QualityVO {
 		private String ccdDtlNm;//공통코드상세명
 		private String ccdDtlDesct;//공통코드상세설명
 		private String dtlUseYn; //상세코드사용여부
+		
 	
 	
 	

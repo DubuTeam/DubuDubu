@@ -288,7 +288,7 @@ tr {
 		}) */
 		$(function () {
 			getVendListInit();
-			getRscListInit();
+			//getRscListInit();
 		})
 
 
@@ -445,6 +445,12 @@ tr {
 					name: 'vendNm',
 					align: 'center'
 				},
+				 {
+					header: '자재상세코드',
+					name: 'ordrDtlCd',
+					align: 'center',
+					hidden: true
+				}, 
 				{
 					header: '발주번호',
 					name: 'ordrCd',
@@ -520,7 +526,8 @@ tr {
 				{
 					header: '불량수량',
 					name: 'inspFailCnt',
-					align: 'right'
+					align: 'right',
+					editor: 'text'
 				}
 			]
 			, editingEvent: 'click'
@@ -607,7 +614,7 @@ tr {
 					type: 'POST',
 					data: searchDate,
 					success: function (res) {
-
+						console.log(res);
 						grid.resetData(res);
 					},
 					error: function (xhr, status, error) {

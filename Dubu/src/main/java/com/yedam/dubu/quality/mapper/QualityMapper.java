@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 import com.yedam.dubu.quality.service.QualityVO;
+import com.yedam.dubu.quality.service.RscInspVO;
 
 public interface QualityMapper {
 	
@@ -25,8 +26,17 @@ public interface QualityMapper {
 	   // List<QualityVO> getResources(QualityVO qualityVO);
 	    
 	    // 검사상세
-	    List<QualityVO> getInfCdList();
+	    void setRscInspList(RscInspVO rscInspVOS);
+	    void setRscInsp(RscInspVO rscInspVO);
 	    void setRscInfList(@Param("insp") QualityVO insp, @Param("inf") QualityVO inf);
 	    
+	    
+	    String genRscNoOrdrCd();  //검사코드
+	    String genRscInspCd();
+	    List<QualityVO> getInfCdList();
+	    
+	    
+	   
+	   
 	    
 }

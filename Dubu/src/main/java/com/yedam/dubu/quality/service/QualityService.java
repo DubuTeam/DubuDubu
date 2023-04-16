@@ -15,9 +15,12 @@ public interface QualityService {
 	
 	List<QualityVO> getMatVendList(QualityVO qualityVO);
     List<QualityVO> getMatOrdrList(QualityVO qualityVO);
+    void setRscInspList(List<RscInspVO> rscInspVOS);
+    
     
     //자재관련조회
   //  List<QualityVO> getResources(QualityVO qualityVO);
     // 검사상세
     List<QualityVO> getInfCdList();
+    
 }

@@ -43,6 +43,7 @@ import lombok.NoArgsConstructor;
 	    private int inspCnt; //검사수량
 	    private int inspPassCnt; // 합격수량
 	    private int inspFailCnt; // 불량수량
+	    private String ordrDtlCd; //자재상세코드
 
 	    private int passRmnCnt; // 합격잔여수량
 
