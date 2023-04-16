@@ -200,6 +200,31 @@ public class EquipmentController {
 	}
 	
 	
+	// 비가동 목록 추가
+	@PostMapping("/insertEqIpopr")
+	@ResponseBody
+	public String eqIpoprInsertProcess(EquipmentVO equipmentVO) {
+		equipmentService.insertEqIpopr(equipmentVO);		// <- 여기서..정보가 담긴 VO 객체를 가지고, 직접적인 DB 랑 연결.
+		
+		return "redirect:eqIpopr";
+	}
+	
+	// 비가동 목록 수정
+	@PostMapping("/updateEqIpopr")
+	@ResponseBody
+	public String eqIpoprUpdateProcess(EquipmentVO equipmentVO) {
+		equipmentService.updateEqIpopr(equipmentVO);
+		return "redirect:eqIpopr";
+	}
+	
+	@PostMapping("/deleteEqIpopr")
+	@ResponseBody
+	public String deleteeqIpopr(String noprCd) {
+		equipmentService.deleteEqIpopr(noprCd);
+		System.out.println("출력 테스트" + noprCd);
+		return "redirect:eqCheck";
+	}
+	
 	///////////////////////////////////////////////////////////////////////////
 	
 	

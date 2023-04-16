@@ -318,7 +318,7 @@
 	
 	<!-- (모달 밖) 모든 비가동 관리 리스트 출력 -->
 	<select id="selectAllEqIpoprList" resultType="EquipmentVO">
-		SELECT nopr_cd, eqm_cd, eqm_nm, fr_dt, to_dt, eqm_yn  FROM eqm_opr ORDER BY nopr_cd
+		SELECT nopr_cd, eqm_cd, eqm_nm, fr_dt, to_dt, eqm_yn, eqm_psch, opert_ctnt FROM eqm_opr ORDER BY nopr_cd
 	</select>
 	
 	<!-- 부여될 비가동 코드를 미리 조회 (등록과 관련)  -  라인명은 NOPR0001, NOPR0002  이런식으로 문자열이다. -->
@@ -328,6 +328,53 @@
 		    'NOPR'||LPAD(REPLACE(MAX(nopr_cd), 'NOPR') + 1, 4, '0'), 'NOPR0001')
 		FROM eqm_opr
 	</select>
+	
+	
+	<!-- 비가동 등록하기 -->
+	<insert id="insertEqIpopr" parameterType="equipmentVO">
+		INSERT INTO eqm_opr 
+		                (
+							nopr_cd,
+							eqm_cd,
+							fr_dt,
+							to_dt,
+							opert_ctnt,
+							eqm_psch,
+							eqm_nm,
+							eqm_yn
+		                )
+		        VALUES (
+			        		#{noprCd},
+			                #{eqmCd},
+			                #{frDt},
+			                #{toDt},
+			                #{opertCtnt},
+			                #{eqmPsch},
+			                #{eqmNm},
+			                #{eqmYn}
+		                )
+	</insert>
+	
+	<!-- 비가동 수정하기 -->
+	<update id="updateEqIpopr" parameterType="equipmentVO">
+		UPDATE eqm_opr
+		SET
+			nopr_cd = #{noprCd},
+			eqm_cd = #{eqmCd},
+			fr_dt = #{frDt},
+			to_dt = #{toDt},
+			opert_ctnt = #{opertCtnt},
+			eqm_psch = #{eqmPsch},
+			eqm_nm = #{eqmNm},
+			eqm_yn = #{eqmYn}
+		WHERE nopr_cd = #{noprCd}
+	</update>
+	
+	<!-- 비가동 삭제하기 -->
+	<delete id="deleteEqIpopr" parameterType="String">
+		DELETE FROM eqm_opr WHERE nopr_cd = #{noprCd}
+	</delete>
+	
 	
 	<!-- ↑↑↑ 비가동 관리 페이지 -->
 </mapper>
