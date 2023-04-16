@@ -48,6 +48,9 @@ public interface ProductionMapper {
 	// 생산계획 코드 부여 INDICA
 	public int updateIndicac(ProductionVO vo);
 	
+	// 생산계획 코드 부여 ORDER_SHEET
+	public int updateOrderSheet(ProductionVO vo);
+	
 	// 생산계획 작업 우선 순위 EQ_BOM
 	public int updateEqBom(ProductionVO vo);
 	
