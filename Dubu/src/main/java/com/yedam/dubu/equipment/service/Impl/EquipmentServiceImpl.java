@@ -146,4 +146,18 @@ public class EquipmentServiceImpl implements EquipmentService{
 	public List<EquipmentVO> selectSpecificEqCheckList(EquipmentVO equipmentVO) {
 		return equipmentMapper.selectSpecificEqCheckList(equipmentVO);
 	}
+
+	
+	/////////////////////////////////////////////////////////////////////////
+	
+	
+	@Override
+	public List<EquipmentVO> selectAllEqIpoprList() {
+		return equipmentMapper.selectAllEqIpoprList();
+	}
+
+	@Override
+	public String getNoprCode() {
+		return equipmentMapper.getNoprCode();
+	}
 }

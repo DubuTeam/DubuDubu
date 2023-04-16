@@ -101,4 +101,17 @@ public interface EquipmentMapper {
 		
 		// 8. 설비 점검 검색하기
 		public List<EquipmentVO> selectSpecificEqCheckList(EquipmentVO equipmentVO);
+		
+		
+		/////////////////////////////////////////////////////////////////////////
+		
+		
+		// <<< 비가동 관리 페이지 >>>
+		
+		
+		// 1. 전체 비가동 조회
+		public List<EquipmentVO> selectAllEqIpoprList();
+		
+		// 2. 자동으로 부여될 비가동 코드
+		public String getNoprCode();
 }

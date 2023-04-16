@@ -32,3 +32,8 @@ label {
 #SEqmNm, #STrDt, #SToDt, #modalBtn {
     margin: 0px 10px;
 }
+
+/* 검색 기능으로 찾은 목록들 위에다가 커서 올렸을 때 */
+.eachRow:hover, .eachRowInModal:hover, #list > .selectedRows:hover {
+	background-color: rgb(233, 233, 233);
+}

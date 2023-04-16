@@ -90,4 +90,16 @@ public interface EquipmentService {
 	
 	// 설비 점검 검색하기
 	public List<EquipmentVO> selectSpecificEqCheckList(EquipmentVO equipmentVO);
+	
+	
+	/////////////////////////////////////////////////////////////////////////
+	
+	
+	// 4. 비가동 관리 테이블
+	
+	// 전체 비가동 조회
+	public List<EquipmentVO> selectAllEqIpoprList();
+	
+	// 자동으로 부여될 비가동 코드
+	public String getNoprCode();
 }

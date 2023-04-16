@@ -307,10 +307,27 @@
 		INNER JOIN eqm_chck c
 		ON e.eqm_cd = c.eqm_cd
 		WHERE 1=1
-		<if test="stDt != null"><![CDATA[ AND c.chck_dt >= #{frDt}]]></if>
-		<if test="toDt != null"><![CDATA[ AND c.chck_dt < TO_DATE(#{toDt}+2)]]></if>
+		<if test="searchFrDt != null"><![CDATA[ AND c.chck_dt >= TO_DATE(#{searchFrDt})]]></if>
+		<if test="searchToDt != null"><![CDATA[ AND c.chck_dt < TO_DATE(#{searchToDt}+2)]]></if>
 		<if test="eqmNm != null"> AND e.eqm_nm LIKE '%'||#{keyword3}||'%'</if>
 	</select>
 
 	<!-- ↑↑↑ 설비 점검 내역 페이지 -->
+	<!-- ↓↓↓ 비가동 관리 페이지 -->
+	
+	
+	<!-- (모달 밖) 모든 비가동 관리 리스트 출력 -->
+	<select id="selectAllEqIpoprList" resultType="EquipmentVO">
+		SELECT nopr_cd, eqm_cd, eqm_nm, fr_dt, to_dt, eqm_yn  FROM eqm_opr ORDER BY nopr_cd
+	</select>
+	
+	<!-- 부여될 비가동 코드를 미리 조회 (등록과 관련)  -  라인명은 NOPR0001, NOPR0002  이런식으로 문자열이다. -->
+	<select id="getNoprCode" resultType="String">
+		SELECT
+		    NVL2(MAX(nopr_cd),
+		    'NOPR'||LPAD(REPLACE(MAX(nopr_cd), 'NOPR') + 1, 4, '0'), 'NOPR0001')
+		FROM eqm_opr
+	</select>
+	
+	<!-- ↑↑↑ 비가동 관리 페이지 -->
 </mapper>

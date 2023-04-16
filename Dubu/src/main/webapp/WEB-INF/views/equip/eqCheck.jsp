@@ -219,9 +219,9 @@
 							<div id="searchEqmSet">
 								설비명 <input class="form-control" type="text" id="keyword3" name="eqmNm"
 									style="width: 150px">
-								해당일자 <input type="date" class="form-control" id="frDt" name="frDt"
+								해당일자 <input type="date" class="form-control" id="searchFrDt" name="searchFrDt"
 									style="width: 150px;">
-								~ <input type="date" class="form-control" id="toDt" name="toDt"
+								~ <input type="date" class="form-control" id="searchToDt" name="searchToDt"
 								style="width: 150px;">
 
 								<button type="button" style="margin-bottom: 3px" class="btn btn-primary"
