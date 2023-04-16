@@ -759,7 +759,8 @@ const grid = new tui.Grid({
          {
    	      header: '발주진행사항',
    	      name: 'rscProgress',
-   	      align : 'center'
+   	      align : 'center',
+   	   	  sortable : true
    	    }
 	  ]
 	  /* data: [
