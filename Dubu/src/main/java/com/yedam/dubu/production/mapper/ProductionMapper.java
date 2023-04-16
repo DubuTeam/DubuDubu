@@ -31,7 +31,13 @@ public interface ProductionMapper {
 	//public List<ProductionVO> selectOrderList();
 	
 	// 주문서 디테일 조회
-	public List<ProductionVO> orderDetailGrid(String[] array);
+	public List<ProductionVO> orderDetailGrid(ProductionVO productionVO);
+	
+	// 생산계획 제품명 추가
+	public int insertPlanNm(ProductionVO productionVO);
+	
+	//샹선걔획 생산량 추가
+	public int insertPlanCnt(ProductionVO productionVO);
 	
 	// 생산계획 코드 부여 PLAN
 	public int updatePlanCd(ProductionVO vo);
@@ -52,9 +58,9 @@ public interface ProductionMapper {
 	//public int updatePlanYn(ProductionVO vo);
 	
 	// 생산계획 제품 조회
-	public List<ProductionVO> selectPlanEquip(String[] array);
+	public List<ProductionVO> selectPlanEquip(ProductionVO productionVO);
 	// 생산계획 사용가능자재 조회
-	public List<ProductionVO> selectPlanMaterial(String[] array);
+	public List<ProductionVO> selectPlanMaterial(ProductionVO productionVO);
 	// 생산계획 제품공정확인 조회
 	public List<ProductionVO> planEquipCheck(@Param("planCd")String planCd);
 	// 생산계획 자재확인 조회

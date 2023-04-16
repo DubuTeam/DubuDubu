@@ -29,6 +29,10 @@ public interface ProductionService {
 	// 주문서 디테일 조회
 	public List<ProductionVO> orderDetailGrid(String orderNo);
 	
+	// 생산계획 등록
+	public int insertPlan(List<ProductionVO> name, List<ProductionVO> cnt);
+	
+	
 	// 생산계획 코드 부여
 	public int updatePlan (List<ProductionVO> updatePlanCd, List<ProductionVO> updateIndicac, 
 						   List<ProductionVO> updatePlanDtl, List<ProductionVO> updateEqBom);
