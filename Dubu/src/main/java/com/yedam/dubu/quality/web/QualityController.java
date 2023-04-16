@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.yedam.dubu.quality.service.QualityService;
@@ -90,4 +91,14 @@ public class QualityController {
         return qualityService.getInfCdList();
     }
 	
+    @RequestMapping("schRscInspHist")
+    @ResponseBody
+    public List<RscInspVO> schRscInspHist(@ModelAttribute RscInspVO rscInspVO) {
+        return qualityService.schRscInspHist(rscInspVO);
+    }
+    
+	/*
+	 * @PostMapping("upRscProg") public List<RscInspVO> upRscProg(@RequestBody
+	 * String ordrCd) { return qualityService.upRscProg(ordrCd); }
+	 */
 }

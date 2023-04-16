@@ -35,7 +35,7 @@ import lombok.NoArgsConstructor;
 	    private int ordrCnt; // 발주수량
 	    private int preIstCnt; // 가입고수량
 
-	    private String rscInspCd; // 검사코드
+	    private String inspCd; // 검사코드
 	    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
 	    @DateTimeFormat(pattern="yyyy-MM-dd")
 	    private Date inspDt; // 검사일자
@@ -50,5 +50,16 @@ import lombok.NoArgsConstructor;
 	    private String from; // from where?
 
 	    private List<RscInfVO> rscInfList; //불량목록
+		private String rscInspCd;
+	    private String rscProgress;// 검사완료
+	    private int inspDtlCd;
+	    
+	    public String getRscInspCd() {
+	        return rscInspCd;
+	    }
+
+	    public void setRscInspCd(String rscInspCd) {
+	        this.rscInspCd = rscInspCd;
+	    }
 	
 }
