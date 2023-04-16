@@ -177,7 +177,7 @@
 	<!-- 입고 테이블에 등록 -->
 	<insert id="getMaterialIstInsert" parameterType="MaterialVO">
 		INSERT INTO RSC_IST(IST_CD,IST_DT,IST_CNT)
-    	VALUES(#{istCd}, sysdate, #{inspPassCnt})
+    	VALUES(#{istCd}, sysdate, #{istCnt})
     </insert>
     
     <!-- 자재입고시(등록) 실행하는 프로시저 --> 
@@ -188,10 +188,73 @@
             }
 	</insert>
 	
+	<!-- 프로 시저 이용하여 입고등록함 -->
+	<!-- 
+	create or replace PROCEDURE material_Ist_Insert(
+        p_IST_CD IN RSC_IST.IST_CD%TYPE,  입고 코드
+        p_ORDR_DTL_CD IN RSC_ORDR_DTL.ORDR_DTL_CD%TYPE, 
+        p_RSC_ORDR IN RSC_ORDR.ORDR_CD%TYPE,  자재 발주번호
+        p_RSC_CD IN RSC_ORDR_DTL.RSC_CD%TYPE,  자재코드
+        p_INSP_CD IN RSC_INSP.INSP_CD%TYPE,  검사코드
+        p_INSP_PASS_CNT IN RSC_INSP_DTL.INSP_PASS_CNT%TYPE,  입고가능수량
+        p_EXP_DT IN RSC_LOT.EXP_DT%TYPE  유통기한
+    )
+	IS
+	p_prc_lot_cd RSC_LOT.PRC_LOT_CD%TYPE;  자재 LOT코드
+	BEGIN
+	
+	     자재 LOT 코드부여
+	    SELECT 'MaterialLOT' || RSC_LOT_SEQ.NEXTVAL as prcLotCd
+	    INTO p_prc_lot_cd
+	    FROM DUAL;
+	
+	     자재 LOT테이블에 INSERT
+	    INSERT INTO RSC_LOT(PRC_LOT_CD, IST_CD, ORDR_DTL_CD, ORDR_CD, RSC_CD, INSP_CD, LOT_CNT, EXP_DT)
+	    VALUES(p_prc_lot_cd, p_IST_CD, p_ORDR_DTL_CD, p_RSC_ORDR, p_RSC_CD, p_INSP_CD,p_INSP_PASS_CNT,p_EXP_DT);
+	
+	     자재 재고 테이블에 UPDATE
+	    UPDATE RSC_STC
+	    SET RSC_STC = RSC_STC + p_INSP_PASS_CNT, AVAL_STC = AVAL_STC + p_INSP_PASS_CNT
+	    WHERE RSC_CD = p_RSC_CD;
+	
+	     자재 재고 이력 INSERT
+	    INSERT INTO RSC_STC_HIST(RSC_CD, CLS_YYMM, IST_CNT, OUST_CNT)
+	    VALUES(p_RSC_CD, sysdate, p_INSP_PASS_CNT,0);
+	
+	     자재 발주의 진행사항 UPDATE
+	    UPDATE RSC_ORDR
+	    SET RSC_progress = '입고완료'
+	    WHERE ORDR_CD = p_RSC_ORDR;
+	
+	     검사 상세 디테일에 입고여부
+	    UPDATE RSC_INSP_DTL
+	    SET IST_CHECK = 'Y'
+	    WHERE INSP_CD = p_INSP_CD;
+	
+	END material_Ist_Insert; -->
+	
+	<!-- 자재 입고 헤더 리스트 -->
 	<select id="getMaterialTotalIstList" resultType="MaterialVO">
-		SELECT *
+		SELECT IST_CD, IST_DT, IST_CNT 
 		FROM RSC_IST
+		ORDER BY IST_CD
 	</select>
+	
+	<!--  자재 입고 상세 리스트 -->
+	<select id="getMaterialIstDetail" resultType="MaterialVO">
+		SELECT rid.INSP_CD, rid.ORDR_DTL_CD, rid.ORDR_CD, r.RSC_CD, r.RSC_NM, r.RSC_SPEC, 
+       		   r.MNG_UNIT, r.RSC_TYP ,v.VEND_CD, v.VEND_NM, 
+       		   rid.IST_CHECK, rid.INSP_PASS_CNT, rl.IST_CD
+		FROM RSC_INSP_DTL rid JOIN RSC r 
+		ON r.RSC_CD = rid.RSC_CD
+		JOIN vend v
+		ON r.VEND_CD = v.VEND_CD
+        JOIN RSC_LOT rl
+        ON rid.ORDR_DTL_CD = rl.ORDR_DTL_CD 
+		WHERE rid.IST_CHECK='Y' AND rl.IST_CD = #{istCd}
+        ORDER BY INSP_CD
+	</select>
+	
 	
 
 </mapper>
