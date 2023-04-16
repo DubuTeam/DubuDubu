@@ -65,17 +65,19 @@
 	</select>
 	<!-- 주문서 디테일 조회 -->
 	<select id="orderDetailGrid" resultType="ProductionVO">
-		SELECT ORDER_NO,
-		       VEND_NM,
-		       PRDT_NM,
-		       ORDER_CNT
-		FROM ORDER_SHEET
-		WHERE ORDER_NO IN
-	<foreach collection="array" item="test" open="(" close=")" separator="," >
-		#{test}
-	</foreach>
-	ORDER BY VEND_NM
+		SELECT O.ORDER_NO, 
+		       O.VEND_NM, 
+		       P.PRDT_NM, 
+		       O.ORDER_CNT 
+		FROM ORDER_SHEET O  
+		JOIN EDCTS P 
+		ON P.EDCTS_CD= O.EDCTS_CD
+		WHERE ORDER_NO = #{orderNo}
 	</select>
+	<!-- 생산계획 제품명 추가 -->
+	<insert id="insertPlanNm" parameterType="ProductionVO">
+		
+	</insert>
 	<!-- 생산계획코드, 작업우선순위 업데이트 -->
 	<select id="planCode" resultType="String">
 		SELECT 'PLAN_CD' || PLAN_CODE_SEQ.NEXTVAL AS PLAN_CD FROM DUAL
@@ -100,14 +102,14 @@
 	</update> --> 
 	<!-- 생산계획 제품 조회 -->
 	<select id="selectPlanEquip" resultType="ProductionVO">
-		 SELECT PRDT_NM,
-               SUM(ORDER_CNT) AS ORDER_CNT
-        FROM ORDER_SHEET
-        WHERE ORDER_NO IN 
-		<foreach collection="array" item="equip" open="(" close=")" separator="," >
-		#{equip}
-		</foreach>
-        GROUP BY PRDT_NM
+		 SELECT O.PRDT_NM,
+                SUM(O.ORDER_CNT) AS ORDER_CNT,
+                P.PLAN_CD
+        FROM ORDER_SHEET O
+        INNER JOIN PLAN P
+        ON O.ORDER_NO = P.ORDER_NO
+        WHERE O.ORDER_NO = #{orderNo} 
+        GROUP BY O.PRDT_NM, P.PLAN_CD
 	</select>
 	<!-- 생산계획 사용가능자재 조회 -->
 	<select id="selectPlanMaterial" resultType="ProductionVO">
@@ -122,22 +124,21 @@
 	    ON R.RSC_CD = B.RSC_CD
      INNER JOIN ORDER_SHEET O
         ON R.VEND_CD = O.VEND_CD
-     WHERE O.ORDER_NO IN
-		<foreach collection="array" item="material" open="(" close=")" separator="," >
-		#{material}
-		</foreach>
+     WHERE O.ORDER_NO = #{orderNo}
 	GROUP BY R.RSC_CD, R.RSC_NM, S.AVAL_STC
 	</select>
 	<!-- 생산계획 제품공정확인 -->
 	<select id="planEquipCheck" resultType="ProductionVO">
-	    <!-- SELECT I.EDCTS_CD,
-	           I.LINE_CD,
-	           P.PRCS_CD,
-	           I.PLAN_CD
-	    FROM INDICA_DTL I
-	INNER JOIN PRCS_PROG P
-	        ON I.INDICA_DT = P.INDICA_DT
-	WHERE I.PLAN_CD = #{planCd} -->
+		SELECT B.EQ_SQ,
+		       B.PRCS_CD,
+		       P.PRCS_NM
+		FROM PRCS P
+		INNER JOIN EQ_BOM B
+		ON B.PRCS_CD = P.PRCS_CD
+		INNER JOIN PLAN_DTL L
+		ON B.BOM_CD = L.BOM_CD
+		WHERE L.PLAN_CD = #{planCd}
+		ORDER BY EQ_SQ
 	</select>
 <!-- 	 생산계획 자재확인 
 	<select id="planMaterialCheck" resultType="ProductionVO">

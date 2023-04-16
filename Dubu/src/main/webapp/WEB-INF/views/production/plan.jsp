@@ -68,8 +68,8 @@
 											<div id="orderGrid"></div>									
 									</div>
 									<div class="modal-footer">
-										<button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
-										<button type="button" class="btn btn-primary" onclick="addOrder()">등록</button>
+										<!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button> -->
+										<!-- <button type="button" class="btn btn-primary" onclick="addOrder()">등록</button> -->
 									</div>
 								</div>
 							</div>
@@ -77,12 +77,12 @@
 
 						<!-- ↑↑↑ 모달 -->
 						<!--  -->
-						<button class="btn btn-primary" id="regiBtn" onclick="newPlan()">
+						<!-- <button class="btn btn-primary" id="regiBtn" onclick="newPlan()">
 							<i class="fas fa-file"></i> 새계획
 						</button>
 						<button class="btn btn-primary" id="osBtn" onclick="savePlan()">
 							<i class="fas fa-save"></i> 저장
-						</button>
+						</button> -->
 					</div>
 				</div>
 			</div>
@@ -190,7 +190,6 @@ let planCd='';
 		//그리드 선언
         var grid = new tui.Grid({
              el: document.getElementById('orderGrid'),
-             rowHeaders: ['checkbox'],
              columns: [
 
                  {
@@ -256,7 +255,7 @@ let planCd='';
         });  */ 
      
      // 모달창의 체크한 건만 가져오기
-     grid.on('check', (ev) => {
+     /* grid.on('check', (ev) => {
    	      checkLen = grid.getCheckedRows().length;
   	  });
      grid.on('checkAll', (ev) => {
@@ -264,20 +263,29 @@ let planCd='';
   	  });   
      grid.on('unCheck', (ev) => {
   	      checkLen = grid.getCheckedRows().length;
-  	  }); 
+  	  });  */
      
-     function addOrder(){
+  	  // 주문서를 더블 클릭하면 조회
+  	 grid.on('dblclick', (ev) => {
+  	   //console.log(ev);
+  	   //console.log(equipKey);
+  	   str = grid.getRow(ev.rowKey).orderNo;
+  	   //console.log(equipValue);
+  	   orderDetail();
+  	   planEquipMaterial();     
+	  $('#exampleModal').modal('hide');
+     $('.modal-backdrop').remove();
+    }); 
+  	  
+/*      function addOrder(){
     	// 체크한 행만 가져오기
     	 for (let i = 0; i < checkLen; i++) {
     	        str += grid.getCheckedRows()[i].orderNo + ",";
-    	      };
+    	      }; 
     	 //console.log(str);
     	 orderDetail();
-    	 planEquipMaterial();
-     
-    	  $('#exampleModal').modal('hide');
-          $('.modal-backdrop').remove();
-     };
+    	
+     }; */
       
           // 주문서 디테일 조회       
        function orderDetail(){
@@ -452,7 +460,7 @@ let planCd='';
 
                     });
                  
-                    // 제품 그리드의 행을 더블클릭하면 제품공정확인 그리드가 살행
+                    // 제품 그리드의 행을 클릭하면 제품공정확인 그리드가 살행
                     gridEquip.on('click', (ev) => {
                 	   //console.log(ev);
                 	   equipKey = ev.rowKey;
@@ -488,7 +496,7 @@ let planCd='';
 
                              {
                                  header: '공정순서',
-                                 name: ''
+                                 name: 'eqSq'
                              },
                              {
                                  header: '공정코드',
@@ -500,52 +508,5 @@ let planCd='';
                              }
                          ]
                      }); 
-                     // 제품 그리드의 행을 더블클릭하면 자재확인 그리드가 살행
-                      /* gridMaterial.on('click', (e) => {
-                       materialKey = e.rowKey;
-                       console.log(materialKey);
-                       materialValue = gridMaterial.getValue(materialKey, 'prcLotCd');              
-                	   console.log(materialValue);
-                	   planMaterialCheck();
-                   });  
-                    // 자재확인
-                      function planMaterialCheck(){
-                        $.ajax({
-                            url: "selectPlanMaterialCheck",
-                            method: "post",
-                            data: { prcLotCd : materialValue },
-                            success: function(data) {
-                         	   console.log(data)
-                         	  gridMaterialCheck.resetData(data);  //그리드 적용
-                            },
-                            error: function (reject) {
-                              console.log(reject);
-                            }
-                        });                                       
-                    }   
-                  
-                   //그리드 선언
-                     var gridMaterialCheck = new tui.Grid({
-                          el: document.getElementById('gridMateralCheck'),
-                          columns: [
-
-                              {
-                                  header: '자재코드',
-                                  name: 'rscCd'
-                              },
-                              {
-                                  header: '공정코드',
-                                  name: 'prcsCd'
-                              },
-                              {
-                                  header: '출고수량',
-                                  name: 'oustCnt'
-                              },
-                              {
-                                  header: '계획코드',
-                                  name: 'planCd'
-                              }
-                          ]
-                      });  */ 
-           		
+                     
 </script>

@@ -80,10 +80,11 @@ public class ProductionServiceImpl implements ProductionService {
 
 	@Override
 	public List<ProductionVO> orderDetailGrid(String orderNo) {
-		String[] array = orderNo.split(",");
+		ProductionVO productionVO = new ProductionVO();
+		productionVO.setOrderNo(orderNo);
 		 
 		 List<ProductionVO> list = new ArrayList<>();
-		list = productionMapper.orderDetailGrid(array);
+		list = productionMapper.orderDetailGrid(productionVO);
 	
 		return list;
 	}
@@ -92,20 +93,24 @@ public class ProductionServiceImpl implements ProductionService {
 
 	@Override
 	public List<ProductionVO> selectPlanEquip(String orderNo) {
-		String[] array = orderNo.split(",");
 		 
-		 List<ProductionVO> list = new ArrayList<>();
-		list = productionMapper.selectPlanEquip(array);
+		ProductionVO productionVO = new ProductionVO();
+		productionVO.setOrderNo(orderNo);
+		
+		List<ProductionVO> list = new ArrayList<>();
+		list = productionMapper.selectPlanEquip(productionVO);
 	
 		return list;
 	}
 
 	@Override
 	public List<ProductionVO> selectPlanMaterial(String orderNo) {
-		String[] array = orderNo.split(",");
 		 
-		 List<ProductionVO> list = new ArrayList<>();
-		list = productionMapper.selectPlanMaterial(array);
+		ProductionVO productionVO = new ProductionVO();
+		productionVO.setOrderNo(orderNo);
+		
+		List<ProductionVO> list = new ArrayList<>();
+		list = productionMapper.selectPlanMaterial(productionVO);
 	
 		return list;
 	}
@@ -141,6 +146,12 @@ public class ProductionServiceImpl implements ProductionService {
 			result += productionMapper.updateEqBom(vo);
 		}
 		return result;
+	}
+
+	@Override
+	public int insertPlan(List<ProductionVO> name, List<ProductionVO> cnt) {
+		
+		return 0;
 	}
 
 	/*
