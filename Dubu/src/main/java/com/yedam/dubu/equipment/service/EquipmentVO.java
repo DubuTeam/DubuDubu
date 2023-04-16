@@ -8,7 +8,7 @@ import lombok.Data;
 
 @Data
 public class EquipmentVO {
-	// 설비라인 테이블 (EQM_LINE 테이블)
+	// 1. 설비라인 테이블 (EQM_LINE 테이블)
 	private String lineCd;			// 라인코드
 	private String lineNm;			// 라인명
 	private String eqmPsch;			// 라인 담당자
@@ -53,6 +53,9 @@ public class EquipmentVO {
 	private String keyword;				// 검색창에 입력한 값
 	
 	
+	///////////////////////////////////////////////
+	
+	
 	// 설비점검내역 페이지에서 쓰이는 변수들
 	private String chckCd;				// 점검코드
 	@DateTimeFormat(pattern="yyyy-MM-dd")
@@ -66,8 +69,23 @@ public class EquipmentVO {
 	
 	// 설비점검내역 페이지에서 검색
 	private String keyword3;				// 검색 키워드
+
 	@DateTimeFormat(pattern="yyyy-MM-dd")
-	private Date frDt;						// 해당 일자(~부터)
+	private Date searchFrDt;						// 해당 일자(~부터)
 	@DateTimeFormat(pattern="yyyy-MM-dd")
-	private Date toDt;						// 해당 일자(~까지)
+	private Date searchToDt;						// 해당 일자(~까지)
+	
+	
+	///////////////////////////////////////////////
+	
+	
+	// 비가동관리 페이지
+	private String noprCd;
+	
+	@DateTimeFormat(pattern="yyyy-MM-dd")
+	private Date frDt;						// 비가동 시작 일자
+	@DateTimeFormat(pattern="yyyy-MM-dd")
+	private Date toDt;						// 비가동 종료 일자
+	
+	private String opertCtnt;				// 작업내용.   비가동 사유?
 }

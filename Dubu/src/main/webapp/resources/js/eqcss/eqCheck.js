@@ -5,23 +5,23 @@ $(document).ready(function () {
     ///////////////// 설비 점검 검색 /////////////////////
     $('#chckSearchBtn').on("click", function() {
         // console.log($('#keyword3').val())
-        // console.log($('#frDt').val())
-        // console.log($('#toDt').val())
+        // console.log($('#searchFrDt').val())
+        // console.log($('#searchToDt').val())
 
-        // if($('#frDt').val() == "") {
+        // if($('#searchFrDt').val() == "") {
         //     alert('Hello')
         // }
 
         let keyword3 = $('#keyword3').val()
-        let frDt = $('#frDt').val()
-        let toDt = $('#toDt').val()
+        let searchFrDt = $('#searchFrDt').val()
+        let searchToDt = $('#searchToDt').val()
 
         console.log(keyword3)
-        console.log(frDt)
-        console.log(toDt)
+        console.log(searchFrDt)
+        console.log(searchToDt)
 
         // 날짜가 둘 중 하나만 입력되었을 때 (키워드 입력 유무는 상관 X)
-        if((frDt == "" && toDt != "") || (toDt == "" && frDt != "")) {
+        if((searchFrDt == "" && searchToDt != "") || (searchToDt == "" && searchFrDt != "")) {
             alert('두 날짜 모두 입력해라. 조패기전에')
         }
         // 날짜가 둘 다 입력되었을 때! (키워드 입력 유무는 상관 X)
@@ -30,8 +30,8 @@ $(document).ready(function () {
                 url: 'searchEqCheck',
                 data: {
                     keyword3: keyword3,
-                    frDt: frDt,
-                    toDt: toDt
+                    searchFrDt: searchFrDt,
+                    searchToDt: searchToDt
                 },
                 success: function(result) {
                     console.log(result)

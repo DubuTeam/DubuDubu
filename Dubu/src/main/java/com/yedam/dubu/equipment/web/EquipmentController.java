@@ -168,10 +168,10 @@ public class EquipmentController {
 	// 설비 점검 검색 (모달 아님)
 	@GetMapping("/searchEqCheck")
 	@ResponseBody
-	public List<EquipmentVO> getSpecificEqCheck(EquipmentVO equipmentVO, @RequestParam String keyword3, @RequestParam Date frDt, @RequestParam Date toDt) {
+	public List<EquipmentVO> getSpecificEqCheck(EquipmentVO equipmentVO, @RequestParam String keyword3, @RequestParam Date searchFrDt, @RequestParam Date searchToDt) {
 		equipmentVO.setKeyword3(keyword3);
-		equipmentVO.setFrDt(frDt);
-		equipmentVO.setToDt(toDt);
+		equipmentVO.setFrDt(searchFrDt);
+		equipmentVO.setToDt(searchToDt);
 
 		return equipmentService.selectSpecificEqCheckList(equipmentVO);
 	}
@@ -183,6 +183,19 @@ public class EquipmentController {
 	// 비가동관리
 	@GetMapping("/eqIpopr")
 	public String getEqIpopr(Model model) {
+		// 설비명* 탭에서  모든 비가동관리에 있는 설비들을 option에 넣어야 할 때
+		// 그리고 비가동관리 목록 출력할 때
+		model.addAttribute("eqIpoprList", equipmentService.selectAllEqIpoprList());
+		
+		// 설비명* 탭에서  모든 설비들을 option에 넣어야 할 때
+		model.addAttribute("eqLineList", equipmentService.selectAllEquipmentList());
+		
+//		// 설비명* 탭에서  모든 설비 점검에 있는 설비들을 option에 넣어야 할 때		
+//		model.addAttribute("checkList", equipmentService.selectAllCheckList());
+		
+		// 다음 비가동 코드를 input 태그에 미리 적어줌
+		model.addAttribute("getNoprCode", equipmentService.getNoprCode());
+		
 		return "equip/eqIpopr";
 	}
 	
