@@ -107,8 +107,14 @@ public class MaterialServiceImpl implements MaterialService{
 
 	// 입고 테이블 리스트
 	@Override
-	public MaterialVO getMaterialTotalIstList() {
+	public List<MaterialVO> getMaterialTotalIstList() {
 		return materialMapper.getMaterialTotalIstList();
+	}
+
+	// 입고 상세 테이블 리스트
+	@Override
+	public List<MaterialVO> getMaterialIstDetail(String istCd) {
+		return materialMapper.getMaterialIstDetail(istCd);
 	}
 	
 	

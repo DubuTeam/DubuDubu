@@ -191,6 +191,7 @@ public class MaterialController {
 		
 		MaterialVO material = new MaterialVO();
 		int istCnt = materialVO.size(); // 입고 건수
+		System.out.println("건수" + istCnt);
 		int r = 0;
 		
 		material.setIstCd(materialService.getMaterialIstCode().getIstCd()); // 입고 코드
@@ -211,12 +212,22 @@ public class MaterialController {
 		
 	}
 	
-	
+	// 입고 테이블 리스트
 	@PostMapping("/materialTotalIstList")
 	@ResponseBody
-	public MaterialVO getMaterialTotalIstList() {
+	public List<MaterialVO> getMaterialTotalIstList() {
 		return materialService.getMaterialTotalIstList();
 	}
+	
+	
+	// 더블 클릭시 실행되는 입고 상세 테이블 리스트
+	@PostMapping("/materialIstDetail")
+	@ResponseBody
+	public List<MaterialVO> getMaterialIstDetail(MaterialVO materialVO){
+		String istCd = materialVO.getIstCd();
+		return materialService.getMaterialIstDetail(istCd);
+	}
+	
 	
 	//////////////////////////////////////////////////////////////
 

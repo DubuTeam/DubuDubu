@@ -53,7 +53,10 @@ public interface MaterialService {
 	public int getIstInsertProcedure(MaterialVO materialVO);
 	
 	// 입고 테이블 리스트
-	public MaterialVO getMaterialTotalIstList();
+	public List<MaterialVO> getMaterialTotalIstList();
+	
+	// 입고 상세 테이블 리스트
+	public List<MaterialVO> getMaterialIstDetail(String istCd);
 		
 	
 }

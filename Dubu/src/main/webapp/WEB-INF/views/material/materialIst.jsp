@@ -144,10 +144,10 @@
 					<div class="card">
 						<div class="card-body">
 							<div class="linelist" style="float: right;">
-								<button class="btn btn-primary" id="delRow">
+								<button type="button" class="btn btn-primary" id="delRow" >
 									<i class="fas fa-minus"></i> 삭제
 								</button>
-								<button class="btn btn-primary" id="saveBtn">
+								<button type="button" class="btn btn-primary" id="saveBtn" >
 									<i class="fas fa-save"></i> 등록
 								</button>
 							</div>
@@ -226,6 +226,44 @@
 			<!-- 플렉스넣은태그 닫는태그 -->
 	</div>
 	<br><br>
+	
+	<!-- 자재발주 내역 조회 Modal -->
+		<div class="modal fade" id="detailModal" tabindex="-1" role="dialog"
+			aria-labelledby="exampleModalLabel" aria-hidden="true">
+			<div class="modal-dialog modal-xl" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="exampleModalLabel">자재 입고 상세조회</h5>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">X</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						<div class="row">
+							<!-- <div class="col-md-6">
+								<label style="margin-top: 5px; display:inline;">발주코드</label> 
+								<input class="form-control" type="text" id="ordrCd" name="ordrCd" style="width: 180px; margin-bottom: 10px; display:inline;" readonly />
+							</div> -->
+		<!-- 					<div class="col-md-3"></div> -->
+							<div class="linelist col-md-3" style="margin-bottom:10px; float:right;">
+								<button type="button" class="btn btn-primary" id="modifyBtn">
+									<i class="fas fa-save"></i> 수정
+								</button>
+								<button type="button" class="btn btn-primary" id="DetailDelBtn">
+									<i class="fas fa-minus"></i> 삭제
+								</button>
+								<button id="excelBtn" name="excelBtn" type="button"
+									class="btn btn-primary">
+									<i class="fas fa-download"></i> Excel
+								</button>
+							</div>
+						</div>
+						<div id="materialIstDetailGrid"></div>
+					</div>
+				</div>
+			</div>
+		</div><!-- 모달창 끝 -->
+	
 
 	<!-- 업체명 Modal -->
 	<div class="modal fade" id="vendModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -311,17 +349,17 @@ const grid = new tui.Grid({
 	      sortable : true
 	  	},
 	  	{
-		      header: '자재상세번호',
-		      name: 'ordrDtlCd',
-		      align : 'center',
-		      hidden : true,
-		      sortable : true
+	      header: '자재상세번호',
+	      name: 'ordrDtlCd',
+	      align : 'center',
+	      hidden : true,
+	      sortable : true
 		},
 	    {
-		      header: '발주번호',
-		      name: 'ordrCd',
-		      align : 'center',
-		      sortable : true
+	      header: '발주번호',
+	      name: 'ordrCd',
+	      align : 'center',
+	      sortable : true
 		},
 	    {
 	      header: '자재코드',
@@ -424,7 +462,9 @@ $(document).ready(function(){
 	today();
 	searchAll();
 	istTotalList();
+	
 });
+
 
 //바로 화면에 나타나는 발주전체 목록
 function searchAll(){
@@ -449,6 +489,11 @@ function searchAll(){
 	});
 
 }
+
+//삭제 버튼 클릭시 
+$('#delRow').on('click', function(){
+	grid.removeCheckedRows(); // 체크한것만 삭제
+})
 
 //날짜 변환
 function dateFormat(date) {
@@ -487,37 +532,6 @@ function searchVend(vendName){
 }
  
 
-//그리드
-const istGrid = new tui.Grid({
-	  el: document.getElementById('istGrid'), // Container element
-	  scrollX: false,
-      scrollY: true,
-      bodyHeight: 400,
-      rowHeight: 50,
-      rowHeaders: ['checkbox'],
-	  columns: [
-	  	{
-	      header: '입고번호',
-	      name: 'istCd',
-	      align : 'center',
-	      sortable : true
-	  	},
-	  	{
-	      header: '입고일자',
-	      name: 'istDt',
-	      align : 'center',
-	      sortable : true
-		},
-		{
-	      header: '건수',
-	      name: 'istCnt',
-	      align : 'center',
-	      sortable : true
-		}
-	  ]
-});
-	    
- 
  
  
 // 등록 버튼을 눌렀을때
@@ -545,8 +559,12 @@ $('#saveBtn').on('click', function(){
 			   contentType : 'application/json',
 			   success: function (data) {
 				   console.log('성공');
-				   searchAll();
-				   istTotalList();
+				   Swal.fire({
+	                   icon: 'success',
+	                   title: '입고등록이 완료되었습니다.'
+	               });
+				   searchAll(); // 입고등록 가능 리스트
+				   istTotalList(); // 입고 등록한 리스트
 				   
 			   },
 		 	   error: function (reject) {	   
@@ -556,6 +574,43 @@ $('#saveBtn').on('click', function(){
 		}
 	})
 });
+
+
+
+//그리드
+const istGrid = new tui.Grid({
+	  el: document.getElementById('istGrid'), // Container element
+	  scrollX: false,
+    scrollY: true,
+    bodyHeight: 400,
+    rowHeight: 50,
+    rowHeaders: ['checkbox'],
+	  columns: [
+	  	{
+	      header: '입고번호',
+	      name: 'istCd',
+	      align : 'center',
+	      sortable : true
+	  	},
+	  	{
+	      header: '입고일자',
+	      name: 'istDt',
+	      align : 'center',
+	      sortable : true,
+	      formatter : function(data){ // 날짜형식 바꿔주는것
+              return dateFormat(data.value); 
+         }
+		},
+		{
+	      header: '건수',
+	      name: 'istCnt',
+	      align : 'center',
+	      sortable : true
+		}
+	  ]
+});
+	    
+
 
 function istTotalList(){
 	$.ajax({
@@ -569,7 +624,102 @@ function istTotalList(){
 		}
 	});
 }
+
+
+//자재발주 내역 모달창 그리드  
+const detailGrid = new tui.Grid({
+	el : document.getElementById('materialIstDetailGrid'),
+	 scrollX: false,
+     scrollY: true,
+     bodyHeight: 400,
+     rowHeight: 50,
+     rowHeaders: ['checkbox'],
+	  columns: [
+	  	{
+	      header: '검사번호',
+	      name: 'inspCd',
+	      align : 'center',
+	      sortable : true
+	  	},
+	  	{
+	      header: '자재상세번호',
+	      name: 'ordrDtlCd',
+	      align : 'center',
+	      hidden : true,
+	      sortable : true
+		},
+	    {
+	      header: '발주번호',
+	      name: 'ordrCd',
+	      align : 'center',
+	      sortable : true
+		},
+	    {
+	      header: '자재코드',
+	      name: 'rscCd',
+	      align : 'center',
+	      sortable : true
+	    },
+	    {
+	      header: '자재명',
+	      name: 'rscNm',
+	      align : 'center'
+	    },
+	    {
+	      header: '규격',
+	      name: 'rscSpec',
+	      align : 'center'
+	    },
+	    {
+	      header: '단위',
+	      name: 'mngUnit',
+	      align : 'center'
+		},
+		{
+	      header: '자재유형',
+	      name: 'rscTyp',
+	      align : 'center'
+	    },
+	    {
+	      header: '입고수량',
+	      name: 'inspPassCnt',
+	      align : 'center'
+	    }
+	 ]
+});
+
+
+istGrid.on('dblclick', (e) => {
+	// materialOrderDetailGrid
+	let rscCdRowKey = '';
+	rscCdRowKey = e.rowKey; // 내가 더블클릭한 곳의 index 값
+	
+	// getRow(e.rowKey) : rowKey값의 행 정보(object)를 가져옴
+	// Return the object that contains all values in the specified row.
+	let istCd = istGrid.getRow(e.rowKey).istCd; 
  
+	$('#detailModal').modal('show'); // 모달창 show
+	
+	$.ajax({
+		url:"materialIstDetail",
+		data : {istCd:istCd},
+		method:"post",
+		success:function(result) {
+			//console.log(result);
+			setTimeout(function() {
+				detailGrid.refreshLayout(); // new tui.Grid의 refreshLayout()으로 해줘야함
+			},300);
+			detailGrid.resetData(result);
+		},
+		error: function (reject) {	   
+		       console.log(reject);
+		}
+	}) 
+})
+ 
+
+
+
 
 </script>
 
