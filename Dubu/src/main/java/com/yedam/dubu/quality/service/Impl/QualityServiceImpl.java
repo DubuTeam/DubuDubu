@@ -4,10 +4,13 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.yedam.dubu.quality.mapper.QualityMapper;
 import com.yedam.dubu.quality.service.QualityService;
 import com.yedam.dubu.quality.service.QualityVO;
+import com.yedam.dubu.quality.service.RscInfVO;
+import com.yedam.dubu.quality.service.RscInspVO;
 
 @Service
 public class QualityServiceImpl implements QualityService {
@@ -45,11 +48,46 @@ public class QualityServiceImpl implements QualityService {
 		return qualityMapper.getMatOrdrList(qualityVO);
 	}
 
-	@Override
+	 @Override
+	 @Transactional
+		    public void setRscInspList(List<RscInspVO> rscInspVOS) {
+		        // rsc_insp insert
+		        String rscInspCd = qualityMapper.genRscInspCd();
+		        RscInspVO vo = rscInspVOS.get(0);
+		        rscInspVOS.remove(0);
+		        vo.setRscInspCd(rscInspCd);
+		        qualityMapper.setRscInsp(vo);
+
+		        // rsc_insp_dtl insert
+		        for (RscInspVO rscInspVO : rscInspVOS) {
+
+		            // when ordrCd doesn't exist -> gen cd and set cd
+		            if (rscInspVO.getOrdrCd() == null) {
+		                String noOrdrCd = qualityMapper.genRscNoOrdrCd();
+		                rscInspVO.setOrdrCd(noOrdrCd);
+		            }
+
+					/*
+					 * // set rsc insp dtl each rscInspVO.setRscInspCd(rscInspCd);
+					 * qualityMapper.setRscInspList(rscInspVO);
+					 * qualityMapper.updRscOrdrRmnCnt(rscInspVO);
+					 * 
+					 * // set rsc inf list each if (rscInspVO.getRscInfList() != null) { for
+					 * (RscInfVO rscInfVO : rscInspVO.getRscInfList()) {
+					 * qualityMapper.setRscInfList(rscInspVO, rscInfVO); } }
+					 */
+		        }
+		    }
+		
+	
+
+	@Override  //검사상세
 	public List<QualityVO> getInfCdList() {
-		// TODO Auto-generated method stub
+		
 		return qualityMapper.getInfCdList();
 	}
+
+
 
 	/*@Override
 	public List<QualityVO> getResources(QualityVO qualityVO) {

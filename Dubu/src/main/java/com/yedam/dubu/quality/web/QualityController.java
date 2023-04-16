@@ -8,11 +8,13 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.yedam.dubu.quality.service.QualityService;
 import com.yedam.dubu.quality.service.QualityVO;
+import com.yedam.dubu.quality.service.RscInspVO;
 
 @Controller
 public class QualityController {
@@ -57,6 +59,7 @@ public class QualityController {
     @RequestMapping("getVendors")
     @ResponseBody
     public List<QualityVO> getMatVendList(@ModelAttribute QualityVO qualityVO) {
+    	System.out.println(qualityService.getMatVendList(qualityVO));
         return qualityService.getMatVendList(qualityVO);
     }
     
@@ -73,6 +76,11 @@ public class QualityController {
     @ResponseBody
     public List<QualityVO> getRscOrdrList(QualityVO qualityVO) {
         return qualityService.getMatOrdrList(qualityVO);
+    }
+    @RequestMapping("setRscInspList")
+    @ResponseBody
+    public void setRscInspList(@RequestBody List<RscInspVO> rscInspVOS) {
+    	qualityService.setRscInspList(rscInspVOS);
     }
     
     // 검사상세

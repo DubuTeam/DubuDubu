@@ -61,7 +61,7 @@
 	<select id="getMatOrdrList" parameterType="QualityVO"
 		resultType="QualityVO">
 		select rod.RSC_CD, rsc.RSC_NM, rod.ORDR_CD, rod.ORDR_CNT, rod.RMN_CNT,
-		vend.VEND_NM, rsc.MNG_UNIT, rsc.RSC_SPEC
+		vend.VEND_NM, rsc.MNG_UNIT, rsc.RSC_SPEC, rod.ORDR_DTL_CD
 		from RSC_ORDR ro,
 		RSC_ORDR_DTL rod,
 		VEND,
@@ -103,14 +103,36 @@
 		ORDER BY CCD_DTL
 	</select>
 
-	<insert id="setRscInspList" parameterType="QualityVO"> 전체정보 인서트
-		insert into RSC_INSP_DTL (RSC_CD, RSC_INSP_CD, ORDR_CD, INSP_CNT,
-		INSP_PASS_CNT, PASS_RMN_CNT,
-		INSP_FAIL_CNT, PRE_IST_CNT)
-		values (#{rscCd}, #{rscInspCd}, #{ordrCd}, #{inspCnt},
-		to_number(#{inspPassCnt}), to_number(#{inspPassCnt}),
-		to_number(#{inspFailCnt}),
-		#{preIstCnt})
-	</insert>
+	<insert id="setRscInspList" parameterType="RscInspVO">
+        insert into RSC_INSP_DTL (RSC_CD, RSC_INSP_CD, ORDR_CD, INSP_CNT, INSP_PASS_CNT, PASS_RMN_CNT,
+                                  INSP_FAIL_CNT, PRE_IST_CNT)
+        values (#{rscCd}, #{rscInspCd}, #{ordrCd}, #{inspCnt}, to_number(#{inspPassCnt}), to_number(#{inspPassCnt}),
+                to_number(#{inspFailCnt}),
+                #{preIstCnt})
+    </insert>
+    
+    <select id="genRscNoOrdrCd" resultType="String">  <!-- 검사코드 -->
+        select 'NOR' || to_char(sysdate, 'YYYYMMDD') || lpad(NVL(max(substr(ORDR_CD, 12, 3)), 0) + 1, 3, '0')
+        from rsc_insp_dtl
+        where 'NOR' = substr(ORDR_CD, 0, 3)
+          and substr(ORDR_CD, 4, 8) = to_char(sysdate, 'yyyymmdd')
+    </select>
+    <select id="genRscInspCd" resultType="String">
+        select 'RMI' || to_char(sysdate, 'YYYYMMDD') || lpad(NVL(max(substr(rsc_insp_cd, 12, 3)), 0) + 1, 3, '0')
+        from rsc_insp_dtl
+        where substr(rsc_insp_cd, 4, 8) = to_char(sysdate, 'yyyymmdd')
+    </select>
+    <insert id="setRscInsp" parameterType="RscInspVO">
+        merge into RSC_INSP
+        using dual
+        on (RSC_INSP_CD = #{rscInspCd})
+        when matched then
+            update
+            set INSP_DT   = #{inspDt},
+                INSP_TSTR = #{inspTstr}
+        when not matched then
+            insert (RSC_INSP_CD, INSP_DT, INSP_TSTR)
+            values (#{rscInspCd}, #{inspDt}, #{inspTstr})
+    </insert>
 
 </mapper>
