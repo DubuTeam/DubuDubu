@@ -122,7 +122,8 @@ public class ProductionServiceImpl implements ProductionService {
 
 	@Override
 	public int updatePlan(List<ProductionVO> updatePlanCd, List<ProductionVO> updateIndicac,
-						  List<ProductionVO> updatePlanDtl, List<ProductionVO> updateEqBom) {	
+						  List<ProductionVO> updatePlanDtl, List<ProductionVO> updateEqBom,
+						  List<ProductionVO> updateOrderSheet) {	
 		int result = 0;
 		
 		String plancd = productionMapper.planCode(); 
@@ -141,6 +142,9 @@ public class ProductionServiceImpl implements ProductionService {
 		}
 		for(ProductionVO vo : updateEqBom) {
 			result += productionMapper.updateEqBom(vo);
+		}
+		for(ProductionVO vo : updateEqBom) {
+			result += productionMapper.updateOrderSheet(vo);
 		}
 		for(ProductionVO vo : updateEqBom) {
 			result += productionMapper.updateEqBom(vo);

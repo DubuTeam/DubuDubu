@@ -60,7 +60,7 @@
 	<!-- 주문서 조회 -->
 	<select id="selectOrderList" resultType="ProductionVO">
 		SELECT * FROM ORDER_SHEET 
-		WHERE PLAN_YN = 'N'
+		WHERE PLAN_CD IS NULL
 		ORDER BY ORDER_DT
 	</select>
 	<!-- 주문서 디테일 조회 -->
@@ -90,6 +90,9 @@
 	</update>
 	<update id="updateIndicac" parameterType="ProductionVO">
 		UPDATE INDICA SET PLAN_CD = #{planCd}
+	</update>
+	<update id="updateOrderSheet" parameterType="ProductionVO">
+		UPDATE ORDER_SHEET SET PLAN_CD = #{planCd}
 	</update>
 	<update id="updateEqBom" parameterType="ProductionVO">
 		UPDATE EQ_BOM SET EQ_SQ	= #{eqSq}

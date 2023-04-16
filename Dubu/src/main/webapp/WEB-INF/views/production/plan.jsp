@@ -79,10 +79,10 @@
 						<!--  -->
 						<!-- <button class="btn btn-primary" id="regiBtn" onclick="newPlan()">
 							<i class="fas fa-file"></i> 새계획
-						</button>
+						</button> -->
 						<button class="btn btn-primary" id="osBtn" onclick="savePlan()">
 							<i class="fas fa-save"></i> 저장
-						</button> -->
+						</button> 
 					</div>
 				</div>
 			</div>
@@ -370,7 +370,7 @@ let planCd='';
        	        	search();
            		    Swal.fire({
    	        		      icon: 'success',
-   	        		      title: '입력 및 수정이 완료되었습니다.'
+   	        		      title: '생산계획코드가 부여되었습니다.'
    	        		 });
        	    },
        	    error: function(reject) {

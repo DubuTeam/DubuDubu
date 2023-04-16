@@ -35,7 +35,7 @@ public interface ProductionService {
 	
 	// 생산계획 코드 부여
 	public int updatePlan (List<ProductionVO> updatePlanCd, List<ProductionVO> updateIndicac, 
-						   List<ProductionVO> updatePlanDtl, List<ProductionVO> updateEqBom);
+						   List<ProductionVO> updatePlanDtl, List<ProductionVO> updateEqBom, List<ProductionVO> updateOrderSheet);
 	
 	// 생산계획 제품 조회
 	public List<ProductionVO> selectPlanEquip(String orderNo);
