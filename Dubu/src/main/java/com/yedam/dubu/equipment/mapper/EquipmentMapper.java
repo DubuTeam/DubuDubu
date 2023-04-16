@@ -114,4 +114,13 @@ public interface EquipmentMapper {
 		
 		// 2. 자동으로 부여될 비가동 코드
 		public String getNoprCode();
+		
+		// 3. 비가동 등록하기
+		public int insertEqIpopr(EquipmentVO equipmentVO);
+		
+		// 4. 비가동 수정하기
+		public int updateEqIpopr(EquipmentVO equipmentVO);
+		
+		// 5. 비가동 삭제하기
+		public int deleteEqIpopr(String noprCd);
 }

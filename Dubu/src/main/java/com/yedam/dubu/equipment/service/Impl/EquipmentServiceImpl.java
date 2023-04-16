@@ -160,4 +160,19 @@ public class EquipmentServiceImpl implements EquipmentService{
 	public String getNoprCode() {
 		return equipmentMapper.getNoprCode();
 	}
+
+	@Override
+	public int insertEqIpopr(EquipmentVO equipmentVO) {
+		return equipmentMapper.insertEqIpopr(equipmentVO);
+	}
+
+	@Override
+	public int updateEqIpopr(EquipmentVO equipmentVO) {
+		return equipmentMapper.updateEqIpopr(equipmentVO);
+	}
+
+	@Override
+	public int deleteEqIpopr(String noprCd) {
+		return equipmentMapper.deleteEqIpopr(noprCd);
+	}
 }
