@@ -19,16 +19,17 @@ public interface QualityService {
     
     
     //자재관련조회
-  //  List<QualityVO> getResources(QualityVO qualityVO);
+    // List<QualityVO> getResources(QualityVO qualityVO);
+    
     // 검사상세
     List<QualityVO> getInfCdList();
     
  // 입고검사 수정
     List<RscInspVO> schRscInspHist(RscInspVO rscInspVO);
+    
+  //업데이트
+    void upRscProg(RscInspVO rscInspVO);
 
-	/*
-	 * @Override public List<RscInspVO> upRscProg(String ordrCd) { return
-	 * qualityMapper.upRscProg(ordrCd); }
-	 */
+ 
     
 }

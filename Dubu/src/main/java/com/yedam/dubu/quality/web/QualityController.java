@@ -96,9 +96,10 @@ public class QualityController {
     public List<RscInspVO> schRscInspHist(@ModelAttribute RscInspVO rscInspVO) {
         return qualityService.schRscInspHist(rscInspVO);
     }
+
+     @PostMapping("/upRscProg")
+      public void upRscProg(@RequestBody RscInspVO rscInspVO) {
+        qualityService.upRscProg(rscInspVO);
+      }
     
-	/*
-	 * @PostMapping("upRscProg") public List<RscInspVO> upRscProg(@RequestBody
-	 * String ordrCd) { return qualityService.upRscProg(ordrCd); }
-	 */
 }
