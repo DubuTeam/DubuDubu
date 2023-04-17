@@ -26,7 +26,7 @@ public class ProductionVO {
 	public String prdtNm;
 	
 	// 주문서 디테일 조회
-	@DateTimeFormat(pattern="yyyy-MM--dd")
+	@DateTimeFormat(pattern="yyyy-MM-dd")
 	public Date planDt;
 	public String planCd;
 	public String avalStc;
@@ -39,9 +39,9 @@ public class ProductionVO {
 	
 	// 생산계획 조회
 	public String lineCd;
-	@DateTimeFormat(pattern="yyyy-MM--dd")
+	@DateTimeFormat(pattern="yyyy-MM-dd")
 	public Date wkToDt;
-	@DateTimeFormat(pattern="yyyy-MM--dd")
+	@DateTimeFormat(pattern="yyyy-MM-dd")
 	public Date wkFrDt; // 작업 시작일
 	public int indicaCnt; // 생산지시 수량
 	public int prefRank;
@@ -58,6 +58,8 @@ public class ProductionVO {
 	// 생산지시
 	public int planCnt;     // 계획수량
 	public int planNindica; // 미지시수량
+	@DateTimeFormat(pattern="yyyy-MM-dd")
+	public Date indicaDt;
 	
 	
 	
@@ -76,18 +78,6 @@ public class ProductionVO {
 	
 	
 	
-	
-	// 선아구역
-	// 생산지시 헤더
-	private String indicaCd; // 생산지시 헤더 코드
-	private String indicaDt; // 생산 지시 일자
-	
-	// 생산지시 디테일
-	private String prodOrderDetail; // 생산지시 디테일 코드
-	private String bomCd; // BOM코드
-	private String wkFrDt2; // 작업 시작일
-	
-	// 공정 관리 테이블
 	
 	
 	

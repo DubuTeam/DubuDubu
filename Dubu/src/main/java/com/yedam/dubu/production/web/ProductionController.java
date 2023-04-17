@@ -142,7 +142,7 @@ public class ProductionController {
 	// 생산지시 계획 디테일
 	@PostMapping("/indicaOrderDetail")
 	@ResponseBody List<ProductionVO> getIndicaOrderDetail(@RequestParam(required=false)String planCd){
-		return null;
+		return productionService.selectIndicaOrderDetail(planCd);
 	}
 	
 	// 생산지시조회

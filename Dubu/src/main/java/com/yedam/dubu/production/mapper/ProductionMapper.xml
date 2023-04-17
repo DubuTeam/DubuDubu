@@ -168,6 +168,18 @@
 	</select>
 	<!-- 생산지시 계획 디테일 조회 -->
 	<select id="selectIndicaOrderDetail" resultType="ProductionVO">
-		
+		SELECT PD.PLAN_CD,
+		       E.PRDT_NM,
+		      (PD.PLAN_CNT-ID.INDICA_CNT) AS PLAN_NINDICA,
+		       PD.LINE_CD
+		FROM PLAN_DTL PD
+		INNER JOIN INDICA I
+		    ON PD.PLAN_CD = I.PLAN_CD
+		INNER JOIN INDICA_DTL ID
+		    ON I.INDICA_CD = ID.INDICA_CD
+		INNER JOIN EDCTS E
+		    ON PD.EDCTS_CD = E.EDCTS_CD
+		WHERE PD.PLAN_CD = #{planCd}
+		GROUP BY PD.PLAN_CD, E.PRDT_NM, PD.PLAN_CNT-ID.INDICA_CNT, PD.LINE_CD
 	</select>
 </mapper>
