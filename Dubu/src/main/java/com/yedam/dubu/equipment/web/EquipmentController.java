@@ -23,7 +23,7 @@ public class EquipmentController {
 	
 	// 1. 라인 관리 페이지
 	@GetMapping("/eqLine")
-	public String getEqLine(Model model) {
+	public String getEqLine(Model model, EquipmentVO equipmentVO) {
 		model.addAttribute("eqLineList", equipmentService.selectAllEquipmentLineList());
 		model.addAttribute("getLineCode", equipmentService.getLineCode());				// 다음 라인 코드를 input 태그에 미리 적어줌
 
@@ -70,6 +70,9 @@ public class EquipmentController {
 		// 테스트
 		model.addAttribute("getEqCode", equipmentService.getEqCode());				// 다음 설비 코드를 input 태그에 미리 적어줌
 
+		// 테스트
+		model.addAttribute("eqLineOption", equipmentService.getEqLineOption());
+		
 		// 설비 목록을 전체 출력하기 위해서 보냄
 		model.addAttribute("eqList", equipmentService.selectAllEquipmentList());
 		
@@ -185,10 +188,11 @@ public class EquipmentController {
 		model.addAttribute("eqIpoprList", equipmentService.selectAllEqIpoprList());
 		
 		// 설비명* 탭에서  모든 설비들을 option에 넣어야 할 때
-		model.addAttribute("eqLineList", equipmentService.selectAllEquipmentList());
+		// model.addAttribute("eqLineList", equipmentService.selectAllEquipmentList());
 		
-//		// 설비명* 탭에서  모든 설비 점검에 있는 설비들을 option에 넣어야 할 때		
-//		model.addAttribute("checkList", equipmentService.selectAllCheckList());
+		// 설비명* 탭에서 현재 가동중이지 않은 설비들만 옵션에 뜨도록		
+		model.addAttribute("eqIpoprOption", equipmentService.eqIpoprOption());
+		// 		model.addAttribute("eqLineOption", equipmentService.getEqLineOption());
 		
 		// 다음 비가동 코드를 input 태그에 미리 적어줌
 		model.addAttribute("getNoprCode", equipmentService.getNoprCode());
