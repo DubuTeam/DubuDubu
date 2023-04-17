@@ -693,41 +693,46 @@ function comList() {
 			$("#vendGridModal").modal('hide');
 		});
 		
-//주문서 수정 저장
 		var okBtn = document.getElementById('okBtn');
-		okBtn.addEventListener('click',function(result) {
+		okBtn.addEventListener('click', function(result) {
 		    var data = grid.getCheckedRows();
+
+		    // 체크된 값이 없으면 실행하지 않음
+		    if (data.length === 0) {
+		        toastr.warning('선택된 항목이 없습니다');
+		        return;
+		    }
 
 		    // 모든 필드가 값이 존재하는지 검사
 		    for (var i = 0; i < data.length; i++) {
 		        var row = data[i];
-		        console.log(row)
-		        if (!row.orderNo || !row.edctsCd || !row.vendCd || !row.vendNm || !row.prdtNm || !row.orderCnt ||!row.paprdDt) {
+		        if (!row.orderNo || !row.edctsCd || !row.vendCd || !row.vendNm || !row.prdtNm || !row.orderCnt || !row.paprdDt) {
 		            toastr.warning('모든 필드를 채워주세요');
 		            return; // 중단
 		        }
 		    }
-		    
+
 		    // 값이 모두 존재하면 저장
 		    $.ajax({
-		        url:"saveOrdr",
-		        method:"post",
-		        data:JSON.stringify(data),
-		        contentType:"application/json",
-		        success:function() {
+		        url: "saveOrdr",
+		        method: "post",
+		        data: JSON.stringify(data),
+		        contentType: "application/json",
+		        success: function() {
 		            toastr.success('저장되었습니다');
 		            console.log(data);
 		            $('#addBtn').prop('disabled', false);
 		        },
-		        error:function(er){
+		        error: function(er) {
 		            console.log(er);
 		            toastr.warning('저장에 실패했습니다');
 		        }
-		    })
-		}); 
-		$('#grid').mouseleave(ev=>{
-			grid.finishEditing();
-		})	
+		    });
+		});
+
+		$('#grid').mouseleave(ev => {
+		    grid.finishEditing();
+		});
 		
 		
 
