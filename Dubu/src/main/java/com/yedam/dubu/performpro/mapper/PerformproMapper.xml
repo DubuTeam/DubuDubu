@@ -5,7 +5,32 @@
 <mapper namespace="com.yedam.dubu.performpro.mapper.PerformproMapper">
 	
 	<select id="indicaHeader" resultType="PerformproVO">
-		SELECT * FROM INDICA
+		SELECT i.INDICA_CD, count(id.prod_order_detail_cd) as prodCount, i.INDICA_DT
+		FROM INDICA i JOIN INDICA_DTL id
+		ON i.indica_cd = id.indica_cd
+		GROUP BY i.INDICA_CD, i.INDICA_DT
+	</select>
+	
+	<select id="getProdList" resultType="PerformproVO">
+		SELECT id.prod_order_detail_cd, b.prdt_nm, id.BOM_CD ,i.indica_cd, id.edcts_cd, id.indica_cnt, id.wk_fr_dt
+		FROM INDICA i JOIN INDICA_DTL id
+		ON i.indica_cd = id.indica_cd
+		JOIN bom b
+		ON id.bom_cd = b.bom_cd
+		WHERE id.indica_cd = #{indicaCd}
+	</select>
+	
+	<!-- 생산지시 디테일 코드, 공정명, 공정코드, 공정순서, 자재코드, 자재소모량, 지시량 , 작업일자, 생산완료여부  --> 
+	<!-- 한 제품의 생산 공정 흐름 -->
+	<select id="getProcessFlow" resultType="PerformproVO">
+		SELECT pp.prod_order_detail_cd, pr.prcs_nm, pp.prcs_cd , pp.prcs_pr, vi.rsc_cd, vi.oust_cnt,id.indica_cnt, id.wk_fr_dt, pp.complete
+		FROM PRCS_PROG pp JOIN indica_dtl id
+		    ON pp.prod_order_detail_cd = id.prod_order_detail_cd
+		JOIN prcs pr
+		    ON pp.prcs_cd = pr.prcs_cd
+		JOIN v_prodBom vi
+		    ON id.bom_cd = vi.bom_cd AND pp.prcs_pr = vi.eq_sq
+		WHERE pp.prod_order_detail_cd = #{prodOrderDetailCd}
 	</select>
 	
 </mapper>

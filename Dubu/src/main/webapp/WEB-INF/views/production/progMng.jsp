@@ -64,12 +64,11 @@
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
-              <button type="button" class="btn btn-primary">삭제</button>
+              <button type="button" class="btn btn-primary" id="selectBtn">선택</button>
             </div>
           </div>
         </div>
       </div>
-
       <!-- ↑↑↑ 모달 -->
       <!--  -->
 
@@ -79,7 +78,7 @@
     <div class="card mb-4">
       <div class="card-body">
         <div class="linelist" style="float: right;">
-          <button type="button" class="btn btn-primary" id="searchBtn">
+          <button type="button" class="btn btn-primary" id="insSearchBtn">
             <i class="fas fa-search"></i> 조회
           </button>
         </div>
@@ -113,7 +112,7 @@
     <div class="card mb-4">
       <div class="card-body">
         <div>지시(제품)목록 리스트</div>
-        <div id="grid"></div> <!-- 그리드 -->
+        <div id="prodListGrid"></div> <!-- 그리드 -->
       </div>
     </div>
     <br>
@@ -121,7 +120,7 @@
 
     <div class="card mb-4">
       <div class="card-body">
-        <div class="linelist" style="float: right;">
+        <!-- <div class="linelist" style="float: right;">
           <button type="button" class="btn btn-primary addBtn">
             <i class="fas fa-plus"></i> 추가
           </button>
@@ -129,9 +128,9 @@
             <i class="fas fa-save"></i> 저장
           </button>
           <br> <br>
-        </div>
-        <div>공정진행</div>
-        <div id="workGrid"></div> <!-- 그리드 -->
+        </div> -->
+        <div>진행공정흐름</div>
+        <div id="prodFlowGrid"></div> <!-- 그리드 -->
       </div>
     </div>
 
@@ -349,32 +348,34 @@
 
 <script>
 
-  $('#searchBtn').on('click', function () {
-    //$('#insModal').modal('show');
-    $('#insModal').modal('show');
-    showModal();
- 
-  })
 
-	function showModal() {
-		  $.ajax({
-				url:"getIndicaHeader",
-				method:"post",
-				success:function(result) {
-					//console.log(result);
-					setTimeout(function() {
-						insGrid.refreshLayout(); // new tui.Grid의 refreshLayout()으로 해줘야함
-					},300);
-					insGrid.resetData(result);
-				},
-				error: function (reject) {	   
-				       console.log(reject);
-				}
-			}) 
-	  }
+// 생산 지시 조회 버튼 클릭시 실행하는 함수
+$('#insSearchBtn').on('click', function () {
+  $('#insModal').modal('show');
+  showModal();
+})
+
+
+// 지시헤더 리스트
+function showModal() {
+	  $.ajax({
+		url:"getIndicaHeader",
+		method:"post",
+		success:function(result) {
+			//console.log(result);
+			setTimeout(function() {
+				insGrid.refreshLayout(); // new tui.Grid의 refreshLayout()으로 해줘야함
+			},300);
+			insGrid.resetData(result);
+		},
+		error: function (reject) {	   
+		       console.log(reject);
+		}
+	}) 
+ }
   
   
-  // 그리드
+  // 생산 헤더 그리드
   const insGrid = new tui.Grid({
     el: document.getElementById('insGrid'), // Container element
     scrollX: false,
@@ -390,24 +391,207 @@
         sortable: true
       },
       {
+          header: '생산할 제품 건수',
+          name: 'prodCount',
+          align: 'center',
+          sortable: true
+      },
+      {
         header: '생산지시일자',
         name: 'indicaDt',
         align: 'center',
-        sortable: true
+        sortable: true,
+        formatter : function(data){ // 날짜형식 바꿔주는것
+            return dateFormat(data.value); 
+       	}
       }
     ]
   });
 
 
-  
-
   // 로드시 나타남
   $(document).ready(function () {
 
   });
+  
+  
+  // 지시(제품) 목록 리스트 그리드
+  const prodListGrid = new tui.Grid({
+    el: document.getElementById('prodListGrid'), // Container element
+    scrollX: false,
+    scrollY: true,
+    bodyHeight: 200,
+    rowHeight: 50,
+    rowHeaders: ['rowNum'],
+    columns: [
+      {
+        header: '생산지시디테일코드',
+        name: 'prodOrderDetailCd',
+        align: 'center',
+        sortable: true
+      },
+      {
+        header: '제품명',
+        name: 'prdtNm',
+        align: 'center',
+        sortable: true
+      },
+      {
+        header: 'BOM코드',
+        name: 'bomCd',
+        align: 'center',
+        sortable: true
+      },
+      {
+        header: '지시코드',
+        name: 'indicaCd',
+        align: 'center',
+        sortable: true
+      },
+      {
+        header: '생산지시수량',
+        name: 'indicaCnt',
+        align: 'center',
+        sortable: true
+      },
+      {
+        header: '작업시작일',
+        name: 'wkFrDt',
+        align: 'center',
+        sortable: true,
+        formatter : function(data){ // 날짜형식 바꿔주는것
+            return dateFormat(data.value); 
+       	}
+      }
+    ]
+  });
+  
+
+  // 생산 지시 모달창에서 조회 버튼을 클릭했을때 실행하는 함수
+  $('#selectBtn').on('click', function(){
+	  let row = insGrid.getCheckedRows();
+	  let indicaCd = row[0].indicaCd; // 선택한 행의(하나만 선택) indicaCd 값을 가져옴
+	  prodList(indicaCd); // 생산 디테일 호출
+	  $('#insModal').modal('hide'); // 모달창 닫힘
+	  $('.modal-backdrop').remove(); // 모달창 닫을때 생기는 background배경 제거
+  });
+  
+  
+//생산 디테일 (생산해야하는 제품목록들)
+function prodList(indicaCd) {
+	  $.ajax({
+		url:"prodList",
+		method:"post",
+		data : {indicaCd : indicaCd},
+		success: function(result) {
+			prodListGrid.resetData(result);
+		},
+		error: function (reject) {	   
+		    console.log(reject);
+		}
+	}) 
+}
+  
+ 
+// 지시(제품) 목록 리스트 그리드
+const prodFlowGrid = new tui.Grid({
+  el: document.getElementById('prodFlowGrid'), // Container element
+  scrollX: false,
+  scrollY: true,
+  bodyHeight: 200,
+  rowHeight: 50,
+  rowHeaders: ['rowNum'],
+  columns: [
+    {
+      header: '생산지시디테일코드',
+      name: 'prodOrderDetailCd',
+      align: 'center',
+      sortable: true
+    },
+    {
+      header: '공정코드',
+      name: 'prcsCd',
+      align: 'center',
+      sortable: true
+    },
+    {
+      header: '공정명',
+      name: 'prcsNm',
+      align: 'center',
+      sortable: true
+    },
+    {
+      header: '공정순서',
+      name: 'prcsPr',
+      align: 'center',
+      sortable: true
+    },
+    {
+      header: '자재코드',
+      name: 'rscCd',
+      align: 'center',
+      sortable: true
+    },
+    {
+       header: '자재소모수량',
+       name: 'oustCnt',
+       align: 'center',
+       sortable: true
+    },
+    {
+       header: '생산지시수량',
+       name: 'indicaCnt',
+       align: 'center',
+       sortable: true
+    },
+    {
+      header: '작업시작일',
+      name: 'wkFrDt',
+      align: 'center',
+      sortable: true,
+      formatter : function(data){ // 날짜형식 바꿔주는것
+          return dateFormat(data.value); 
+     	}
+    },
+    {
+        header: '생산완료여부',
+        name: 'complete',
+        align: 'center',
+        sortable: true
+    }
+  ]
+});
 
 
-  // 설비 그리드
+//지시(제품)리스트를 더블클릭하였을때 실행하는 함수
+prodListGrid.on('dblclick', function(e){
+	let rowKey = e.rowKey;
+	let prodOrderDetailCd = prodListGrid.getValue(rowKey, 'prodOrderDetailCd');
+	processFlow(prodOrderDetailCd);
+	
+	
+})
+
+// 한 제품의 공정흐름을 나타내는 함수
+function processFlow(prodOrderDetailCd){
+	$.ajax({
+ 		url:"processFlow",
+ 		method:"post",
+ 		data : {prodOrderDetailCd : prodOrderDetailCd},
+ 		success: function(result) {
+ 			prodFlowGrid.resetData(result);
+ 		},
+ 		error: function (reject) {	   
+ 		    console.log(reject);
+ 		}
+ 	}) 
+ }
+  
+  
+  
+  
+
+  // 작업등록 모달창에서의 설비 그리드
   const equiGrid = new tui.Grid({
     el: document.getElementById('equiGrid'), // Container element
     scrollX: false,
@@ -440,8 +624,7 @@
     ]
   });
 
-  // 공정 , 자재 그리드
-  // 그리드
+  // 작업등록 모달창에서의 공정 , 자재 그리드
   const prcsGrid = new tui.Grid({
     el: document.getElementById('prcsGrid'), // Container element
     scrollX: false,
@@ -480,5 +663,15 @@
       }
     ]
   });
+  
+//날짜 변환
+function dateFormat(date) {
+   let date1 = new Date(date);
+   let date2 = date1.getFullYear() + '-' 
+         + ((date1.getMonth()<10)?'0'+(date1.getMonth()+1):(date1.getMonth()+1)) + '-'
+         + ((date1.getDate()<10)?'0'+date1.getDate():date1.getDate());       
+   return date2;
+}
+
 
 </script>
