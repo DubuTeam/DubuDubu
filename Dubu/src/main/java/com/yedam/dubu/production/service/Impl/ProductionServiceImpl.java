@@ -153,9 +153,19 @@ public class ProductionServiceImpl implements ProductionService {
 	}
 
 	@Override
+	public List<ProductionVO> selectIndicaOrder(String planCd) {
+		return productionMapper.selectIndicaOrder(planCd);
+	}
+
+	@Override
 	public int insertPlan(List<ProductionVO> name, List<ProductionVO> cnt) {
-		
+		// TODO Auto-generated method stub
 		return 0;
+	}
+
+	@Override
+	public List<ProductionVO> selectIndicaOrderDetail(String planCd) {
+		return productionMapper.selectIndicaOrderDetail(planCd);
 	}
 
 	/*

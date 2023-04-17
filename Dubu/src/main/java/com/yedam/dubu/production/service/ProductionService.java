@@ -47,4 +47,10 @@ public interface ProductionService {
 	public List<ProductionVO> planEquipCheck(String planCd);
 	// 제품자재확인 조회
 	//public List<ProductionVO> planMaterialCheck(String prcLotCd);
+	
+	// 생산지시 계획 조회
+	public List<ProductionVO> selectIndicaOrder(String planCd);
+	
+	// 생산지시 계획 디테일 조회
+	public List<ProductionVO> selectIndicaOrderDetail(String planCd);
 }	

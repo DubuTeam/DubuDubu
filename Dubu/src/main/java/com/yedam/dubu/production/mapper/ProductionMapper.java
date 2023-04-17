@@ -68,4 +68,9 @@ public interface ProductionMapper {
 	public List<ProductionVO> planEquipCheck(@Param("planCd")String planCd);
 	// 생산계획 자재확인 조회
 	//public List<ProductionVO> planMaterialCheck(@Param("prcLotCd")String prcLotCd);
+	
+	// 생산지시 계획 조회
+	public List<ProductionVO> selectIndicaOrder(@Param("planCd")String planCd);
+	// 생산지시 계획 디테일 조회
+	public List<ProductionVO> selectIndicaOrderDetail(@Param("planCd")String planCd);
 }

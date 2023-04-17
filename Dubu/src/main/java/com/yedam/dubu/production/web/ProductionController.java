@@ -133,6 +133,17 @@ public class ProductionController {
 	public String getIndica(Model model){
 		return "production/indica";
 	}
+	// 생산지시 계획 조회
+	@PostMapping("/indicaOrderList")
+	@ResponseBody List<ProductionVO> getIndicaOrder(@RequestParam(required = false)String planCd){
+		return productionService.selectIndicaOrder(planCd);
+	}
+	
+	// 생산지시 계획 디테일
+	@PostMapping("/indicaOrderDetail")
+	@ResponseBody List<ProductionVO> getIndicaOrderDetail(@RequestParam(required=false)String planCd){
+		return null;
+	}
 	
 	// 생산지시조회
 	@GetMapping("/indicaSearch")
