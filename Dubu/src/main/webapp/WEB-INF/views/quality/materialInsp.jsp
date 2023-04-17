@@ -1027,12 +1027,14 @@ function upRscProg() {
   console.log(selectedRows);
   let ordrCdArr = selectedRows.map(row => row.ordrCd);
   console.log(ordrCdArr);
+  
+  let data = { ordrCdArr: ordrCdArr };  // data 변수 정의
   // AJAX 호출
   $.ajax({
     type: 'POST',
-    url: "upRscProg",
+    url: "/upRscProg",
     data: JSON.stringify({
-      ordrCdArr: ordrCdArr,
+      data
       // 기타 필요한 데이터도 함께 전송 가능
     }),
     contentType: 'application/json',
