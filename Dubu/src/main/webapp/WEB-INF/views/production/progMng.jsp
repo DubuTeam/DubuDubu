@@ -112,7 +112,7 @@
     <br><br>
     <div class="card mb-4">
       <div class="card-body">
-        <div>공정진행</div>
+        <div>지시(제품)목록 리스트</div>
         <div id="grid"></div> <!-- 그리드 -->
       </div>
     </div>
@@ -130,7 +130,7 @@
           </button>
           <br> <br>
         </div>
-        <div>작업등록</div>
+        <div>공정진행</div>
         <div id="workGrid"></div> <!-- 그리드 -->
       </div>
     </div>
@@ -351,15 +351,29 @@
 
   $('#searchBtn').on('click', function () {
     //$('#insModal').modal('show');
-
     $('#insModal').modal('show');
-    setTimeout(() => insGrid.refreshLayout(), 30);
-    //setTimeout(() => prcsGrid.refreshLayout(), 300);
-
     showModal();
+ 
   })
 
-
+	function showModal() {
+		  $.ajax({
+				url:"getIndicaHeader",
+				method:"post",
+				success:function(result) {
+					//console.log(result);
+					setTimeout(function() {
+						insGrid.refreshLayout(); // new tui.Grid의 refreshLayout()으로 해줘야함
+					},300);
+					insGrid.resetData(result);
+				},
+				error: function (reject) {	   
+				       console.log(reject);
+				}
+			}) 
+	  }
+  
+  
   // 그리드
   const insGrid = new tui.Grid({
     el: document.getElementById('insGrid'), // Container element
@@ -376,13 +390,7 @@
         sortable: true
       },
       {
-        header: '제품명',
-        name: 'edctsCd',
-        align: 'center',
-        sortable: true
-      },
-      {
-        header: '지시일자',
+        header: '생산지시일자',
         name: 'indicaDt',
         align: 'center',
         sortable: true
@@ -391,9 +399,7 @@
   });
 
 
-  function showModal() {
-
-  }
+  
 
   // 로드시 나타남
   $(document).ready(function () {
