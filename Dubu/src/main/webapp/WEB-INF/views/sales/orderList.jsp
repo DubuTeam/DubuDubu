@@ -263,7 +263,11 @@
 
 <script>
 //행추가 버튼
+
 $('#addBtn').click(ev => {
+    // Disable the addBtn
+    $('#addBtn').prop('disabled', true);
+
     var row = grid.getRowCount();
     grid.appendRow();
     //주문서 추가시 주문번호 자동 생성 
@@ -277,7 +281,7 @@ $('#addBtn').click(ev => {
         success:function(makeno) {
             var no = makeno.index;
             var rcode = orderDt.replaceAll("-","");
-            var result = "ORD" + rcode + no;
+            var result = "ORD" + no;
             console.log(result);
             console.log(row);
             console.log(no);
@@ -285,6 +289,7 @@ $('#addBtn').click(ev => {
         }
     });
 });
+
 $(function() {
 	searchAll();
 	comList();
@@ -294,6 +299,7 @@ $(function() {
 
 	//현재날짜 기준 주문서 조회(첫페이지)
 	function searchAll() {
+	
 		var searchData = $("#searchFrm").serialize();
 		$.ajax({
 			url : "orderSelect",
@@ -701,7 +707,7 @@ function comList() {
 		            return; // 중단
 		        }
 		    }
-
+		    
 		    // 값이 모두 존재하면 저장
 		    $.ajax({
 		        url:"saveOrdr",
@@ -711,6 +717,7 @@ function comList() {
 		        success:function() {
 		            toastr.success('저장되었습니다');
 		            console.log(data);
+		            $('#addBtn').prop('disabled', false);
 		        },
 		        error:function(er){
 		            console.log(er);
@@ -721,5 +728,7 @@ function comList() {
 		$('#grid').mouseleave(ev=>{
 			grid.finishEditing();
 		})	
+		
+		
 
 </script>
