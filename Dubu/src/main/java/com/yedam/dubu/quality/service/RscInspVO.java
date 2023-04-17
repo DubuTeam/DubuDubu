@@ -52,14 +52,14 @@ import lombok.NoArgsConstructor;
 	    private List<RscInfVO> rscInfList; //불량목록
 		private String rscInspCd;
 	    private String rscProgress;// 검사완료
-	    private int inspDtlCd;
+	    private String inspDtlCd;
 	    
 	    public String getRscInspCd() {
-	        return rscInspCd;
+	        return inspCd;
 	    }
 
 	    public void setRscInspCd(String rscInspCd) {
-	        this.rscInspCd = rscInspCd;
+	        this.inspCd = rscInspCd;
 	    }
 	
 }
