@@ -149,8 +149,8 @@
 
     <update id="upRscProg" parameterType="string">
     UPDATE RSC_ORDR SET RSC_PROGRESS = '검사완료'
-    WHERE ORDR_CD = #{value};
-</update>
+    WHERE ORDR_CD = #{ordrCd}
+	</update>
     
     
     

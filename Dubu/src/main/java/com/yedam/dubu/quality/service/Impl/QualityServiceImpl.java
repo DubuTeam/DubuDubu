@@ -94,6 +94,13 @@ public class QualityServiceImpl implements QualityService {
         return qualityMapper.schRscInspHist(rscInspVO);
     }
 
+	@Override
+	public void upRscProg(RscInspVO rscInspVO) {
+		qualityMapper.upRscProg(rscInspVO);
+		
+	}
+
+
 	/*
 	 * @Override public List<RscInspVO> upRscProg(RscInspVO rscInspVO) { return
 	 * qualityMapper.upRscProg(rscInspVO.getOrdrCd()); }
