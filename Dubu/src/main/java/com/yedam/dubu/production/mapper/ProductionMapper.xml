@@ -38,7 +38,7 @@
 	</insert>
 	<!-- 등록하고자 하는 코드 -->
 	<select id="inesrtPrcsCode" resultType="ProductionVO">
-		SELECT PRCS_DIV FROM PRCS WHERE PRCS_DIV=#{prcsDiv}
+		SELECT #{PRCS_FG} || PRCS_SEQ.NEXTVAL AS PRCS_CD FROM DUAL
 	</select>
 	<!-- 수정 -->
 	<update id="updatePrcsGrid" parameterType="ProductionVO">
@@ -80,7 +80,7 @@
 	</insert>
 	<!-- 생산계획코드, 작업우선순위 업데이트 -->
 	<select id="planCode" resultType="String">
-		SELECT 'PLAN_CD' || PLAN_CODE_SEQ.NEXTVAL AS PLAN_CD FROM DUAL
+		SELECT 'PLC' || PLAN_CODE_SEQ.NEXTVAL AS PLAN_CD FROM DUAL
 	</select>
 	<update id="updatePlanCd" parameterType="ProductionVO">
 		UPDATE PLAN SET PLAN_CD = #{planCd}
@@ -96,13 +96,7 @@
 	</update>
 	<update id="updateEqBom" parameterType="ProductionVO">
 		UPDATE EQ_BOM SET EQ_SQ	= #{eqSq}
-	</update>
-	<!-- 생산등록 -->
-	<!-- <update id="updatePlanYn" parameterType="ProductionVO">
-	 	UPDATE ORDER_SHEET
-	 	SET PLAN_YN = 'Y'
-	 	WHERE ORDER_NO = #{orderNo}
-	</update> --> 
+	</update> 
 	<!-- 생산계획 제품 조회 -->
 	<select id="selectPlanEquip" resultType="ProductionVO">
 		 SELECT O.PRDT_NM,
@@ -158,4 +152,21 @@
         ON B.RSC_CD = L.RSC_CD
 	    WHERE L.PRC_LOT_CD = #{prcLotCd}
 	</select -->
+	
+	<!-- 생산지시 계획 조회 -->
+	<select id="selectIndicaOrder" resultType="ProductionVO">
+		SELECT PD.PLAN_CD,
+		       PD.PLAN_CNT,
+		      (PD.PLAN_CNT-ID.INDICA_CNT) AS PLAN_NINDICA
+		FROM  PLAN_DTL PD
+		INNER JOIN INDICA I
+		ON PD.PLAN_CD = I.PLAN_CD
+		INNER JOIN INDICA_DTL ID
+		ON I.INDICA_CD = ID.INDICA_CD
+		WHERE PD.PLAN_CD IS NOT NULL
+	</select>
+	<!-- 생산지시 계획 디테일 조회 -->
+	<select id="selectIndicaOrderDetail" resultType="ProductionVO">
+		
+	</select>
 </mapper>

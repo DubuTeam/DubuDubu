@@ -55,6 +55,11 @@ public class ProductionVO {
 	public int eqSq;
 	
 	
+	// 생산지시
+	public int planCnt;     // 계획수량
+	public int planNindica; // 미지시수량
+	
+	
 	
 	
 	
