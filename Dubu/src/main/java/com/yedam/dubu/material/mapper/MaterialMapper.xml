@@ -255,6 +255,21 @@
         ORDER BY INSP_CD
 	</select>
 	
-	
+	<!-- 자재 재고 조회 리스트 -->
+	<select id="getMaterialStocklList" resultType="MaterialVO">
+		SELECT
+            r.rsc_cd,
+		    r.rsc_nm,
+		    r.rsc_typ,
+		    r.rsc_spec,
+		    r.mng_unit,
+		    rs.rsc_stc,
+		    r.saf_stc,
+            rsh.ist_cnt,
+            rsh.oust_cnt
+		FROM rsc r JOIN rsc_stc rs ON r.rsc_cd = rs.rsc_cd
+                    JOIN rsc_stc_hist rsh ON rs.rsc_cd = rsh.rsc_cd
+		ORDER BY r.rsc_cd
+	</select>
 
 </mapper>

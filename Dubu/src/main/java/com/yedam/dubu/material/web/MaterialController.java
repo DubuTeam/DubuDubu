@@ -252,6 +252,7 @@ public class MaterialController {
 	// 자재재고조회
 	@GetMapping("/materialStcList")
 	public String getMaterialStcList(Model model) {
+		model.addAttribute("materialStocklList", materialService.getMaterialStocklList());
 		return "material/materialStcList";
 	}
 

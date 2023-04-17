@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.yedam.dubu.equipment.service.EquipmentService;
 import com.yedam.dubu.equipment.service.EquipmentVO;
+import com.yedam.dubu.sales.service.SalesIstVO;
 
 @Controller
 public class EquipmentController {
@@ -165,14 +166,10 @@ public class EquipmentController {
 	}
 	
 	
-	// 설비 점검 검색 (모달 아님)
-	@GetMapping("/searchEqCheck")
+	// 설비 점검 검색 (모달 아님)  - 테스트
+	@PostMapping("/searchEqCheck")
 	@ResponseBody
-	public List<EquipmentVO> getSpecificEqCheck(EquipmentVO equipmentVO, @RequestParam String keyword3, @RequestParam Date searchFrDt, @RequestParam Date searchToDt) {
-		equipmentVO.setKeyword3(keyword3);
-		equipmentVO.setFrDt(searchFrDt);
-		equipmentVO.setToDt(searchToDt);
-
+	public List<EquipmentVO> getSpecificEqCheck(EquipmentVO equipmentVO) {
 		return equipmentService.selectSpecificEqCheckList(equipmentVO);
 	}
 	
@@ -225,12 +222,12 @@ public class EquipmentController {
 		return "redirect:eqCheck";
 	}
 	
-	///////////////////////////////////////////////////////////////////////////
-	
-	
-	// 실시간설비상태
-	@GetMapping("/equIp")
-	public String getEquIp(Model model) {
-		return "equip/equIp";
+	// 설비 점검 검색 (모달 아님)  - 테스트
+	@PostMapping("/searchEqIpopr")
+	@ResponseBody
+	public List<EquipmentVO> getSpecificEqIpopr(EquipmentVO equipmentVO) {
+		return equipmentService.selectSpecificEqIpoprList(equipmentVO);
 	}
+	
+	///////////////////////////////////////////////////////////////////////////
 }
