@@ -156,10 +156,5 @@ public class ProductionController {
 	public String getPrcsSearch(Model model){
 		return "production/prcsSearch";
 	}
-	
-	// 생산관리
-	@GetMapping("/progMng")
-	public String getprogMng(Model model){
-		return "production/progMng";
-	}
+
 }

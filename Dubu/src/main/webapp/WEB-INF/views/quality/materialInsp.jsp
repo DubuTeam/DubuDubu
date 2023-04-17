@@ -1011,6 +1011,7 @@ $('#infModal').on('shown.bs.modal', function () {
                     updRscInspHist(gridVal);
                     grid.clear();
                 }
+                upRscProg();
             } else {
                 toastr.error('비어있는 항목이 있습니다.');
             }
@@ -1020,32 +1021,29 @@ $('#infModal').on('shown.bs.modal', function () {
         
 // ====================업데이트 검사완료=============
 // AJAX 코드
-function upRscProg(ordrCd) {
-    let url = "upRscProg";
-
-    // rscInspVO 객체 생성
-    let rscInspVO = {
-        ordrCd: ordrCd
-    };
-
-    // AJAX 호출
-    $.ajax({
-        url: url,
-        type: 'POST',
-        contentType: 'application/json',
-        data: JSON.stringify(rscInspVO),
-        success: function (res) {
-            if (res) {
-                
-              
-            } else {
-             
-            }
-        },
-        error: function (xhr, status, error) {
-            console.log(error);
-        }
-    });
+function upRscProg() {
+  // AJAX 호출
+   let selectedRows = grid.getCheckedRows();
+  console.log(selectedRows);
+  let ordrCdArr = selectedRows.map(row => row.ordrCd);
+  console.log(ordrCdArr);
+  // AJAX 호출
+  $.ajax({
+    type: 'POST',
+    url: "upRscProg",
+    data: JSON.stringify({
+      ordrCdArr: ordrCdArr,
+      // 기타 필요한 데이터도 함께 전송 가능
+    }),
+    contentType: 'application/json',
+    success: function(result) {
+      // 성공 시 처리할 코드
+      console.log('검사완료 업데이트 완료');
+    },
+    error: function(xhr, status, error) {
+      // 실패 시 처리할 코드
+    }
+  });
 }
 //  ========================================================= 19:19
         /* function setRscInspList(data) {
