@@ -130,24 +130,26 @@ public class ProductionServiceImpl implements ProductionService {
 		System.out.println(plancd);
 		for(ProductionVO vo : updatePlanCd) {
 			vo.setPlanCd(plancd);
+			System.out.println(plancd);
 			result += productionMapper.updatePlanCd(vo);
 		}
 		for(ProductionVO vo : updateIndicac) {
 			vo.setPlanCd(plancd);
+			System.out.println(plancd);
 			result += productionMapper.updateIndicac(vo);
 		}
 		for(ProductionVO vo : updatePlanDtl) {
 			vo.setPlanCd(plancd);
+			System.out.println(plancd);
 			result += productionMapper.updatePlanDtl(vo);
 		}
 		for(ProductionVO vo : updateEqBom) {
 			result += productionMapper.updateEqBom(vo);
 		}
-		for(ProductionVO vo : updateEqBom) {
+		for(ProductionVO vo : updateOrderSheet) {
+			vo.setPlanCd(plancd);
+			System.out.println(plancd);
 			result += productionMapper.updateOrderSheet(vo);
-		}
-		for(ProductionVO vo : updateEqBom) {
-			result += productionMapper.updateEqBom(vo);
 		}
 		return result;
 	}

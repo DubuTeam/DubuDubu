@@ -60,7 +60,7 @@
 	<!-- 주문서 조회 -->
 	<select id="selectOrderList" resultType="ProductionVO">
 		SELECT * FROM ORDER_SHEET 
-		WHERE PLAN_CD IS NULL
+		WHERE PLAN_CD = 'N'
 		ORDER BY ORDER_DT
 	</select>
 	<!-- 주문서 디테일 조회 -->
@@ -156,14 +156,15 @@
 	<!-- 생산지시 계획 조회 -->
 	<select id="selectIndicaOrder" resultType="ProductionVO">
 		SELECT PD.PLAN_CD,
-		       PD.PLAN_CNT,
+		       MAX(PD.PLAN_CNT),
 		      (PD.PLAN_CNT-ID.INDICA_CNT) AS PLAN_NINDICA
 		FROM  PLAN_DTL PD
 		INNER JOIN INDICA I
 		ON PD.PLAN_CD = I.PLAN_CD
 		INNER JOIN INDICA_DTL ID
 		ON I.INDICA_CD = ID.INDICA_CD
-		WHERE PD.PLAN_CD IS NOT NULL
+        WHERE PD.PLAN_CD IS NOT NULL
+        GROUP BY PD.PLAN_CD, PD.PLAN_CNT-ID.INDICA_CNT
 	</select>
 	<!-- 생산지시 계획 디테일 조회 -->
 	<select id="selectIndicaOrderDetail" resultType="ProductionVO">
