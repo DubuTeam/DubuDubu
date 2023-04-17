@@ -192,7 +192,7 @@
 													style="width: 250px">
 													<option selected value="">==등록시필수선택==</option>
 													<!-- 라인명 탭에서 쓸 옵션들 -->
-													<c:forEach var="list" items="${eqLineList}">
+													<c:forEach var="list" items="${eqLineOption}">
 														<option value="${list.lineCd}">${list.lineNm}</option>
 													</c:forEach>
 												</select>

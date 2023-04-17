@@ -59,7 +59,7 @@ src="${pageContext.request.contextPath}/resources/js/eqcss/eqIpopr.js"></script>
                                             style="width: 250px" id="eqmNm"
                                             class="dataTable-selector">
                                             <option selected value="">==등록시필수선택==</option>
-                                            <c:forEach var="list" items="${eqLineList}">
+                                            <c:forEach var="list" items="${eqIpoprOption}">
                                                 <option value="${list.eqmCd}">${list.eqmNm}</option>
                                             </c:forEach>
                                         </select>

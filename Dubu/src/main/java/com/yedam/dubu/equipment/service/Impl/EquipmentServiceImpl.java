@@ -75,6 +75,11 @@ public class EquipmentServiceImpl implements EquipmentService{
 		return equipmentMapper.getEqCode();
 	}
 	
+	@Override
+	public List<EquipmentVO> getEqLineOption() {
+		return equipmentMapper.getEqLineOption();
+	}
+	
 	///
 	
 	@Override
@@ -154,6 +159,11 @@ public class EquipmentServiceImpl implements EquipmentService{
 	@Override
 	public List<EquipmentVO> selectAllEqIpoprList() {
 		return equipmentMapper.selectAllEqIpoprList();
+	}
+	
+	@Override
+	public List<EquipmentVO> eqIpoprOption() {
+		return equipmentMapper.eqIpoprOption();
 	}
 
 	@Override

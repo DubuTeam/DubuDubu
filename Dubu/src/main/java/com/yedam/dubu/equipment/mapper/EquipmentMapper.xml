@@ -11,6 +11,13 @@
 		SELECT * FROM EQM_LINE ORDER BY line_cd
 	</select>
 	
+	
+	<!-- 설비 페이지 - 가동중인 라인만 라인명 옵션에 뜨도록 -->
+	<select id="getEqLineOption" resultType="EquipmentVO">
+		SELECT * FROM EQM_LINE WHERE use_yn = 'Y' ORDER BY line_cd
+	</select>
+	
+	
 	<!-- 부여될 라인 코드를 미리 조회 (등록과 관련)  -  라인명은 LINE0002, LINE0003  이런식으로 문자열이다. -->
 	<select id="getLineCode" resultType="String">
 		SELECT
@@ -338,6 +345,26 @@
 			opert_ctnt
 		FROM eqm_opr
 		ORDER BY nopr_cd
+	</select>
+	
+	<!-- 현재 가동중이지 않은 설비들만 설비명 옵션에 뜨도록 -->
+	<select id="eqIpoprOption" resultType="EquipmentVO">
+		SELECT
+			ROWNUM AS "idx",
+			eqm_nm,
+			eqm_fg,
+			eqm_cd,
+			prcs_cd,
+			prcs_nm,
+			eqm_yn,
+			min_temp,
+			max_temp,
+			chck_perd,
+			line_cd,
+			eqm_ist_dt
+		FROM eqm
+        WHERE eqm_yn = 'N'
+		ORDER BY eqm_cd
 	</select>
 	
 	<!-- 부여될 비가동 코드를 미리 조회 (등록과 관련)  -  라인명은 NOPR0001, NOPR0002  이런식으로 문자열이다. -->
