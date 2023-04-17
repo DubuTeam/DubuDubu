@@ -1032,7 +1032,7 @@ function upRscProg() {
     type: 'POST',
     url: "upRscProg",
     data: JSON.stringify({
-      ordrCdArr: ordrCdArr,
+      ordrCdArr: 'ordrCdArr',
       // 기타 필요한 데이터도 함께 전송 가능
     }),
     contentType: 'application/json',
