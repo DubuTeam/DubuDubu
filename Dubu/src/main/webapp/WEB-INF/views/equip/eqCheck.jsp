@@ -61,7 +61,7 @@
 													<!-- Button trigger modal (4.6버젼) -->
 													<button type="button" style="margin-left: 3px"
 														class="btn btn-primary" data-toggle="modal"
-														data-target="#`222" id="searchBtn"
+														data-target="#exampleModal222" id="searchBtn"
 														name="searchBtn">
 														<i class="fas fa-search"></i>
 													</button>
@@ -215,9 +215,9 @@
 
 				<div class="card mb-4">
 					<div class="card-body">
-						<form action="" method="get">
+						<form action="" method="get" id="searchFrm" name="searchFrm">
 							<div id="searchEqmSet">
-								설비명 <input class="form-control" type="text" id="keyword3" name="eqmNm"
+								설비명 <input class="form-control" type="text" id="keyword3" name="keyword3"
 									style="width: 150px">
 								해당일자 <input type="date" class="form-control" id="searchFrDt" name="searchFrDt"
 									style="width: 150px;">

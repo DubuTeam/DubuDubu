@@ -302,15 +302,24 @@
 	
 	<!-- 설비 점검 검색하기 (모달 아님) -->
 	<select id="selectSpecificEqCheckList" resultType="EquipmentVO">
-		SELECT e.prcs_cd, e.eqm_ist_dt, e.chck_perd, e.use_yn, e.prcs_nm, c.chck_cd, c.eqm_cd, c.eqm_nm, c.chck_fg, c.chck_dt, c.jdgmnt, c.dispo_matter, c.dispo_ctnt, c.chck_psch
-		FROM eqm e
-		INNER JOIN eqm_chck c
-		ON e.eqm_cd = c.eqm_cd
+		SELECT
+			chck_cd,
+            eqm_cd,
+            eqm_nm,
+            chck_fg,
+            dispo_matter,
+            jdgmnt,
+            chck_dt,
+            chck_psch
+		FROM eqm_chck
 		WHERE 1=1
-		<if test="searchFrDt != null"><![CDATA[ AND c.chck_dt >= TO_DATE(#{searchFrDt})]]></if>
-		<if test="searchToDt != null"><![CDATA[ AND c.chck_dt < TO_DATE(#{searchToDt}+2)]]></if>
-		<if test="eqmNm != null"> AND e.eqm_nm LIKE '%'||#{keyword3}||'%'</if>
+		
+		<if test="keyword3 != null and keyword3 != ''">AND eqm_nm = #{keyword3}</if>
+		<if test="searchFrDt != null"><![CDATA[AND chck_dt >= #{searchFrDt}]]></if>
+		<if test="searchToDt != null"><![CDATA[AND chck_dt <= #{searchToDt}]]></if>
+		ORDER BY chck_cd
 	</select>
+
 
 	<!-- ↑↑↑ 설비 점검 내역 페이지 -->
 	<!-- ↓↓↓ 비가동 관리 페이지 -->
@@ -318,7 +327,17 @@
 	
 	<!-- (모달 밖) 모든 비가동 관리 리스트 출력 -->
 	<select id="selectAllEqIpoprList" resultType="EquipmentVO">
-		SELECT nopr_cd, eqm_cd, eqm_nm, fr_dt, to_dt, eqm_yn, eqm_psch, opert_ctnt FROM eqm_opr ORDER BY nopr_cd
+		SELECT
+			nopr_cd,
+			eqm_cd,
+			eqm_nm,
+			fr_dt,
+			to_dt,
+			eqm_yn,
+			eqm_psch,
+			opert_ctnt
+		FROM eqm_opr
+		ORDER BY nopr_cd
 	</select>
 	
 	<!-- 부여될 비가동 코드를 미리 조회 (등록과 관련)  -  라인명은 NOPR0001, NOPR0002  이런식으로 문자열이다. -->
@@ -375,6 +394,27 @@
 		DELETE FROM eqm_opr WHERE nopr_cd = #{noprCd}
 	</delete>
 	
+	
+	
+	<!-- 비가동 검색하기 -->
+	<select id="selectSpecificEqIpoprList" resultType="EquipmentVO">
+		SELECT
+			nopr_cd,
+			eqm_cd,
+			eqm_nm,
+			fr_dt,
+			to_dt,
+			eqm_yn,
+			eqm_psch,
+			opert_ctnt
+		FROM eqm_opr
+		WHERE 1=1
+		
+		<if test="keyword3 != null and keyword3 != ''">AND eqm_nm = #{keyword3}</if>
+		<if test="searchFrDt != null"><![CDATA[AND fr_dt >= #{searchFrDt}]]></if>
+		<if test="searchToDt != null"><![CDATA[AND fr_dt <= #{searchToDt}]]></if>
+		ORDER BY nopr_cd
+	</select>
 	
 	<!-- ↑↑↑ 비가동 관리 페이지 -->
 </mapper>

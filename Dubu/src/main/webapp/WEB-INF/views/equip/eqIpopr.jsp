@@ -73,10 +73,10 @@ src="${pageContext.request.contextPath}/resources/js/eqcss/eqIpopr.js"></script>
                                     </td>
 
 
-                                    <!-- 여기도 나한테 맞게 고치기 (완성하고 이거 hidden으로 바꾸기) -->
-                                    <th>비가동코드</th>
+                                    <!-- 이거 hidden으로 바꾸기 - 숨기기 -->
+                                    <!-- <th>비가동코드</th> -->
                                     <td>
-                                        <input class="form-control" type="text" id="noprCd"
+                                        <input class="form-control" type="hidden" id="noprCd"
                                             name="noprCd" style="width: 250px" readonly
                                             value="${getNoprCode }" />
                                     </td>
@@ -130,9 +130,9 @@ src="${pageContext.request.contextPath}/resources/js/eqcss/eqIpopr.js"></script>
                 <!-- -------------------------------------------------------------- -->
 
 
-                <form action="" method="get">
+                <form action="" method="get" id="searchFrm" name="searchFrm">
                     <div id="searchEqmSet">
-                        설비명 <input class="form-control" type="text" id="keyword3" name="eqmNm"
+                        설비명 <input class="form-control" type="text" id="keyword3" name="keyword3"
                             style="width: 150px">
                         해당일자 <input type="date" class="form-control" id="searchFrDt" name="searchFrDt"
                             style="width: 150px;">

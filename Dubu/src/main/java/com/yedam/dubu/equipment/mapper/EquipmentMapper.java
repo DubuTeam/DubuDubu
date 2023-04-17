@@ -123,4 +123,7 @@ public interface EquipmentMapper {
 		
 		// 5. 비가동 삭제하기
 		public int deleteEqIpopr(String noprCd);
+		
+		// 6. 비가동 검색하기
+		public List<EquipmentVO> selectSpecificEqIpoprList(EquipmentVO equipmentVO);
 }

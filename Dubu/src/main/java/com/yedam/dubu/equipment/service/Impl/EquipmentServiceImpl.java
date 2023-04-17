@@ -175,4 +175,9 @@ public class EquipmentServiceImpl implements EquipmentService{
 	public int deleteEqIpopr(String noprCd) {
 		return equipmentMapper.deleteEqIpopr(noprCd);
 	}
+
+	@Override
+	public List<EquipmentVO> selectSpecificEqIpoprList(EquipmentVO equipmentVO) {
+		return equipmentMapper.selectSpecificEqIpoprList(equipmentVO);
+	}
 }

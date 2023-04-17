@@ -1,35 +1,64 @@
-
 .table table {
 	width: 100%;
 }
 
-.inputMargin{
- text-align:center;
+.inputMargin {
+	text-align: center;
 }
 
-.inputMargin input{
- margin : 10px;
- width: 200px;
- height : 50px;
-}
-
-.inputMargin th{
- font-size : 20px;
-}
-
-.btnStyle button{
-	width:100px;
-	padding:10px;
-}
-
-.work{
-	margin:20px;
-}
-
-.work input{
+.inputMargin input {
+	margin: 10px;
 	width: 200px;
- 	height : 50px;
+	height: 50px;
 }
-.work button{
-	padding:10px;
+
+.inputMargin th {
+	font-size: 20px;
+}
+
+.btnStyle button {
+	width: 100px;
+	padding: 10px;
+}
+
+.work {
+	margin: 20px;
+}
+
+.work input {
+	width: 200px;
+	height: 50px;
+}
+
+.work button {
+	padding: 10px;
+}
+
+
+/*  */
+
+
+#main-contents {
+	display: flex;
+	justify-content: space-around;
+}
+
+#left-contents, #right-contents {
+	/* border: 1px solid #e3e6f0; */
+	background-color: #e3e6f0;
+	width: 45%;
+	height: auto;
+	overflow: hidden;
+}
+
+.linelist {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-bottom: 15px;
+}
+
+
+.saveBtn {
+	margin-left: 5px;
 }

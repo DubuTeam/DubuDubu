@@ -59,5 +59,6 @@ public interface MaterialMapper {
 	// 입고 상세 테이블 리스트
 	public List<MaterialVO> getMaterialIstDetail(String istCd);
 	
-	
+	// 자재 재고 조회
+	public List<MaterialVO> getMaterialStocklList();
 }
