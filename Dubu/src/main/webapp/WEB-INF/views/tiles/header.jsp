@@ -68,7 +68,7 @@
         </a>
         <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
-            	<a class="collapse-item" href="${pageContext.request.contextPath}/prcProcess">제품공정흐름관리</a>
+            	<%-- <a class="collapse-item" href="${pageContext.request.contextPath}/prcProcess">제품공정흐름관리</a>--%>
                 <a class="collapse-item" href="${pageContext.request.contextPath}/prcs">공정관리</a>
                 <a class="collapse-item" href="${pageContext.request.contextPath}/plan">생산계획</a>
                 <%-- <a class="collapse-item" href="${pageContext.request.contextPath}/planSearch">생산계획조회XXX</a> --%>
@@ -96,7 +96,7 @@
                 <a class="collapse-item" href="${pageContext.request.contextPath}/eq">설비관리</a>
                 <a class="collapse-item" href="${pageContext.request.contextPath}/eqCheck">설비점검내역</a>
                 <a class="collapse-item" href="${pageContext.request.contextPath}/eqIpopr">비가동관리</a>
-                <a class="collapse-item" href="${pageContext.request.contextPath}/equIp">실시간설비상태</a>
+                <!-- <a class="collapse-item" href="${pageContext.request.contextPath}/equIp">실시간설비상태</a> -->
             </div>
         </div>
     </li>

@@ -1,37 +1,35 @@
-#container {
-	width: 98%;
-	margin: 0 auto;
-}
-
-.col {
-	width: 700px
-}
-
-#pDate {
-	float: left;
-}
-
-#lbtn {
-	float: left;
-	display: inline-block;
-}
-
-.rbtn {
-	float: right;
-	display: inline-block;
-}
-
-#grid3 {
-	float: right;
-	margin-top: 0px;
-}
-
-.linelist {
-	float: right;
-	margin-top: 0px;
-	margin-right: 150px;
-}
 
 .table table {
 	width: 100%;
+}
+
+.inputMargin{
+ text-align:center;
+}
+
+.inputMargin input{
+ margin : 10px;
+ width: 200px;
+ height : 50px;
+}
+
+.inputMargin th{
+ font-size : 20px;
+}
+
+.btnStyle button{
+	width:100px;
+	padding:10px;
+}
+
+.work{
+	margin:20px;
+}
+
+.work input{
+	width: 200px;
+ 	height : 50px;
+}
+.work button{
+	padding:10px;
 }
