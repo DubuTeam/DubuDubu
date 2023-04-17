@@ -486,7 +486,7 @@ today = today.toISOString().split('T')[0];
 					header: '자재상세코드',
 					name: 'ordrDtlCd',
 					align: 'center',
-					hidden: true
+					//hidden: true
 				}, 
 				{
 					header: '발주번호',
@@ -595,7 +595,7 @@ today = today.toISOString().split('T')[0];
 		
 
 
-		/*   function getOrdrList() {
+		   function getOrdrList() {
 			  // initiate inf list
   
 			  infData.clear();
@@ -617,17 +617,24 @@ today = today.toISOString().split('T')[0];
 					  .then(res => res.json())
 					  .then(res => grid.resetData(res))
 			  }
-		  } */
+		  } 
 		$(document).ready(function () {
 			$('#getOrdrList').on('click', function () {
 				getOrdr();
 
 			})
 		});
+	     function getInfList() {
+	            let url = 'getInfCdList'
+	            fetch(url).then(res => res.json())
+	                .then(res => {
+	                    infGrid.resetData(res)
+	                });
+	        }
+
+		
 		  getOrdr();
 		function getOrdr() {
-			document.getElementById('startDt').valueAsDate = new Date(2023,03,01);
-	        document.getElementById('endDt').valueAsDate = new Date();
 			var searchDate = {
 					
 				startDt: $('#startDt').val(),
@@ -653,6 +660,7 @@ today = today.toISOString().split('T')[0];
 					success: function (res) {
 						console.log(res);
 						grid.resetData(res);
+						
 					},
 					error: function (xhr, status, error) {
 						console.error('Ajax Error:', error);
@@ -1013,7 +1021,7 @@ $('#infModal').on('shown.bs.modal', function () {
 // ====================업데이트 검사완료=============
 // AJAX 코드
 function upRscProg(ordrCd) {
-    let url = 'upRscProg';
+    let url = "upRscProg";
 
     // rscInspVO 객체 생성
     let rscInspVO = {
@@ -1061,7 +1069,7 @@ function upRscProg(ordrCd) {
  
  
  function setRscInspList(data) {
-	    let url = 'setRscInspList';
+	    let url = "setRscInspList";
 
 	    // AJAX 호출
 	    $.ajax({
@@ -1072,10 +1080,17 @@ function upRscProg(ordrCd) {
 	        success: function (res) {
 	            if (res) {
 	                toastr.success('저장이 완료되었습니다.');
+	                getOrdr();
 	                getOrdrList();
 	                schRscInspHist();
+	                
+	                
 	            } else {
-	                toastr.error('요청이 잘 못되었습니다.')
+	                toastr.success('저장이 완료되었습니다.');
+	                getOrdr();
+	                getOrdrList();
+	                schRscInspHist();
+	                
 	            }
 	        },
 	        error: function (xhr, status, error) {
@@ -1111,6 +1126,16 @@ function upRscProg(ordrCd) {
             infGrid.finishEditing();
         })
          */
+         
+         // declare modal
+         function schRscInspHist() {
+             let url = 'schRscInspHist'
+             fetch(url).then(res => res.json()).then(res => {
+                 mdfyGrid.resetData(res);
+             }).then(res => {
+                 mdfyGrid.refreshLayout();
+             })
+         }
          
          function updRscInspHist(data) {
         	  let url = 'updRscInspHist';

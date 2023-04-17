@@ -125,15 +125,28 @@
                 to_number(#{inspFailCnt}),
                 #{preIstCnt})
     </insert> -->
-    
-     <insert id="setRscInspList" parameterType="RscInspVO">
+    <!--  시퀀스 인서트 -->
+     <!-- <insert id="setRscInspList" parameterType="RscInspVO">
         insert into RSC_INSP_DTL (INSP_DTL_CD, RSC_CD, INSP_CD, ORDR_CD, INSP_CNT, INSP_PASS_CNT,
                                   INSP_FAIL_CNT, PRE_IST_CNT)
         values (INSP_DTL_CD_SEQ.NEXTVAL, #{rscCd}, #{inspCd}, #{ordrCd}, #{inspCnt}, to_number(#{inspPassCnt}),
                 to_number(#{inspFailCnt}),
                 #{preIstCnt})
-    </insert>
-    
+    </insert> -->
+    <insert id="setRscInspList" parameterType="RscInspVO">
+    <selectKey keyProperty="inspDtlCd" resultType="String" order="BEFORE">
+        select 'IDC'|| LPAD(INSP_DTL_CD_SEQ2.NEXTVAL, 4, '0') as INSP_DTL_CD
+        	  from dual
+    </selectKey>
+    insert into RSC_INSP_DTL (INSP_DTL_CD, INSP_CD, RSC_CD,  ORDR_CD, ORDR_DTL_CD, INSP_CNT, INSP_PASS_CNT,
+                              INSP_FAIL_CNT, PRE_IST_CNT)
+    values (#{inspDtlCd}, #{inspCd}, #{rscCd},  #{ordrCd}, #{ordrDtlCd}, #{inspCnt},  to_number(#{inspPassCnt}),
+            to_number(#{inspFailCnt}),
+            #{preIstCnt} )
+</insert>
+
+
+
     <update id="upRscProg" parameterType="string">
     UPDATE RSC_ORDR SET RSC_PROGRESS = '검사완료'
     WHERE ORDR_CD = #{value};
