@@ -280,12 +280,25 @@ tr {
 </div>
 
 <script>
-		/* document.addEventListener('load', function () {
+
+let vendCd = document.getElementById('vendCd');
+let inspDt = document.getElementById('inspDt');
+let inspTstr = document.getElementById('inspTstr');
+let delDataBtn = document.getElementById('delDataBtn');
+let inspCd = '';
+
+let saveFlag = 0 // 0 : 저장, 1 : 수정저장
+let initDate = new Date();
+
+let today = new Date()
+today = today.toISOString().split('T')[0];
+
+		 document.addEventListener('load', function () {
 			getVendListInit();
-			//getRscListInit();
-			//getInfList();
+			getRscListInit();
+			getInfList();
 			//schRscInspHist();
-		}) */
+		}) 
 		$(function () {
 			getVendListInit();
 			//getRscListInit();
@@ -402,6 +415,30 @@ tr {
 		}
 
 		//===========================main grid =========================================
+		
+			 let iModal;
+
+        class rscInfBtn {
+            constructor(props) {
+                let {rowKey, value} = props;
+                let btn = document.createElement('button');
+                let text = document.createTextNode(value);
+                btn.appendChild(text);
+                btn.innerHTML = '검사'
+                btn.className = 'inspBtn';
+                btn.addEventListener('click', function (e) {
+                    let infDiv = document.getElementById('infModal');
+                    infDiv.dataset.rowKey = rowKey;
+                    iModal = new bootstrap.Modal(infDiv, {});
+                    iModal.show('infModal');
+                })
+                this.el = btn;
+            }
+
+            getElement() {
+                return this.el;
+            }
+        }
 			
 
 		// main grid section
@@ -449,7 +486,7 @@ tr {
 					header: '자재상세코드',
 					name: 'ordrDtlCd',
 					align: 'center',
-					hidden: true
+					//hidden: true
 				}, 
 				{
 					header: '발주번호',
@@ -510,7 +547,7 @@ tr {
 					header: '검사',
 					name: 'rscInfBtn',
 					align: 'center',
-					//renderer: { type: 'rscInfBtn' },
+					renderer: rscInfBtn,
 					width: 50
 				},
 				{
@@ -558,7 +595,7 @@ tr {
 		
 
 
-		/*   function getOrdrList() {
+		   function getOrdrList() {
 			  // initiate inf list
   
 			  infData.clear();
@@ -580,17 +617,24 @@ tr {
 					  .then(res => res.json())
 					  .then(res => grid.resetData(res))
 			  }
-		  } */
+		  } 
 		$(document).ready(function () {
 			$('#getOrdrList').on('click', function () {
 				getOrdr();
 
 			})
 		});
+	     function getInfList() {
+	            let url = 'getInfCdList'
+	            fetch(url).then(res => res.json())
+	                .then(res => {
+	                    infGrid.resetData(res)
+	                });
+	        }
+
+		
 		  getOrdr();
 		function getOrdr() {
-			document.getElementById('startDt').valueAsDate = new Date(2023,03,01);
-	        document.getElementById('endDt').valueAsDate = new Date();
 			var searchDate = {
 					
 				startDt: $('#startDt').val(),
@@ -616,6 +660,7 @@ tr {
 					success: function (res) {
 						console.log(res);
 						grid.resetData(res);
+						
 					},
 					error: function (xhr, status, error) {
 						console.error('Ajax Error:', error);
@@ -654,6 +699,8 @@ tr {
 			]
 			, editingEvent: 'click'
 		})
+		
+		/*
 		let infData = new Map();
         let infModal = document.getElementById('infModal');
 
@@ -666,21 +713,21 @@ tr {
 			console.log('TEST');
 			let data = grid.getRow(infRowKey);
 			console.log(data);
-			/*  let rowKey = $('#infModal').data('rowKey');
-			  let data = infData.get(rowKey);
-			  if (data === undefined) { // initiate
+			 //let rowKey = $('#infModal').data('rowKey');
+			  //let data = infData.get(rowKey);
+			  /*if (data === undefined) {
 			    infGrid.setColumnValues('infCnt', '');
 			  } else if (data.length !== 0) {
 			    infGrid.resetData(data);
 			  } else {
 			    infGrid.setColumnValues('infCnt', '');
 			  }
-			  infGrid.refreshLayout(); */
+			  infGrid.refreshLayout(); 
 			
 			if(columnName == 'rscInfBtn'){
 				$("#infModal").modal("show");
 				$.ajax({
-					url: 'getInfCdList',
+					url: 'get`List',
 					dataType: "json",
 					method: "get",
 					success: function (edctsCdList) {
@@ -691,8 +738,62 @@ tr {
 					}
 				}) 
 			}
-		}) 
- 
+*/
+
+let infData = new Map();
+let infModal = document.getElementById('infModal');
+
+// 제품코드 칸 클릭 -> 제품코드 모달창 띄우기
+let infRowKey = '';
+grid.on("dblclick", (e) => {
+  const { columnName } = e;
+  infRowKey = e.rowKey;
+  console.log('TEST');
+  let data = grid.getRow(infRowKey);
+  console.log(data);
+  /*if (data === undefined) {
+    infGrid.setColumnValues('infCnt', '');
+  } else if (data.length !== 0) {
+    infGrid.resetData(data);
+  } else {
+    infGrid.setColumnValues('infCnt', '');
+  }
+  infGrid.refreshLayout();*/
+
+  if(columnName == 'rscInfBtn'){
+    $("#infModal").modal("show");
+    $.ajax({
+      url: 'getInfCdList',
+      dataType: "json",
+      method: "get",
+      success: function (edctsCdList) {
+        setTimeout(function () {
+          infGrid.refreshLayout();
+        }, 300);
+        infGrid.resetData(edctsCdList);
+      }
+    }) 
+  }
+}) 
+$('#infModal').on('shown.bs.modal', function () {
+  let rowKey = infRowKey;
+  let data = infData.get(rowKey);
+  if (data === undefined) {
+    infGrid.setColumnValues('infCnt', '');
+  } else if (data.length !== 0) {
+    infGrid.resetData(data);
+  } else {
+    infGrid.setColumnValues('infCnt', '');
+  }
+  infGrid.refreshLayout();
+});
+
+
+
+
+
+
+
  
 //=================================mdfygrid==================================
 	  let mdfyGrid = new tui.Grid({
@@ -703,7 +804,7 @@ tr {
             columns: [
                 {
                     header: '검사코드',
-                    name: 'rscInspCd',
+                    name: 'inspCd',
                     align: 'center'
                 },
                 {
@@ -826,6 +927,282 @@ tr {
             }
         }
       
+        
+        //==================================저장====================================
+        	/* let saveBtn = document.getElementById('saveBtn')
+        saveBtn.addEventListener('click', function () {
+        	let gridVal = grid.getCheckedRows();
+            let test = validVal(gridVal);
+            if (test === 0) {
+                gridVal.forEach(el => {
+                    if (el.inspFailCnt === '') {
+                        el.inspFailCnt = 0;
+                    }
+                    let rowKey = el.rowKey.toString();
+                    console.log(rowKey);
+                    el.rscInfList = infData.get(rowKey)
+                })
+                let obj = {
+                    inspDt: inspDt.value,
+                    inspTstr: inspTstr.value,
+                    inspCd: inspCd
+                }
+                gridVal.unshift(obj);
+                if (saveFlag === 0) {
+                    setRscInspList(gridVal);
+                } else {
+                    updRscInspHist(gridVal);
+                    grid.clear();
+                }
+            } else {
+                toastr.error('비어있는 항목이 있습니다.');
+            }
+            inspDt.value = today;
+            inspTstr.value = '';
+        })
+
+        function validVal(val) {
+            let errCnt = 0;
+            val.forEach(el => {
+                if (el.rscNm == null) {
+                    errCnt++;
+                } else if (el.inspPassCnt == null) {
+                    errCnt++;
+                }
+            })
+            return errCnt;
+        } */
+        
+        
+        function validVal(val) {
+            let errCnt = 0;
+            val.forEach(el => {
+                if (el.rscNm == null) {
+                    errCnt++;
+                } else if (el.inspPassCnt == null) {
+                    errCnt++;
+                }
+            })
+            return errCnt;
+        }
+
+        let saveBtn = document.getElementById('saveBtn');
+        saveBtn.addEventListener('click', function () {
+            let gridVal = grid.getCheckedRows();
+            let test = validVal(gridVal);
+            if (test === 0) {
+                gridVal.forEach(el => {
+                    if (el.inspFailCnt === '') {
+                        el.inspFailCnt = 0;
+                    }
+                    let rowKey = el.rowKey.toString();
+                    console.log(rowKey);
+                    el.rscInfList = infData.get(rowKey)
+                })
+                let obj = {
+                    inspDt: inspDt.value,
+                    inspTstr: inspTstr.value,
+                    inspCd: inspCd
+                }
+                gridVal.unshift(obj);
+                if (saveFlag === 0) {
+                    setRscInspList(gridVal);
+                } else {
+                    updRscInspHist(gridVal);
+                    grid.clear();
+                }
+            } else {
+                toastr.error('비어있는 항목이 있습니다.');
+            }
+            inspDt.value = today;
+            inspTstr.value = '';
+        })
+        
+// ====================업데이트 검사완료=============
+// AJAX 코드
+function upRscProg(ordrCd) {
+    let url = "upRscProg";
+
+    // rscInspVO 객체 생성
+    let rscInspVO = {
+        ordrCd: ordrCd
+    };
+
+    // AJAX 호출
+    $.ajax({
+        url: url,
+        type: 'POST',
+        contentType: 'application/json',
+        data: JSON.stringify(rscInspVO),
+        success: function (res) {
+            if (res) {
+                
+              
+            } else {
+             
+            }
+        },
+        error: function (xhr, status, error) {
+            console.log(error);
+        }
+    });
+}
+//  ========================================================= 19:19
+        /* function setRscInspList(data) {
+            let url = 'setRscInspList';
+            fetch(url, {
+                headers: {'Content-Type': 'application/json'},
+                method: 'POST',
+                body: JSON.stringify(data)
+            }).then(res => {
+                if (res.ok) {
+                    toastr.success('저장이 완료되었습니다.');
+                    getOrdrList();
+                } else {
+                    toastr.error('요청이 잘 못되었습니다.')
+                }
+            }).then(res => {
+                schRscInspHist();
+            })
+        }
+ */
+ 
+ 
+ function setRscInspList(data) {
+	    let url = "setRscInspList";
+
+	    // AJAX 호출
+	    $.ajax({
+	        url: url,
+	        type: 'POST',
+	        contentType: 'application/json',
+	        data: JSON.stringify(data),
+	        success: function (res) {
+	            if (res) {
+	                toastr.success('저장이 완료되었습니다.');
+	                getOrdr();
+	                getOrdrList();
+	                schRscInspHist();
+	                
+	                
+	            } else {
+	                toastr.success('저장이 완료되었습니다.');
+	                getOrdr();
+	                getOrdrList();
+	                schRscInspHist();
+	                
+	            }
+	        },
+	        error: function (xhr, status, error) {
+	            console.log(error);
+	        }
+	    });
+	}
+        
+       
+
+        
+        
+      /*   function updRscInspHist(data) {
+            let url = 'updRscInspHist';
+            fetch(url, {
+                headers: {'Content-Type': 'application/json'},
+                method: 'POST',
+                body: JSON.stringify(data)
+            }).then(res => {
+                if (res.ok) {
+                    toastr.success('수정이 완료되었습니다.')
+                } else {
+                    toastr.error('요청이 잘 못되었습니다.')
+                }
+            }).then(res => {
+                saveFlag === 0;
+                schRscInspHist();
+            })
+        }
+        
+        let infGridEl = document.getElementById('inf-grid')
+        infGridEl.addEventListener('mouseleave', function () {
+            infGrid.finishEditing();
+        })
+         */
+         
+         // declare modal
+         function schRscInspHist() {
+             let url = 'schRscInspHist'
+             fetch(url).then(res => res.json()).then(res => {
+                 mdfyGrid.resetData(res);
+             }).then(res => {
+                 mdfyGrid.refreshLayout();
+             })
+         }
+         
+         function updRscInspHist(data) {
+        	  let url = 'updRscInspHist';
+        	  $.ajax({
+        	    url: url,
+        	    type: 'POST',
+        	    contentType: 'application/json',
+        	    data: JSON.stringify(data),
+        	    success: function() {
+        	      toastr.success('수정이 완료되었습니다.');
+        	      saveFlag = 0;
+        	      schRscInspHist();
+        	    },
+        	    error: function() {
+        	      toastr.error('요청이 잘 못되었습니다.');
+        	    }
+        	  });
+        	}
+
+        	let infGridEl = document.getElementById('inf-grid')
+        	infGridEl.addEventListener('mouseleave', function() {
+        	  infGrid.finishEditing();
+        	});
+        
+    
+infModal.dataset.rowKey = infRowKey; // 모달 열 때 rowKey 값을 지정
+$.ajax({
+    url: 'getInfCdList',
+    dataType: "json",
+    method: "get",
+    success: function (edctsCdList) {
+        setTimeout(function () {
+            infGrid.refreshLayout();
+        }, 300);
+        infGrid.resetData(edctsCdList);
+    }
+});
+        
+        
+        
+        let calInfCnt = document.getElementById('calInfCnt');
+        calInfCnt.addEventListener('click', function () {
+            let rowKey = infModal.dataset.rowKey;
+            console.log(rowKey)
+            let inspCnt = grid.getValue(rowKey, 'inspCnt')
+            if (inspCnt === '' || inspCnt == null) {
+            	console.log(inspCnt)
+                toastr.error('검사량을 먼저 입력하세요.');
+                //iModal.hide(infModal);
+            } else {
+                let colVal = infGrid.getColumnValues('infCnt')
+                let infSum = colVal.reduce((a, b) => ((+a) + (+b)));
+                let inspCnt = grid.getValue(rowKey, 'inspCnt')
+
+                if (infSum > parseInt(inspCnt)) {
+                    toastr.error('불량수량이 검사량 보다 많습니다.');
+                } else {
+                    grid.setValue(rowKey, 'inspPassCnt', (inspCnt - infSum))
+                    grid.setValue(rowKey, 'inspFailCnt', infSum)
+                    let data = infGrid.getData();
+                    infData.set(rowKey, data);
+                    infGrid.refreshLayout();
+
+                }
+                //iModal.hide(infModal);
+            }
+        })
 
         
 	</script>

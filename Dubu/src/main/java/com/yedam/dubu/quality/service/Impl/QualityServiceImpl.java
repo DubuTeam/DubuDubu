@@ -49,36 +49,37 @@ public class QualityServiceImpl implements QualityService {
 	}
 
 	 @Override
-	 @Transactional
-		    public void setRscInspList(List<RscInspVO> rscInspVOS) {
-		        // rsc_insp insert
-		        String rscInspCd = qualityMapper.genRscInspCd();
-		        RscInspVO vo = rscInspVOS.get(0);
-		        rscInspVOS.remove(0);
-		        vo.setRscInspCd(rscInspCd);
-		        qualityMapper.setRscInsp(vo);
+	    @Transactional
+	    public void setRscInspList(List<RscInspVO> rscInspVOS) {
+	        // rsc_insp insert
+	        String rscInspCd = qualityMapper.genRscInspCd();
+	        RscInspVO vo = rscInspVOS.get(0);
+	        rscInspVOS.remove(0);
+	        vo.setRscInspCd(rscInspCd);
+	        qualityMapper.setRscInsp(vo);
 
-		        // rsc_insp_dtl insert
-		        for (RscInspVO rscInspVO : rscInspVOS) {
+	        // rsc_insp_dtl insert
+	        for (RscInspVO rscInspVO : rscInspVOS) {
 
-		            // when ordrCd doesn't exist -> gen cd and set cd
-		            if (rscInspVO.getOrdrCd() == null) {
-		                String noOrdrCd = qualityMapper.genRscNoOrdrCd();
-		                rscInspVO.setOrdrCd(noOrdrCd);
-		            }
+	            // when ordrCd doesn't exist -> gen cd and set cd
+	            if (rscInspVO.getOrdrCd() == null) {
+	                String noOrdrCd = qualityMapper.genRscNoOrdrCd();
+	                rscInspVO.setOrdrCd(noOrdrCd);
+	            }
 
-					/*
-					 * // set rsc insp dtl each rscInspVO.setRscInspCd(rscInspCd);
-					 * qualityMapper.setRscInspList(rscInspVO);
-					 * qualityMapper.updRscOrdrRmnCnt(rscInspVO);
-					 * 
-					 * // set rsc inf list each if (rscInspVO.getRscInfList() != null) { for
-					 * (RscInfVO rscInfVO : rscInspVO.getRscInfList()) {
-					 * qualityMapper.setRscInfList(rscInspVO, rscInfVO); } }
-					 */
-		        }
-		    }
-		
+	            // set rsc insp dtl each
+	            rscInspVO.setRscInspCd(rscInspCd);
+	            qualityMapper.setRscInspList(rscInspVO);
+	            qualityMapper.updRscOrdrRmnCnt(rscInspVO);
+
+	            // set rsc inf list each
+	            if (rscInspVO.getRscInfList() != null) {
+	                for (RscInfVO rscInfVO : rscInspVO.getRscInfList()) {
+	                	qualityMapper.setRscInfList(rscInspVO, rscInfVO);
+	                }
+	            }
+	        }
+	    }
 	
 
 	@Override  //검사상세
@@ -86,8 +87,17 @@ public class QualityServiceImpl implements QualityService {
 		
 		return qualityMapper.getInfCdList();
 	}
+	
+	// 입고검사 수정
+    @Override
+    public List<RscInspVO> schRscInspHist(RscInspVO rscInspVO) {
+        return qualityMapper.schRscInspHist(rscInspVO);
+    }
 
-
+	/*
+	 * @Override public List<RscInspVO> upRscProg(RscInspVO rscInspVO) { return
+	 * qualityMapper.upRscProg(rscInspVO.getOrdrCd()); }
+	 */
 
 	/*@Override
 	public List<QualityVO> getResources(QualityVO qualityVO) {

@@ -122,7 +122,8 @@ public class ProductionServiceImpl implements ProductionService {
 
 	@Override
 	public int updatePlan(List<ProductionVO> updatePlanCd, List<ProductionVO> updateIndicac,
-						  List<ProductionVO> updatePlanDtl, List<ProductionVO> updateEqBom) {	
+						  List<ProductionVO> updatePlanDtl, List<ProductionVO> updateEqBom,
+						  List<ProductionVO> updateOrderSheet) {	
 		int result = 0;
 		
 		String plancd = productionMapper.planCode(); 
@@ -143,15 +144,28 @@ public class ProductionServiceImpl implements ProductionService {
 			result += productionMapper.updateEqBom(vo);
 		}
 		for(ProductionVO vo : updateEqBom) {
+			result += productionMapper.updateOrderSheet(vo);
+		}
+		for(ProductionVO vo : updateEqBom) {
 			result += productionMapper.updateEqBom(vo);
 		}
 		return result;
 	}
 
 	@Override
+	public List<ProductionVO> selectIndicaOrder(String planCd) {
+		return productionMapper.selectIndicaOrder(planCd);
+	}
+
+	@Override
 	public int insertPlan(List<ProductionVO> name, List<ProductionVO> cnt) {
-		
+		// TODO Auto-generated method stub
 		return 0;
+	}
+
+	@Override
+	public List<ProductionVO> selectIndicaOrderDetail(String planCd) {
+		return productionMapper.selectIndicaOrderDetail(planCd);
 	}
 
 	/*

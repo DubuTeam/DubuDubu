@@ -1,7 +1,13 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <link href="${pageContext.request.contextPath}/resources/css/material/materialStcList.css" rel="stylesheet">
+
+<style>
+	.eachRow:hover {
+		background-color: rgb(233, 233, 233);
+	}
+</style>
 
 <!-- Begin Page Content -->
 <div class="container-fluid">
@@ -20,12 +26,6 @@
 				<div style="display: inline-block; margin: auto 0; float: right">
 					<button class="btn btn-primary" id="schBtn">
 						<i class="fas fa-search"></i> 조회
-					</button>
-					<button class="btn btn-primary" id="reloadBtn">
-						<i class="fas fa-file"></i> 새자료
-					</button>
-					<button class="btn btn-primary" id="excelBtn">
-						<i class="fas fa-file-excel"></i> 엑셀
 					</button>
 				</div>
 				<form id="schParam">
@@ -75,23 +75,27 @@
 								<th>자재구분</th>
 								<th>규격</th>
 								<th>단위</th>
-								<th>기초수량</th>
 								<th>재고수량</th>
 								<th>안전재고</th>
+								<th>입고수량</th>
+								<th>출고수량</th>
 							</tr>
 						</thead>
 						<!-- ↓↓↓여기에 조회된 결과 출력 -->
 						<tbody id="list">
-							<tr>
-								<td>test</td>
-								<td>test</td>
-								<td>test</td>
-								<td>test</td>
-								<td>test</td>
-								<td>test</td>
-								<td>test</td>
-								<td>test</td>
-							</tr>
+							<c:forEach items="${materialStocklList }" var="material">
+								<tr class="eachRow">
+									<td>${material.rscCd }</td>
+									<td>${material.rscNm }</td>
+									<td>${material.rscTyp }</td>
+									<td>${material.rscSpec }</td>
+									<td>${material.mngUnit }</td>
+									<td>${material.rscStc }</td>					
+									<td>${material.safStc }</td>
+									<td>${material.istCnt }</td>					
+									<td>${material.oustCnt }</td>
+								</tr>
+							</c:forEach>
 						</tbody>
 					</table>
 				</div>

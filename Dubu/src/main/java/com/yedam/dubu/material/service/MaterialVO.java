@@ -70,5 +70,7 @@ public class MaterialVO {
 	private Date expDt; // 유통기한
 	private String expDt2; // 유통기한
 	
+	// 자재 재고 이력 테이블
+	private int oustCnt;	// 출고수량
 	
 }

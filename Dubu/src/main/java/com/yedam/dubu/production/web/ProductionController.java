@@ -91,7 +91,7 @@ public class ProductionController {
 	 @PostMapping("/updatePlan")
 	 @ResponseBody
 	 public int updatePlan(@RequestBody ProductionVO productionVO) {
-		 return productionService.updatePlan(productionVO.getUpdatedRows(),productionVO.getUpdatedRows(),productionVO.getUpdatedRows(),productionVO.getUpdatedRows());
+		 return productionService.updatePlan(productionVO.getUpdatedRows(),productionVO.getUpdatedRows(),productionVO.getUpdatedRows(),productionVO.getUpdatedRows(), productionVO.getUpdatedRows());
 	 }
 		
 		 // 생산계획 새로운 계획
@@ -132,6 +132,17 @@ public class ProductionController {
 	@GetMapping("/indica")
 	public String getIndica(Model model){
 		return "production/indica";
+	}
+	// 생산지시 계획 조회
+	@PostMapping("/indicaOrderList")
+	@ResponseBody List<ProductionVO> getIndicaOrder(@RequestParam(required = false)String planCd){
+		return productionService.selectIndicaOrder(planCd);
+	}
+	
+	// 생산지시 계획 디테일
+	@PostMapping("/indicaOrderDetail")
+	@ResponseBody List<ProductionVO> getIndicaOrderDetail(@RequestParam(required=false)String planCd){
+		return null;
 	}
 	
 	// 생산지시조회

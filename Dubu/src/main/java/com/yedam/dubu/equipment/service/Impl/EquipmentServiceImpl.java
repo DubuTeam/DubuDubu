@@ -75,6 +75,11 @@ public class EquipmentServiceImpl implements EquipmentService{
 		return equipmentMapper.getEqCode();
 	}
 	
+	@Override
+	public List<EquipmentVO> getEqLineOption() {
+		return equipmentMapper.getEqLineOption();
+	}
+	
 	///
 	
 	@Override
@@ -155,6 +160,11 @@ public class EquipmentServiceImpl implements EquipmentService{
 	public List<EquipmentVO> selectAllEqIpoprList() {
 		return equipmentMapper.selectAllEqIpoprList();
 	}
+	
+	@Override
+	public List<EquipmentVO> eqIpoprOption() {
+		return equipmentMapper.eqIpoprOption();
+	}
 
 	@Override
 	public String getNoprCode() {
@@ -174,5 +184,10 @@ public class EquipmentServiceImpl implements EquipmentService{
 	@Override
 	public int deleteEqIpopr(String noprCd) {
 		return equipmentMapper.deleteEqIpopr(noprCd);
+	}
+
+	@Override
+	public List<EquipmentVO> selectSpecificEqIpoprList(EquipmentVO equipmentVO) {
+		return equipmentMapper.selectSpecificEqIpoprList(equipmentVO);
 	}
 }

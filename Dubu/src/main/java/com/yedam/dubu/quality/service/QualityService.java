@@ -23,4 +23,12 @@ public interface QualityService {
     // 검사상세
     List<QualityVO> getInfCdList();
     
+ // 입고검사 수정
+    List<RscInspVO> schRscInspHist(RscInspVO rscInspVO);
+
+	/*
+	 * @Override public List<RscInspVO> upRscProg(String ordrCd) { return
+	 * qualityMapper.upRscProg(ordrCd); }
+	 */
+    
 }

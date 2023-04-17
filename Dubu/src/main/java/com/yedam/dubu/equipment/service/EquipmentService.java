@@ -44,6 +44,8 @@ public interface EquipmentService {
 	// 테스트 - 자동으로 부여될 설비 코드
 	public String getEqCode();
 	
+	// 가동중인 라인만 라인명 옵션에 뜨도록
+	public List<EquipmentVO> getEqLineOption();
 	
 	// 설비 목록 출력하기
 	public List<EquipmentVO> selectAllEquipmentList();
@@ -100,6 +102,9 @@ public interface EquipmentService {
 	// 전체 비가동 조회
 	public List<EquipmentVO> selectAllEqIpoprList();
 	
+	// 현재 가동중이지 않은 설비들을 설비명 옵션에 뜨도록
+	public List<EquipmentVO> eqIpoprOption();
+	
 	// 자동으로 부여될 비가동 코드
 	public String getNoprCode();
 	
@@ -111,4 +116,7 @@ public interface EquipmentService {
 	
 	// 비가동 삭제하기
 	public int deleteEqIpopr(String noprCd);
+	
+	// 비가동 검색하기
+	public List<EquipmentVO> selectSpecificEqIpoprList(EquipmentVO equipmentVO);
 }

@@ -3,6 +3,142 @@ $(document).ready(function () {
 
     console.log("다음 비가동코드 => " + $('#noprCd').val())
 
+    ///////////////// 비가동 검색 버튼 /////////////////////
+    $('#chckSearchBtn').on("click", function() {
+        let keyword3 = $('#keyword3').val()
+        let searchFrDt = $('#searchFrDt').val()
+        let searchToDt = $('#searchToDt').val()
+
+        console.log(keyword3)
+        console.log(searchFrDt)
+        console.log(searchToDt)
+
+        // 날짜가 둘 중 하나만 입력되었을 때 (키워드 입력 유무는 상관 X)
+        if((searchFrDt == "" && searchToDt != "") || (searchToDt == "" && searchFrDt != "")) {
+            alert('두 날짜 모두 입력해라. 조패기전에')
+        }
+        // 날짜가 둘 다 입력되었을 때! (키워드 입력 유무는 상관 X)
+        else {
+            var searchData = $("#searchFrm").serialize();
+            $.ajax({
+                url: 'searchEqIpopr',
+                dataType: "json",
+                method: "post",
+                data: searchData,
+                success: function(result) {
+                    console.log(result)
+
+                    $('#keyword3').val("");
+                    $("#list").find("tr").remove();
+
+                    // ms 를 년-월-일 로 바꿈
+                    function convertToyyyyMMdd(ms) {
+                        let date = new Date(ms); // 현재 날짜 및 시간
+                        let year = date.getFullYear();
+                        // .padStart(2,'0');   -> 월, 일   앞에 빈 공간 생기면 0으로 채워줌 (2자리수)
+                        let month = new String(date.getMonth() + 1).padStart(2, '0');;
+                        let day = new String(date.getDate()).padStart(2, '0');;
+
+                        let today = year + "-" + month + "-" + day; // 현재 날짜
+                        return today;
+                    }
+
+                    $(result).each(function (idx, item) {
+                        console.log("인덱스 -> " + idx)
+                        console.log(item)
+
+                        let tr = $("<tr />");
+
+                        tr.append($('<td />').text(item.noprCd))
+                        tr.append($('<td />').text(item.eqmCd))
+                        tr.append($('<td />').text(item.eqmNm))
+                        // 날짜를 yyyy-MM-dd 형식으로 변환하여 새로운 td 엘리먼트에 추가합니다.
+                        tr.append($('<td />').text(convertToyyyyMMdd(item.frDt)))
+                        tr.append($('<td />').text(convertToyyyyMMdd(item.toDt)))
+                        tr.append($('<td />').text(item.eqmYn))
+                        tr.append($('<td />').text(item.eqmPsch))
+                        tr.append($('<td />').text(item.opertCtnt))
+
+                        // dispoCtnt 값을 가지는 hidden input 엘리먼트를 생성하여 새로운 td 엘리먼트에 추가합니다.
+                        const dispoInput = $('<input />', {
+                            type: 'hidden',
+                            value: item.dispoCtnt,
+                            id: 'dispoCtnt',
+                            name: 'dispoCtnt'
+                        });
+
+                        const dispoTd = $('<td />').append(dispoInput);
+                        tr.append(dispoTd);
+
+
+                        $('#list').append(tr)
+                        $('tr').attr("class", "eachRow");
+                    });
+                }
+            })
+        }
+    })
+    ///////////////// 비가동 검색 버튼 /////////////////////
+    
+
+    ///////////////// 비가동 검색 버튼 누른 후, 특정 행 클릭 시 /////////////////////
+    $('#list').on("click", "tr", function() {
+        // 5-1. 해당 행에 입력된 데이터를 받아옴.     (가장 가까운 tr태그의 각 셀들)
+        let chckCdEachRow = $(this).closest("tr").children().eq(0).text();
+        let eqmCd = $(this).closest("tr").children().eq(1).text();
+        let eqmNm = $(this).closest("tr").children().eq(2).text();
+        let chckFgSet = $(this).closest("tr").children().eq(3).text();
+        let dispoMatterSet = $(this).closest("tr").children().eq(4).text();
+        let jdgmntSet = $(this).closest("tr").children().eq(5).text();
+        let chckDt = $(this).closest("tr").children().eq(6).text();
+        let chckPsch = $(this).closest("tr").children().eq(7).text();
+        // let dispoCtnt = $(this).closest("tr").children().eq(7).text();
+        let dispoCtnt = $(this).closest("tr").find("input[name='dispoCtnt']").val();
+        
+        console.log("점검구분?" + chckFgSet)
+        console.log("점검코드는 => " + chckCdEachRow);
+
+        // 5-2. 그리고 jsp 파일의 input 태그에다가 위 데이터를 집어넣는다.
+        $('#chckCd').val(chckCdEachRow);
+        $('#eqmCd').val(eqmCd);
+        $('#eqmNm').val(eqmNm);
+
+        $('#chckPsch').val(chckPsch);
+
+        // 5-3. Yes or No 의 경우, radio 버튼 바꿔가면서 선택되도록!
+        if (dispoMatterSet == "수리") {
+            $("#dispoMatter1").prop("checked", true);
+        } else if (dispoMatterSet == "점검") {
+            $("#dispoMatter2").prop("checked", true);
+        }
+
+        if (jdgmntSet == "적합") {
+            $("#jdgmnt1").prop("checked", true);
+        } else if (jdgmntSet == "부적합") {
+            $("#jdgmnt2").prop("checked", true);
+        }
+        
+        // 점검구분
+        if (chckFgSet == "정기점검") {
+            $("#chckFg1").prop("checked", true);
+        } else if (chckFgSet == "수시점검") {
+            $("#chckFg2").prop("checked", true);
+        }
+
+
+        // let selectedValue = $("input[name='your_radio_button_name']:checked").val();
+        // $("#your_hidden_input_id").val(selectedValue);
+
+        let selectedValue = $("input[name='chckFg']:checked").val();
+        $("#chckFg").val(selectedValue);
+
+        // 점검일자
+        $('input[name=chckDt]').attr('value', chckDt);
+
+        // 조치내역
+        $('#dispoCtnt').val(dispoCtnt);
+    })
+    ///////////////// 비가동 검색 버튼 누른 후, 특정 행 클릭 시 /////////////////////
 
 
     // 1. 초기화 버튼 눌렀을 때..

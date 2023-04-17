@@ -116,9 +116,10 @@ public class MaterialServiceImpl implements MaterialService{
 	public List<MaterialVO> getMaterialIstDetail(String istCd) {
 		return materialMapper.getMaterialIstDetail(istCd);
 	}
-	
-	
-	
-	
 
+	// 자재 재고 조회
+	@Override
+	public List<MaterialVO> getMaterialStocklList() {
+		return materialMapper.getMaterialStocklList();
+	}
 }

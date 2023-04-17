@@ -48,6 +48,9 @@ public interface ProductionMapper {
 	// 생산계획 코드 부여 INDICA
 	public int updateIndicac(ProductionVO vo);
 	
+	// 생산계획 코드 부여 ORDER_SHEET
+	public int updateOrderSheet(ProductionVO vo);
+	
 	// 생산계획 작업 우선 순위 EQ_BOM
 	public int updateEqBom(ProductionVO vo);
 	
@@ -65,4 +68,9 @@ public interface ProductionMapper {
 	public List<ProductionVO> planEquipCheck(@Param("planCd")String planCd);
 	// 생산계획 자재확인 조회
 	//public List<ProductionVO> planMaterialCheck(@Param("prcLotCd")String prcLotCd);
+	
+	// 생산지시 계획 조회
+	public List<ProductionVO> selectIndicaOrder(@Param("planCd")String planCd);
+	// 생산지시 계획 디테일 조회
+	public List<ProductionVO> selectIndicaOrderDetail(@Param("planCd")String planCd);
 }

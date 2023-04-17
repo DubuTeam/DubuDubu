@@ -2,6 +2,16 @@
 	pageEncoding="UTF-8"%>
 
 <link href="${pageContext.request.contextPath}/resources/css/prodcss/indica.css" rel="stylesheet" type="text/css">
+<!-- JQuery -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<!-- grid -->
+<link rel="stylesheet" href="https://uicdn.toast.com/grid/latest/tui-grid.css" />
+<script src="https://uicdn.toast.com/grid/latest/tui-grid.js"></script>
+<!-- SweetAlert -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.css">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.js"></script>
+<!-- 부트스트랩 -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
 
 <!-- Begin Page Content -->
 <!-- 헤더부분 -->
@@ -27,7 +37,7 @@
 					<!--  -->
 					<!-- Button trigger modal (4.6버젼) -->
 					<button type="button" style="margin-left: 3px" class="btn btn-primary" data-toggle="modal"
-					data-target="#exampleModal" id="searchBtn" name="searchBtn">
+					data-target="#exampleModal" id="searchBtn" name="searchBtn" >
 					<i class="fas fa-search"></i>계획 조회
 				</button>
 
@@ -47,37 +57,13 @@
 							<div class="modal-body" style="text-align: center;">
 
 								<!-- 조회 시 나타나는 테이블 -->
-								<div id="list-body" class="table">
-									<table>
-										<thead>
-											<tr>
-												<th><input type="checkbox"></th>
-												<th>생산계획코드</th>
-												<th>제품명</th>
-												<th>주문수량</th>
-											</tr>
-										</thead>
-
-										<!-- ↓↓↓여기에 조회된 결과 출력 (테스트용 더미 넣었음) -->
-										<tbody id="list">
-											<tr>
-												<td><input type="checkbox"></td>
-												<td>더미기</td>
-												<td>Dummy01</td>
-												<td>Dummy123</td>
-											</tr>
-										</tbody>
-									</table>
-								</div>
+								<div id = "planGrid"></div>
 							</div>
 							<div class="modal-footer">
-								<button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
-								<button type="button" class="btn btn-primary">삭제</button>
+									</div>
+								</div>
 							</div>
 						</div>
-					</div>
-				</div>
-
 				<!-- ↑↑↑ 모달 -->
 					<!--  -->
 					<button class="btn btn-primary" id="regiBtn">
@@ -85,7 +71,7 @@
 					</button>
 				</div>
 
-				<div id="grid"></div>
+				<div id="planDetailGrid"></div>
 			</div>
 		</div>
 		<br>
@@ -128,4 +114,75 @@
 
 </div>
 <!-- End of Main Content -->
-
+<script>
+let str = '';
+	function planSearch(){		 
+		$.ajax({
+	        url: "indicaOrderList",
+	        method: "post",
+	        success: function(data) {
+	        	console.log(data);
+	           setTimeout(()=>planGrid.refreshLayout(),300);
+	           planGrid.resetData(data);  //그리드 적용
+	        },
+	        error: function (reject) {
+	          console.log(reject);
+	        },
+	    });
+	}
+	// 생산지시 계획 조회 그리드
+	var planGrid = new tui.Grid({
+		el: document.getElementById('planGrid'),
+		columns: [
+			{
+				header: '계획코드',
+				name: 'planCd'
+			},
+			{
+				header: '계획량',
+				name: 'planCnt'
+			},
+			{
+				header: '미지시량',
+				name: 'planNindica'
+			}
+		]
+	});
+	searchBtn.addEventListener("click", planSearch);	
+	
+	// 생산지시 계획 조회
+	planGrid.on('dblcick',(plan)=>{
+		str = planGrid.getRow(plan.rowKey).planCd;
+		console.log(str);
+		//planSearchDetail();
+		$('#exampleModal').modal('hide');
+	    $('.modal-backdrop').remove();
+	});
+	
+	function planSearchDetail(){
+		$.ajax({
+			url: "indicaOrderDetail",
+			method: "post",
+			data: {planCd : str},
+			success: function(data){
+				planDetail.resetData(data);
+			},
+			error: function(reject){
+				console.log(reject);
+			}
+		});
+	};
+	 /* var planDetail = new tui.Grid({
+		 el: document.getElementById('planDetailGrid');
+	 	 columns: [
+	 		 {
+	 			 header: '',
+	 			 name: ''
+	 		 },
+	 		{
+	 			 header: '',
+	 			 name: ''
+	 		 }
+	 	 ]
+	 });  */
+</script>
