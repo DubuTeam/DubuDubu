@@ -150,14 +150,7 @@ let str = '';
 	});
 	searchBtn.addEventListener("click", planSearch);	
 	
-	// 생산지시 계획 조회
-	planGrid.on('dblcick',(plan)=>{
-		str = planGrid.getRow(plan.rowKey).planCd;
-		console.log(str);
-		//planSearchDetail();
-		$('#exampleModal').modal('hide');
-	    $('.modal-backdrop').remove();
-	});
+	
 	
 	function planSearchDetail(){
 		$.ajax({
@@ -172,17 +165,76 @@ let str = '';
 			}
 		});
 	};
-	 /* var planDetail = new tui.Grid({
-		 el: document.getElementById('planDetailGrid');
+	  var planDetail = new tui.Grid({
+		 el: document.getElementById('planDetailGrid'),
 	 	 columns: [
-	 		 {
-	 			 header: '',
-	 			 name: ''
-	 		 },
-	 		{
-	 			 header: '',
-	 			 name: ''
-	 		 }
-	 	 ]
-	 });  */
+			 		 {
+			 			 header: '계획코드',
+			 			 name: 'planCd'
+			 		 },
+			 		 {
+			 			 header: '제품명',
+			 			 name: 'prdtNm' 
+			 		 },
+			 		 {
+			 			 header: '미지시량',
+			 			 name: 'planNindica'
+			 		 },
+			 		 {
+			 			 header: '지시량',
+			 			 name: 'planCnt',
+			 			 editor: 'text'
+			 		 },
+			 		 {
+			 			 header: '라인코드',
+			 			 name: 'lineCd'
+			 		 },
+			 		 {
+			 			 header: '지시일자',
+			 			 name: 'indicaDt',
+			 			 formatter: function (data) {
+		                     let dateVal = '';
+		                     if(data.value != null ){
+		                         dateVal = dateChange(data.value);
+		                     }else{
+		                         dateVal = getToday();
+		                     }
+		                     return dateVal;
+		                   },
+		                 editor: 'text'
+			 		 }
+			 	 ]
+			 }); 
+	  // 생산지시 계획 조회
+	  	planGrid.on('dblclick', (e) => {
+	  		console.log(e);
+	  		str = planGrid.getRow(e.rowKey).planCd;
+	  		console.log(str);
+	  		planSearchDetail();
+	  		$('#exampleModal').modal('hide');
+	  	    $('.modal-backdrop').remove(); 
+	  	});
+	  
+	  // 날짜변형
+      function dateChange(date) {
+      	   let date1 = new Date(date);
+      	   let date2 =
+      	     date1.getFullYear() + "-" + 
+      	     (date1.getMonth() < 10 ? "0" + (date1.getMonth() + 1): date1.getMonth() + 1) +"-" +
+      	     (date1.getDate() < 10 ? "0" + date1.getDate() : date1.getDate());
+      	   return date2;
+      	 };
+      
+      function getToday(){
+      	const date = new Date();
+      	const hours = String (date.getHours()).padStart(2,"0");
+      	const minutes = String(date.getMinutes()).padStart(2,"0");
+      	const seconds = String(date.getSeconds()).padStart(2,"0");
+      	const years = date.getFullYear();
+      	const month = String(date.getMonth()+1).padStart(2,"0");
+      	const day = String(date.getDate()).padStart(2,"0");
+      	return years + "-" + month + "-" + day;
+      };
+      
+  
 </script>
