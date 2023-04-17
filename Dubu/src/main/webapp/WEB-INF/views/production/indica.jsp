@@ -150,14 +150,7 @@ let str = '';
 	});
 	searchBtn.addEventListener("click", planSearch);	
 	
-	// 생산지시 계획 조회
-	planGrid.on('dblcick',(plan)=>{
-		str = planGrid.getRow(plan.rowKey).planCd;
-		console.log(str);
-		//planSearchDetail();
-		$('#exampleModal').modal('hide');
-	    $('.modal-backdrop').remove();
-	});
+	
 	
 	function planSearchDetail(){
 		$.ajax({
@@ -173,7 +166,7 @@ let str = '';
 		});
 	};
 	  var planDetail = new tui.Grid({
-		 el: document.getElementById('planDetailGrid');
+		 el: document.getElementById('planDetailGrid'),
 	 	 columns: [
 			 		 {
 			 			 header: '계획코드',
@@ -181,10 +174,10 @@ let str = '';
 			 		 },
 			 		 {
 			 			 header: '제품명',
-			 			 name: 'prdtNm 
+			 			 name: 'prdtNm' 
 			 		 },
 			 		 {
-			 			 header: '미지사량',
+			 			 header: '미지시량',
 			 			 name: 'planNindica'
 			 		 },
 			 		 {
@@ -211,7 +204,17 @@ let str = '';
 		                 editor: 'text'
 			 		 }
 			 	 ]
-			 });  
+			 }); 
+	  // 생산지시 계획 조회
+	  	planGrid.on('dblclick', (e) => {
+	  		console.log(e);
+	  		str = planGrid.getRow(e.rowKey).planCd;
+	  		console.log(str);
+	  		planSearchDetail();
+	  		$('#exampleModal').modal('hide');
+	  	    $('.modal-backdrop').remove(); 
+	  	});
+	  
 	  // 날짜변형
       function dateChange(date) {
       	   let date1 = new Date(date);
@@ -232,4 +235,6 @@ let str = '';
       	const day = String(date.getDate()).padStart(2,"0");
       	return years + "-" + month + "-" + day;
       };
+      
+  
 </script>
