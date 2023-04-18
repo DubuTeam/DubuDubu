@@ -29,8 +29,6 @@ public class SalesVO {
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
 	Date paprdDt;
 
-
-
 	String vendNm; // 제품코드
 	String prdtNm; // 제품명
 	int orderCnt;
@@ -40,5 +38,24 @@ public class SalesVO {
 	String index;
 	String defaultValue;
 	String edctsLotNo;
+
+	private String prcsProgCd;
+	private String prcsCd;
+	private String prodOrderDetailCd;
+	private int prcsPr;
+	private int prcsStock;
+	private int prcsCnt;
+	private String complete;
+
+	
+	private String indicaCd;
+	private String bomCd;
+	private Date wkFrDt;
+	
+	private int indicaCnt;
+
+	// getters and setters for each field
+
+	// getters and setters for each field
 
 }

@@ -39,4 +39,20 @@ public class PrdtInspVO {
 	String edctsNm;
 
 	String prdtNm;
+	
+	private String prcsProgCd;
+	private String prcsCd;
+	private String prodOrderDetailCd;
+	private int prcsPr;
+	private int prcsStock;
+	private int prcsCnt;
+	private String complete;
+
+	
+	private String indicaCd;
+	private String bomCd;
+	private Date wkFrDt;
+	
+	private int indicaCnt;
+
 }
