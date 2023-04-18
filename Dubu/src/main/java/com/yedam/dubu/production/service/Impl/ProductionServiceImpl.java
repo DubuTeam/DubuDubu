@@ -104,10 +104,10 @@ public class ProductionServiceImpl implements ProductionService {
 	}
 
 	@Override
-	public List<ProductionVO> selectPlanMaterial(String prdtNm) {
+	public List<ProductionVO> selectPlanMaterial(String orderNo) {
 		 
 		ProductionVO productionVO = new ProductionVO();
-		productionVO.setOrderNo(prdtNm);
+		productionVO.setOrderNo(orderNo);
 		
 		List<ProductionVO> list = new ArrayList<>();
 		list = productionMapper.selectPlanMaterial(productionVO);
@@ -116,37 +116,17 @@ public class ProductionServiceImpl implements ProductionService {
 	}
 
 	@Override
-	public List<ProductionVO> planEquipCheck(String planCd) {
-		return productionMapper.planEquipCheck(planCd);
+	public List<ProductionVO> planEquipCheck(String prdtNm) {
+		return productionMapper.planEquipCheck(prdtNm);
 	}
 
 	@Override
-	public int updatePlan(List<ProductionVO> updatePlanCd, List<ProductionVO> updateIndicac,
-						  List<ProductionVO> updatePlanDtl,
-						  List<ProductionVO> updateOrderSheet) {	
+	public int updatePlan(List<ProductionVO> insertPlan) {	
 		int result = 0;
-		
 		String plancd = productionMapper.planCode(); 
-		System.out.println(plancd);
-		for(ProductionVO vo : updatePlanCd) {
+		for(ProductionVO vo : insertPlan) {
 			vo.setPlanCd(plancd);
-			System.out.println(plancd);
-			result += productionMapper.updatePlanCd(vo);
-		}
-		for(ProductionVO vo : updateIndicac) {
-			vo.setPlanCd(plancd);
-			System.out.println(plancd);
-			result += productionMapper.updateIndicac(vo);
-		}
-		for(ProductionVO vo : updatePlanDtl) {
-			vo.setPlanCd(plancd);
-			System.out.println(plancd);
-			result += productionMapper.updatePlanDtl(vo);
-		}
-		for(ProductionVO vo : updateOrderSheet) {
-			vo.setPlanCd(plancd);
-			System.out.println(plancd);
-			result += productionMapper.updateOrderSheet(vo);
+			result += productionMapper.insertPlan(vo);
 		}
 		return result;
 	}

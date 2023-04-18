@@ -82,22 +82,13 @@
 	<select id="planCode" resultType="String">
 		SELECT 'PLC' || PLAN_CODE_SEQ.NEXTVAL AS PLAN_CD FROM DUAL
 	</select>
-	<update id="updatePlanCd" parameterType="ProductionVO">
-		UPDATE PLAN SET PLAN_CD = #{planCd}
-		WHERE ORDER_NO = #{orderNo}
-	</update>
-	<update id="updatePlanDtl" parameterType="ProductionVO">
-		UPDATE PLAN_DTL SET PLAN_CD = #{planCd}
-		WHERE PLAN_DTL_CD = #{planDtlCd}
-	</update>
-	<update id="updateIndicac" parameterType="ProductionVO">
-		UPDATE INDICA SET PLAN_CD = #{planCd}
-		WHERE INDICA_CD = #{indicaCd}
-	</update>
-	<update id="updateOrderSheet" parameterType="ProductionVO">
-		UPDATE ORDER_SHEET SET PLAN_CD = #{planCd}
-		WHERE ORDER_NO = #{orderNo}
-	</update> 
+	<insert id="insertPlan" parameterType="ProductionVO">
+		INSERT INTO PLAN
+		VALUES (#{planCd},
+			    null,
+			    sysdate,
+			    #{orderNo})
+	</insert>
 	<!-- 생산계획 제품 조회 -->
 	<select id="selectPlanEquip" resultType="ProductionVO">
 		 SELECT O.PRDT_NM,
@@ -114,11 +105,11 @@
 	  SELECT R.RSC_CD,
              R.RSC_NM,
 	         S.AVAL_STC,
-	         SUM(B.USE_CNT) AS USE_CNT
+	         SUM(B.OUST_CNT) AS OUST_CNT
 	  FROM RSC R
 	 INNER JOIN RSC_STC S
 	    ON R.RSC_CD = S.RSC_CD
-	 INNER JOIN BOMR B
+	 INNER JOIN RS_BOM B
 	    ON R.RSC_CD = B.RSC_CD
      INNER JOIN ORDER_SHEET O
         ON R.VEND_CD = O.VEND_CD
@@ -127,18 +118,13 @@
 	</select>
 	<!-- 생산계획 제품공정확인 -->
 	<select id="planEquipCheck" resultType="ProductionVO">
-		SELECT B.EQ_SQ,
-		       B.PRCS_CD,
-		       P.PRCS_NM
-		FROM PRCS P
-		INNER JOIN EQ_BOM B
-		ON B.PRCS_CD = P.PRCS_CD
-		INNER JOIN PLAN_DTL L
-		ON B.BOM_CD = L.BOM_CD
-        INNER JOIN ORDER_SHEET O
-        ON L.PLAN_CD = O.PLAN_CD
-		WHERE O.PRDT_NM = #{prdtNm}
-		ORDER BY EQ_SQ
+		SELECT vp.eq_sq, vp.prcs_cd, p.prcs_nm
+        FROM V_PRODBOM vp 
+        JOIN BOM b
+            ON vp.bom_cd = b.bom_cd
+        JOIN prcs p
+            ON vp.prcs_cd = p.prcs_cd
+        WHERE prdt_nm = #{prdtNm}
 	</select>
 <!-- 	 생산계획 자재확인 
 	<select id="planMaterialCheck" resultType="ProductionVO">

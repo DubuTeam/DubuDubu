@@ -29,7 +29,7 @@ public class ProductionVO {
 	@DateTimeFormat(pattern="yyyy-MM-dd")
 	public Date planDt;
 	public String planCd;
-	public String avalStc;
+	public int avalStc;
 	@DateTimeFormat(pattern="yyyy-MM-dd")
 	public Date paprdDt;
 	public String vendNm;

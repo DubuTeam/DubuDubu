@@ -39,20 +39,8 @@ public interface ProductionMapper {
 	//샹선걔획 생산량 추가
 	public int insertPlanCnt(ProductionVO productionVO);
 	
-	// 생산계획 코드 부여 PLAN
-	public int updatePlanCd(ProductionVO vo);
-	
-	// 생산계획 코드 부여 PLAN_DTL
-	public int updatePlanDtl(ProductionVO vo);
-	
-	// 생산계획 코드 부여 INDICA
-	public int updateIndicac(ProductionVO vo);
-	
-	// 생산계획 코드 부여 ORDER_SHEET
-	public int updateOrderSheet(ProductionVO vo);
-	
-	// 생산계획 작업 우선 순위 EQ_BOM
-	public int updateEqBom(ProductionVO vo);
+	// 생산계획 등록
+	public int insertPlan(ProductionVO productionVO);
 	
 	// 계획코드
 	public String planCode();
@@ -65,7 +53,7 @@ public interface ProductionMapper {
 	// 생산계획 사용가능자재 조회
 	public List<ProductionVO> selectPlanMaterial(ProductionVO productionVO);
 	// 생산계획 제품공정확인 조회
-	public List<ProductionVO> planEquipCheck(@Param("planCd")String planCd);
+	public List<ProductionVO> planEquipCheck(String prdtNm);
 	// 생산계획 자재확인 조회
 	//public List<ProductionVO> planMaterialCheck(@Param("prcLotCd")String prcLotCd);
 	
