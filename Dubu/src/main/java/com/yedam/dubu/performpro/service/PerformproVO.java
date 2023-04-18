@@ -42,17 +42,17 @@ public class PerformproVO {
 	@DateTimeFormat(pattern="yyyy-MM--dd")
 	private Date wkToDt;
 	private int prefRank;
-	private String rscNm;
+	private String rscNm; 		// 자재명
 	private String prcLotCd;
-	private int oustCnt; 	//  생산지시수량
+	private int oustCnt; 		// 자재소모수량
 	private String useCnt;
-	private String rscCd; 	// 자재코드
+	private String rscCd; 		// 자재코드
 	private int eqSq;
 	
 	
 	// 생산지시
-	private int planCnt;     // 계획수량
-	private int planNindica; // 미지시수량
+	private int planCnt;     	// 계획수량
+	private int planNindica; 	// 미지시수량
 	
 	
 	// 생산지시 헤더
