@@ -691,6 +691,7 @@ function comList() {
 		
 		vendGrid.on("dblclick",(ev) => {
 			$("#vendGridModal").modal('hide');
+			
 		});
 		
 		var okBtn = document.getElementById('okBtn');
