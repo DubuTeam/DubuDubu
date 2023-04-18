@@ -150,7 +150,7 @@
 	</insert>
 
 
-
+	<!-- 검사 등록 시 업데이트 -->
 	<update id="upRscProg" parameterType="RscInspVO">
 		UPDATE RSC_ORDR
 		SET RSC_PROGRESS = '검사완료'
@@ -200,16 +200,23 @@
 		RSC_CD = #{rscCd}
 	</update>
 
-	<select id="schRscInspHist" parameterType="RscInspVO"
-		resultType="RscInspVO">
-		select ri.INSP_DT, count(*) inspCnt, ri.INSP_CD
+	<select id="schRscInspHist" parameterType="RscInspVO" resultType="RscInspVO">
+		<!-- select ri.INSP_DT, count(*) inspCnt, ri.INSP_CD
 		from
 		RSC_INSP ri,
 		RSC_INSP_DTL rid
 		where ri.INSP_CD = rid.INSP_CD
 		group by
 		INSP_DT, ri.INSP_CD
-		order by INSP_CD desc
+		order by INSP_CD desc -->
+		
+		
+		SELECT ri.INSP_DT, ri.INSP_TSTR, COUNT(*) inspCnt, ri.INSP_CD
+		FROM RSC_INSP ri
+		JOIN RSC_INSP_DTL rid 
+		ON ri.INSP_CD = rid.INSP_CD
+		GROUP BY ri.INSP_DT, ri.INSP_TSTR, ri.INSP_CD
+		ORDER BY ri.INSP_CD DESC;
 	</select>
 
 	<delete id="delRscInspHist" parameterType="RscInspVO">

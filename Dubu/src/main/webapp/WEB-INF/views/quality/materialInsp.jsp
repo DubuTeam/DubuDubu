@@ -809,6 +809,11 @@ $('#infModal').on('shown.bs.modal', function () {
                     align: 'center'
                 },
                 {
+                    header: '검사자',
+                    name: 'inspTstr',
+                    align: 'center'
+                },
+                {
                     header: '검사일자',
                     name: 'inspDt',
                     align: 'center'
@@ -1204,7 +1209,8 @@ function upRscProg() {
          // declare modal
          function schRscInspHist() {
              let url = 'schRscInspHist'
-             fetch(url).then(res => res.json()).then(res => {
+             fetch(url).then(res => res.json())
+             	.then(res => {
                  mdfyGrid.resetData(res);
              }).then(res => {
                  mdfyGrid.refreshLayout();
