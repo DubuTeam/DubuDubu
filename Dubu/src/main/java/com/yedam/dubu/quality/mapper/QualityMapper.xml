@@ -46,7 +46,8 @@
 
 	<select id="getPrdtInspDtl" resultType="QualityVO">
 		SELECT *
-		FROM PRDT_INSP_DTL
+		FROM
+		PRDT_INSP_DTL
 		WHERE EDCTS_LOT_NO = #{edctsLotNo}
 	</select>
 
@@ -54,7 +55,8 @@
 		resultType="QualityVO">   <!-- 업체명 조회 모달 -->
 		select VEND_CD, VEND_NM, BINZO, TELNO
 		from VEND
-		where UPPER(VEND_NM) like UPPER('%${vendNm}%')
+		where UPPER(VEND_NM)
+		like UPPER('%${vendNm}%')
 		and UPPER(VEND_CD) like UPPER('%${vendCd}%')
 	</select>
 
@@ -62,14 +64,17 @@
 		resultType="QualityVO">
 		select rod.RSC_CD, rsc.RSC_NM, rod.ORDR_CD, rod.ORDR_CNT, rod.RMN_CNT,
 		vend.VEND_NM, rsc.MNG_UNIT, rsc.RSC_SPEC, rod.ORDR_DTL_CD
-		from RSC_ORDR ro,
+		from RSC_ORDR
+		ro,
 		RSC_ORDR_DTL rod,
 		VEND,
 		RSC
 		where ro.ORDR_CD = rod.ORDR_CD
-		and rod.RSC_CD = rsc.RSC_CD
+		and
+		rod.RSC_CD = rsc.RSC_CD
 		and rod.RMN_CNT != 0
-		and ro.VEND_CD = vend.VEND_CD
+		and ro.VEND_CD =
+		vend.VEND_CD
 		<if test=" vendCd !=null and !vendCd.equals('') ">and ro.VEND_CD = #{vendCd}</if>
         <![CDATA[
           and rod.PAPRD_CMND_DT >= TO_CHAR(#{startDt}, 'YYYY-MM-DD')
@@ -78,34 +83,27 @@
 		order by PAPRD_CMND_DT
 	</select>
 
-	<!-- <insert id="setRscInfList">  수량 인서트
+	<!-- <insert id="setRscInfList"> 수량 인서트 merge into RSC_INFER using dual 
+		on (RSC_CD = #{insp.rscCd} and RSC_INSP_CD = #{insp.rscInspCd} and ORDR_CD 
+		= #{insp.ordrCd} and CCD_DTL = #{inf.ccdDtl}) when matched then update set 
+		INF_CNT = #{inf.infCnt} when not matched then insert (CCD_DTL, RSC_CD, RSC_INSP_CD, 
+		INF_CNT, ORDR_CD) values (#{inf.ccdDtl}, #{insp.rscCd}, #{insp.rscInspCd}, 
+		to_number(#{inf.infCnt}), #{insp.ordrCd}) </insert> -->
+
+	<insert id="setRscInfList">
+		<!-- 수량 인서트 -->
 		merge into RSC_INFER
 		using dual
-		on (RSC_CD = #{insp.rscCd} and RSC_INSP_CD = #{insp.rscInspCd}
+		on (RSC_CD = #{insp.rscCd} and INSP_CD = #{insp.inspCd}
 		and ORDR_CD = #{insp.ordrCd} and CCD_DTL = #{inf.ccdDtl})
 		when matched then
 		update
 		set INF_CNT = #{inf.infCnt}
 		when not matched then
-		insert (CCD_DTL, RSC_CD, RSC_INSP_CD, INF_CNT, ORDR_CD)
-		values (#{inf.ccdDtl}, #{insp.rscCd}, #{insp.rscInspCd},
+		insert (CCD_DTL, RSC_CD, INSP_CD, INF_CNT, ORDR_CD)
+		values (#{inf.ccdDtl}, #{insp.rscCd}, #{insp.inspCd},
 		to_number(#{inf.infCnt}), #{insp.ordrCd})
-	</insert> -->
-	
-	<insert id="setRscInfList">
-  <!-- 수량 인서트 -->
-  merge into RSC_INFER
-  using dual
-  on (RSC_CD = #{insp.rscCd} and INSP_CD = #{insp.inspCd}
-  and ORDR_CD = #{insp.ordrCd} and CCD_DTL = #{inf.ccdDtl})
-  when matched then
-  update
-  set INF_CNT = #{inf.infCnt}
-  when not matched then
-  insert (CCD_DTL, RSC_CD, INSP_CD, INF_CNT, ORDR_CD)
-  values (#{inf.ccdDtl}, #{insp.rscCd}, #{insp.inspCd},
-  to_number(#{inf.infCnt}), #{insp.ordrCd})
-</insert>
+	</insert>
 
 
 
@@ -114,85 +112,92 @@
 	<select id="getInfCdList" resultType="QualityVO">
 		SELECT *
 		FROM CCDS_DTL
-		WHERE CCD = 'INF'
+		WHERE
+		CCD = 'INF'
 		ORDER BY CCD_DTL
 	</select>
 
-	<!-- <insert id="setRscInspList" parameterType="RscInspVO">
-        insert into RSC_INSP_DTL (RSC_CD, INSP_CD, ORDR_CD, INSP_CNT, INSP_PASS_CNT,
-                                  INSP_FAIL_CNT, PRE_IST_CNT)
-        values (#{rscCd}, #{inspCd}, #{ordrCd}, #{inspCnt}, to_number(#{inspPassCnt}),
-                to_number(#{inspFailCnt}),
-                #{preIstCnt})
-    </insert> -->
-    <!--  시퀀스 인서트 -->
-     <!-- <insert id="setRscInspList" parameterType="RscInspVO">
-        insert into RSC_INSP_DTL (INSP_DTL_CD, RSC_CD, INSP_CD, ORDR_CD, INSP_CNT, INSP_PASS_CNT,
-                                  INSP_FAIL_CNT, PRE_IST_CNT)
-        values (INSP_DTL_CD_SEQ.NEXTVAL, #{rscCd}, #{inspCd}, #{ordrCd}, #{inspCnt}, to_number(#{inspPassCnt}),
-                to_number(#{inspFailCnt}),
-                #{preIstCnt})
-    </insert> -->
-    <insert id="setRscInspList" parameterType="RscInspVO">
-    <selectKey keyProperty="inspDtlCd" resultType="String" order="BEFORE">
-        select 'IDC'|| LPAD(INSP_DTL_CD_SEQ2.NEXTVAL, 4, '0') as INSP_DTL_CD
-        	  from dual
-    </selectKey>
-    insert into RSC_INSP_DTL (INSP_DTL_CD, INSP_CD, RSC_CD,  ORDR_CD, ORDR_DTL_CD, INSP_CNT, INSP_PASS_CNT,
-                              INSP_FAIL_CNT, PRE_IST_CNT)
-    values (#{inspDtlCd}, #{inspCd}, #{rscCd},  #{ordrCd}, #{ordrDtlCd}, #{inspCnt},  to_number(#{inspPassCnt}),
-            to_number(#{inspFailCnt}),
-            #{preIstCnt} )
-</insert>
+	<!-- <insert id="setRscInspList" parameterType="RscInspVO"> insert into 
+		RSC_INSP_DTL (RSC_CD, INSP_CD, ORDR_CD, INSP_CNT, INSP_PASS_CNT, INSP_FAIL_CNT, 
+		PRE_IST_CNT) values (#{rscCd}, #{inspCd}, #{ordrCd}, #{inspCnt}, to_number(#{inspPassCnt}), 
+		to_number(#{inspFailCnt}), #{preIstCnt}) </insert> -->
+	<!-- 시퀀스 인서트 -->
+	<!-- <insert id="setRscInspList" parameterType="RscInspVO"> insert into 
+		RSC_INSP_DTL (INSP_DTL_CD, RSC_CD, INSP_CD, ORDR_CD, INSP_CNT, INSP_PASS_CNT, 
+		INSP_FAIL_CNT, PRE_IST_CNT) values (INSP_DTL_CD_SEQ.NEXTVAL, #{rscCd}, #{inspCd}, 
+		#{ordrCd}, #{inspCnt}, to_number(#{inspPassCnt}), to_number(#{inspFailCnt}), 
+		#{preIstCnt}) </insert> -->
+	<insert id="setRscInspList" parameterType="RscInspVO">
+		<selectKey keyProperty="inspDtlCd" resultType="String"
+			order="BEFORE">
+			select 'IDC'|| LPAD(INSP_DTL_CD_SEQ2.NEXTVAL, 4, '0') as INSP_DTL_CD
+			from dual
+		</selectKey>
+		insert into RSC_INSP_DTL (INSP_DTL_CD, INSP_CD, RSC_CD, ORDR_CD,
+		ORDR_DTL_CD, INSP_CNT, INSP_PASS_CNT,
+		INSP_FAIL_CNT, PRE_IST_CNT)
+		values (#{inspDtlCd}, #{inspCd}, #{rscCd}, #{ordrCd}, #{ordrDtlCd},
+		#{inspCnt}, to_number(#{inspPassCnt}),
+		to_number(#{inspFailCnt}),
+		#{preIstCnt} )
+	</insert>
 
 
 
-    <update id="upRscProg" parameterType="string">
-    UPDATE RSC_ORDR SET RSC_PROGRESS = '검사완료'
-    WHERE ORDR_CD = #{ordrCd}
+	<update id="upRscProg" parameterType="RscInspVO">
+		UPDATE RSC_ORDR SET RSC_PROGRESS = '검사완료'
+		WHERE ORDR_CD = #{ordrCd}
 	</update>
-    
-    
-    
-    <select id="genRscNoOrdrCd" resultType="String">  <!-- 검사코드 -->
-        select 'NOR' || to_char(sysdate, 'YYYYMMDD') || lpad(NVL(max(substr(ORDR_CD, 12, 3)), 0) + 1, 3, '0')
-        from rsc_insp_dtl
-        where 'NOR' = substr(ORDR_CD, 0, 3)
-          and substr(ORDR_CD, 4, 8) = to_char(sysdate, 'yyyymmdd')
-    </select>
-    <select id="genRscInspCd" resultType="String">
-        select 'RMI' || to_char(sysdate, 'YYYYMMDD') || lpad(NVL(max(substr(insp_cd, 12, 3)), 0) + 1, 3, '0')
-        from rsc_insp_dtl
-        where substr(insp_cd, 4, 8) = to_char(sysdate, 'yyyymmdd')
-    </select>
-    <insert id="setRscInsp" parameterType="RscInspVO">
-        merge into RSC_INSP
-        using dual
-        on (INSP_CD = #{inspCd})
-        when matched then
-            update
-            set INSP_DT   = #{inspDt},
-                INSP_TSTR = #{inspTstr}
-        when not matched then
-            insert (INSP_CD, INSP_DT, INSP_TSTR)
-            values (#{inspCd}, #{inspDt}, #{inspTstr})
-    </insert>
-    
-    <update id="updRscOrdrRmnCnt" parameterType="RscInspVO">
-        update RSC_ORDR_DTL
-        set RMN_CNT = RMN_CNT - #{preIstCnt}
-        where ORDR_CD = #{ordrCd}
-          and RSC_CD = #{rscCd}
-    </update>
-    
-    <select id="schRscInspHist" parameterType="RscInspVO" resultType="RscInspVO">
-        select ri.INSP_DT, count(*) inspCnt, ri.INSP_CD
-        from RSC_INSP ri,
-             RSC_INSP_DTL rid
-        where ri.INSP_CD = rid.INSP_CD
-        group by INSP_DT, ri.INSP_CD
-        order by INSP_CD desc
-    </select>
-    
+
+
+
+	<select id="genRscNoOrdrCd" resultType="String">  <!-- 검사코드 -->
+		select 'NOR' || to_char(sysdate, 'YYYYMMDD') ||
+		lpad(NVL(max(substr(ORDR_CD, 12, 3)), 0) + 1, 3, '0')
+		from rsc_insp_dtl
+		where 'NOR' = substr(ORDR_CD, 0, 3)
+		and substr(ORDR_CD, 4, 8) = to_char(sysdate, 'yyyymmdd')
+	</select>
+	<select id="genRscInspCd" resultType="String">
+		select 'RMI' || to_char(sysdate, 'YYYYMMDD') || lpad(NVL(max(substr(insp_cd,
+		12, 3)), 0) + 1, 3, '0')
+		from rsc_insp_dtl
+		where substr(insp_cd, 4, 8) = to_char(sysdate, 'yyyymmdd')
+	</select>
+	<insert id="setRscInsp" parameterType="RscInspVO">
+		merge into RSC_INSP
+		using dual
+		on (INSP_CD = #{inspCd})
+		when matched then
+		update
+		set INSP_DT = #{inspDt},
+		INSP_TSTR = #{inspTstr}
+		when not matched then
+		insert (INSP_CD, INSP_DT, INSP_TSTR)
+		values (#{inspCd}, #{inspDt}, #{inspTstr})
+	</insert>
+
+	<update id="updRscOrdrRmnCnt" parameterType="RscInspVO">
+		update RSC_ORDR_DTL
+		set RMN_CNT = RMN_CNT - #{preIstCnt}
+		where ORDR_CD = #{ordrCd}
+		and RSC_CD = #{rscCd}
+	</update>
+
+	<select id="schRscInspHist" parameterType="RscInspVO"
+		resultType="RscInspVO">
+		select ri.INSP_DT, count(*) inspCnt, ri.INSP_CD
+		from RSC_INSP ri,
+		RSC_INSP_DTL rid
+		where ri.INSP_CD = rid.INSP_CD
+		group by INSP_DT, ri.INSP_CD
+		order by INSP_CD desc
+	</select>
+
+	<delete id="delRscInspHist" parameterType="RscInspVO">
+		delete
+		from RSC_INSP
+		where INSP_CD = #{inspCd}
+	</delete>
 
 </mapper>

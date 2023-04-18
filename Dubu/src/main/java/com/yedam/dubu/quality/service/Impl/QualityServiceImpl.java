@@ -20,7 +20,7 @@ public class QualityServiceImpl implements QualityService {
 
 	@Override
 	public List<QualityVO> selectQualityList() {
-		
+
 		return qualityMapper.selectQualityList();
 	}
 
@@ -32,14 +32,15 @@ public class QualityServiceImpl implements QualityService {
 
 	@Override
 	public List<QualityVO> getPrdtInspDtl(QualityVO qualityVO) {
-	
+
 		return qualityMapper.getPrdtInspDtl(qualityVO);
 	}
-	//입고검사등록
+
+	// 입고검사등록
 	@Override
 	public List<QualityVO> getMatVendList(QualityVO qualityVO) {
 		// TODO Auto-generated method stub
-		return qualityMapper.getMatVendList(qualityVO) ;
+		return qualityMapper.getMatVendList(qualityVO);
 	}
 
 	@Override
@@ -48,71 +49,76 @@ public class QualityServiceImpl implements QualityService {
 		return qualityMapper.getMatOrdrList(qualityVO);
 	}
 
-	 @Override
-	    @Transactional
-	    public void setRscInspList(List<RscInspVO> rscInspVOS) {
-	        // rsc_insp insert
-	        String rscInspCd = qualityMapper.genRscInspCd();
-	        RscInspVO vo = rscInspVOS.get(0);
-	        rscInspVOS.remove(0);
-	        vo.setRscInspCd(rscInspCd);
-	        qualityMapper.setRscInsp(vo);
+	@Override
+	@Transactional
+	public void setRscInspList(List<RscInspVO> rscInspVOS) {
+		// rsc_insp insert
+		String rscInspCd = qualityMapper.genRscInspCd();
+		RscInspVO vo = rscInspVOS.get(0);
+		rscInspVOS.remove(0);
+		vo.setRscInspCd(rscInspCd);
+		qualityMapper.setRscInsp(vo);
 
-	        // rsc_insp_dtl insert
-	        for (RscInspVO rscInspVO : rscInspVOS) {
+		// rsc_insp_dtl insert
+		for (RscInspVO rscInspVO : rscInspVOS) {
 
-	            // when ordrCd doesn't exist -> gen cd and set cd
-	            if (rscInspVO.getOrdrCd() == null) {
-	                String noOrdrCd = qualityMapper.genRscNoOrdrCd();
-	                rscInspVO.setOrdrCd(noOrdrCd);
-	            }
+			// when ordrCd doesn't exist -> gen cd and set cd
+			if (rscInspVO.getOrdrCd() == null) {
+				String noOrdrCd = qualityMapper.genRscNoOrdrCd();
+				rscInspVO.setOrdrCd(noOrdrCd);
+			}
 
-	            // set rsc insp dtl each
-	            rscInspVO.setRscInspCd(rscInspCd);
-	            qualityMapper.setRscInspList(rscInspVO);
-	            qualityMapper.updRscOrdrRmnCnt(rscInspVO);
+			// set rsc insp dtl each
+			rscInspVO.setRscInspCd(rscInspCd);
+			qualityMapper.setRscInspList(rscInspVO);
+			qualityMapper.updRscOrdrRmnCnt(rscInspVO);
 
-	            // set rsc inf list each
-	            if (rscInspVO.getRscInfList() != null) {
-	                for (RscInfVO rscInfVO : rscInspVO.getRscInfList()) {
-	                	qualityMapper.setRscInfList(rscInspVO, rscInfVO);
-	                }
-	            }
-	        }
-	    }
-	
+			// set rsc inf list each
+			if (rscInspVO.getRscInfList() != null) {
+				for (RscInfVO rscInfVO : rscInspVO.getRscInfList()) {
+					qualityMapper.setRscInfList(rscInspVO, rscInfVO);
+				}
+			}
+		}
+	}
 
-	@Override  //검사상세
+	@Override // 검사상세
 	public List<QualityVO> getInfCdList() {
-		
+
 		return qualityMapper.getInfCdList();
 	}
-	
-	// 입고검사 수정
-    @Override
-    public List<RscInspVO> schRscInspHist(RscInspVO rscInspVO) {
-        return qualityMapper.schRscInspHist(rscInspVO);
-    }
 
+	// 입고검사 수정
 	@Override
-	public void upRscProg(RscInspVO rscInspVO) {
-		qualityMapper.upRscProg(rscInspVO);
-		
+	public List<RscInspVO> schRscInspHist(RscInspVO rscInspVO) {
+		return qualityMapper.schRscInspHist(rscInspVO);
 	}
 
+	
 
 	/*
 	 * @Override public List<RscInspVO> upRscProg(RscInspVO rscInspVO) { return
 	 * qualityMapper.upRscProg(rscInspVO.getOrdrCd()); }
 	 */
 
-	/*@Override
-	public List<QualityVO> getResources(QualityVO qualityVO) {
-		// TODO Auto-generated method stub
-		return qualityMapper.getResources(qualityVO);
-	}*/
+	/*
+	 * @Override public List<QualityVO> getResources(QualityVO qualityVO) { // TODO
+	 * Auto-generated method stub return qualityMapper.getResources(qualityVO); }
+	 */
 
-	
+	@Override
+	@Transactional
+	public void delRscInspHistAll(List<RscInspVO> rscInspVOS) {
+		for (RscInspVO vo : rscInspVOS) {
+			qualityMapper.delRscInspHistSingle(vo);
+		}
+		qualityMapper.delRscInspHist(rscInspVOS.get(0));
+	}
+
+	@Override
+	public int upRscProg(RscInspVO rscInspVO) {
+		
+		return qualityMapper.upRscProg(rscInspVO);
+	}
+
 }
-
-
