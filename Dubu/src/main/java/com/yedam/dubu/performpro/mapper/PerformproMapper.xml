@@ -20,10 +20,10 @@
 		WHERE id.indica_cd = #{indicaCd}
 	</select>
 	
-	<!-- 생산지시 디테일 코드, 공정명, 공정코드, 공정순서, 자재코드, 자재소모량, 지시량 , 작업일자, 생산완료여부  --> 
+	<!-- 생산지시 디테일 코드, 공정명, 공정코드, 공정순서, 자재코드, 자재소모량, 지시량 , 작업일자, 생산완료여부, 제품명  --> 
 	<!-- 한 제품의 생산 공정 흐름 -->
 	<select id="getProcessFlow" resultType="PerformproVO">
-		SELECT pp.prod_order_detail_cd, pr.prcs_nm, pp.prcs_cd , pp.prcs_pr, vi.rsc_cd, vi.oust_cnt,id.indica_cnt, id.wk_fr_dt, pp.complete, b.PRDT_NM
+		SELECT pp.prod_order_detail_cd, pr.prcs_nm, pp.prcs_cd , pp.prcs_pr, vi.rsc_cd, vi.oust_cnt,id.indica_cnt, id.wk_fr_dt, pp.complete, b.PRDT_NM, b.bom_cd
 		FROM PRCS_PROG pp JOIN indica_dtl id
 		    ON pp.prod_order_detail_cd = id.prod_order_detail_cd
 		JOIN prcs pr

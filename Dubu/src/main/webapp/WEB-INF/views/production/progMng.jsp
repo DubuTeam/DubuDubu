@@ -315,7 +315,7 @@
                     <th>설비</th>
                     <td><input id="eqmCode" type="text" readOnly style="background-color: rgb(233, 233, 233);"></td>
                     <th>작업량설정</th>
-                    <td><input type="text" id="workCnt"></td>
+                    <td><input type="text" id="workCnt" style="background-color: rgb(233, 233, 233);"></td>
                   </tr>
                 </tbody>
               </table>
@@ -333,11 +333,11 @@
                 <input type="text" id="endTime">
                 <button type="button" id="workEnd">작업종료</button>
               </div>
-              <div class="work">
-                <span>불량등록</span>
-                <input type="text" value="0">
-                <button type="button">불량(+)</button>
-                <button type="button">불량(-)</button>
+              <div class="work count-wrap _count">
+                <span style="font-size: 20px;"><b>불량등록</b></span>
+                 <input type="text" class="inp" value="1" />
+                <button type="button" class="plus">불량(+)</button>
+                <button type="button" class="minus">불량(-)</button>
               </div>
             </div>
 
@@ -346,7 +346,7 @@
             <hr>
             <div class="btnStyle" style="clear:both; float:right;">
               <button type="button">등록</button>
-              <button type="button">취소</button>
+              <button type="button" id="modalCancel">취소</button>
             </div>
           </div>
         </div>
@@ -581,14 +581,21 @@ const prodFlowGrid = new tui.Grid({
      	}
     },
     {
-        header: '생산완료여부',
-        name: 'complete',
-        align: 'center',
-        sortable: true
+      header: '공정완료여부',
+      name: 'complete',
+      align: 'center',
+      sortable: true
     },
     {
       header: '제품명',
       name: 'prdtNm',
+      align: 'center',
+      sortable: true,
+      hidden: true
+    },
+    {
+      header: 'BOM코드',
+      name: 'bomCd',
       align: 'center',
       sortable: true,
       hidden: true
@@ -633,12 +640,16 @@ prodFlowGrid.on('dblclick', function(e){
 	
 	let prcsCd = prodFlowGrid.getValue(rowKey, 'prcsCd'); // 공정코드
 	
-	let bom = prodFlowGrid.getValue(rowKey, 'prcsCd'); // 공정코드
-	getEquiGrid(prcsCd); // 해당 공정의 설비 그리드
-	getRscGrid(); // 해당 공정의 자재 그리드
+	let bom = prodFlowGrid.getValue(rowKey, 'bomCd'); // 공정코드
 	
+	let indicaCnt = prodFlowGrid.getValue(rowKey, 'indicaCnt'); // 생산지시수량
+	$('#workCnt').val(indicaCnt);
+	
+	getEquiGrid(prcsCd); // 해당 공정의 설비 그리드
+	getRscGrid(prcsCd,bom); // 해당 공정의 자재 그리드
+	
+	// workCnt
 	$('#eqmCode').val(''); // 설비코드 초기화
-	$('#workCnt').val(''); // 작업량 초기화
 	$("#worker option:eq(0)").prop("selected", true); // select 첫번째갑 초기화
 	$('#startTime').val('');
 	$('#endTime').val('');
@@ -654,6 +665,7 @@ const equiGrid = new tui.Grid({
   scrollY: true,
   bodyHeight: 200,
   rowHeight: 50,
+  rowHeaders: ['rowNum'],
   columns: [
     {
       header: '공정코드',
@@ -722,41 +734,58 @@ const rscGrid = new tui.Grid({
   scrollY: true,
   bodyHeight: 200,
   rowHeight: 50,
-  rowHeaders: ['checkbox', 'rowNum'],
+  rowHeaders: ['rowNum'],
   columns: [
     {
-      header: '공정코드',
-      name: 'indicaCd',
+      header: 'BOM코드',
+      name: 'bomCd',
       align: 'center',
       sortable: true,
-      editor: 'text'
+      hidden: true
     },
     {
-      header: '공정명',
-      name: 'edctsCd',
+      header: '공정코드',
+      name: 'prcsCd',
       align: 'center',
       sortable: true,
-      editor: 'text'
+      hidden: true
     },
     {
       header: '자재명',
-      name: 'indicaDt',
+      name: 'rscNm',
       align: 'center',
-      sortable: true,
-      editor: 'text'
+      sortable: true
     },
     {
-      header: '자재소요량',
-      name: 'indicaDt',
+      header: '자재코드',
+      name: 'rscCd',
       align: 'center',
-      sortable: true,
-      editor: 'text'
+      sortable: true
+    },
+    {
+      header: '자재소모수량',
+      name: 'oustCnt',
+      align: 'center',
+      sortable: true
     }
   ]
 });
 
-function getRscGrid(){
-	
+function getRscGrid(prcsCd,bom){
+	$.ajax({
+ 		url:"getRsc",
+ 		method:"post",
+ 		data : {prcsCd : prcsCd, bomCd:bom},
+ 		success: function(result) {
+ 			setTimeout(function() {
+ 				rscGrid.refreshLayout(); // new tui.Grid의 refreshLayout()으로 해줘야함
+			},300);
+ 			rscGrid.resetData(result);
+ 		},
+ 		error: function (reject) {	   
+ 		    console.log(reject);
+ 		}
+ 	});
 }
   
 //날짜 변환
@@ -789,5 +818,39 @@ function PrintTime() {
     return time;
 }
 
+$('#modalCancel').on('click', function(){
+	$('#workModal').modal('hide'); // 모달창 닫힘
+	$('.modal-backdrop').remove(); // 모달창 닫을때 생기는 background배경 제거
+})
+
+
+// 수량 증가 감소
+$('._count :button').on({
+    'click' : function(e){
+        e.preventDefault();
+        var $count = $(this).parent('._count').find('.inp');
+        var now = parseInt($count.val());
+        var min = 1;
+        var max = 999;
+        var num = now;
+        if($(this).hasClass('minus')){
+            var type = 'm';
+        }else{
+            var type = 'p';
+        }
+        if(type=='m'){
+            if(now>min){
+                num = now - 1;
+            }
+        }else{
+            if(now<max){
+                num = now + 1;
+            }
+        }
+        if(num != now){
+            $count.val(num);
+        }
+    }
+});
 
 </script>
