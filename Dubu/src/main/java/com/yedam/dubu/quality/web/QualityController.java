@@ -81,11 +81,12 @@ public class QualityController {
 	}
 
 	
-	//인서트
+	// 자재검사 등록 INSERT 인서트
 	@RequestMapping("setRscInspList")
 	@ResponseBody
 	public void setRscInspList(@RequestBody List<RscInspVO> rscInspVOS) {
 		qualityService.setRscInspList(rscInspVOS);
+		
 		
 	}
 
@@ -108,12 +109,12 @@ public class QualityController {
 	 * rscInspVO) { qualityService.upRscProg(rscInspVO); }
 	 */
 
-	    @PostMapping("/upRscProg")
-	    @ResponseBody
-	    public void upRscProg(@RequestBody RscInspVO rscInspVO) {
-	        qualityService.upRscProg(rscInspVO);
+    @PostMapping("/upRscProg")
+    @ResponseBody
+    public int upRscProg(RscInspVO rscInspVO) {
+        return qualityService.upRscProg(rscInspVO);
+    }
 	    
-	}
 	//삭제
 	@RequestMapping("delRscInspHist")
 	@ResponseBody

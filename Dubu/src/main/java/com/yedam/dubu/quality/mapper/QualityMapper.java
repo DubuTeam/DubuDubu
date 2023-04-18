@@ -18,7 +18,7 @@ public interface QualityMapper {
 	public List<QualityVO> getPrdtInspDtl(QualityVO qualityVO);
 	
 		//업데이트
-		int upRscProg(RscInspVO rscInspVO);
+		int upRscProg(RscInspVO rscInspVO); // 검사완료
 		//입고검사등록
 	
 		List<QualityVO> getMatVendList(QualityVO qualityVO);

@@ -53,7 +53,7 @@ public class QualityServiceImpl implements QualityService {
 	@Transactional
 	public void setRscInspList(List<RscInspVO> rscInspVOS) {
 		// rsc_insp insert
-		String rscInspCd = qualityMapper.genRscInspCd();
+		String rscInspCd = qualityMapper.genRscInspCd(); // 검사코드부여
 		RscInspVO vo = rscInspVOS.get(0);
 		rscInspVOS.remove(0);
 		vo.setRscInspCd(rscInspCd);
@@ -71,7 +71,7 @@ public class QualityServiceImpl implements QualityService {
 			// set rsc insp dtl each
 			rscInspVO.setRscInspCd(rscInspCd);
 			qualityMapper.setRscInspList(rscInspVO);
-			qualityMapper.updRscOrdrRmnCnt(rscInspVO);
+			qualityMapper.updRscOrdrRmnCnt(rscInspVO); 
 
 			// set rsc inf list each
 			if (rscInspVO.getRscInfList() != null) {
