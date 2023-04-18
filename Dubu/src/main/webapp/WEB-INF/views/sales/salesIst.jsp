@@ -100,9 +100,10 @@
 							<tr>
 								<th>제품 입고번호</th>
 								<td><input type="text" class="form-control" id="edctsIstNo"
-									name="edctsIstNo" style="width: 150px; margin-left: 6px; color : transparent;"
-									readonly ></td>
-								<th>완제품LOT번호</th>
+									name="edctsIstNo"
+									style="width: 150px; margin-left: 6px; color: transparent;"
+									readonly></td>
+								<th>완제품</th>
 								<td style="width: 175px;">
 									<div class="input-group">
 										<input type="text" class="form-control" id="edctsLotNo"
@@ -227,16 +228,6 @@
 		scrollY : false,
 		rowHeaders : [ 'checkbox' ],
 		columns : [ {
-			header : '주문번호',
-			name : 'orderNo',
-			width : 120,
-			align : 'center'
-		}, {
-			header : '완제품LOT번호',
-			name : 'edctsLotNo',
-			width : 120,
-			align : 'center'
-		}, {
 			header : '제품코드',
 			name : 'edctsCd',
 			align : 'center'
