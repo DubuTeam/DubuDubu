@@ -7,66 +7,73 @@
 	<!-- * 자재 발주 관리 페이지 * -->
 	<!-- 자재 검색 리스트 -->
 	<select id="getMaterialModal" resultType="MaterialVO">
-		SELECT DISTINCT RSC_CD , RSC_NM ,RSC_TYP, MNG_UNIT 
+		SELECT DISTINCT RSC_CD
+		, RSC_NM ,RSC_TYP, MNG_UNIT
 		FROM RSC
 		ORDER BY RSC_CD
 	</select>
-		
+
 	<!-- 업체 검색 리스트 -->
 	<select id="getVendModal" resultType="MaterialVO">
-		SELECT DISTINCT VEND_CD, VEND_NM, BINZO, TELNO 
+		SELECT DISTINCT VEND_CD,
+		VEND_NM, BINZO, TELNO
 		FROM VEND
 		ORDER BY VEND_CD
 	</select>
-	
+
 	<!-- 자재 목록 리스트 -->
 	<select id="getMaterialList" resultType="MaterialVO">
-		SELECT r.RSC_CD, r.RSC_NM, r.VEND_CD, rs.AVAL_STC, r.SAF_STC, v.VEND_NM
+		SELECT r.RSC_CD, r.RSC_NM, r.VEND_CD, rs.AVAL_STC, r.SAF_STC,
+		v.VEND_NM
 		FROM RSC r JOIN RSC_STC rs
-  		ON r.RSC_CD = rs.RSC_CD
-  		JOIN VEND v
-  		ON v.VEND_CD = r.VEND_CD
+		ON r.RSC_CD = rs.RSC_CD
+		JOIN VEND v
+		ON v.VEND_CD = r.VEND_CD
 		<where>
-		    <if test="rscNm != null and !rscNm.equals('')">
-		         r.RSC_NM LIKE '%' || #{rscNm} || '%'
-		    </if>
-		    <if test="vendNm != null and !vendNm.equals('')">
-		         AND UPPER(v.VEND_NM) LIKE '%' || UPPER(#{vendNm}) || '%'
-		    </if>
+			<if test="rscNm != null and !rscNm.equals('')">
+				r.RSC_NM LIKE '%' || #{rscNm} || '%'
+			</if>
+			<if test="vendNm != null and !vendNm.equals('')">
+				AND UPPER(v.VEND_NM) LIKE '%' || UPPER(#{vendNm}) || '%'
+			</if>
 		</where>
 		ORDER BY r.RSC_CD
-		
+
 		<!-- 전체 목록 리스트 -->
-		<!-- SELECT r.RSC_CD, r.RSC_NM, r.VEND_CD, rs.AVAL_STC, r.SAF_STC, v.VEND_NM
-		FROM RSC r LEFT JOIN RSC_STC rs
-  		ON r.RSC_CD = rs.RSC_CD
-  		LEFT JOIN VEND v
-  		ON v.VEND_CD = r.VEND_CD
-		ORDER BY r.RSC_CD -->
+		<!-- SELECT r.RSC_CD, r.RSC_NM, r.VEND_CD, rs.AVAL_STC, r.SAF_STC, v.VEND_NM 
+			FROM RSC r LEFT JOIN RSC_STC rs ON r.RSC_CD = rs.RSC_CD LEFT JOIN VEND v 
+			ON v.VEND_CD = r.VEND_CD ORDER BY r.RSC_CD -->
 	</select>
-	
+
 	<!-- 다음에 오는 자재 발주 코드 -->
 	<select id="getNextMaterialOrderCode" resultType="MaterialVO">
-		SELECT 'ORDR' || RSC_ORDR_SEQ.NEXTVAL as ordrCd
+		SELECT 'ORDR'
+		|| RSC_ORDR_SEQ.NEXTVAL as ordrCd
 		FROM DUAL
 	</select>
-	
-	<!-- 자재 발주 INSERT  -->
+
+	<!-- 자재 발주 INSERT -->
 	<insert id="getMaterialOrderInsert" parameterType="MaterialVO">
-		INSERT INTO RSC_ORDR(ORDR_CD, VEND_CD, ORDR_REQ_DT)
-		VALUES(#{ordrCd}, #{vendCd}, sysdate)
+		INSERT INTO
+		RSC_ORDR(ORDR_CD, VEND_CD, ORDR_REQ_DT)
+		VALUES(#{ordrCd}, #{vendCd},
+		sysdate)
 	</insert>
-	
-	<!-- 자재 발주 디테일 INSERT  -->
-	<insert id="getMaterialOrderDetailInsert" parameterType="MaterialVO">
-		<selectKey keyProperty="ordrDtlCd" resultType="String" order="BEFORE">
+
+	<!-- 자재 발주 디테일 INSERT -->
+	<insert id="getMaterialOrderDetailInsert"
+		parameterType="MaterialVO">
+		<selectKey keyProperty="ordrDtlCd" resultType="String"
+			order="BEFORE">
 			SELECT 'ODC' || RSC_ORDR_DTL_seq.nextval FROM dual
 		</selectKey>
-		
-		INSERT INTO RSC_ORDR_DTL(ORDR_DTL_CD, ORDR_CD, RSC_CD, ORDR_CNT , RMN_CNT, PAPRD_CMND_DT)
-		VALUES(#{ordrDtlCd}, #{ordrCd},#{rscCd}, #{ordrCnt}, #{rmnCnt}, TO_DATE(#{paprdCmndDt2},'YYYY-MM-DD'))
+
+		INSERT INTO RSC_ORDR_DTL(ORDR_DTL_CD, ORDR_CD, RSC_CD, ORDR_CNT ,
+		RMN_CNT, PAPRD_CMND_DT)
+		VALUES(#{ordrDtlCd}, #{ordrCd},#{rscCd},
+		#{ordrCnt}, #{rmnCnt}, TO_DATE(#{paprdCmndDt2},'YYYY-MM-DD'))
 	</insert>
-	
+
 	<!-- *자재 발주 조회 페이지* -->
 	<!-- 자재 발주 조회 -->
 	<select id="getMaterialOrderList" resultType="MaterialVO">
@@ -74,201 +81,181 @@
 		FROM RSC_ORDR r JOIN VEND v
 		ON r.VEND_CD = v.VEND_CD
 		<where>
-		    <if test="vendNm != null and !vendNm.equals('')">
-		        UPPER(v.VEND_NM) LIKE '%' || UPPER(#{vendNm}) || '%'
-		    </if>
-		    <if test="startOrdrReqDt != null and !startOrdrReqDt.equals('')">
-		    	AND <![CDATA[ORDR_REQ_DT >= #{startOrdrReqDt}]]>
-		    </if>
+			<if test="vendNm != null and !vendNm.equals('')">
+				UPPER(v.VEND_NM) LIKE '%' || UPPER(#{vendNm}) || '%'
+			</if>
+			<if test="startOrdrReqDt != null and !startOrdrReqDt.equals('')">
+				AND <![CDATA[ORDR_REQ_DT >= #{startOrdrReqDt}]]>
+			</if>
 			<if test="endOrdrReqDt != null and !endOrdrReqDt.equals('')">
 				AND <![CDATA[ORDR_REQ_DT <= #{endOrdrReqDt}]]>
 			</if>
 		</where>
 		ORDER BY r.ORDR_REQ_DT DESC
 
-		<!-- SELECT r.ORDR_CD, r.VEND_CD, v.VEND_NM, r.ORDR_REQ_DT
-		FROM RSC_ORDR r JOIN VEND v
-		ON r.VEND_CD = v.VEND_CD
-		ORDER BY r.ORDR_CD -->
+		<!-- SELECT r.ORDR_CD, r.VEND_CD, v.VEND_NM, r.ORDR_REQ_DT FROM RSC_ORDR 
+			r JOIN VEND v ON r.VEND_CD = v.VEND_CD ORDER BY r.ORDR_CD -->
 	</select>
-	
+
 	<!-- 자재 발주 상세 리스트 -->
 	<select id="getMaterialOrderListDetail" resultType="MaterialVO">
-		SELECT rd.RSC_CD,
-		       rs.RSC_NM, 
-		       rs.VEND_CD, 
-		       v.VEND_NM, 
-		       ro.ORDR_CD, 
-		       rd.ORDR_CNT, 
-		       rc.AVAL_STC,
-		       rs.SAF_STC,
-		       (AVAL_STC+ORDR_CNT) as expect,
-		       rd.PAPRD_CMND_DT
+		SELECT
+		rd.RSC_CD,
+		rs.RSC_NM,
+		rs.VEND_CD,
+		v.VEND_NM,
+		ro.ORDR_CD,
+		rd.ORDR_CNT,
+		rc.AVAL_STC,
+		rs.SAF_STC,
+		(AVAL_STC+ORDR_CNT) as expect,
+		rd.PAPRD_CMND_DT
 		FROM RSC_ORDR ro JOIN RSC_ORDR_DTL rd
-	  	ON ro.ORDR_CD = rd.ORDR_CD
-	  	JOIN RSC rs
-	  	ON rd.RSC_CD = rs.RSC_CD
-	  	JOIN VEND v
-	  	ON v.VEND_CD = ro.VEND_CD
-	  	JOIN RSC_STC rc
-	  	ON rc.RSC_CD = rd.RSC_CD
-	  	WHERE ro.ORDR_CD = #{ordrCd}
+		ON ro.ORDR_CD = rd.ORDR_CD
+		JOIN RSC rs
+		ON rd.RSC_CD = rs.RSC_CD
+		JOIN VEND v
+		ON v.VEND_CD = ro.VEND_CD
+		JOIN RSC_STC rc
+		ON rc.RSC_CD = rd.RSC_CD
+		WHERE ro.ORDR_CD = #{ordrCd}
 	</select>
-	
+
 	<!-- 자재발주 상세 디테일 수정 -->
-	<update id="getMaterialOrderListDetailModify" parameterType="MaterialVO">
-		UPDATE RSC_ORDR_DTL 
-      	SET	RMN_CNT = #{rmnCnt}, PAPRD_CMND_DT = TO_DATE(#{paprdCmndDt2},'YYYY-MM-DD'), ORDR_CNT = #{ordrCnt}
-		WHERE ORDR_CD = #{ordrCd} AND RSC_CD = #{rscCd}	
+	<update id="getMaterialOrderListDetailModify"
+		parameterType="MaterialVO">
+		UPDATE RSC_ORDR_DTL
+		SET RMN_CNT = #{rmnCnt}, PAPRD_CMND_DT =
+		TO_DATE(#{paprdCmndDt2},'YYYY-MM-DD'), ORDR_CNT = #{ordrCnt}
+		WHERE
+		ORDR_CD = #{ordrCd} AND RSC_CD = #{rscCd}
 	</update>
-	
+
 	<!-- 자재발주 삭제 -->
 	<delete id="getMaterialOrderDelete" parameterType="String">
-		DELETE 
+		DELETE
 		FROM RSC_ORDR
 		WHERE ORDR_CD = #{ordrCd}
 	</delete>
-	
-	<!-- 트리거를 이용하여 삭제함
-		create or replace trigger delete_material_detail
-   			after delete on RSC_ORDR
-   			for each row
-   			begin 
-      			delete from RSC_ORDR_DTL
-      			where ORDR_CD = :OLD.ORDR_CD;
-   			end;
-   		 / 
-   	-->
-   	
-   	<!-- 자재 발주 상세 삭제 => 프로시저 사용함 --> 
-   	<delete id="getDeleteProcedure" statementType="CALLABLE" parameterType="MaterialVO">
-			{ call delete_material_order (
-			    #{ordrCd, mode=IN, jdbcType=VARCHAR, javaType=String},
-                #{rscCd, mode=IN, jdbcType=VARCHAR, javaType=String}
-               )
-            }
+
+	<!-- 트리거를 이용하여 삭제함 create or replace trigger delete_material_detail after 
+		delete on RSC_ORDR for each row begin delete from RSC_ORDR_DTL where ORDR_CD 
+		= :OLD.ORDR_CD; end; / -->
+
+	<!-- 자재 발주 상세 삭제 => 프로시저 사용함 -->
+	<delete id="getDeleteProcedure" statementType="CALLABLE"
+		parameterType="MaterialVO">
+		{ call delete_material_order (
+		#{ordrCd, mode=IN, jdbcType=VARCHAR, javaType=String},
+		#{rscCd, mode=IN, jdbcType=VARCHAR, javaType=String}
+		)
+		}
 	</delete>
-	
+
 	<!-- ////////////////////////////// -->
-	
+
 	<!-- 입고 리스트 -->
-	<!-- 자재 입고 검사 부여된것만  -->
+	<!-- 자재 입고 검사 부여된것만 -->
 	<select id="getMaterialIstList" resultType="MaterialVO">
-		SELECT rid.INSP_CD, rid.ORDR_DTL_CD, rid.ORDR_CD, r.RSC_CD, r.RSC_NM, r.RSC_SPEC, 
-       		   r.MNG_UNIT, r.RSC_TYP ,v.VEND_CD, v.VEND_NM, 
-       		   rid.IST_CHECK, rid.INSP_PASS_CNT
-		FROM RSC_INSP_DTL rid JOIN RSC r 
+		SELECT rid.INSP_CD, rid.ORDR_DTL_CD, rid.ORDR_CD, r.RSC_CD, r.RSC_NM,
+		r.RSC_SPEC,
+		r.MNG_UNIT, r.RSC_TYP ,v.VEND_CD, v.VEND_NM,
+		rid.IST_CHECK, rid.INSP_PASS_CNT
+		FROM RSC_INSP_DTL rid JOIN RSC r
 		ON r.RSC_CD = rid.RSC_CD
 		JOIN vend v
 		ON r.VEND_CD = v.VEND_CD
-		WHERE rid.INSP_CD IS NOT NULL AND rid.IST_CHECK='N'
-	    <if test="vendNm != null and !vendNm.equals('')">
-	       AND UPPER(v.VEND_NM) LIKE '%' || UPPER(#{vendNm}) || '%'
-	    </if>
+		WHERE
+		rid.INSP_CD IS NOT NULL AND rid.IST_CHECK='N'
+		<if test="vendNm != null and !vendNm.equals('')">
+			AND UPPER(v.VEND_NM) LIKE '%' || UPPER(#{vendNm}) || '%'
+		</if>
 		ORDER BY rid.INSP_CD, rid.ORDR_CD, rid.RSC_CD
 	</select>
-	
+
 	<!-- 입고 코드 부여 -->
 	<select id="getMaterialIstCode" resultType="MaterialVO">
-	    SELECT 'IST' || RSC_IST_SEQ.NEXTVAL as istCd
-	    FROM DUAL
+		SELECT 'IST' || RSC_IST_SEQ.NEXTVAL as istCd
+		FROM DUAL
 	</select>
-	
+
 	<!-- 입고 테이블에 등록 -->
 	<insert id="getMaterialIstInsert" parameterType="MaterialVO">
-		INSERT INTO RSC_IST(IST_CD,IST_DT,IST_CNT)
-    	VALUES(#{istCd}, sysdate, #{istCnt})
-    </insert>
-    
-    <!-- 자재입고시(등록) 실행하는 프로시저 --> 
-   	<insert id="getIstInsertProcedure" statementType="CALLABLE" parameterType="MaterialVO">
-			{ call material_Ist_Insert (
-			    #{istCd}, #{ordrDtlCd}, #{ordrCd}, #{rscCd},#{inspCd},#{inspPassCnt},#{expDt2}
-              )
-            }
+		INSERT INTO
+		RSC_IST(IST_CD,IST_DT,IST_CNT)
+		VALUES(#{istCd}, sysdate, #{istCnt})
 	</insert>
-	
+
+	<!-- 자재입고시(등록) 실행하는 프로시저 -->
+	<insert id="getIstInsertProcedure" statementType="CALLABLE"
+		parameterType="MaterialVO">
+		{ call material_Ist_Insert (
+		#{istCd}, #{ordrDtlCd}, #{ordrCd}, #{rscCd},#{inspCd},#{inspPassCnt},#{expDt2}
+		)
+		}
+	</insert>
+
 	<!-- 프로 시저 이용하여 입고등록함 -->
-	<!-- 
-	create or replace PROCEDURE material_Ist_Insert(
-        p_IST_CD IN RSC_IST.IST_CD%TYPE,  입고 코드
-        p_ORDR_DTL_CD IN RSC_ORDR_DTL.ORDR_DTL_CD%TYPE, 
-        p_RSC_ORDR IN RSC_ORDR.ORDR_CD%TYPE,  자재 발주번호
-        p_RSC_CD IN RSC_ORDR_DTL.RSC_CD%TYPE,  자재코드
-        p_INSP_CD IN RSC_INSP.INSP_CD%TYPE,  검사코드
-        p_INSP_PASS_CNT IN RSC_INSP_DTL.INSP_PASS_CNT%TYPE,  입고가능수량
-        p_EXP_DT IN RSC_LOT.EXP_DT%TYPE  유통기한
-    )
-	IS
-	p_prc_lot_cd RSC_LOT.PRC_LOT_CD%TYPE;  자재 LOT코드
-	BEGIN
-	
-	     자재 LOT 코드부여
-	    SELECT 'MaterialLOT' || RSC_LOT_SEQ.NEXTVAL as prcLotCd
-	    INTO p_prc_lot_cd
-	    FROM DUAL;
-	
-	     자재 LOT테이블에 INSERT
-	    INSERT INTO RSC_LOT(PRC_LOT_CD, IST_CD, ORDR_DTL_CD, ORDR_CD, RSC_CD, INSP_CD, LOT_CNT, EXP_DT)
-	    VALUES(p_prc_lot_cd, p_IST_CD, p_ORDR_DTL_CD, p_RSC_ORDR, p_RSC_CD, p_INSP_CD,p_INSP_PASS_CNT,p_EXP_DT);
-	
-	     자재 재고 테이블에 UPDATE
-	    UPDATE RSC_STC
-	    SET RSC_STC = RSC_STC + p_INSP_PASS_CNT, AVAL_STC = AVAL_STC + p_INSP_PASS_CNT
-	    WHERE RSC_CD = p_RSC_CD;
-	
-	     자재 재고 이력 INSERT
-	    INSERT INTO RSC_STC_HIST(RSC_CD, CLS_YYMM, IST_CNT, OUST_CNT)
-	    VALUES(p_RSC_CD, sysdate, p_INSP_PASS_CNT,0);
-	
-	     자재 발주의 진행사항 UPDATE
-	    UPDATE RSC_ORDR
-	    SET RSC_progress = '입고완료'
-	    WHERE ORDR_CD = p_RSC_ORDR;
-	
-	     검사 상세 디테일에 입고여부
-	    UPDATE RSC_INSP_DTL
-	    SET IST_CHECK = 'Y'
-	    WHERE INSP_CD = p_INSP_CD;
-	
-	END material_Ist_Insert; -->
-	
+	<!-- create or replace PROCEDURE material_Ist_Insert( p_IST_CD IN RSC_IST.IST_CD%TYPE, 
+		입고 코드 p_ORDR_DTL_CD IN RSC_ORDR_DTL.ORDR_DTL_CD%TYPE, p_RSC_ORDR IN RSC_ORDR.ORDR_CD%TYPE, 
+		자재 발주번호 p_RSC_CD IN RSC_ORDR_DTL.RSC_CD%TYPE, 자재코드 p_INSP_CD IN RSC_INSP.INSP_CD%TYPE, 
+		검사코드 p_INSP_PASS_CNT IN RSC_INSP_DTL.INSP_PASS_CNT%TYPE, 입고가능수량 p_EXP_DT 
+		IN RSC_LOT.EXP_DT%TYPE 유통기한 ) IS p_prc_lot_cd RSC_LOT.PRC_LOT_CD%TYPE; 자재 
+		LOT코드 BEGIN 자재 LOT 코드부여 SELECT 'MaterialLOT' || RSC_LOT_SEQ.NEXTVAL as prcLotCd 
+		INTO p_prc_lot_cd FROM DUAL; 자재 LOT테이블에 INSERT INSERT INTO RSC_LOT(PRC_LOT_CD, 
+		IST_CD, ORDR_DTL_CD, ORDR_CD, RSC_CD, INSP_CD, LOT_CNT, EXP_DT) VALUES(p_prc_lot_cd, 
+		p_IST_CD, p_ORDR_DTL_CD, p_RSC_ORDR, p_RSC_CD, p_INSP_CD,p_INSP_PASS_CNT,p_EXP_DT); 
+		자재 재고 테이블에 UPDATE UPDATE RSC_STC SET RSC_STC = RSC_STC + p_INSP_PASS_CNT, 
+		AVAL_STC = AVAL_STC + p_INSP_PASS_CNT WHERE RSC_CD = p_RSC_CD; 자재 재고 이력 INSERT 
+		INSERT INTO RSC_STC_HIST(RSC_CD, CLS_YYMM, IST_CNT, OUST_CNT) VALUES(p_RSC_CD, 
+		sysdate, p_INSP_PASS_CNT,0); 자재 발주의 진행사항 UPDATE UPDATE RSC_ORDR SET RSC_progress 
+		= '입고완료' WHERE ORDR_CD = p_RSC_ORDR; 검사 상세 디테일에 입고여부 UPDATE RSC_INSP_DTL 
+		SET IST_CHECK = 'Y' WHERE INSP_CD = p_INSP_CD; END material_Ist_Insert; -->
+
 	<!-- 자재 입고 헤더 리스트 -->
 	<select id="getMaterialTotalIstList" resultType="MaterialVO">
-		SELECT IST_CD, IST_DT, IST_CNT 
+		SELECT IST_CD,
+		IST_DT, IST_CNT
 		FROM RSC_IST
 		ORDER BY IST_CD
 	</select>
-	
-	<!--  자재 입고 상세 리스트 -->
+
+	<!-- 자재 입고 상세 리스트 -->
 	<select id="getMaterialIstDetail" resultType="MaterialVO">
-		SELECT rid.INSP_CD, rid.ORDR_DTL_CD, rid.ORDR_CD, r.RSC_CD, r.RSC_NM, r.RSC_SPEC, 
-       		   r.MNG_UNIT, r.RSC_TYP ,v.VEND_CD, v.VEND_NM, 
-       		   rid.IST_CHECK, rid.INSP_PASS_CNT, rl.IST_CD
-		FROM RSC_INSP_DTL rid JOIN RSC r 
+		SELECT rid.INSP_CD,
+		rid.ORDR_DTL_CD, rid.ORDR_CD, r.RSC_CD, r.RSC_NM, r.RSC_SPEC,
+		r.MNG_UNIT, r.RSC_TYP ,v.VEND_CD, v.VEND_NM,
+		rid.IST_CHECK, rid.INSP_PASS_CNT, rl.IST_CD
+		FROM RSC_INSP_DTL rid JOIN RSC r
 		ON r.RSC_CD = rid.RSC_CD
 		JOIN vend v
 		ON r.VEND_CD = v.VEND_CD
-        JOIN RSC_LOT rl
-        ON rid.ORDR_DTL_CD = rl.ORDR_DTL_CD 
+		JOIN RSC_LOT rl
+		ON rid.ORDR_DTL_CD = rl.ORDR_DTL_CD
 		WHERE rid.IST_CHECK='Y' AND rl.IST_CD = #{istCd}
-        ORDER BY INSP_CD
+		ORDER BY INSP_CD
 	</select>
-	
+
 	<!-- 자재 재고 조회 리스트 -->
 	<select id="getMaterialStocklList" resultType="MaterialVO">
 		SELECT
-            r.rsc_cd,
-		    r.rsc_nm,
-		    r.rsc_typ,
-		    r.rsc_spec,
-		    r.mng_unit,
-		    rs.rsc_stc,
-		    r.saf_stc,
-            rsh.ist_cnt,
-            rsh.oust_cnt
-		FROM rsc r JOIN rsc_stc rs ON r.rsc_cd = rs.rsc_cd
-                    JOIN rsc_stc_hist rsh ON rs.rsc_cd = rsh.rsc_cd
+		r.rsc_cd,
+		r.rsc_nm,
+		r.rsc_typ,
+		r.rsc_spec,
+		r.mng_unit,
+		rs.rsc_stc - COALESCE((
+		SELECT SUM(ist_cnt)
+		FROM rsc_stc_hist
+		WHERE rsc_cd = r.rsc_cd
+		), 0) AS rsc_stc,
+		r.saf_stc,
+		rsh.ist_cnt,
+		rsh.oust_cnt
+		FROM
+		rsc r
+		JOIN rsc_stc rs ON r.rsc_cd = rs.rsc_cd
+		JOIN rsc_stc_hist rsh ON rs.rsc_cd = rsh.rsc_cd
 		ORDER BY r.rsc_cd
 	</select>
 
