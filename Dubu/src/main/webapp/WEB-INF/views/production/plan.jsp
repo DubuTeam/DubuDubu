@@ -372,7 +372,7 @@ let getData='';
 	        		      icon: 'success',
 	        		      title: '생산계획코드가 부여되었습니다.'
 	        		 });
-       	        	//search();
+       	        	search();
        	    },
        	    error: function(reject) {
        	        console.log(reject);

@@ -41,6 +41,7 @@ public interface ProductionMapper {
 	
 	// 생산계획 등록
 	public int insertPlan(ProductionVO productionVO);
+	public int updatePlanCode(ProductionVO productionVO);
 	
 	// 계획코드
 	public String planCode();
