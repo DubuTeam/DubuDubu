@@ -86,7 +86,7 @@
 		INSERT INTO PLAN
 		VALUES (#{planCd},
 			    null,
-			    sysdate,
+			    TO_CHAR(sysdate, 'yyyy-MM-dd'),
 			    #{orderNo})
 	</insert>
 	<!-- 생산계획 제품 조회 -->
