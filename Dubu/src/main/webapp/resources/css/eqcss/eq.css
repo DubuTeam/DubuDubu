@@ -43,6 +43,18 @@ label {
 	float: left;
 }
 
+
+
+html {
+	scroll-behavior: smooth;		/* 스크롤 부드럽게 */
+}
+
+/* 스크롤 */
+.table {
+	height: 250px;
+	overflow: auto;
+}
+
 .table > table {
     width: 100%;
 }

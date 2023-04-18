@@ -306,7 +306,9 @@
 		DELETE FROM eqm_chck WHERE chck_cd = #{chckCd}
 	</delete>
 	
-	
+	<!--
+			<if test="keyword3 != null and keyword3 != ''">AND eqm_nm = #{keyword3}</if>
+	-->
 	<!-- 설비 점검 검색하기 (모달 아님) -->
 	<select id="selectSpecificEqCheckList" resultType="EquipmentVO">
 		SELECT
@@ -317,11 +319,12 @@
             dispo_matter,
             jdgmnt,
             chck_dt,
-            chck_psch
+            chck_psch,
+            dispo_ctnt
 		FROM eqm_chck
 		WHERE 1=1
 		
-		<if test="keyword3 != null and keyword3 != ''">AND eqm_nm = #{keyword3}</if>
+		<if test="keyword3 != null and keyword3 != ''">AND eqm_nm LIKE '%' || #{keyword3} || '%'</if>
 		<if test="searchFrDt != null"><![CDATA[AND chck_dt >= #{searchFrDt}]]></if>
 		<if test="searchToDt != null"><![CDATA[AND chck_dt <= #{searchToDt}]]></if>
 		ORDER BY chck_cd
@@ -360,7 +363,7 @@
 		ORDER BY nopr_cd
 	</select>
 	
-	<!-- 현재 가동중이지 않은 설비들만 설비명 옵션에 뜨도록 -->
+	<!-- 전체 설비명 옵션에 뜨도록 -->
 	<select id="eqIpoprOption" resultType="EquipmentVO">
 		SELECT
 			ROWNUM AS "idx",
@@ -376,8 +379,9 @@
 			line_cd,
 			eqm_ist_dt
 		FROM eqm
-        WHERE eqm_yn = 'N'
-		ORDER BY eqm_cd
+        <!-- WHERE eqm_yn = 'N' -->
+        <!-- 설비명 가나다 순으로 -->
+		ORDER BY eqm_nm ASC
 	</select>
 	
 	<!-- 부여될 비가동 코드를 미리 조회 (등록과 관련)  -  라인명은 NOPR0001, NOPR0002  이런식으로 문자열이다. -->
@@ -446,7 +450,7 @@
 		FROM eqm_opr
 		WHERE 1=1
 		
-		<if test="keyword3 != null and keyword3 != ''">AND eqm_nm = #{keyword3}</if>
+		<if test="keyword3 != null and keyword3 != ''">AND eqm_nm LIKE '%' || #{keyword3} || '%'</if>
 		<if test="searchFrDt != null"><![CDATA[AND fr_dt >= #{searchFrDt}]]></if>
 		<if test="searchToDt != null"><![CDATA[AND fr_dt <= #{searchToDt}]]></if>
 		ORDER BY nopr_cd
