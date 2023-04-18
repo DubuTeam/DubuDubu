@@ -68,218 +68,218 @@ tr {
 
 
 </head>
+<body>
 
+	<!-- Begin Page Content -->
+	<div class="container-fluid"></div>
+	<!-- Page Heading -->
+	<div class="container-fluid px-4">
+		<h1 class="mt-4">자재입고검사</h1>
+		<ol class="breadcrumb mb-4">
+			<li class="breadcrumb-item"><a href="home.do"><i
+					class="fas fa-home"></i></a></li>
+			<li class="breadcrumb-item">> 자재관리</li>
+			<li class="breadcrumb-item active">> 자재입고검사</li>
+		</ol>
 
-<!-- Begin Page Content -->
-<div class="container-fluid"></div>
-<!-- Page Heading -->
-<div class="container-fluid px-4">
-	<h1 class="mt-4">자재입고검사</h1>
-	<ol class="breadcrumb mb-4">
-		<li class="breadcrumb-item"><a href="home.do"><i
-				class="fas fa-home"></i></a></li>
-		<li class="breadcrumb-item">> 자재관리</li>
-		<li class="breadcrumb-item active">> 자재입고검사</li>
-	</ol>
-
-	<section class="layout">
-		<div class="header">
-			<div class="card" id="card-1">
-				<div class="card-body">
-					<div style="display: inline-block; margin: auto 0; float: right;">
-						<button class="btn btn-primary" id="saveBtn">
-							<i class="fas fa-save"></i> 저장
-						</button>
-						<button class="btn btn-primary" id="delDataBtn">
-							<i class="fas fa-file"></i> 삭제
-						</button>
-						<button class="btn btn-primary" id="reloadBtn">
-							<i class="fas fa-file"></i> 새자료
-						</button>
-					</div>
-					<table style="vertical-align: middle; text-align: center">
-						<colgroup>
-							<col style="width: 120px">
-							<col style="width: 30px">
-							<col style="width: 80px">
-							<col style="width: 180px">
-							<col style="width: 20px">
-							<col style="width: 80px">
-							<col style="width: 180px">
-						</colgroup>
-						<tbody>
-							<tr>
-								<th><b>자재검사등록</b></th>
-								<td></td>
-								<th><b>검사일자</b></th>
-								<td>
-									<div>
-
-										<input type="date" id="inspDt" name="inspDt"
-											class="form-control" style="width: 150px;">
-									</div>
-									<div id="wrapper" style="margin-top: -1px;"></div>
-								</td>
-								<td></td>
-								<th><b>검사자</b></th>
-								<td><input type="text" id="inspTstr" class="form-control"
-									style="width: 168px;"></td>
-							</tr>
-
-						</tbody>
-					</table>
-
-				</div>
-			</div>
-		</div>
-
-		<div class="ordr">
-			<div class="card">
-				<div class="card-body">
-					<form id="ordrListFrm">
+		<section class="layout">
+			<div class="header">
+				<div class="card" id="card-1">
+					<div class="card-body">
+						<div style="display: inline-block; margin: auto 0; float: right;">
+							<button class="btn btn-primary" id="saveBtn">
+								<i class="fas fa-save"></i> 저장
+							</button>
+							<button class="btn btn-primary" id="delDataBtn">
+								<i class="fas fa-file"></i> 삭제
+							</button>
+							<button class="btn btn-primary" id="reloadBtn">
+								<i class="fas fa-file"></i> 새자료
+							</button>
+						</div>
 						<table style="vertical-align: middle; text-align: center">
 							<colgroup>
 								<col style="width: 120px">
 								<col style="width: 30px">
 								<col style="width: 80px">
-								<col style="width: 250px">
+								<col style="width: 180px">
 								<col style="width: 20px">
-								<col style="width: 100px">
-								<col style="width: 350px">
+								<col style="width: 80px">
+								<col style="width: 180px">
 							</colgroup>
-							<tr>
-								<th><b>발주자료 조회</b></th>
-								<td></td>
-								<th><label for="vendNm"><b>업체명</b></label></th>
-								<td style="display: flex;"><input id="vendNm" type="text"
-									class="form-control" placeholder="검색버튼을 이용하세요"
-									style="width: 200px;" required readonly> <input
-									id="vendCd" type="hidden" name="vendCd">
-									<button id="modalBtn" type="button" class="btn btn-primary"
-										data-toggle="modal" data-target="#vendModal"
-										onclick="setTime()">
-										<i class="fas fa-search"></i>
-									</button></td>
-								<td></td>
-								<th><b>납기예정일</b></th>
-								<td>
-									<div style="display: flex;">
-										<input type="date" id="startDt" name="startDt"
-											class="form-control" style="width: 150px;"> <span
-											style="padding: 5px;">-</span> <input type="date" id="endDt"
-											name="endDt" class="form-control" style="width: 150px;">
-									</div>
-								</td>
-								<th></th>
-								<td><input id="getOrdrList" type="button"
-									class="btn btn-primary" value="가져오기" /></td>
-							</tr>
+							<tbody>
+								<tr>
+									<th><b>자재검사등록</b></th>
+									<td></td>
+									<th><b>검사일자</b></th>
+									<td>
+										<div>
+
+											<input type="date" id="inspDt" name="inspDt"
+												class="form-control" style="width: 150px;">
+										</div>
+										<div id="wrapper" style="margin-top: -1px;"></div>
+									</td>
+									<td></td>
+									<th><b>검사자</b></th>
+									<td><input type="text" id="inspTstr" class="form-control"
+										style="width: 168px;"></td>
+								</tr>
+
+							</tbody>
 						</table>
-					</form>
+
+					</div>
 				</div>
 			</div>
-		</div>
-		<div class="body" style="margin-top: 40px;">
-			<div class="card-body" style="height: 100%; border: 1px solid #ccc;">
-				<div class="d-flex justify-content-between align-items-center"
-					style="height: 40px;">
-					<h5 class="card-title" style="margin: 0; padding-left: 10px;"></h5>
-					<button class="btn btn-primary" id="delRow"
-						style="margin-right: 10px;">
-						<i class="fas fa-minus"></i> 삭제
+
+			<div class="ordr">
+				<div class="card">
+					<div class="card-body">
+						<form id="ordrListFrm">
+							<table style="vertical-align: middle; text-align: center">
+								<colgroup>
+									<col style="width: 120px">
+									<col style="width: 30px">
+									<col style="width: 80px">
+									<col style="width: 250px">
+									<col style="width: 20px">
+									<col style="width: 100px">
+									<col style="width: 350px">
+								</colgroup>
+								<tr>
+									<th><b>발주자료 조회</b></th>
+									<td></td>
+									<th><label for="vendNm"><b>업체명</b></label></th>
+									<td style="display: flex;"><input id="vendNm" type="text"
+										class="form-control" placeholder="검색버튼을 이용하세요"
+										style="width: 200px;" required readonly> <input
+										id="vendCd" type="hidden" name="vendCd">
+										<button id="modalBtn" type="button" class="btn btn-primary"
+											data-toggle="modal" data-target="#vendModal"
+											onclick="setTime()">
+											<i class="fas fa-search"></i>
+										</button></td>
+									<td></td>
+									<th><b>납기예정일</b></th>
+									<td>
+										<div style="display: flex;">
+											<input type="date" id="startDt" name="startDt"
+												class="form-control" style="width: 150px;"> <span
+												style="padding: 5px;">-</span> <input type="date" id="endDt"
+												name="endDt" class="form-control" style="width: 150px;">
+										</div>
+									</td>
+									<th></th>
+									<td><input id="getOrdrList" type="button"
+										class="btn btn-primary" value="가져오기" /></td>
+								</tr>
+							</table>
+						</form>
+					</div>
+				</div>
+			</div>
+			<div class="body" style="margin-top: 40px;">
+				<div class="card-body" style="height: 100%; border: 1px solid #ccc;">
+					<div class="d-flex justify-content-between align-items-center"
+						style="height: 40px;">
+						<h5 class="card-title" style="margin: 0; padding-left: 10px;"></h5>
+						<button class="btn btn-primary" id="delRow"
+							style="margin-right: 10px;">
+							<i class="fas fa-minus"></i> 삭제
+						</button>
+					</div>
+					<hr style="margin: 0;">
+					<div id="grid" style="height: calc(100% - 40px);"></div>
+				</div>
+			</div>
+
+			<div class="rightside" style="margin-top: 40px;">
+				<div class="card" style="height: 100%; border: 1px solid #ccc;">
+					<div class="card-body"
+						style="height: 100%; display: flex; flex-direction: column; justify-content: space-between; padding: 10px;">
+						<div style="overflow-y: auto; height: calc(100% - 20px);">
+							<b style="margin: 0;">검사목록</b> <br> <br>
+							<div id="mdfy-grid"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+	</div>
+
+	<div class="modal fade" id="vendModal" tabindex="-1">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title">업체검색</h4>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
 					</button>
 				</div>
-				<hr style="margin: 0;">
-				<div id="grid" style="height: calc(100% - 40px);"></div>
-			</div>
-		</div>
-
-		<div class="rightside" style="margin-top: 40px;">
-			<div class="card" style="height: 100%; border: 1px solid #ccc;">
-				<div class="card-body"
-					style="height: 100%; display: flex; flex-direction: column; justify-content: space-between; padding: 10px;">
-					<div style="overflow-y: auto; height: calc(100% - 20px);">
-						<b style="margin: 0;">검사목록</b> <br> <br>
-						<div id="mdfy-grid"></div>
+				<div class="modal-body">
+					<form id="vendSchForm">
+						<table>
+							<colgroup>
+								<col style="width: 400px;">
+								<col style="width: 10px">
+								<col style="width: 50px;">
+							</colgroup>
+							<tbody>
+								<tr>
+									<td><input type="text" name="vendNm" class="form-control"
+										placeholder="업체명"></td>
+									<td></td>
+									<td rowspan="2">
+										<button id="vendSch" class="btn btn-primary" type="button"
+											style="height: 90px;">
+											<i class="fas fa-search"></i>
+										</button>
+									</td>
+								</tr>
+								<tr>
+									<td><input type="text" name="vendCd" class="form-control"
+										placeholder="업체코드"></td>
+								</tr>
+							</tbody>
+						</table>
+					</form>
+					<br>
+					<div id="vendgrid"></div>
+					<div style="float: right">
+						<p>선택 : 더블클릭</p>
 					</div>
 				</div>
 			</div>
 		</div>
-	</section>
-</div>
+	</div>
 
-<div class="modal fade" id="vendModal" tabindex="-1">
-	<div class="modal-dialog">
-		<div class="modal-content">
-			<div class="modal-header">
-				<h4 class="modal-title">업체검색</h4>
-				<button type="button" class="close" data-dismiss="modal"
-					aria-label="Close">
-					<span aria-hidden="true">&times;</span>
-				</button>
-			</div>
-			<div class="modal-body">
-				<form id="vendSchForm">
-					<table>
-						<colgroup>
-							<col style="width: 400px;">
-							<col style="width: 10px">
-							<col style="width: 50px;">
-						</colgroup>
-						<tbody>
-							<tr>
-								<td><input type="text" name="vendNm" class="form-control"
-									placeholder="업체명"></td>
-								<td></td>
-								<td rowspan="2">
-									<button id="vendSch" class="btn btn-primary" type="button"
-										style="height: 90px;">
-										<i class="fas fa-search"></i>
-									</button>
-								</td>
-							</tr>
-							<tr>
-								<td><input type="text" name="vendCd" class="form-control"
-									placeholder="업체코드"></td>
-							</tr>
-						</tbody>
-					</table>
-				</form>
-				<br>
-				<div id="vendgrid"></div>
-				<div style="float: right">
-					<p>선택 : 더블클릭</p>
+
+	<!--inspection detail modal-->
+	<div class="modal fade" id="infModal" tabindex="-1">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<b class="modal-title">검사상세</b>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<div id="inf-grid"></div>
+					<br>
+					<div style="float: right">
+						<input type="button" id="calInfCnt" value="입력"
+							class="btn btn-primary" data-dismiss="modal">
+					</div>
 				</div>
 			</div>
 		</div>
 	</div>
-</div>
 
-
-<!--inspection detail modal-->
-<div class="modal fade" id="infModal" tabindex="-1">
-	<div class="modal-dialog">
-		<div class="modal-content">
-			<div class="modal-header">
-				<b class="modal-title">검사상세</b>
-				<button type="button" class="close" data-dismiss="modal"
-					aria-label="Close">
-					<span aria-hidden="true">&times;</span>
-				</button>
-			</div>
-			<div class="modal-body">
-				<div id="inf-grid"></div>
-				<br>
-				<div style="float: right">
-					<input type="button" id="calInfCnt" value="입력"
-						class="btn btn-primary" data-dismiss="modal">
-				</div>
-			</div>
-		</div>
-	</div>
-</div>
-
-<script>
+	<script>
 
 let vendCd = document.getElementById('vendCd');
 let inspDt = document.getElementById('inspDt');
@@ -632,7 +632,8 @@ today = today.toISOString().split('T')[0];
 	                });
 	        }
 
-		
+	     document.getElementById("startDt").valueAsDate = new Date('2023-03-31');
+		    document.getElementById("endDt").valueAsDate = new Date();
 		  getOrdr();
 		function getOrdr() {
 			var searchDate = {
@@ -989,7 +990,9 @@ $('#infModal').on('shown.bs.modal', function () {
         let saveBtn = document.getElementById('saveBtn');
         saveBtn.addEventListener('click', function () {
             let gridVal = grid.getCheckedRows();
+           
             let test = validVal(gridVal);
+            
             if (test === 0) {
                 gridVal.forEach(el => {
                     if (el.inspFailCnt === '') {
@@ -1007,11 +1010,12 @@ $('#infModal').on('shown.bs.modal', function () {
                 gridVal.unshift(obj);
                 if (saveFlag === 0) {
                     setRscInspList(gridVal);
+                    upRscProg();
                 } else {
                     updRscInspHist(gridVal);
                     grid.clear();
                 }
-                upRscProg();
+                
             } else {
                 toastr.error('비어있는 항목이 있습니다.');
             }
@@ -1021,18 +1025,19 @@ $('#infModal').on('shown.bs.modal', function () {
         
 // ====================업데이트 검사완료=============
 // AJAX 코드
-function upRscProg() {
+ function upRscProg() {
   // AJAX 호출
    let selectedRows = grid.getCheckedRows();
   console.log(selectedRows);
-  let ordrCdArr = selectedRows.map(row => row.ordrCd);
-  console.log(ordrCdArr);
+  let ordrCd = selectedRows.map(row => row.ordrCd);
+  console.log(ordrCd);
   
-  let data = { ordrCdArr: ordrCdArr };  // data 변수 정의
+  let data = { ordrCd: ordrCd };
+  console.log(data);// data 변수 정의
   // AJAX 호출
   $.ajax({
     type: 'POST',
-    url: "/upRscProg",
+    url: "upRscProg",
     data: JSON.stringify({
       data
       // 기타 필요한 데이터도 함께 전송 가능
@@ -1046,7 +1051,7 @@ function upRscProg() {
       // 실패 시 처리할 코드
     }
   });
-}
+} 
 //  ========================================================= 19:19
         /* function setRscInspList(data) {
             let url = 'setRscInspList';
@@ -1083,6 +1088,7 @@ function upRscProg() {
 	                getOrdr();
 	                getOrdrList();
 	                schRscInspHist();
+	                console.log(data);
 	                
 	                
 	            } else {
@@ -1090,11 +1096,12 @@ function upRscProg() {
 	                getOrdr();
 	                getOrdrList();
 	                schRscInspHist();
-	                
+	                console.log(data);
 	            }
 	        },
 	        error: function (xhr, status, error) {
 	            console.log(error);
+	            console.log(data);
 	        }
 	    });
 	}
@@ -1203,9 +1210,26 @@ $.ajax({
                 //iModal.hide(infModal);
             }
         })
-
+   delDataBtn.addEventListener('click', function () {
+    if (saveFlag === 1) {
+        toastr.warning('등록모드에서는 삭제할 수 없습니다.');
+    } else {
+        let data = grid.getData();
+        let url = 'delRscInspHist';
+        fetch(url, {
+            headers: {'Content-Type': 'application/json'},
+            method: 'POST',
+            body: JSON.stringify(data)
+        }).then(res => {
+            toastr.success('삭제되었습니다.');
+            schRscInspHist();
+            grid.clear();
+        });
+    }
+});
         
 	</script>
+</body>
 </div>
 </div>
 </div>

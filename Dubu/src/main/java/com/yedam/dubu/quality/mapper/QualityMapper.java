@@ -19,7 +19,7 @@ public interface QualityMapper {
 	
 		//업데이트
 		
-		void upRscProg(RscInspVO rscInspVO);
+		int upRscProg(RscInspVO rscInspVO);
 		//입고검사등록
 	
 		List<QualityVO> getMatVendList(QualityVO qualityVO);
@@ -43,7 +43,9 @@ public interface QualityMapper {
 	    List<RscInspVO> schRscInspHist(RscInspVO rscInspVO);
 	    
 	    
-	   
+	    // 삭제
+	    void delRscInspHist(RscInspVO rscInspVO);
+	    void delRscInspHistSingle(RscInspVO rscInspVO);
 	   
 	    
 }

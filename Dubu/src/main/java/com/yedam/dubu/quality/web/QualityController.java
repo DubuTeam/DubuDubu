@@ -22,28 +22,28 @@ public class QualityController {
 
 	@Autowired
 	QualityService qualityService;
-	
+
 	// 제품검사관리
 	@GetMapping("/prdtInsp")
 	public String getPrdtInsp(Model model) {
-		model.addAttribute("getPrdtInsp",qualityService.selectQualityList());
+		model.addAttribute("getPrdtInsp", qualityService.selectQualityList());
 		return "quality/prdtInsp";
 	}
-	
 
 	@PostMapping("/prdtInsp")
 	@ResponseBody
-	public List<QualityVO>PrdtInsp2(QualityVO qualityVO) {
+	public List<QualityVO> PrdtInsp2(QualityVO qualityVO) {
 
 		return null;
 	}
-	
+
 	// 자재입고검사관리
 	@GetMapping("/materialInsp")
 	public String getMaterialInsp(Model model) {
 		return "quality/materialInsp";
 	}
-	//조회
+
+	// 조회
 	@RequestMapping("getPrdtInsp")
 	@ResponseBody
 	public List<QualityVO> getPrdtInsp(QualityVO qualityVO) {
@@ -55,51 +55,62 @@ public class QualityController {
 	public List<QualityVO> getPrdtInspDtl(QualityVO qualityVO) {
 		return qualityService.getPrdtInspDtl(qualityVO);
 	}
-	
-	 // search conditions
-    @RequestMapping("getVendors")
-    @ResponseBody
-    public List<QualityVO> getMatVendList(@ModelAttribute QualityVO qualityVO) {
-    	System.out.println(qualityService.getMatVendList(qualityVO));
-        return qualityService.getMatVendList(qualityVO);
-    }
-    
-    
-    /*
-    @RequestMapping("getResources")
-    @ResponseBody
-    public List<QualityVO> getResources(@ModelAttribute QualityVO qualityVO) {
-        return qualityService.getResources(qualityVO);
-    }*/
 
-    //검사내역 저장
-    @RequestMapping("getRscOrdrList")
-    @ResponseBody
-    public List<QualityVO> getRscOrdrList(QualityVO qualityVO) {
-        return qualityService.getMatOrdrList(qualityVO);
-    }
-    @RequestMapping("setRscInspList")
-    @ResponseBody
-    public void setRscInspList(@RequestBody List<RscInspVO> rscInspVOS) {
-    	qualityService.setRscInspList(rscInspVOS);
-    }
-    
-    // 검사상세
-    @RequestMapping("getInfCdList")
-    @ResponseBody
-    public List<QualityVO> getInfCdList() {
-        return qualityService.getInfCdList();
-    }
-	
-    @RequestMapping("schRscInspHist")
-    @ResponseBody
-    public List<RscInspVO> schRscInspHist(@ModelAttribute RscInspVO rscInspVO) {
-        return qualityService.schRscInspHist(rscInspVO);
-    }
+	// search conditions
+	@RequestMapping("getVendors")
+	@ResponseBody
+	public List<QualityVO> getMatVendList(@ModelAttribute QualityVO qualityVO) {
+		System.out.println(qualityService.getMatVendList(qualityVO));
+		return qualityService.getMatVendList(qualityVO);
+	}
 
-     @PostMapping("/upRscProg")
-      public void upRscProg(@RequestBody RscInspVO rscInspVO) {
-        qualityService.upRscProg(rscInspVO);
-      }
-    
+	/*
+	 * @RequestMapping("getResources")
+	 * 
+	 * @ResponseBody public List<QualityVO> getResources(@ModelAttribute QualityVO
+	 * qualityVO) { return qualityService.getResources(qualityVO); }
+	 */
+
+	// 검사내역 저장
+	@RequestMapping("getRscOrdrList")
+	@ResponseBody
+	public List<QualityVO> getRscOrdrList(QualityVO qualityVO) {
+		return qualityService.getMatOrdrList(qualityVO);
+	}
+
+	
+	//인서트
+	@RequestMapping("setRscInspList")
+	@ResponseBody
+	public void setRscInspList(@RequestBody List<RscInspVO> rscInspVOS) {
+		qualityService.setRscInspList(rscInspVOS);
+		
+	}
+
+	// 검사상세
+	@RequestMapping("getInfCdList")
+	@ResponseBody
+	public List<QualityVO> getInfCdList() {
+		return qualityService.getInfCdList();
+	}
+
+	@RequestMapping("schRscInspHist")
+	@ResponseBody
+	public List<RscInspVO> schRscInspHist(@ModelAttribute RscInspVO rscInspVO) {
+		return qualityService.schRscInspHist(rscInspVO);
+	}
+
+	
+	 @PostMapping("upRscProg") 
+	 public void upRscProg(@RequestBody RscInspVO rscInspVO) { 
+		 qualityService.upRscProg(rscInspVO); 
+		 }
+	 
+	//삭제
+	@RequestMapping("delRscInspHist")
+	@ResponseBody
+	public void delRscInspHist(@RequestBody List<RscInspVO> rscInspVOS) {
+		qualityService.delRscInspHistAll(rscInspVOS);
+	}
+
 }
