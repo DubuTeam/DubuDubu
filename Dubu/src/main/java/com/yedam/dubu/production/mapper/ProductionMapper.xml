@@ -78,7 +78,7 @@
 	<insert id="insertPlanNm" parameterType="ProductionVO">
 		
 	</insert>
-	<!-- 생산계획코드, 작업우선순위 업데이트 -->
+	<!-- 생산계획코드 업데이트, 인서트 -->
 	<select id="planCode" resultType="String">
 		SELECT 'PLC' || PLAN_CODE_SEQ.NEXTVAL AS PLAN_CD FROM DUAL
 	</select>
@@ -88,6 +88,10 @@
 			    sysdate,
 			    #{orderNo})
 	</insert>
+	<update id="updatePlanCode" parameterType="ProductionVO">
+		UPDATE ORDER_SHEET SET PLAN_CD = #{palnCd}
+        WHERE ORDER_NO = #{orderNo}
+	</update>
 	<!-- 생산계획 제품 조회 -->
 	<select id="selectPlanEquip" resultType="ProductionVO">
 		 SELECT O.PLAN_CD,
