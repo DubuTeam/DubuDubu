@@ -4,14 +4,6 @@ $(document).ready(function () {
 
     ///////////////// 설비 점검 검색 /////////////////////
     $('#chckSearchBtn').on("click", function() {
-        // console.log($('#keyword3').val())
-        // console.log($('#searchFrDt').val())
-        // console.log($('#searchToDt').val())
-
-        // if($('#searchFrDt').val() == "") {
-        //     alert('Hello')
-        // }
-
         let keyword3 = $('#keyword3').val()
         let searchFrDt = $('#searchFrDt').val()
         let searchToDt = $('#searchToDt').val()
@@ -67,18 +59,20 @@ $(document).ready(function () {
                         // 점검담당자
                         tr.append($('<td />').text(item.chckPsch))
 
+                        
                         // dispoCtnt 값을 가지는 hidden input 엘리먼트를 생성하여 새로운 td 엘리먼트에 추가합니다.
-                        const dispoInput = $('<input />', {
+                        const dispoCtnt = $('<input />', {
                             type: 'hidden',
                             value: item.dispoCtnt,
                             id: 'dispoCtnt',
                             name: 'dispoCtnt'
                         });
-
-                        const dispoTd = $('<td />').append(dispoInput);
+                        
+                        const dispoTd = $('<td />').append(dispoCtnt);
                         tr.append(dispoTd);
-
-
+                        
+                        console.log("테스트!!!!!!!!!! => " + item.dispoCtnt)
+                        
                         $('#list').append(tr)
                         $('tr').attr("class", "eachRow");
                     });
@@ -102,9 +96,10 @@ $(document).ready(function () {
         let chckPsch = $(this).closest("tr").children().eq(7).text();
         // let dispoCtnt = $(this).closest("tr").children().eq(7).text();
         let dispoCtnt = $(this).closest("tr").find("input[name='dispoCtnt']").val();
-        
+
         console.log("점검구분?" + chckFgSet)
         console.log("점검코드는 => " + chckCdEachRow);
+        console.log("조치내역 => " + dispoCtnt)
 
         // 5-2. 그리고 jsp 파일의 input 태그에다가 위 데이터를 집어넣는다.
         $('#chckCd').val(chckCdEachRow);
@@ -359,6 +354,9 @@ $(document).ready(function () {
         $('#eqmCd').val(eqmCd);
         $('#eqmNm').val(eqmNm);
 
+        // select 태그에서 eqmCd 인 value 에 대응하는 option 태그를 선택하고 변경 이벤트 발생시킴
+        $("#eqmCd").val(eqmCd).change();
+
         $('#chckPsch').val(chckPsch);
 
         // 5-3. Yes or No 의 경우, radio 버튼 바꿔가면서 선택되도록!
@@ -380,10 +378,6 @@ $(document).ready(function () {
         } else if (chckFgSet == "수시점검") {
             $("#chckFg2").prop("checked", true);
         }
-
-
-        // let selectedValue = $("input[name='your_radio_button_name']:checked").val();
-        // $("#your_hidden_input_id").val(selectedValue);
 
         let selectedValue = $("input[name='chckFg']:checked").val();
         $("#chckFg").val(selectedValue);

@@ -82,62 +82,62 @@ $(document).ready(function () {
     
 
     ///////////////// 비가동 검색 버튼 누른 후, 특정 행 클릭 시 /////////////////////
-    $('#list').on("click", "tr", function() {
-        // 5-1. 해당 행에 입력된 데이터를 받아옴.     (가장 가까운 tr태그의 각 셀들)
-        let chckCdEachRow = $(this).closest("tr").children().eq(0).text();
-        let eqmCd = $(this).closest("tr").children().eq(1).text();
-        let eqmNm = $(this).closest("tr").children().eq(2).text();
-        let chckFgSet = $(this).closest("tr").children().eq(3).text();
-        let dispoMatterSet = $(this).closest("tr").children().eq(4).text();
-        let jdgmntSet = $(this).closest("tr").children().eq(5).text();
-        let chckDt = $(this).closest("tr").children().eq(6).text();
-        let chckPsch = $(this).closest("tr").children().eq(7).text();
-        // let dispoCtnt = $(this).closest("tr").children().eq(7).text();
-        let dispoCtnt = $(this).closest("tr").find("input[name='dispoCtnt']").val();
+    // $('#list').on("click", "tr", function() {
+    //     // 5-1. 해당 행에 입력된 데이터를 받아옴.     (가장 가까운 tr태그의 각 셀들)
+    //     let chckCdEachRow = $(this).closest("tr").children().eq(0).text();
+    //     let eqmCd = $(this).closest("tr").children().eq(1).text();
+    //     let eqmNm = $(this).closest("tr").children().eq(2).text();
+    //     let chckFgSet = $(this).closest("tr").children().eq(3).text();
+    //     let dispoMatterSet = $(this).closest("tr").children().eq(4).text();
+    //     let jdgmntSet = $(this).closest("tr").children().eq(5).text();
+    //     let chckDt = $(this).closest("tr").children().eq(6).text();
+    //     let chckPsch = $(this).closest("tr").children().eq(7).text();
+    //     // let dispoCtnt = $(this).closest("tr").children().eq(7).text();
+    //     let dispoCtnt = $(this).closest("tr").find("input[name='dispoCtnt']").val();
         
-        console.log("점검구분?" + chckFgSet)
-        console.log("점검코드는 => " + chckCdEachRow);
+    //     console.log("점검구분?" + chckFgSet)
+    //     console.log("점검코드는 => " + chckCdEachRow);
 
-        // 5-2. 그리고 jsp 파일의 input 태그에다가 위 데이터를 집어넣는다.
-        $('#chckCd').val(chckCdEachRow);
-        $('#eqmCd').val(eqmCd);
-        $('#eqmNm').val(eqmNm);
+    //     // 5-2. 그리고 jsp 파일의 input 태그에다가 위 데이터를 집어넣는다.
+    //     $('#chckCd').val(chckCdEachRow);
+    //     $('#eqmCd').val(eqmCd);
+    //     $('#eqmNm').val(eqmNm);
 
-        $('#chckPsch').val(chckPsch);
+    //     $('#chckPsch').val(chckPsch);
 
-        // 5-3. Yes or No 의 경우, radio 버튼 바꿔가면서 선택되도록!
-        if (dispoMatterSet == "수리") {
-            $("#dispoMatter1").prop("checked", true);
-        } else if (dispoMatterSet == "점검") {
-            $("#dispoMatter2").prop("checked", true);
-        }
+    //     // 5-3. Yes or No 의 경우, radio 버튼 바꿔가면서 선택되도록!
+    //     if (dispoMatterSet == "수리") {
+    //         $("#dispoMatter1").prop("checked", true);
+    //     } else if (dispoMatterSet == "점검") {
+    //         $("#dispoMatter2").prop("checked", true);
+    //     }
 
-        if (jdgmntSet == "적합") {
-            $("#jdgmnt1").prop("checked", true);
-        } else if (jdgmntSet == "부적합") {
-            $("#jdgmnt2").prop("checked", true);
-        }
+    //     if (jdgmntSet == "적합") {
+    //         $("#jdgmnt1").prop("checked", true);
+    //     } else if (jdgmntSet == "부적합") {
+    //         $("#jdgmnt2").prop("checked", true);
+    //     }
         
-        // 점검구분
-        if (chckFgSet == "정기점검") {
-            $("#chckFg1").prop("checked", true);
-        } else if (chckFgSet == "수시점검") {
-            $("#chckFg2").prop("checked", true);
-        }
+    //     // 점검구분
+    //     if (chckFgSet == "정기점검") {
+    //         $("#chckFg1").prop("checked", true);
+    //     } else if (chckFgSet == "수시점검") {
+    //         $("#chckFg2").prop("checked", true);
+    //     }
 
 
-        // let selectedValue = $("input[name='your_radio_button_name']:checked").val();
-        // $("#your_hidden_input_id").val(selectedValue);
+    //     // let selectedValue = $("input[name='your_radio_button_name']:checked").val();
+    //     // $("#your_hidden_input_id").val(selectedValue);
 
-        let selectedValue = $("input[name='chckFg']:checked").val();
-        $("#chckFg").val(selectedValue);
+    //     let selectedValue = $("input[name='chckFg']:checked").val();
+    //     $("#chckFg").val(selectedValue);
 
-        // 점검일자
-        $('input[name=chckDt]').attr('value', chckDt);
+    //     // 점검일자
+    //     $('input[name=chckDt]').attr('value', chckDt);
 
-        // 조치내역
-        $('#dispoCtnt').val(dispoCtnt);
-    })
+    //     // 조치내역
+    //     $('#dispoCtnt').val(dispoCtnt);
+    // })
     ///////////////// 비가동 검색 버튼 누른 후, 특정 행 클릭 시 /////////////////////
 
 
@@ -284,6 +284,11 @@ $(document).ready(function () {
         
         // select 태그에서 eqmCd 인 value 에 대응하는 option 태그를 선택하고 변경 이벤트 발생시킴
         $("#eqmNm").val(eqmCd).change();
+
+
+        console.log("설비코드 => " + eqmCd)
+        console.log("설비명 => " + eqmNm)
+
 
         // 시작일자
         $('input[name=frDt]').attr('value', frDt);

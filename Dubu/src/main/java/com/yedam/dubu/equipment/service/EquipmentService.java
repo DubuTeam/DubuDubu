@@ -93,6 +93,9 @@ public interface EquipmentService {
 	// 설비 점검 검색하기
 	public List<EquipmentVO> selectSpecificEqCheckList(EquipmentVO equipmentVO);
 	
+	// 설비점검 INSERT 시  판정이 "부적합"이면,  설비 테이블의 가동여부 를 "N" 으로 바꾸기
+	public int changeToN(EquipmentVO equipmentVO);
+	
 	
 	/////////////////////////////////////////////////////////////////////////
 	

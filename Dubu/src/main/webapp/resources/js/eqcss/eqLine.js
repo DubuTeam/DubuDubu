@@ -83,7 +83,7 @@ $(document).ready(function () {
                 data: {
                     lineCd: currentCd,
                     lineNm: lineNm,
-                    eqmPsch: staff,
+                    linePsch: staff,
                     uphCnt: uph,
                     useYn: use
                 },
@@ -102,7 +102,7 @@ $(document).ready(function () {
                 data: {
                     lineCd: currentCd,
                     lineNm: lineNm,
-                    eqmPsch: staff,
+                    linePsch: staff,
                     uphCnt: uph,
                     useYn: use
                 },

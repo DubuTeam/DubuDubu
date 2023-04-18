@@ -33,14 +33,14 @@
 						(
 							line_cd,
 							line_nm,
-							eqm_psch,
+							line_psch,
 							uph_cnt,
 							use_yn
 						)
 				VALUES (
 							#{lineCd},
 							#{lineNm},
-							#{eqmPsch},
+							#{linePsch},
 							#{uphCnt},
 							#{useYn}
 						)			
@@ -52,7 +52,7 @@
 		UPDATE eqm_line
 		SET
 			line_nm = #{lineNm},
-			eqm_psch = #{eqmPsch},
+			line_psch = #{linePsch},
 			uph_cnt = #{uphCnt},
 			use_yn = #{useYn}
 		WHERE line_cd = #{lineCd}
@@ -327,6 +327,20 @@
 		ORDER BY chck_cd
 	</select>
 
+
+	<!-- 9. 설비점검 INSERT 시  판정이 "부적합"이면,  설비 테이블의 가동여부 를 "N" 으로 바꾸기 -->
+	<update id="changeToN" parameterType="equipmentVO">
+		UPDATE eqm
+		SET eqm_yn = 
+		    CASE 
+		        WHEN eqm_cd IN (
+		                        SELECT eqm_cd
+		                        FROM eqm_chck
+		                        WHERE jdgmnt = '부적합'
+		                        ) THEN 'N'
+		        ELSE eqm_yn
+		    END
+	</update>
 
 	<!-- ↑↑↑ 설비 점검 내역 페이지 -->
 	<!-- ↓↓↓ 비가동 관리 페이지 -->
