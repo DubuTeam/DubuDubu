@@ -101,7 +101,7 @@
 								<th>제품 입고번호</th>
 								<td><input type="text" class="form-control" id="edctsIstNo"
 									name="edctsIstNo"
-									style="width: 150px; margin-left: 6px; color: transparent;"
+									style="width: 150px; margin-left: 6px;"
 									readonly></td>
 								<th>완제품</th>
 								<td style="width: 175px;">
@@ -158,7 +158,7 @@
 	<div class="modal-dialog modal-lg">
 		<div class="modal-content">
 			<div class="modal-header">
-				<h5 class="modal-title" id="lotModalLabel">검사완료 완제품LOT번호</h5>
+				<h5 class="modal-title" id="lotModalLabel">검사완료 제품</h5>
 				<button type="button" class="close" data-dismiss="modal"
 					aria-label="Close">
 					<span aria-hidden="true">&times;</span>
@@ -270,8 +270,8 @@
 			let edctsLotNoResult = grid.getValue(IstNoRowKey, 'edctsLotNo');
 			let edctsIstCntResult = grid.getValue(IstNoRowKey, 'edctsIstCnt');
 			if(columnName == 'edctsIstNo') {
-				let nextIstNo = (parseInt(edctsIstNoResult.substring(3)) + 1).toString().padStart(4, '0');
-			    edctsIstNo.value = 'IST' + nextIstNo;
+	
+	
 				edctsLotNo.value = edctsLotNoResult;
 				edctsIstCnt.value = edctsIstCntResult;
 			}
