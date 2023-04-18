@@ -71,7 +71,43 @@ $(document).ready(function () {
 
 
                         $('#list').append(tr)
-                        $('tr').attr("class", "eachRow");
+                        $('tr').attr("class", "selectedRows");
+
+
+                        // 여기 추가하기!!! eq.js 의  Line 415 ~
+                        /// ↓↓↓ 검색한 리스트 중 하나 클릭했을 때, 상세 정보 나옴 (이거 리팩토링 필요할듯 - 함수로 따로 만들어서)
+                        $('.selectedRows').on("click", function (ev) {
+                            let eqmCd = $(this).closest("tr").children().eq(1).text();
+                            let eqmNm = $(this).closest("tr").children().eq(2).text();
+                            let frDt = $(this).closest("tr").children().eq(3).text();
+                            let toDt = $(this).closest("tr").children().eq(4).text();
+                            let eqmPsch = $(this).closest("tr").children().eq(5).text();
+                            let dispoCtnt = $(this).closest("tr").find("input[name='dispoCtnt']").val();
+
+
+                            // 5-2. 그리고 jsp 파일의 input 태그에다가 위 데이터를 집어넣는다.
+                            // $('#noprCd').val(noprCdEachRow);
+                            $('#eqmCd').val(eqmCd);
+                            $('#eqmNm').val(eqmNm);
+                            
+                            // select 태그에서 eqmCd 인 value 에 대응하는 option 태그를 선택하고 변경 이벤트 발생시킴
+                            $("#eqmNm").val(eqmCd).change();
+
+
+                            console.log("설비코드 => " + eqmCd)
+                            console.log("설비명 => " + eqmNm)
+
+
+                            // 시작일자
+                            $('input[name=frDt]').attr('value', frDt);
+                            // 종료일자
+                            $('input[name=toDt]').attr('value', toDt);
+
+                            $('#eqmPsch').val(eqmPsch);
+
+                            // 작업내역
+                            $('#opertCtnt').val(dispoCtnt);
+                        })
                     });
                 }
             })
