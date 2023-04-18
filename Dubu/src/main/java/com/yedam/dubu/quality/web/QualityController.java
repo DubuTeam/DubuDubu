@@ -10,9 +10,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.yedam.dubu.quality.mapper.QualityMapper;
 import com.yedam.dubu.quality.service.QualityService;
 import com.yedam.dubu.quality.service.QualityVO;
 import com.yedam.dubu.quality.service.RscInspVO;
@@ -22,6 +22,8 @@ public class QualityController {
 
 	@Autowired
 	QualityService qualityService;
+	@Autowired
+	 QualityMapper qualityMapper;
 
 	// 제품검사관리
 	@GetMapping("/prdtInsp")
@@ -100,12 +102,18 @@ public class QualityController {
 		return qualityService.schRscInspHist(rscInspVO);
 	}
 
-	
-	 @PostMapping("upRscProg") 
-	 public void upRscProg(@RequestBody RscInspVO rscInspVO) { 
-		 qualityService.upRscProg(rscInspVO); 
-		 }
-	 
+	//업뎃
+	/*
+	 * @PostMapping("upRscProg") public void upRscProg(@RequestBody RscInspVO
+	 * rscInspVO) { qualityService.upRscProg(rscInspVO); }
+	 */
+
+	    @PostMapping("/upRscProg")
+	    @ResponseBody
+	    public void upRscProg(@RequestBody RscInspVO rscInspVO) {
+	        qualityService.upRscProg(rscInspVO);
+	    
+	}
 	//삭제
 	@RequestMapping("delRscInspHist")
 	@ResponseBody

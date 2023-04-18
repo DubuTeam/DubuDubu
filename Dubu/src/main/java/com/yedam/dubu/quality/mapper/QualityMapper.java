@@ -18,7 +18,6 @@ public interface QualityMapper {
 	public List<QualityVO> getPrdtInspDtl(QualityVO qualityVO);
 	
 		//업데이트
-		
 		int upRscProg(RscInspVO rscInspVO);
 		//입고검사등록
 	
@@ -46,6 +45,7 @@ public interface QualityMapper {
 	    // 삭제
 	    void delRscInspHist(RscInspVO rscInspVO);
 	    void delRscInspHistSingle(RscInspVO rscInspVO);
+		
 	   
 	    
 }
