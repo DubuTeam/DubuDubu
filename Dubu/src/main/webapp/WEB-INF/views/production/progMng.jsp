@@ -111,7 +111,7 @@
     <br><br>
     <div class="card mb-4">
       <div class="card-body">
-        <div>지시(제품)목록 리스트</div>
+        <div><b>지시(제품)목록 리스트</b></div>
         <div id="prodListGrid"></div> <!-- 그리드 -->
       </div>
     </div>
@@ -129,13 +129,13 @@
           </button>
           <br> <br>
         </div> -->
-        <div>진행공정흐름</div>
+        <div><b>진행공정흐름</b></div>
         <div id="prodFlowGrid"></div> <!-- 그리드 -->
       </div>
     </div>
 
     <br> <br>
-    <!-- 테스트 카테고리111 -->
+    <!-- 공정실적부분 -->
     <div class="card mb-4">
       <div class="card-body">
         <div class="linelist" style="float: right;">
@@ -147,14 +147,14 @@
           </button>
           <br> <br>
         </div>
-        <div>테스트 카테고리111</div>
+        <div><b>공정실적</b></div>
         <div id="workGrid"></div> <!-- 그리드 -->
       </div>
     </div>
 
     <br> <br>
     <!-- 테스트 카테고리222 -->
-    <div class="card mb-4">
+    <!-- <div class="card mb-4">
       <div class="card-body">
         <div class="linelist">
           <div>테스트 카테고리222</div>
@@ -181,7 +181,7 @@
                 </tr>
               </thead>
 
-              <!-- ↓↓↓여기에 조회된 결과 출력 -->
+              ↓↓↓여기에 조회된 결과 출력
               <tbody>
                 <tr>
                   <td>더미1-1</td>
@@ -220,7 +220,7 @@
                 </tr>
               </thead>
 
-              <!-- ↓↓↓여기에 조회된 결과 출력 -->
+              ↓↓↓여기에 조회된 결과 출력
               <tbody>
                 <tr>
                   <td>두부1-1</td>
@@ -247,12 +247,12 @@
             </table>
           </div>
         </div>
-        <div id="workGrid"></div> <!-- 그리드 -->
+        <div id="workGrid"></div> 그리드
       </div>
     </div>
     <br><br>
 
-    <div id="dialog" title=""></div>
+    <div id="dialog" title=""></div> -->
 
     <!-- 생산지시 조회 Modal -->
     <!-- <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
@@ -292,16 +292,30 @@
               <table style="width: 100%;">
                 <tbody>
                   <tr>
+                  	<th><b>제품명</b></th>
+                  	<td><input id="prodName" type="text" readOnly style="background-color: rgb(233, 233, 233);"></td>
+                  	<th><b>공정</b></th>
+                  	<td><input id="process" type="text" readOnly style="background-color: rgb(233, 233, 233);"></td>
+                  </tr>
+                  <tr>
                     <th>작업일자</th>
-                    <td><input type="text" readOnly style="background-color: rgb(233, 233, 233);"></td>
+                    <td><input id="today" type="text" readOnly style="background-color: rgb(233, 233, 233);"></td>
                     <th>작업자</th>
-                    <td><input type="text"></td>
+                    <td><select id="worker" style="width:200px; height:40px;">
+                    		<option selected>작업자를선택하세요</option>
+    						<option>박선아</option>
+    						<option>병길동</option>
+    						<option>권수민</option>
+    						<option>박찬</option>
+    						<option>박종민</option>
+						</select>
+					</td>
                   </tr>
                   <tr>
                     <th>설비</th>
-                    <td><input type="text" readOnly style="background-color: rgb(233, 233, 233);"></td>
+                    <td><input id="eqmCode" type="text" readOnly style="background-color: rgb(233, 233, 233);"></td>
                     <th>작업량설정</th>
-                    <td><input type="text"></td>
+                    <td><input type="text" id="workCnt"></td>
                   </tr>
                 </tbody>
               </table>
@@ -309,15 +323,15 @@
             <hr>
             <div class="row">
               <div id="equiGrid" class="col-md-5"></div>
-              <div id="prcsGrid" class="col-md-7"></div>
+              <div id="rscGrid" class="col-md-7"></div>
             </div>
             <hr>
             <div style="text-align: end;">
               <div class="work">
-                <input type="text">
-                <button type="button">작업시작</button>
-                <input type="text">
-                <button type="button">작업종료</button>
+                <input type="text" id="startTime">
+                <button type="button" id="workStart">작업시작</button>
+                <input type="text" id="endTime">
+                <button type="button" id="workEnd">작업종료</button>
               </div>
               <div class="work">
                 <span>불량등록</span>
@@ -347,6 +361,19 @@
 <!-- End of Main Content -->
 
 <script>
+
+// 오늘 날짜 함수
+function today(){
+    let date = new Date(); // 현재 날짜 및 시간
+    let year = date.getFullYear();
+    let month = new String(date.getMonth() + 1);
+    let day = new String(date.getDate());
+    if (month.length == 1) month = "0" + month;
+    if (day.length == 1) day = "0" + day;
+    let today = year +"-" + month + "-" + day; // 현재날짜
+    $('#today').val(today);
+    return today;
+  }
 
 
 // 생산 지시 조회 버튼 클릭시 실행하는 함수
@@ -411,7 +438,7 @@ function showModal() {
 
   // 로드시 나타남
   $(document).ready(function () {
-
+	  today(); // 오늘 날짜 실행 함수
   });
   
   
@@ -467,14 +494,14 @@ function showModal() {
   });
   
 
-  // 생산 지시 모달창에서 조회 버튼을 클릭했을때 실행하는 함수
-  $('#selectBtn').on('click', function(){
-	  let row = insGrid.getCheckedRows();
-	  let indicaCd = row[0].indicaCd; // 선택한 행의(하나만 선택) indicaCd 값을 가져옴
-	  prodList(indicaCd); // 생산 디테일 호출
-	  $('#insModal').modal('hide'); // 모달창 닫힘
-	  $('.modal-backdrop').remove(); // 모달창 닫을때 생기는 background배경 제거
-  });
+ // 생산 지시 모달창에서 조회 버튼을 클릭했을때 실행하는 함수
+ $('#selectBtn').on('click', function(){
+  let row = insGrid.getCheckedRows();
+  let indicaCd = row[0].indicaCd; // 선택한 행의(하나만 선택) indicaCd 값을 가져옴
+  prodList(indicaCd); // 생산 디테일 호출
+  $('#insModal').modal('hide'); // 모달창 닫힘
+  $('.modal-backdrop').remove(); // 모달창 닫을때 생기는 background배경 제거
+ });
   
   
 //생산 디테일 (생산해야하는 제품목록들)
@@ -493,7 +520,7 @@ function prodList(indicaCd) {
 }
   
  
-// 지시(제품) 목록 리스트 그리드
+// 진행공정 흐름 그리드
 const prodFlowGrid = new tui.Grid({
   el: document.getElementById('prodFlowGrid'), // Container element
   scrollX: false,
@@ -558,7 +585,15 @@ const prodFlowGrid = new tui.Grid({
         name: 'complete',
         align: 'center',
         sortable: true
+    },
+    {
+      header: '제품명',
+      name: 'prdtNm',
+      align: 'center',
+      sortable: true,
+      hidden: true
     }
+    
   ]
 });
 
@@ -567,9 +602,7 @@ const prodFlowGrid = new tui.Grid({
 prodListGrid.on('dblclick', function(e){
 	let rowKey = e.rowKey;
 	let prodOrderDetailCd = prodListGrid.getValue(rowKey, 'prodOrderDetailCd');
-	processFlow(prodOrderDetailCd);
-	
-	
+	processFlow(prodOrderDetailCd); // 지시 공정 흐름 그리드 그리기
 })
 
 // 한 제품의 공정흐름을 나타내는 함수
@@ -586,83 +619,145 @@ function processFlow(prodOrderDetailCd){
  		}
  	}) 
  }
-  
-  
+
+// 공정흐름에서 한 공정을 클릭할시 나타나는 작업등록 모달창
+prodFlowGrid.on('dblclick', function(e){
+	$('#workModal').modal('show');
+	let rowKey = e.rowKey; 
+	
+	let prodName = prodFlowGrid.getValue(rowKey, 'prdtNm'); // 제품명
+	$('#prodName').val(prodName); // 제품명 
+	
+	let prcsNm = prodFlowGrid.getValue(rowKey, 'prcsNm'); // 공정명
+	$('#process').val(prcsNm); // 공정명
+	
+	let prcsCd = prodFlowGrid.getValue(rowKey, 'prcsCd'); // 공정코드
+	
+	let bom = prodFlowGrid.getValue(rowKey, 'prcsCd'); // 공정코드
+	getEquiGrid(prcsCd); // 해당 공정의 설비 그리드
+	getRscGrid(); // 해당 공정의 자재 그리드
+	
+	$('#eqmCode').val(''); // 설비코드 초기화
+	$('#workCnt').val(''); // 작업량 초기화
+	$("#worker option:eq(0)").prop("selected", true); // select 첫번째갑 초기화
+	$('#startTime').val('');
+	$('#endTime').val('');
+
+})
   
   
 
-  // 작업등록 모달창에서의 설비 그리드
-  const equiGrid = new tui.Grid({
-    el: document.getElementById('equiGrid'), // Container element
-    scrollX: false,
-    scrollY: true,
-    bodyHeight: 200,
-    rowHeight: 50,
-    rowHeaders: ['checkbox', 'rowNum'],
-    columns: [
-      {
-        header: '생산지시코드',
-        name: 'indicaCd',
-        align: 'center',
-        sortable: true,
-        editor: 'text'
-      },
-      {
-        header: '제품명',
-        name: 'edctsCd',
-        align: 'center',
-        sortable: true,
-        editor: 'text'
-      },
-      {
-        header: '지시일자',
-        name: 'indicaDt',
-        align: 'center',
-        sortable: true,
-        editor: 'text'
-      }
-    ]
-  });
+// 작업등록 모달창에서의 설비 그리드
+const equiGrid = new tui.Grid({
+  el: document.getElementById('equiGrid'), // Container element
+  scrollX: false,
+  scrollY: true,
+  bodyHeight: 200,
+  rowHeight: 50,
+  columns: [
+    {
+      header: '공정코드',
+      name: 'prcsCd',
+      align: 'center',
+      sortable: true,
+      hidden : true
+    },
+    {
+      header: '공정명',
+      name: 'prcsNm',
+      align: 'center',
+      sortable: true,
+      hidden : true
+    },
+    {
+      header: '설비코드',
+      name: 'eqmCd',
+      align: 'center',
+      sortable: true
+    }, 
+    {
+      header: '설비명',
+      name: 'eqmNm',
+      align: 'center',
+      sortable: true
+    },
+    {
+      header: '사용여부',
+      name: 'eqmYn',
+      align: 'center',
+      sortable: true
+    }
+  ]
+});
 
-  // 작업등록 모달창에서의 공정 , 자재 그리드
-  const prcsGrid = new tui.Grid({
-    el: document.getElementById('prcsGrid'), // Container element
-    scrollX: false,
-    scrollY: true,
-    bodyHeight: 200,
-    rowHeight: 50,
-    rowHeaders: ['checkbox', 'rowNum'],
-    columns: [
-      {
-        header: '공정코드',
-        name: 'indicaCd',
-        align: 'center',
-        sortable: true,
-        editor: 'text'
-      },
-      {
-        header: '공정명',
-        name: 'edctsCd',
-        align: 'center',
-        sortable: true,
-        editor: 'text'
-      },
-      {
-        header: '자재명',
-        name: 'indicaDt',
-        align: 'center',
-        sortable: true,
-        editor: 'text'
-      },
-      {
-        header: '자재소요량',
-        name: 'indicaDt',
-        align: 'center',
-        sortable: true,
-        editor: 'text'
-      }
-    ]
-  });
+function getEquiGrid(prcsCd){
+	$.ajax({
+ 		url:"getEqm",
+ 		method:"post",
+ 		data : {prcsCd : prcsCd},
+ 		success: function(result) {
+ 			setTimeout(function() {
+ 				equiGrid.refreshLayout(); // new tui.Grid의 refreshLayout()으로 해줘야함
+			},300);
+ 			equiGrid.resetData(result);
+ 		},
+ 		error: function (reject) {	   
+ 		    console.log(reject);
+ 		}
+ 	});
+}
+
+equiGrid.on('dblclick', function(e){
+	let rowKey = e.rowKey;
+	let eqmCd = equiGrid.getValue(rowKey, 'eqmCd'); // 설비코드
+	$('#eqmCode').val(eqmCd);
+});
+
+
+
+// 작업등록 모달창에서의 자재 그리드
+const rscGrid = new tui.Grid({
+  el: document.getElementById('rscGrid'), // Container element
+  scrollX: false,
+  scrollY: true,
+  bodyHeight: 200,
+  rowHeight: 50,
+  rowHeaders: ['checkbox', 'rowNum'],
+  columns: [
+    {
+      header: '공정코드',
+      name: 'indicaCd',
+      align: 'center',
+      sortable: true,
+      editor: 'text'
+    },
+    {
+      header: '공정명',
+      name: 'edctsCd',
+      align: 'center',
+      sortable: true,
+      editor: 'text'
+    },
+    {
+      header: '자재명',
+      name: 'indicaDt',
+      align: 'center',
+      sortable: true,
+      editor: 'text'
+    },
+    {
+      header: '자재소요량',
+      name: 'indicaDt',
+      align: 'center',
+      sortable: true,
+      editor: 'text'
+    }
+  ]
+});
+
+function getRscGrid(){
+	
+}
   
 //날짜 변환
 function dateFormat(date) {
@@ -671,6 +766,27 @@ function dateFormat(date) {
          + ((date1.getMonth()<10)?'0'+(date1.getMonth()+1):(date1.getMonth()+1)) + '-'
          + ((date1.getDate()<10)?'0'+date1.getDate():date1.getDate());       
    return date2;
+}
+
+// 작업 시작 버튼을 누르면 시작하는 함수
+$('#workStart').on('click', function(){
+	$('#startTime').val(PrintTime);
+});
+
+//작업 종료 버튼을 누르면 시작하는 함수
+$('#workEnd').on('click', function(){
+	$('#endTime').val(PrintTime);
+});
+
+
+// 현재 작업시간 출력
+function PrintTime() {
+    let today = new Date();
+    let hh = today.getHours();
+    let mi = today.getMinutes();
+    let ss = today.getSeconds();
+    let time = hh + ":" + mi + ":" + ss;
+    return time;
 }
 
 

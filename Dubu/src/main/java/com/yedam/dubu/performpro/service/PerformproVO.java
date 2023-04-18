@@ -11,7 +11,7 @@ import lombok.Data;
 public class PerformproVO {
 	private int prcsNo;
 	private String prcsCd; 	// 공정코드
-	private String eqmCd;
+	private String eqmCd;	// 설비코드
 	private String prcsNm; 	// 공정명
 	private String prcsFg;
 	private String prcsCtnt;
@@ -75,6 +75,11 @@ public class PerformproVO {
 	// 진행 공정 관리 테이블
 	private String prcsPr; // 공정 순서
 	private String complete; // 생산완료여부
+	
+	// 설비 관리 테이블
+	private String eqmNm; // 설비명
+	private String eqmYn; // 설비 사용 여부
+	
 	
 	
 }
