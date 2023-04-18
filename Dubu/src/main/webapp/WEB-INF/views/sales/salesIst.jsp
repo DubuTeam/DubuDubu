@@ -295,7 +295,7 @@
 			//체크박스 선택시 완제품LOT번호 가져오기
 		lotNoGrid.on("click", e => {
 			let rowInfo = lotNoGrid.getCheckedRows(e);
-			edctsLotNo.value = rowInfo[0].edctsLotNo;
+		
 			inspCnt.value = rowInfo[0].inspCnt;
 		})
 		//모달 그리드 더블클릭시 완제품LOT번호 가져오기
@@ -305,8 +305,8 @@
     					lotNoGrid.check(rowKey);
     					var rowKeyData = lotNoGrid.getCheckedRows(ev);
     					console.log(rowKeyData);
-    					edctsLotNo.value = rowKeyData[0].edctsLotNo;
-    					inspCnt.value = rowKeyData[0].inspCnt;
+    					
+    					
     					$("#lotModal").modal('hide');
 					});
 		//새자료 버튼 클릭 -> 폼 input 비우기
