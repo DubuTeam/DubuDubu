@@ -130,6 +130,9 @@
 		INSP_FAIL_CNT, PRE_IST_CNT) values (INSP_DTL_CD_SEQ.NEXTVAL, #{rscCd}, #{inspCd}, 
 		#{ordrCd}, #{inspCnt}, to_number(#{inspPassCnt}), to_number(#{inspFailCnt}), 
 		#{preIstCnt}) </insert> -->
+		
+		
+	<!-- 검사 등록 INSERT -->
 	<insert id="setRscInspList" parameterType="RscInspVO">
 		<selectKey keyProperty="inspDtlCd" resultType="String"
 			order="BEFORE">

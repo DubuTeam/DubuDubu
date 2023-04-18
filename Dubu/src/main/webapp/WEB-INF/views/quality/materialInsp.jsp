@@ -1022,9 +1022,10 @@ $('#infModal').on('shown.bs.modal', function () {
             inspDt.value = today;
             inspTstr.value = '';
         }) */
-        
+
         saveBtn.addEventListener('click', function () {
         	  let gridVal = grid.getCheckedRows();
+        	  console.log('나는 콘솔이다 : ' + gridVal);
         	  let test = validVal(gridVal);
         	  
         	  if (test === 0) {
@@ -1095,26 +1096,28 @@ $('#infModal').on('shown.bs.modal', function () {
 }  */
 
 function upRscProg() {
-	let selectedRows = grid.getCheckedRows();
-	let url = "/upRscProg";
-	console.log(selectedRows);
-	let ordrCd = selectedRows.map(row => row.ordrCd)[0];
-	console.log(ordrCd);
+	//let gridVal = grid.getCheckedRows();
+	//let selectedRows = grid.getCheckedRows();
+	//let url = "/upRscProg";
+	//console.log('sssss : ' + gridVal2222222);
+	//console.log('콘솔이다 : ' + gridVal);
+	console.log(getOrdrCd);
+	// let ordrCd = selectedRows.map(row => row.ordrCd)[1];
+	//console.log(ordrCd);
 
-	let data = { ordrCd: ordrCd };
+	let data = { ordrCd: getOrdrCd };
 
-	  $.ajax({
+	  /* $.ajax({
 	    type: 'POST',
 	    url: "/upRscProg",
-	    data: JSON.stringify(data),
-	    contentType: 'application/json',
+	    data: data,
 	    success: function(result) {
 	      console.log('검사완료 업데이트 완료');
 	    },
 	    error: function(xhr, status, error) {
 	      console.error(error);
 	    }
-	  });
+	  }); */
 	}
 //  ========================================================= 19:19
         /* function setRscInspList(data) {
@@ -1139,7 +1142,7 @@ function upRscProg() {
  
  function setRscInspList(data) {
 	    let url = "setRscInspList";
-
+		console.log(data);
 	    // AJAX 호출
 	    $.ajax({
 	        url: url,
@@ -1156,7 +1159,7 @@ function upRscProg() {
 	                
 	                
 	            } else {
-	                toastr.success('저장이 완료되었습니다.');
+	            	toastr.success('저장이 완료되었습니다.');
 	                getOrdr();
 	                getOrdrList();
 	                schRscInspHist();
