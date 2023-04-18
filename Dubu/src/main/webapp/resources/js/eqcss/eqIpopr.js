@@ -55,7 +55,6 @@ $(document).ready(function () {
                         // 날짜를 yyyy-MM-dd 형식으로 변환하여 새로운 td 엘리먼트에 추가합니다.
                         tr.append($('<td />').text(convertToyyyyMMdd(item.frDt)))
                         tr.append($('<td />').text(convertToyyyyMMdd(item.toDt)))
-                        tr.append($('<td />').text(item.eqmYn))
                         tr.append($('<td />').text(item.eqmPsch))
                         tr.append($('<td />').text(item.opertCtnt))
 
@@ -186,7 +185,7 @@ $(document).ready(function () {
             let eqmNmSelectBox = document.getElementById("eqmNm");
 
 
-            if (eqmNmSelectBox.selectedIndex === 0 || frDt.value == '' || toDt.value == '' || $('input[name=eqmYN]:checked').val() == undefined || opertCtnt.value == '' || eqmPsch.value == '') {
+            if (eqmNmSelectBox.selectedIndex === 0 || frDt.value == '' || toDt.value == '' || opertCtnt.value == '' || eqmPsch.value == '') {
 
                 alert('모든 항목들을 입력해 주세요')
             }
@@ -196,7 +195,6 @@ $(document).ready(function () {
                 let noprCd = $('#noprCd').val()
                 let frDt = $('#frDt').val()
                 let toDt = $('#toDt').val()
-                let eqmYn = $('input[name=eqmYN]:checked').val()
                 let opertCtnt = $('#opertCtnt').val()
                 let eqmPsch = $('#eqmPsch').val()
 
@@ -211,7 +209,6 @@ $(document).ready(function () {
                         noprCd: noprCd,
                         frDt: frDt,
                         toDt: toDt,
-                        eqmYn: eqmYn,
                         opertCtnt: opertCtnt,
                         eqmPsch: eqmPsch
                     },
@@ -231,7 +228,6 @@ $(document).ready(function () {
             let noprCd = $('#noprCd').val()
             let frDt = $('#frDt').val()
             let toDt = $('#toDt').val()
-            let eqmYn = $('input[name=eqmYN]:checked').val()
             let opertCtnt = $('#opertCtnt').val()
             let eqmPsch = $('#eqmPsch').val()
 
@@ -246,7 +242,6 @@ $(document).ready(function () {
                     noprCd: noprCd,
                     frDt: frDt,
                     toDt: toDt,
-                    eqmYn: eqmYn,
                     opertCtnt: opertCtnt,
                     eqmPsch: eqmPsch
                 },
@@ -273,8 +268,7 @@ $(document).ready(function () {
         let eqmNm = $(this).closest("tr").children().eq(2).text();
         let frDt = $(this).closest("tr").children().eq(3).text();
         let toDt = $(this).closest("tr").children().eq(4).text();
-        let eqmYnSet = $(this).closest("tr").children().eq(5).text();
-        let eqmPsch = $(this).closest("tr").children().eq(6).text();
+        let eqmPsch = $(this).closest("tr").children().eq(5).text();
         let opertCtnt = $(this).closest("tr").find("input[name='opertCtnt']").val();
 
         // 5-2. 그리고 jsp 파일의 input 태그에다가 위 데이터를 집어넣는다.
@@ -294,12 +288,6 @@ $(document).ready(function () {
         $('input[name=frDt]').attr('value', frDt);
         // 종료일자
         $('input[name=toDt]').attr('value', toDt);
-        
-        if (eqmYnSet == "Y") {
-            $("#ynY").prop("checked", true);
-        } else if (eqmYnSet == "N") {
-            $("#ynN").prop("checked", true);
-        }
 
         $('#eqmPsch').val(eqmPsch);
 

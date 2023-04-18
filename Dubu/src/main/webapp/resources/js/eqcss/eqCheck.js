@@ -8,6 +8,8 @@ $(document).ready(function () {
         let searchFrDt = $('#searchFrDt').val()
         let searchToDt = $('#searchToDt').val()
 
+        //
+
         console.log(keyword3)
         console.log(searchFrDt)
         console.log(searchToDt)
@@ -18,17 +20,21 @@ $(document).ready(function () {
         }
         // 날짜가 둘 다 입력되었을 때! (키워드 입력 유무는 상관 X)
         else {
-            var searchData = $("#searchFrm").serialize();
             $.ajax({
                 url: 'searchEqCheck',
-                dataType: "json",
-                method: "post",
-                data: searchData,
+                method: "get",
+                data: {
+                    keyword3: keyword3,
+                    searchFrDt: searchFrDt,
+                    searchToDt: searchToDt,
+                },
                 success: function(result) {
                     console.log(result)
 
                     $('#keyword3').val("");
                     $("#list").find("tr").remove();
+
+                    console.log("성공!")
 
                     // ms 를 년-월-일 로 바꿈
                     function convertToyyyyMMdd(ms) {
@@ -45,6 +51,8 @@ $(document).ready(function () {
                     $(result).each(function (idx, item) {
                         console.log("인덱스 -> " + idx)
                         console.log(item)
+
+                        console.log("테스트222222222 => " + item.dispoCtnt)
 
                         let tr = $("<tr />");
 
@@ -74,7 +82,7 @@ $(document).ready(function () {
                         console.log("테스트!!!!!!!!!! => " + item.dispoCtnt)
                         
                         $('#list').append(tr)
-                        $('tr').attr("class", "eachRow");
+                        $('tr').attr("class", "selectedRows");
                     });
                 }
             })
@@ -84,7 +92,7 @@ $(document).ready(function () {
     
 
     ///////////////// 설비 점검 검색 버튼 누른 후, 특정 행 클릭 시 /////////////////////
-    $('#list').on("click", "tr", function() {
+    $('.selectedRows').on("click", function() {
         // 5-1. 해당 행에 입력된 데이터를 받아옴.     (가장 가까운 tr태그의 각 셀들)
         let chckCdEachRow = $(this).closest("tr").children().eq(0).text();
         let eqmCd = $(this).closest("tr").children().eq(1).text();
@@ -196,8 +204,6 @@ $(document).ready(function () {
         // let eqmNm = $(this).closest("tr").children().eq(1).text();
         // $('#eqmNm').val(eqmNm);
         ↑↑↑ '모달 창 내' 의 특정 행 정보 추출해서, input 에 넣는 기능.  위의 코드 안 됨.
-
-
         모달이 열린 후에 동적으로 DOM이 변경되어 데이터를 불러오는 로직이 작동하지 않을 수 있습니다.
         이 경우에는 이벤트 위임(event delegation)을 사용하여 동적으로 생성된 요소에도 이벤트 핸들러가 적용될 수 있도록 코드를 수정해야 합니다.
         아래는 $(document)에서 이벤트 위임을 사용하는 예시 코드입니다.
