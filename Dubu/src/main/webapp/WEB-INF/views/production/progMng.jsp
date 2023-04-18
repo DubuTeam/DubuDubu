@@ -566,17 +566,18 @@ const prodFlowGrid = new tui.Grid({
        sortable: true
     },
     {
-       header: '작업량',
-       name: 'prcsCnt',
-       align: 'center',
-       sortable: true
-    },
-    {
-        header: '생산지시수량',
+        header: '입고량',
         name: 'indicaCnt',
         align: 'center',
         sortable: true
     },
+    {
+       header: '생산량',
+       name: 'indicaCnt',
+       align: 'center',
+       sortable: true
+    },
+    
     {
       header: '작업시작일',
       name: 'wkFrDt',
