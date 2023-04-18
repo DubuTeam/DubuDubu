@@ -14,8 +14,8 @@
 <!-- 부트스트랩 -->
 <script   src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
 <!-- DatePicker -->
-<link rel="stylesheet" href="[https://uicdn.toast.com/tui.date-picker/latest/tui-date-picker.css](https://uicdn.toast.com/tui.date-picker/latest/tui-date-picker.css)" />
-<script src="[https://uicdn.toast.com/tui.date-picker/latest/tui-date-picker.js](https://uicdn.toast.com/tui.date-picker/latest/tui-date-picker.js)"></script>
+<!-- <link rel="stylesheet" href="[https://uicdn.toast.com/tui.date-picker/latest/tui-date-picker.css](https://uicdn.toast.com/tui.date-picker/latest/tui-date-picker.css)" />
+<script src="[https://uicdn.toast.com/tui.date-picker/latest/tui-date-picker.js](https://uicdn.toast.com/tui.date-picker/latest/tui-date-picker.js)"></script> -->
 
 	<!-- Begin Page Content -->
 	<!-- 헤더부분 -->
@@ -361,10 +361,10 @@ let planCd='';
        	        console.log(reject);
        	    }
        	}); */
-    	   console.log(gridEquip.getModifiedRows().createdRows);
+    	   console.log(gridEquip.getData({ignoredColumns: ['_attributes', 'rowKey']}));
     	   $.ajax({
        	    url: 'updatePlan',
-       	    data: JSON.stringify(gridEquip.getModifiedRows({ignoredColumns: ['_attributes', 'rowKey']})),
+       	    data: JSON.stringify(gridEquip.getData({ignoredColumns: ['_attributes', 'rowKey']})),
        	    contentType : 'application/json',
        	    type: 'POST',
        	    async: false,
@@ -416,6 +416,12 @@ let planCd='';
                    var gridEquip = new tui.Grid({
                         el: document.getElementById('gridEquip'),
                         columns: [
+                        	{
+                        		header: '계획코드',
+                        		name: 'planCd',
+                        		hidden: true
+                        		
+                        	}
 
                             {
                                 header: '제품명',
