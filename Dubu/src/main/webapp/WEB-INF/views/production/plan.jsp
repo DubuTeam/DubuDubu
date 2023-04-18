@@ -32,8 +32,8 @@
 				<div class="card-body" id="upper-body">
 					<div id="pDate">
 						<!--<div class="tui-datepicker-input tui-datetime-input tui-has-focus">-->
-						<label>생산계획일자</label> <input type="date" id="tui-date-picker-target"
-							name="tui-date-picker-target" style="display: inline;">
+						<!-- <label>생산계획일자</label> <input type="date" id="tui-date-picker-target"
+							name="tui-date-picker-target" style="display: inline;"> -->
 						<!--<span class="tui-ico-date"></span>-->
 						<!--<div id="tui-date-picker-container1" style="margin-top: -1px;"></div>-->
 						<!--</div>-->
@@ -322,13 +322,11 @@ let planCd='';
                  },
                  {
                      header: '제품명',
-                     name: 'prdtNm',
-                     editor: 'text'
+                     name: 'prdtNm'
                  },
                  {
                      header: '제품수량',
-                     name: 'orderCnt',
-                     editor: 'text'
+                     name: 'orderCnt'
                  }
                  
              ]
@@ -425,17 +423,24 @@ let planCd='';
                                 name: 'orderCnt'
                             },
                             {
-                                header: '작업우선순위',
-                                name: 'prefRank',
-                                editor: 'text'
-                            },
-                            {
-                                header: '계획코드',
-                                name: 'planCd'
+                                header: '생산계획일자',
+                                name: 'planDt',
+                                formatter: function (data) {
+       		                     let dateVal = '';
+       		                     if(data.value != null ){
+       		                         dateVal = dateChange(data.value);
+       		                     }else{
+       		                         dateVal = getToday();
+       		                     }
+       		                     return dateVal;
+       		                   },
+       		                 editor: 'text'
                             }
                         ]
 
                     });
+           		
+           		
                  //사용가능 자재 그리드 선언
                    var gridMaterial = new tui.Grid({
                         el: document.getElementById('gridMaterial'),
@@ -463,12 +468,12 @@ let planCd='';
                  
                     // 제품 그리드의 행을 클릭하면 제품공정확인 그리드가 살행
                     gridEquip.on('click', (ev) => {
-                	   //console.log(ev);
+                	   console.log(ev);
                 	   equipKey = ev.rowKey;
-                	   //console.log(equipKey);
+                	   console.log(equipKey);
                 	   equipValue1 = gridEquip.getRow(equipKey);
-                	   equipValue = equipValue1.planCd;
-                	   //console.log(equipValue);
+                	   equipValue = equipValue1.prdtNm;
+                	   console.log(equipValue);
                 	   planEquipCheck();
                   });   
             
@@ -479,7 +484,7 @@ let planCd='';
                        $.ajax({
                            url: "selectPlanEquipCheck",
                            method: "post",
-                           data: { planCd : equipValue },
+                           data: { prdtNm : equipValue },
                            success: function(data) {
                         	   //console.log(data)
                         	  gridEquipCheck.resetData(data);  //그리드 적용

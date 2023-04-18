@@ -104,10 +104,10 @@ public class ProductionServiceImpl implements ProductionService {
 	}
 
 	@Override
-	public List<ProductionVO> selectPlanMaterial(String orderNo) {
+	public List<ProductionVO> selectPlanMaterial(String prdtNm) {
 		 
 		ProductionVO productionVO = new ProductionVO();
-		productionVO.setOrderNo(orderNo);
+		productionVO.setOrderNo(prdtNm);
 		
 		List<ProductionVO> list = new ArrayList<>();
 		list = productionMapper.selectPlanMaterial(productionVO);
@@ -122,7 +122,7 @@ public class ProductionServiceImpl implements ProductionService {
 
 	@Override
 	public int updatePlan(List<ProductionVO> updatePlanCd, List<ProductionVO> updateIndicac,
-						  List<ProductionVO> updatePlanDtl, List<ProductionVO> updateEqBom,
+						  List<ProductionVO> updatePlanDtl,
 						  List<ProductionVO> updateOrderSheet) {	
 		int result = 0;
 		
@@ -142,9 +142,6 @@ public class ProductionServiceImpl implements ProductionService {
 			vo.setPlanCd(plancd);
 			System.out.println(plancd);
 			result += productionMapper.updatePlanDtl(vo);
-		}
-		for(ProductionVO vo : updateEqBom) {
-			result += productionMapper.updateEqBom(vo);
 		}
 		for(ProductionVO vo : updateOrderSheet) {
 			vo.setPlanCd(plancd);
