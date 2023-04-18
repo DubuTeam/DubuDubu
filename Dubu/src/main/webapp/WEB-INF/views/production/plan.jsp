@@ -418,7 +418,8 @@ let planCd='';
                         columns: [
                         	{
                         		header: '계획코드',
-                        		name: 'planCd'
+                        		name: 'planCd',
+                        		hidden: true
                         		
                         	}
 
