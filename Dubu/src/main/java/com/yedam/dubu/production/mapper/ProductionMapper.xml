@@ -83,22 +83,23 @@
 		SELECT 'PLC' || PLAN_CODE_SEQ.NEXTVAL AS PLAN_CD FROM DUAL
 	</select>
 	<insert id="insertPlan" parameterType="ProductionVO">
-		INSERT INTO PLAN
+		INSERT INTO PLAN (PLAN_CD, PLAN_DT, ORDER_NO)
 		VALUES (#{planCd},
-			    null,
-			    TO_CHAR(sysdate, 'yyyy-MM-dd'),
+			    sysdate,
 			    #{orderNo})
 	</insert>
 	<!-- 생산계획 제품 조회 -->
 	<select id="selectPlanEquip" resultType="ProductionVO">
-		 SELECT O.PRDT_NM,
+		 SELECT O.PLAN_CD,
+                O.ORDER_NO,
+                O.PRDT_NM,
                 SUM(O.ORDER_CNT) AS ORDER_CNT,
                 P.PLAN_DT
         FROM ORDER_SHEET O
         INNER JOIN PLAN P
         ON O.ORDER_NO = P.ORDER_NO
         WHERE O.ORDER_NO = #{orderNo} 
-        GROUP BY O.PRDT_NM, P.PLAN_DT
+        GROUP BY O.PLAN_CD,O.ORDER_NO,O.PRDT_NM, P.PLAN_DT
 	</select>
 	<!-- 생산계획 사용가능자재 조회 -->
 	<select id="selectPlanMaterial" resultType="ProductionVO">

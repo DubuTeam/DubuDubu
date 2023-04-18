@@ -26,8 +26,8 @@ public class ProductionVO {
 	public String prdtNm;
 	
 	// 주문서 디테일 조회
-	@DateTimeFormat(pattern="yyyy-MM-dd")
-	public Date planDt;
+	//@DateTimeFormat(pattern="yyyy-MM-dd")
+	public String planDt;
 	public String planCd;
 	public int avalStc;
 	@DateTimeFormat(pattern="yyyy-MM-dd")
