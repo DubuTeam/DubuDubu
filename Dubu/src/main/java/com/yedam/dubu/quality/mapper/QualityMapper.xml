@@ -94,12 +94,15 @@
 		<!-- 수량 인서트 -->
 		merge into RSC_INFER
 		using dual
-		on (RSC_CD = #{insp.rscCd} and INSP_CD = #{insp.inspCd}
-		and ORDR_CD = #{insp.ordrCd} and CCD_DTL = #{inf.ccdDtl})
+		on (RSC_CD = #{insp.rscCd} and INSP_CD =
+		#{insp.inspCd}
+		and ORDR_CD = #{insp.ordrCd} and CCD_DTL =
+		#{inf.ccdDtl})
 		when matched then
 		update
 		set INF_CNT = #{inf.infCnt}
-		when not matched then
+		when
+		not matched then
 		insert (CCD_DTL, RSC_CD, INSP_CD, INF_CNT, ORDR_CD)
 		values (#{inf.ccdDtl}, #{insp.rscCd}, #{insp.inspCd},
 		to_number(#{inf.infCnt}), #{insp.ordrCd})
@@ -130,7 +133,8 @@
 	<insert id="setRscInspList" parameterType="RscInspVO">
 		<selectKey keyProperty="inspDtlCd" resultType="String"
 			order="BEFORE">
-			select 'IDC'|| LPAD(INSP_DTL_CD_SEQ2.NEXTVAL, 4, '0') as INSP_DTL_CD
+			select 'IDC'|| LPAD(INSP_DTL_CD_SEQ2.NEXTVAL, 4, '0') as
+			INSP_DTL_CD
 			from dual
 		</selectKey>
 		insert into RSC_INSP_DTL (INSP_DTL_CD, INSP_CD, RSC_CD, ORDR_CD,
@@ -145,7 +149,8 @@
 
 
 	<update id="upRscProg" parameterType="RscInspVO">
-		UPDATE RSC_ORDR SET RSC_PROGRESS = '검사완료'
+		UPDATE RSC_ORDR
+		SET RSC_PROGRESS = '검사완료'
 		WHERE ORDR_CD = #{ordrCd}
 	</update>
 
@@ -156,24 +161,31 @@
 		lpad(NVL(max(substr(ORDR_CD, 12, 3)), 0) + 1, 3, '0')
 		from rsc_insp_dtl
 		where 'NOR' = substr(ORDR_CD, 0, 3)
-		and substr(ORDR_CD, 4, 8) = to_char(sysdate, 'yyyymmdd')
+		and substr(ORDR_CD, 4, 8) =
+		to_char(sysdate, 'yyyymmdd')
 	</select>
 	<select id="genRscInspCd" resultType="String">
-		select 'RMI' || to_char(sysdate, 'YYYYMMDD') || lpad(NVL(max(substr(insp_cd,
-		12, 3)), 0) + 1, 3, '0')
+		select 'RMI' ||
+		to_char(sysdate, 'YYYYMMDD') || lpad(NVL(max(substr(insp_cd,
+		12, 3)),
+		0) + 1, 3, '0')
 		from rsc_insp_dtl
-		where substr(insp_cd, 4, 8) = to_char(sysdate, 'yyyymmdd')
+		where substr(insp_cd, 4, 8) =
+		to_char(sysdate, 'yyyymmdd')
 	</select>
 	<insert id="setRscInsp" parameterType="RscInspVO">
 		merge into RSC_INSP
-		using dual
+		using
+		dual
 		on (INSP_CD = #{inspCd})
 		when matched then
 		update
-		set INSP_DT = #{inspDt},
+		set INSP_DT =
+		#{inspDt},
 		INSP_TSTR = #{inspTstr}
 		when not matched then
-		insert (INSP_CD, INSP_DT, INSP_TSTR)
+		insert (INSP_CD,
+		INSP_DT, INSP_TSTR)
 		values (#{inspCd}, #{inspDt}, #{inspTstr})
 	</insert>
 
@@ -181,16 +193,19 @@
 		update RSC_ORDR_DTL
 		set RMN_CNT = RMN_CNT - #{preIstCnt}
 		where ORDR_CD = #{ordrCd}
-		and RSC_CD = #{rscCd}
+		and
+		RSC_CD = #{rscCd}
 	</update>
 
 	<select id="schRscInspHist" parameterType="RscInspVO"
 		resultType="RscInspVO">
 		select ri.INSP_DT, count(*) inspCnt, ri.INSP_CD
-		from RSC_INSP ri,
+		from
+		RSC_INSP ri,
 		RSC_INSP_DTL rid
 		where ri.INSP_CD = rid.INSP_CD
-		group by INSP_DT, ri.INSP_CD
+		group by
+		INSP_DT, ri.INSP_CD
 		order by INSP_CD desc
 	</select>
 

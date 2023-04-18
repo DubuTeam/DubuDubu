@@ -987,7 +987,7 @@ $('#infModal').on('shown.bs.modal', function () {
             return errCnt;
         }
 
-        let saveBtn = document.getElementById('saveBtn');
+        /* let saveBtn = document.getElementById('saveBtn');
         saveBtn.addEventListener('click', function () {
             let gridVal = grid.getCheckedRows();
            
@@ -1021,11 +1021,52 @@ $('#infModal').on('shown.bs.modal', function () {
             }
             inspDt.value = today;
             inspTstr.value = '';
-        })
+        }) */
+        
+        saveBtn.addEventListener('click', function () {
+        	  let gridVal = grid.getCheckedRows();
+        	  let test = validVal(gridVal);
+        	  
+        	  if (test === 0) {
+        	    gridVal.forEach(el => {
+        	      if (el.inspFailCnt === '') {
+        	        el.inspFailCnt = 0;
+        	      }
+        	      let rowKey = el.rowKey.toString();
+        	      console.log(rowKey);
+        	      el.rscInfList = infData.get(rowKey)
+        	    })
+        	    let obj = {
+        	      inspDt: inspDt.value,
+        	      inspTstr: inspTstr.value,
+        	      inspCd: inspCd
+        	    }
+        	    gridVal.unshift(obj);
+        	    
+        	    // Create rscInspVO object and pass it to upRscProg()
+        	    let selectedRows = grid.getCheckedRows();
+        	    let ordrCd = selectedRows.map(row => row.ordrCd);
+        	    let rscInspVO = {
+        	      ordrCd: ordrCd,
+        	      rscProgress: '검사완료'
+        	    }
+        	    if (saveFlag === 0) {
+        	      setRscInspList(gridVal);
+        	      upRscProg(); // Pass rscInspVO object to upRscProg()
+        	    } else {
+        	      updRscInspHist(gridVal);
+        	      grid.clear();
+        	    }
+        	  } else {
+        	    toastr.error('비어있는 항목이 있습니다.');
+        	  }
+        	  inspDt.value = today;
+        	  inspTstr.value = '';
+        	});
         
 // ====================업데이트 검사완료=============
 // AJAX 코드
- function upRscProg() {
+ /* function upRscProg() {
   // AJAX 호출
    let selectedRows = grid.getCheckedRows();
   console.log(selectedRows);
@@ -1051,7 +1092,30 @@ $('#infModal').on('shown.bs.modal', function () {
       // 실패 시 처리할 코드
     }
   });
-} 
+}  */
+
+function upRscProg() {
+	let selectedRows = grid.getCheckedRows();
+	let url = "/upRscProg";
+	console.log(selectedRows);
+	let ordrCd = selectedRows.map(row => row.ordrCd)[0];
+	console.log(ordrCd);
+
+	let data = { ordrCd: ordrCd };
+
+	  $.ajax({
+	    type: 'POST',
+	    url: "/upRscProg",
+	    data: JSON.stringify(data),
+	    contentType: 'application/json',
+	    success: function(result) {
+	      console.log('검사완료 업데이트 완료');
+	    },
+	    error: function(xhr, status, error) {
+	      console.error(error);
+	    }
+	  });
+	}
 //  ========================================================= 19:19
         /* function setRscInspList(data) {
             let url = 'setRscInspList';
