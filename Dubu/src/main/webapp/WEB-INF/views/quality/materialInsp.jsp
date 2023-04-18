@@ -1052,7 +1052,7 @@ $('#infModal').on('shown.bs.modal', function () {
         	    }
         	    if (saveFlag === 0) {
         	      setRscInspList(gridVal);
-        	      upRscProg(); // Pass rscInspVO object to upRscProg()
+        	      //upRscProg(); // Pass rscInspVO object to upRscProg()
         	    } else {
         	      updRscInspHist(gridVal);
         	      grid.clear();

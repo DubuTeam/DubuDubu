@@ -147,7 +147,7 @@
           </button>
           <br> <br>
         </div>
-        <div><b>공정실적</b></div>
+        <div><b>생산완료된 제품</b></div>
         <div id="workGrid"></div> <!-- 그리드 -->
       </div>
     </div>
@@ -335,7 +335,7 @@
               </div>
               <div class="work count-wrap _count">
                 <span style="font-size: 20px;"><b>불량등록</b></span>
-                 <input type="text" class="inp" value="1" />
+                 <input type="text" class="inp" value="0" />
                 <button type="button" class="plus">불량(+)</button>
                 <button type="button" class="minus">불량(-)</button>
               </div>
@@ -566,10 +566,16 @@ const prodFlowGrid = new tui.Grid({
        sortable: true
     },
     {
-       header: '생산지시수량',
-       name: 'indicaCnt',
+       header: '작업량',
+       name: 'prcsCnt',
        align: 'center',
        sortable: true
+    },
+    {
+        header: '생산지시수량',
+        name: 'indicaCnt',
+        align: 'center',
+        sortable: true
     },
     {
       header: '작업시작일',
@@ -830,7 +836,7 @@ $('._count :button').on({
         e.preventDefault();
         var $count = $(this).parent('._count').find('.inp');
         var now = parseInt($count.val());
-        var min = 1;
+        var min = 0;
         var max = 999;
         var num = now;
         if($(this).hasClass('minus')){
