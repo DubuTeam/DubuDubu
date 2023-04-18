@@ -19,4 +19,11 @@ public interface PerformproService {
 	// 해당 공정에 필요한 자재
 	public List<PerformproVO> getRsc(PerformproVO performproVO);
 	
+	// 작업등록시 실행하는 프로시저
+	public int getWorkResultProcedure(PerformproVO performproVO);
+	
+	// 공정 끝난 제품들 getEndProdList
+	public List<PerformproVO> getEndProdList(String indicaCd);
+	
+	
 }	

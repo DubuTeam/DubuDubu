@@ -75,10 +75,19 @@ public class PerformproVO {
 	// 진행 공정 관리 테이블
 	private String prcsPr; // 공정 순서
 	private String complete; // 생산완료여부
+	private int prcsStock; // 입고량(전공정에서 넘어오는 생산끝난 놈)
+	private int rpcsCnt; // 각공정마다 작업량(생산량)
 	
 	// 설비 관리 테이블
 	private String eqmNm; // 설비명
 	private String eqmYn; // 설비 사용 여부
+	
+	// 공정실적
+	private String fpWorker; // 담당자
+	private String fpStart; // 작업 시작 시간
+	private String fpEnd; // 작업 종료시간
+	private int fpErrorCnt; // 불량률
+	private int fpWorkCnt; // 작업량
 	
 	
 	

@@ -64,7 +64,7 @@
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
-              <button type="button" class="btn btn-primary" id="selectBtn">선택</button>
+              <!-- <button type="button" class="btn btn-primary" id="selectBtn">선택</button> -->
             </div>
           </div>
         </div>
@@ -148,7 +148,7 @@
           <br> <br>
         </div>
         <div><b>생산완료된 제품</b></div>
-        <div id="workGrid"></div> <!-- 그리드 -->
+        <div id="endGrid"></div> <!-- 그리드 -->
       </div>
     </div>
 
@@ -289,6 +289,18 @@
           </div>
           <div class="modal-body">
             <div class="inputMargin">
+            <form id="workResultForm" name="workResultForm" action="workResult" method="post" onsubmit="return false;">
+            	<input id="p_PROD_ORDER_DETAIL_CD" name="prodOrderDetailCd" type="hidden">
+            	<input id="p_PRCS_CD" name="prcsCd" type="hidden">
+            	<input id="p_FP_WORKER" name="fpWorker" type="hidden">
+            	<input id="p_FP_START" name="fpStart" type="hidden">
+            	<input id="p_FP_END" name="fpEnd" type="hidden">
+            	<input id="p_FP_ERROR_CNT" name="fpErrorCnt" type="hidden">
+            	<input id="p_FP_WORK_CNT" name="fpWorkCnt" type="hidden">
+            	<input id="p_PRCS_PR" name="prcsPr" type="hidden">
+            	<input id="p_RSC_CD" name="rscCd" type="hidden">
+            	<input id="p_OUST_CNT" name="oustCnt" type="hidden">
+            </form>
               <table style="width: 100%;">
                 <tbody>
                   <tr>
@@ -312,8 +324,8 @@
 					</td>
                   </tr>
                   <tr>
-                    <th>설비</th>
-                    <td><input id="eqmCode" type="text" readOnly style="background-color: rgb(233, 233, 233);"></td>
+                    <th>설비명</th>
+                    <td><input id="eqmName" type="text" readOnly style="background-color: rgb(233, 233, 233);"><input id="eqmCode" type="hidden" readOnly style="background-color: rgb(233, 233, 233);"></td>
                     <th>작업량설정</th>
                     <td><input type="text" id="workCnt" style="background-color: rgb(233, 233, 233);"></td>
                   </tr>
@@ -322,8 +334,8 @@
             </div>
             <hr>
             <div class="row">
-              <div id="equiGrid" class="col-md-5"></div>
-              <div id="rscGrid" class="col-md-7"></div>
+              <div id="equiGrid" class="col-md-6"></div>
+              <div id="rscGrid" class="col-md-6"></div>
             </div>
             <hr>
             <div style="text-align: end;">
@@ -340,12 +352,11 @@
                 <button type="button" class="minus">불량(-)</button>
               </div>
             </div>
-
             <div style="clear:both;"></div>
             <br>
             <hr>
             <div class="btnStyle" style="clear:both; float:right;">
-              <button type="button">등록</button>
+              <button id="regBtn" type="button">등록</button>
               <button type="button" id="modalCancel">취소</button>
             </div>
           </div>
@@ -409,7 +420,7 @@ function showModal() {
     scrollY: true,
     bodyHeight: 400,
     rowHeight: 50,
-    rowHeaders: ['checkbox', 'rowNum'],
+    rowHeaders: ['rowNum'],
     columns: [
       {
         header: '생산지시코드',
@@ -494,14 +505,25 @@ function showModal() {
   });
   
 
- // 생산 지시 모달창에서 조회 버튼을 클릭했을때 실행하는 함수
- $('#selectBtn').on('click', function(){
+ /* $('#selectBtn').on('click', function(){
   let row = insGrid.getCheckedRows();
   let indicaCd = row[0].indicaCd; // 선택한 행의(하나만 선택) indicaCd 값을 가져옴
   prodList(indicaCd); // 생산 디테일 호출
   $('#insModal').modal('hide'); // 모달창 닫힘
   $('.modal-backdrop').remove(); // 모달창 닫을때 생기는 background배경 제거
- });
+ }); */
+ 
+ let indicaCd = "";
+ 
+ // 생산 지시 모달창에서 더블클릭했을때 실행하는 함수
+ insGrid.on('dblclick', function(e){
+	 let rowKey = e.rowKey;
+	 indicaCd = insGrid.getValue(rowKey, 'indicaCd');
+	 prodList(indicaCd); // 생산 디테일 호출
+	 endList(indicaCd);
+	 $('#insModal').modal('hide'); // 모달창 닫힘
+	 $('.modal-backdrop').remove(); // 모달창 닫을때 생기는 background배경 제거
+ })
   
   
 //생산 디테일 (생산해야하는 제품목록들)
@@ -557,27 +579,35 @@ const prodFlowGrid = new tui.Grid({
       header: '자재코드',
       name: 'rscCd',
       align: 'center',
-      sortable: true
+      sortable: true,
+      hidden : true
     },
     {
        header: '자재소모수량',
        name: 'oustCnt',
        align: 'center',
-       sortable: true
+       sortable: true,
+       hidden : true
     },
     {
-        header: '입고량',
-        name: 'indicaCnt',
+        header: '작업량',
+        name: 'rpcsCnt',
         align: 'center',
         sortable: true
     },
     {
-       header: '생산량',
-       name: 'indicaCnt',
+       header: '입고량',
+       name: 'prcsStock',
        align: 'center',
        sortable: true
     },
-    
+    {
+        header: '생산지시수량',
+        name: 'indicaCnt',
+        align: 'center',
+        sortable: true,
+        hidden : true
+     },
     {
       header: '작업시작일',
       name: 'wkFrDt',
@@ -649,19 +679,43 @@ prodFlowGrid.on('dblclick', function(e){
 	
 	let bom = prodFlowGrid.getValue(rowKey, 'bomCd'); // 공정코드
 	
-	let indicaCnt = prodFlowGrid.getValue(rowKey, 'indicaCnt'); // 생산지시수량
-	$('#workCnt').val(indicaCnt);
+	let prcsStock = prodFlowGrid.getValue(rowKey, 'prcsStock'); // 입고량(전공정에서 넘어오는 생산끝난 놈)
+	$('#workCnt').val(prcsStock); // 작업량 설정
 	
 	getEquiGrid(prcsCd); // 해당 공정의 설비 그리드
 	getRscGrid(prcsCd,bom); // 해당 공정의 자재 그리드
 	
-	// workCnt
-	$('#eqmCode').val(''); // 설비코드 초기화
-	$("#worker option:eq(0)").prop("selected", true); // select 첫번째갑 초기화
-	$('#startTime').val('');
-	$('#endTime').val('');
+	
+	//////////////// 작업모달창의 form ///////////////////////
+	
+	$('#p_PROD_ORDER_DETAIL_CD').val(prodFlowGrid.getValue(rowKey, 'prodOrderDetailCd')); // 지시 디테일 테이블
+	$('#p_PRCS_CD').val(prodFlowGrid.getValue(rowKey, 'prcsCd')); // 공정코드
+	$('#p_FP_WORK_CNT').val(prodFlowGrid.getValue(rowKey, 'prcsStock')); // 입고량 = 투입량
+	$('#p_PRCS_PR').val(prodFlowGrid.getValue(rowKey, 'prcsPr')); // 공정순서
+	$('#p_RSC_CD').val(prodFlowGrid.getValue(rowKey, 'rscCd')); // 자재코드
+	$('#p_OUST_CNT').val(prodFlowGrid.getValue(rowKey, 'oustCnt')); // 자재소모수량
+	
+	
+	console.log('p_PROD_ORDER_DETAIL_CD : ' + $('#p_PROD_ORDER_DETAIL_CD').val());
+	console.log('p_PRCS_CD : ' + $('#p_PRCS_CD').val());
+	console.log('p_FP_WORK_CNT : ' + $('#p_FP_WORK_CNT').val());
+	console.log('p_PRCS_PR : ' + $('#p_PRCS_PR').val());
+	console.log('p_RSC_CD : ' + $('#p_RSC_CD').val());
+	console.log('p_OUST_CNT : ' + $('#p_OUST_CNT').val());
+	
+	
+	$('#eqmName').val(''); // 설비명 초기화
+	$("#worker option:eq(0)").prop("selected", true); // select 첫번째값 초기화
+	$('#startTime').val(''); // 작업 시작시간 초기화
+	$('#endTime').val(''); // 작업 종료시간 초기화
+	
+	// form 초기화
+	$('#p_FP_WORKER').val(''); // 담당자 초기화
+	$('#p_FP_START').val(''); // 작업 시작시간 초기화
+	$('#p_FP_END').val(''); // 작업 종료시간 초기화
 
 })
+  
   
   
 
@@ -728,8 +782,8 @@ function getEquiGrid(prcsCd){
 
 equiGrid.on('dblclick', function(e){
 	let rowKey = e.rowKey;
-	let eqmCd = equiGrid.getValue(rowKey, 'eqmCd'); // 설비코드
-	$('#eqmCode').val(eqmCd);
+	let eqmNm = equiGrid.getValue(rowKey, 'eqmNm'); // 설비명
+	$('#eqmName').val(eqmNm);
 });
 
 
@@ -778,6 +832,7 @@ const rscGrid = new tui.Grid({
   ]
 });
 
+// 자재그리드에서 뿌려주는 데이터
 function getRscGrid(prcsCd,bom){
 	$.ajax({
  		url:"getRsc",
@@ -806,13 +861,23 @@ function dateFormat(date) {
 
 // 작업 시작 버튼을 누르면 시작하는 함수
 $('#workStart').on('click', function(){
-	$('#startTime').val(PrintTime);
+	let time = PrintTime();
+	$('#startTime').val(time);
+	$('#p_FP_START').val(time);
 });
 
 //작업 종료 버튼을 누르면 시작하는 함수
 $('#workEnd').on('click', function(){
-	$('#endTime').val(PrintTime);
+	let time = PrintTime();
+	$('#endTime').val(time);
+	$('#p_FP_END').val(time);
 });
+
+// 담당자 변경시
+$('#worker').on('change', function(){
+	 let worker = $(this).val();
+	 $('#p_FP_WORKER').val(worker);
+})
 
 
 // 현재 작업시간 출력
@@ -832,8 +897,7 @@ $('#modalCancel').on('click', function(){
 
 
 // 수량 증가 감소
-$('._count :button').on({
-    'click' : function(e){
+$('._count :button').on({ 'click' : function(e){
         e.preventDefault();
         var $count = $(this).parent('._count').find('.inp');
         var now = parseInt($count.val());
@@ -857,7 +921,113 @@ $('._count :button').on({
         if(num != now){
             $count.val(num);
         }
+        
+        $('#p_FP_ERROR_CNT').val($count.val());
+        console.log('p_FP_ERROR_CNT : ' + $('#p_FP_ERROR_CNT').val());
     }
 });
+
+$('#regBtn').on('click', function(){
+	
+	let data = $('#workResultForm').serialize();
+	
+	$.ajax({
+ 		url:"workResult",
+ 		method:"post",
+ 		data : data,
+ 		success: function(result) {
+ 			/*setTimeout(function() {
+ 				rscGrid.refreshLayout(); // new tui.Grid의 refreshLayout()으로 해줘야함
+			},300);
+ 			rscGrid.resetData(result);*/
+ 			
+ 			Swal.fire({
+                icon: 'success',
+                title: '작업등록이 완료되었습니다.'
+            });
+ 			
+ 			$('#workModal').modal('hide'); // 모달창 닫힘
+ 			$('.modal-backdrop').remove(); // 모달창 닫을때 생기는 background배경 제거
+ 			
+ 			prodList(indicaCd); // 생산 디테일 호출
+ 			endList(indicaCd); // 공정 끝난 제품 호출
+ 			
+ 			let prodOrderDetailCd = $('#p_PROD_ORDER_DETAIL_CD').val();
+ 			processFlow(prodOrderDetailCd);
+ 		},
+ 		error: function (reject) {	   
+ 		    console.log(reject);
+ 		}
+ 	});
+});
+
+
+// 생산 완료된 제품들 그리드
+const endGrid = new tui.Grid({
+  el: document.getElementById('endGrid'), // Container element
+  scrollX: false,
+  scrollY: true,
+  bodyHeight: 200,
+  rowHeight: 50,
+  rowHeaders: ['rowNum'],
+  columns: [
+    {
+      header: '생산지시디테일코드',
+      name: 'prodOrderDetailCd',
+      align: 'center',
+      sortable: true
+    },
+    {
+      header: '제품명',
+      name: 'prdtNm',
+      align: 'center',
+      sortable: true
+    },
+    {
+      header: 'BOM코드',
+      name: 'bomCd',
+      align: 'center',
+      sortable: true
+    },
+    {
+      header: '지시코드',
+      name: 'indicaCd',
+      align: 'center',
+      sortable: true
+    },
+    {
+      header: '생산지시수량',
+      name: 'indicaCnt',
+      align: 'center',
+      sortable: true
+    },
+    {
+      header: '작업시작일',
+      name: 'wkFrDt',
+      align: 'center',
+      sortable: true,
+      formatter : function(data){ // 날짜형식 바꿔주는것
+          return dateFormat(data.value); 
+     	}
+    }
+  ]
+});
+
+// 생산 완료된 리스트
+function endList(indicaCd) {
+	  $.ajax({
+		url:"endProdList",
+		method:"post",
+		data : {indicaCd : indicaCd},
+		success: function(result) {
+			endGrid.resetData(result);
+		},
+		error: function (reject) {	   
+		    console.log(reject);
+		}
+	}) 
+}
+
+
 
 </script>
