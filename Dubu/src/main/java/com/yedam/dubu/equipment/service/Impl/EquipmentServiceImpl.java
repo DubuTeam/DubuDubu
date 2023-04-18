@@ -153,6 +153,11 @@ public class EquipmentServiceImpl implements EquipmentService{
 	}
 
 	
+	@Override
+	public int changeToN(EquipmentVO equipmentVO) {
+		return equipmentMapper.changeToN(equipmentVO);
+	}
+	
 	/////////////////////////////////////////////////////////////////////////
 	
 	

@@ -44,7 +44,7 @@
 										<tr class="eachRow">
 											<td>${eqLine.lineCd }</td>
 											<td>${eqLine.lineNm }</td>
-											<td>${eqLine.eqmPsch }</td>
+											<td>${eqLine.linePsch }</td>
 											<td>${eqLine.uphCnt }</td>					
 											<td>${eqLine.useYn }</td>
 										</tr>

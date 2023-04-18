@@ -149,6 +149,10 @@ public class EquipmentController {
 	public String checkInsertProcess(EquipmentVO equipmentVO) {
 		equipmentService.insertCheckList(equipmentVO);		// <- 여기서..정보가 담긴 VO 객체를 가지고, 직접적인 DB 랑 연결.
 		
+		System.out.println(equipmentVO);
+		// INSERT 시  판정이 "부적합"이면,  설비 테이블의 가동여부 를 "N" 으로 바꾸기
+		equipmentService.changeToN(equipmentVO);
+		
 		return "redirect:eqCheck";
 	}
 	

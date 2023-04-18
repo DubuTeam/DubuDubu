@@ -11,7 +11,7 @@ public class EquipmentVO {
 	// 1. 설비라인 테이블 (EQM_LINE 테이블)
 	private String lineCd;			// 라인코드
 	private String lineNm;			// 라인명
-	private String eqmPsch;			// 라인 담당자
+	private String linePsch;			// 라인 담당자
 	private int uphCnt;				// UPH 생산량
 	private String useYn;			// 사용 여부
 	
@@ -87,5 +87,6 @@ public class EquipmentVO {
 	@DateTimeFormat(pattern="yyyy-MM-dd")
 	private Date toDt;						// 비가동 종료 일자
 	
+	private String eqmPsch;					// 비가동 담당자
 	private String opertCtnt;				// 작업내용.   비가동 사유?
 }
