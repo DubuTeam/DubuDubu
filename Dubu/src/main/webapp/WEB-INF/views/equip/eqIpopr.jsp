@@ -95,13 +95,6 @@ src="${pageContext.request.contextPath}/resources/js/eqcss/eqIpopr.js"></script>
                                         <input class="form-control" type="date" id="toDt"
                                             name="toDt" style="width: 250px" />
                                     </td>
-
-                                    <th>가동여부 *</th>
-                                    <td id="eqmYNSet">
-                                        <input type="radio" name="eqmYN" id="ynY" value="Y">
-                                        가동&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                        <input type="radio" name="eqmYN" id="ynN" value="N"> 미가동
-                                    </td>
                                 </tr>
 
                                 <tr>
@@ -181,7 +174,6 @@ src="${pageContext.request.contextPath}/resources/js/eqcss/eqIpopr.js"></script>
                                 <th>설비명</th>
                                 <th>시작날짜</th>
                                 <th>종료날짜</th>
-                                <th>가동여부</th>
                                 <th>담당자</th>
                                 <th></th>
                             </tr>
@@ -196,7 +188,6 @@ src="${pageContext.request.contextPath}/resources/js/eqcss/eqIpopr.js"></script>
                                     <td>${eqIpopr.eqmNm }</td>
                                     <td><fmt:formatDate value="${eqIpopr.frDt }" pattern="yyyy-MM-dd" /></td>
                                     <td><fmt:formatDate value="${eqIpopr.toDt }" pattern="yyyy-MM-dd" /></td>
-                                    <td>${eqIpopr.eqmYn }</td>
                                     <td>${eqIpopr.eqmPsch }</td>
                                     <td><input type="hidden" value="${eqIpopr.opertCtnt}"
                                             id="opertCtnt" name="opertCtnt"></td>
@@ -266,17 +257,7 @@ src="${pageContext.request.contextPath}/resources/js/eqcss/eqIpopr.js"></script>
                                                 </td>
                                             </tr>
 
-
-                                            <tr>
-                                                <th>가동여부<strong class="blue">*</strong></th>
-                                                <td><input type="radio" name="frmUseYN"
-                                                        value="Y">가동&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                                    <input type="radio" name="frmUseYN"
-                                                        value="N"> 미가동
-                                                </td>
-                                            </tr>
-
-
+                                            
                                             <tr>
                                                 <th>시작일 *</th>
                                                 <td>
