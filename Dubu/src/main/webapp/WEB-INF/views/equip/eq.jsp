@@ -179,7 +179,7 @@
 
                                             <!-- <th>설비코드</th> -->
 											<td>
-												<input type="text" class="form-control" name="eqmCd" id="eqmCd"
+												<input type="hidden" class="form-control" name="eqmCd" id="eqmCd"
 													style="width: 250px" readonly value="${getEqCode}">
 											</td>
 										</tr>
