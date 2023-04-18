@@ -34,17 +34,16 @@ public interface ProductionService {
 	
 	
 	// 생산계획 코드 부여
-	public int updatePlan (List<ProductionVO> updatePlanCd, List<ProductionVO> updateIndicac, 
-						   List<ProductionVO> updatePlanDtl, List<ProductionVO> updateOrderSheet);
+	public int updatePlan (List<ProductionVO> insertPlan);
 	
 	// 생산계획 제품 조회
 	public List<ProductionVO> selectPlanEquip(String orderNo);
 	
 	// 생산계획 사용가능자재 조회
-	public List<ProductionVO> selectPlanMaterial(String prdtNm);
+	public List<ProductionVO> selectPlanMaterial(String orderNo);
 	
 	// 제품공정확인 조회
-	public List<ProductionVO> planEquipCheck(String planCd);
+	public List<ProductionVO> planEquipCheck(String prdtNm);
 	// 제품자재확인 조회
 	//public List<ProductionVO> planMaterialCheck(String prcLotCd);
 	

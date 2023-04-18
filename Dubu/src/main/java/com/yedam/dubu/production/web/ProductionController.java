@@ -91,7 +91,7 @@ public class ProductionController {
 	 @PostMapping("/updatePlan")
 	 @ResponseBody
 	 public int updatePlan(@RequestBody ProductionVO productionVO) {
-		 return productionService.updatePlan(productionVO.getUpdatedRows(),productionVO.getUpdatedRows(),productionVO.getUpdatedRows(), productionVO.getUpdatedRows());
+		 return productionService.updatePlan(productionVO.getCreatedRows());
 	 }
 		
 		 // 생산계획 새로운 계획
@@ -110,14 +110,15 @@ public class ProductionController {
 	// 생산계획 사용가능자재 조회
 	 @PostMapping("/selectPlanMaterial")
 	 @ResponseBody List<ProductionVO> getPlanMaterial(ProductionVO productionVO){
-		 System.out.println(productionVO.getPrdtNm());
-		 return productionService.selectPlanMaterial(productionVO.getPrdtNm());
+		 System.out.println(productionVO.getOrderNo());
+		 return productionService.selectPlanMaterial(productionVO.getOrderNo());
 	 } 
 	 
 	// 생산계획 제품공정확인 조회
 	 @PostMapping("/selectPlanEquipCheck")	  
-	 @ResponseBody List<ProductionVO> getEquipCheck(@RequestParam(required = false) String planCd){ 
-		 return productionService.planEquipCheck(planCd); }
+	 @ResponseBody List<ProductionVO> getEquipCheck(ProductionVO productionVO){ 
+		 return productionService.planEquipCheck(productionVO.getPrdtNm()); 
+		 }
 	 
 
 		/*

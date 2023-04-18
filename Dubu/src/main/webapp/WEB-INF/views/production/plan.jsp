@@ -13,6 +13,9 @@
 <script   src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.js"></script>
 <!-- 부트스트랩 -->
 <script   src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+<!-- DatePicker -->
+<link rel="stylesheet" href="[https://uicdn.toast.com/tui.date-picker/latest/tui-date-picker.css](https://uicdn.toast.com/tui.date-picker/latest/tui-date-picker.css)" />
+<script src="[https://uicdn.toast.com/tui.date-picker/latest/tui-date-picker.js](https://uicdn.toast.com/tui.date-picker/latest/tui-date-picker.js)"></script>
 
 	<!-- Begin Page Content -->
 	<!-- 헤더부분 -->
@@ -358,7 +361,7 @@ let planCd='';
        	        console.log(reject);
        	    }
        	}); */
-    	   console.log(gridEquip.getModifiedRows().updatedRows);
+    	   console.log(gridEquip.getModifiedRows().createdRows);
     	   $.ajax({
        	    url: 'updatePlan',
        	    data: JSON.stringify(gridEquip.getModifiedRows({ignoredColumns: ['_attributes', 'rowKey']})),
@@ -460,7 +463,7 @@ let planCd='';
                             },
                             {
                                 header: '사용량',
-                                name: 'useCnt'
+                                name: 'oustCnt'
                             }
                         ]
 
@@ -468,12 +471,13 @@ let planCd='';
                  
                     // 제품 그리드의 행을 클릭하면 제품공정확인 그리드가 살행
                     gridEquip.on('click', (ev) => {
-                	   console.log(ev);
+                	   //console.log(ev);
                 	   equipKey = ev.rowKey;
-                	   console.log(equipKey);
+                	   //console.log(equipKey);
                 	   equipValue1 = gridEquip.getRow(equipKey);
+                	   //console.log(equipValue1);
                 	   equipValue = equipValue1.prdtNm;
-                	   console.log(equipValue);
+                	   //console.log(equipValue);
                 	   planEquipCheck();
                   });   
             
