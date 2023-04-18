@@ -5,6 +5,9 @@
 <link href="${pageContext.request.contextPath}/resources/css/prodcss/plan.css" rel="stylesheet" type="text/css">
 <!-- JQuery -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<!-- DatePicker -->
+<link rel="stylesheet" href="https://uicdn.toast.com/tui.date-picker/latest/tui-date-picker.css" />
+<script src="https://uicdn.toast.com/tui.date-picker/latest/tui-date-picker.js"></script>
 <!-- grid -->
 <link rel="stylesheet" href="https://uicdn.toast.com/grid/latest/tui-grid.css" />
 <script src="https://uicdn.toast.com/grid/latest/tui-grid.js"></script>
@@ -13,9 +16,7 @@
 <script   src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.js"></script>
 <!-- 부트스트랩 -->
 <script   src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
-<!-- DatePicker -->
-<!-- <link rel="stylesheet" href="[https://uicdn.toast.com/tui.date-picker/latest/tui-date-picker.css](https://uicdn.toast.com/tui.date-picker/latest/tui-date-picker.css)" />
-<script src="[https://uicdn.toast.com/tui.date-picker/latest/tui-date-picker.js](https://uicdn.toast.com/tui.date-picker/latest/tui-date-picker.js)"></script> -->
+
 
 	<!-- Begin Page Content -->
 	<!-- 헤더부분 -->
@@ -113,12 +114,9 @@
 				<div class="card mb-4">
 					<div class="card-body">
 						<div class="d-flex flex-row justify-content-between">
-							<div id="grid2" style="width: 65%;">사용가능자재
+							<div id="grid2" style="width: 100%;">사용가능자재
 								<div id="gridMaterial"></div>
 							</div>
-							<!-- <div id="grid3" style="width: 30%;">자재확인
-								<div id = "gridMateralCheck"></div>
-							</div> -->
 						</div>
 					</div>
 
@@ -160,6 +158,7 @@ let materialValue = '';
 let materialValue1 = '';
 let str = '';
 let planCd='';
+let getData='';
 
 // 주문서 조회
 /*  const orderList = [
@@ -361,19 +360,19 @@ let planCd='';
        	        console.log(reject);
        	    }
        	}); */
-    	   console.log(gridEquip.getData({ignoredColumns: ['_attributes', 'rowKey']}));
+       		getData=gridEquip.getData({ignoredColumns: ['_attributes', 'rowKey']})
     	   $.ajax({
        	    url: 'updatePlan',
-       	    data: JSON.stringify(gridEquip.getData({ignoredColumns: ['_attributes', 'rowKey']})),
+       	    data: JSON.stringify(getData),
        	    contentType : 'application/json',
        	    type: 'POST',
        	    async: false,
        	    success: function(data) {
-       	        	search();
-           		    Swal.fire({
-   	        		      icon: 'success',
-   	        		      title: '생산계획코드가 부여되었습니다.'
-   	        		 });
+       	    	Swal.fire({
+	        		      icon: 'success',
+	        		      title: '생산계획코드가 부여되었습니다.'
+	        		 });
+       	        	//search();
        	    },
        	    error: function(reject) {
        	        console.log(reject);
@@ -421,8 +420,12 @@ let planCd='';
                         		name: 'planCd',
                         		hidden: true
                         		
-                        	}
-
+                        	},
+                            {
+                            	header: '주문번호',
+                            	name: 'orderNo',
+                            	hidden: true
+                            },
                             {
                                 header: '제품명',
                                 name: 'prdtNm'
@@ -434,20 +437,34 @@ let planCd='';
                             {
                                 header: '생산계획일자',
                                 name: 'planDt',
-                                formatter: function (data) {
-       		                     let dateVal = '';
-       		                     if(data.value != null ){
-       		                         dateVal = dateChange(data.value);
-       		                     }else{
-       		                         dateVal = getToday();
-       		                     }
-       		                     return dateVal;
-       		                   },
-       		                 editor: 'text'
+                                sortingType: 'asc',         
+                                sortable: true,         
+                                editor: {            
+                                	type: 'datePicker',    //데이터피커 사용           
+                                	options: {               
+                                		format: 'yyyy-MM-dd',    //날짜포맷               
+                                		language: 'ko',              //한국기준 
+                                	}
+                            	},         
+                                formatter : function(data){            
+                                	console.log(dateFormat(data.value));
+                                	return dateFormat(data.value);
+                                }
                             }
                         ]
 
                     });
+           		
+                 //날짜 변환
+                   function dateFormat(date) {
+                      let date1 = new Date(date);
+                      let date2 = date1.getFullYear() + '-' 
+                            + ((date1.getMonth()<10)?'0'+(date1.getMonth()+1):(date1.getMonth()+1)) + '-'
+                            + ((date1.getDate()<10)?'0'+date1.getDate():date1.getDate());       
+                      return date2;
+                   }
+           		
+           		
            		
            		
                  //사용가능 자재 그리드 선언
