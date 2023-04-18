@@ -86,7 +86,7 @@
 																	</button>
 																</div>
 																<div class="modal-body"
-																	style="text-align: center;">
+																	style="text-align: center;" id="modal-test">
 																	<div
 																		style="display: flex; margin-bottom: 10px;">
 																		<span

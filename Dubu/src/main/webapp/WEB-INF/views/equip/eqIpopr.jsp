@@ -55,9 +55,8 @@ src="${pageContext.request.contextPath}/resources/js/eqcss/eqIpopr.js"></script>
                                 <tr>
                                     <th>설비명 *</th>
                                     <td>
-                                        <select name="eqmNm" aria-label="Default select example"
-                                            style="width: 250px" id="eqmNm"
-                                            class="dataTable-selector">
+                                        <select name="eqmNm" aria-label="Default select example" style="width: 250px" id="eqmNm" class="dataTable-selector"
+                                        onfocus='this.size=7;' onblur='this.size=1;' onchange='this.size=1; this.blur();'>
                                             <option selected value="">==등록시필수선택==</option>
                                             <c:forEach var="list" items="${eqIpoprOption}">
                                                 <option value="${list.eqmCd}">${list.eqmNm}</option>

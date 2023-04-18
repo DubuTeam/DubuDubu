@@ -30,6 +30,12 @@ textarea {
 	resize: none;
 }
 
+
+
+html {
+	scroll-behavior: smooth;		/* 스크롤 부드럽게 */
+}
+
 .table table {
     width: 100%;
 }
@@ -47,10 +53,11 @@ textarea {
 }
 
 /* 검색 기능으로 찾은 목록들 위에다가 커서 올렸을 때 */
-.eachRow:hover, .eachRowInModal:hover, #list > .selectedRows:hover {
+.eachRow:hover, #listInModal > .selectedRows:hover, .eachRowInModal:hover, #list > .selectedRows:hover {
 	background-color: rgb(233, 233, 233);
 }
 
-/* tr {
-	border-top: 1px solid rgba(0,0,0,.1);
-} */
+#modal-test {
+    height: 50vh;
+    overflow-y: auto;
+}

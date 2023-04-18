@@ -231,7 +231,7 @@ public class EquipmentController {
 	}
 	
 	// 설비 점검 검색 (모달 아님)  - 테스트
-	@PostMapping("/searchEqIpopr")
+	@GetMapping("/searchEqIpopr")
 	@ResponseBody
 	public List<EquipmentVO> getSpecificEqIpopr(EquipmentVO equipmentVO) {
 		return equipmentService.selectSpecificEqIpoprList(equipmentVO);

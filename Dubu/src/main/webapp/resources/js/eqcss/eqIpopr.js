@@ -19,12 +19,15 @@ $(document).ready(function () {
         }
         // 날짜가 둘 다 입력되었을 때! (키워드 입력 유무는 상관 X)
         else {
-            var searchData = $("#searchFrm").serialize();
             $.ajax({
                 url: 'searchEqIpopr',
-                dataType: "json",
-                method: "post",
-                data: searchData,
+                method: "get",
+                data: {
+                    keyword3: keyword3,
+                    searchFrDt: searchFrDt,
+                    searchToDt: searchToDt,
+                },
+                
                 success: function(result) {
                     console.log(result)
 
@@ -59,34 +62,35 @@ $(document).ready(function () {
                         // tr.append($('<td />').text(item.opertCtnt))
 
                         // opertCtnt 값을 가지는 hidden input 엘리먼트를 생성하여 새로운 td 엘리먼트에 추가합니다.
-                        const opertCtntInput = $('<input />', {
+                        const opertCtnt = $('<input />', {
                             type: 'hidden',
                             value: item.opertCtnt,
-                            id: 'dispoCtnt',
-                            name: 'dispoCtnt'
+                            id: 'opertCtnt',
+                            name: 'opertCtnt'
                         });
 
-                        const opertCtntTd = $('<td />').append(opertCtntInput);
-                        tr.append(opertCtntTd);
+                        const opertId = $('<td />').append(opertCtnt);
+                        tr.append(opertId);
 
 
                         $('#list').append(tr)
-                        $('tr').attr("class", "selectedRows");
+                        $('#list tr').attr("class", "selectedRows");
 
 
                         // 여기 추가하기!!! eq.js 의  Line 415 ~
                         /// ↓↓↓ 검색한 리스트 중 하나 클릭했을 때, 상세 정보 나옴 (이거 리팩토링 필요할듯 - 함수로 따로 만들어서)
                         $('.selectedRows').on("click", function (ev) {
+                            // 5-1. 해당 행에 입력된 데이터를 받아옴.     (가장 가까운 tr태그의 각 셀들)
+                            let noprCdEachRow = $(this).closest("tr").children().eq(0).text();
                             let eqmCd = $(this).closest("tr").children().eq(1).text();
                             let eqmNm = $(this).closest("tr").children().eq(2).text();
                             let frDt = $(this).closest("tr").children().eq(3).text();
                             let toDt = $(this).closest("tr").children().eq(4).text();
                             let eqmPsch = $(this).closest("tr").children().eq(5).text();
-                            let dispoCtnt = $(this).closest("tr").find("input[name='dispoCtnt']").val();
-
+                            let opertCtnt = $(this).closest("tr").find("input[name='opertCtnt']").val();
 
                             // 5-2. 그리고 jsp 파일의 input 태그에다가 위 데이터를 집어넣는다.
-                            // $('#noprCd').val(noprCdEachRow);
+                            $('#noprCd').val(noprCdEachRow);
                             $('#eqmCd').val(eqmCd);
                             $('#eqmNm').val(eqmNm);
                             
@@ -106,14 +110,17 @@ $(document).ready(function () {
                             $('#eqmPsch').val(eqmPsch);
 
                             // 작업내역
-                            $('#opertCtnt').val(dispoCtnt);
+                            $('#opertCtnt').val(opertCtnt);
                         })
+                        ///////////////// 비가동 검색 버튼 /////////////////////
                     });
                 }
             })
         }
     })
-    ///////////////// 비가동 검색 버튼 /////////////////////
+
+
+    
     
 
     ///////////////// 비가동 검색 버튼 누른 후, 특정 행 클릭 시 /////////////////////
