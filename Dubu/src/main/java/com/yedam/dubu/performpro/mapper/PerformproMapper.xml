@@ -23,14 +23,32 @@
 	<!-- 생산지시 디테일 코드, 공정명, 공정코드, 공정순서, 자재코드, 자재소모량, 지시량 , 작업일자, 생산완료여부  --> 
 	<!-- 한 제품의 생산 공정 흐름 -->
 	<select id="getProcessFlow" resultType="PerformproVO">
-		SELECT pp.prod_order_detail_cd, pr.prcs_nm, pp.prcs_cd , pp.prcs_pr, vi.rsc_cd, vi.oust_cnt,id.indica_cnt, id.wk_fr_dt, pp.complete
+		SELECT pp.prod_order_detail_cd, pr.prcs_nm, pp.prcs_cd , pp.prcs_pr, vi.rsc_cd, vi.oust_cnt,id.indica_cnt, id.wk_fr_dt, pp.complete, b.PRDT_NM
 		FROM PRCS_PROG pp JOIN indica_dtl id
 		    ON pp.prod_order_detail_cd = id.prod_order_detail_cd
 		JOIN prcs pr
 		    ON pp.prcs_cd = pr.prcs_cd
 		JOIN v_prodBom vi
 		    ON id.bom_cd = vi.bom_cd AND pp.prcs_pr = vi.eq_sq
+		JOIN bom b
+            ON vi.bom_cd = b.bom_cd
 		WHERE pp.prod_order_detail_cd = #{prodOrderDetailCd}
+		ORDER BY pp.prcs_pr
+	</select>
+	
+	<!-- 해당 공정에 해당하는 설비 가져오기 -->
+	<select id="getEqm" resultType="PerformproVO">
+		SELECT PRCS_CD, PRCS_NM, EQM_CD, EQM_NM, EQM_YN
+		FROM EQM
+		WHERE PRCS_CD = #{prcsCd} AND EQM_YN = 'N'
+	</select>
+	
+	<!-- 해당 공정에서 필요한 자재 -->
+	<select id="getRsc" resultType="PerformproVO">
+		select vp.BOM_CD, vp.PRCS_CD ,r.RSC_NM, vp.RSC_CD, vp.OUST_CNT
+		from v_prodBom vp JOIN rsc r
+		ON vp.RSC_CD = r.RSC_CD
+		WHERE vp.BOM_CD = #{bomCd} AND vp.PRCS_CD = #{prcsCd}
 	</select>
 	
 </mapper>

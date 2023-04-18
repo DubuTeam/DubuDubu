@@ -45,6 +45,21 @@ public class PerformproController {
     public List<PerformproVO> getProcessFlow(@RequestParam String prodOrderDetailCd){
     	return performproService.getProcessFlow(prodOrderDetailCd);
     }
+    
+	// 한 공정에 들어가는 설비
+    @PostMapping("/getEqm")
+    @ResponseBody 
+    public List<PerformproVO> getEqm(@RequestParam String prcsCd){
+    	return performproService.getEqm(prcsCd);
+    }
+    
+    // 한 공정에 필요한 자재
+    @PostMapping("/getRsc")
+    @ResponseBody 
+    public List<PerformproVO> getRsc(PerformproVO performproVO){
+    	return performproService.getRsc(performproVO);
+    }
+    
 	 
 	
 }

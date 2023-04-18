@@ -32,9 +32,16 @@ public class PerformproServiceImpl implements PerformproService {
 	public List<PerformproVO> getProcessFlow(String prodOrderDetailCd) {
 		return performproMapper.getProcessFlow(prodOrderDetailCd);
 	}
-	
-	
 
+	@Override
+	public List<PerformproVO> getEqm(String prcsCd) {
+		return performproMapper.getEqm(prcsCd);
+	}
+
+	@Override
+	public List<PerformproVO> getRsc(PerformproVO performproVO) {
+		return performproMapper.getRsc(performproVO);
+	}
 	
 
 }
