@@ -60,6 +60,19 @@ public class PerformproController {
     	return performproService.getRsc(performproVO);
     }
     
-	 
+    // 공정실적 실행
+    @PostMapping("/workResult")
+    @ResponseBody 
+    public int getWorkResult(PerformproVO performproVO){
+    	return performproService.getWorkResultProcedure(performproVO);
+    }
+    
+	
+    // 생산 완료된 제품 목록
+    @PostMapping("/endProdList")
+    @ResponseBody 
+    public List<PerformproVO> getEndProdList(@RequestParam String indicaCd){ 
+	  return performproService.getEndProdList(indicaCd);
+    }
 	
 }

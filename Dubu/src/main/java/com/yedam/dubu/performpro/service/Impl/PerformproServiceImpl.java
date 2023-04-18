@@ -42,6 +42,16 @@ public class PerformproServiceImpl implements PerformproService {
 	public List<PerformproVO> getRsc(PerformproVO performproVO) {
 		return performproMapper.getRsc(performproVO);
 	}
+
+	@Override
+	public int getWorkResultProcedure(PerformproVO performproVO) {
+		return performproMapper.getWorkResultProcedure(performproVO);
+	}
+
+	@Override
+	public List<PerformproVO> getEndProdList(String indicaCd) {
+		return performproMapper.getEndProdList(indicaCd);
+	}
 	
 
 }
