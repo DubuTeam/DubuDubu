@@ -56,18 +56,18 @@ $(document).ready(function () {
                         tr.append($('<td />').text(convertToyyyyMMdd(item.frDt)))
                         tr.append($('<td />').text(convertToyyyyMMdd(item.toDt)))
                         tr.append($('<td />').text(item.eqmPsch))
-                        tr.append($('<td />').text(item.opertCtnt))
+                        // tr.append($('<td />').text(item.opertCtnt))
 
-                        // dispoCtnt 값을 가지는 hidden input 엘리먼트를 생성하여 새로운 td 엘리먼트에 추가합니다.
-                        const dispoInput = $('<input />', {
+                        // opertCtnt 값을 가지는 hidden input 엘리먼트를 생성하여 새로운 td 엘리먼트에 추가합니다.
+                        const opertCtntInput = $('<input />', {
                             type: 'hidden',
-                            value: item.dispoCtnt,
+                            value: item.opertCtnt,
                             id: 'dispoCtnt',
                             name: 'dispoCtnt'
                         });
 
-                        const dispoTd = $('<td />').append(dispoInput);
-                        tr.append(dispoTd);
+                        const opertCtntTd = $('<td />').append(opertCtntInput);
+                        tr.append(opertCtntTd);
 
 
                         $('#list').append(tr)
