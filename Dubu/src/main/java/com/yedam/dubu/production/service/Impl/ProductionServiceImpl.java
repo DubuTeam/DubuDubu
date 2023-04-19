@@ -126,6 +126,7 @@ public class ProductionServiceImpl implements ProductionService {
 		String plancd = productionMapper.planCode(); // 계획코드를 주문서 테이블에 업데이트 할 
 		for(ProductionVO vo : insertPlan) {
 			vo.setPlanCd(plancd);
+			
 			result += productionMapper.insertPlan(vo);
 			result += productionMapper.updatePlanCode(vo);
 		}
