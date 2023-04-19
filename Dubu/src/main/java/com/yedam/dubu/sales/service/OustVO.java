@@ -40,4 +40,7 @@ public class OustVO {
 	String bizNo;
 	String telNo;
 	int lotCnt;
+	
+	int edctsIstCnt;
+	private int total;
 }

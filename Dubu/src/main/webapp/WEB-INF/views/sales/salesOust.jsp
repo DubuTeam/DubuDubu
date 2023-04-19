@@ -197,8 +197,12 @@
 			name : 'prdtNm',
 			align : 'left'
 		}, {
-			header : '완제품 재고량',
-			name : 'lotCnt',
+			header : '완제품 입고',
+			name : 'edctsIstCnt',
+			align : 'right'
+		},{
+			header : '완제품 재고총량',
+			name : 'total',
 			align : 'right'
 		} ]
 	});
