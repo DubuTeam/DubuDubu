@@ -341,9 +341,9 @@
             <hr>
             <div style="text-align: end;">
               <div class="work">
-                <input type="text" id="startTime">
+                <input type="text" id="startTime" readOnly>
                 <button type="button" id="workStart">작업시작</button>
-                <input type="text" id="endTime">
+                <input type="text" id="endTime" readOnly>
                 <button type="button" id="workEnd">작업종료</button>
               </div>
               <div class="work count-wrap _count">
@@ -971,7 +971,7 @@ $('#regBtn').on('click', function(){
  			
  			Swal.fire({
                 icon: 'success',
-                title: '작업등록이 이미 완료되어있습니다.'
+                title: '작업등록이완료되었습니다.'
             });
  			
  			$('#workModal').modal('hide'); // 모달창 닫힘

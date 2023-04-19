@@ -60,5 +60,5 @@ public interface MaterialMapper {
 	public List<MaterialVO> getMaterialIstDetail(String istCd);
 	
 	// 자재 재고 조회
-	public List<MaterialVO> getMaterialStocklList();
+	public List<MaterialVO> getMaterialStocklList(MaterialVO materialVO);
 }

@@ -584,7 +584,7 @@ const istGrid = new tui.Grid({
     scrollY: true,
     bodyHeight: 400,
     rowHeight: 50,
-    rowHeaders: ['checkbox'],
+    rowHeaders: ['rowNum'],
 	  columns: [
 	  	{
 	      header: '입고번호',
