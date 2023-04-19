@@ -184,7 +184,7 @@ public class MaterialController {
 		return materialService.getMaterialIstList(materialVO);
 	}
 	
-	
+	// 자재입고 INSERT
 	@PostMapping("/materialIstInsert")
 	@ResponseBody
 	public int getMaterialIstInsert(@RequestBody List<MaterialVO> materialVO) {
