@@ -722,6 +722,7 @@ function comList() {
 		        success: function() {
 		            toastr.success('저장되었습니다');
 		            console.log(data);
+		            $("input[name=_checked]").prop("checked", false);
 		            $('#addBtn').prop('disabled', false);
 		        },
 		        error: function(er) {
