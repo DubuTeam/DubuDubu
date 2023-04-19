@@ -577,7 +577,7 @@ $('#saveBtn').on('click', function(){
 
 
 
-//그리드
+// 자재 입고 헤더 그리드
 const istGrid = new tui.Grid({
 	  el: document.getElementById('istGrid'), // Container element
 	  scrollX: false,
@@ -611,7 +611,7 @@ const istGrid = new tui.Grid({
 });
 	    
 
-
+// 자재 입고 헤더 그리드 호출
 function istTotalList(){
 	$.ajax({
 		   url: 'materialTotalIstList',
@@ -626,7 +626,7 @@ function istTotalList(){
 }
 
 
-//자재발주 내역 모달창 그리드  
+//자재 입고 상세 내역 모달창 그리드  
 const detailGrid = new tui.Grid({
 	el : document.getElementById('materialIstDetailGrid'),
 	 scrollX: false,
@@ -634,7 +634,13 @@ const detailGrid = new tui.Grid({
      bodyHeight: 400,
      rowHeight: 50,
      rowHeaders: ['checkbox'],
-	  columns: [
+	  columns: [ 
+		{
+	      header: '자재LOT코드',
+	      name: 'prcLotCd',
+	      align : 'center',
+	      sortable : true
+	  	},
 	  	{
 	      header: '검사번호',
 	      name: 'inspCd',
@@ -684,11 +690,17 @@ const detailGrid = new tui.Grid({
 	      header: '입고수량',
 	      name: 'inspPassCnt',
 	      align : 'center'
+	    },
+	    {
+	      header: '유통기한',
+	      name: 'expDt',
+	      align : 'center'
 	    }
 	 ]
 });
 
 
+// 자재 입고 헤더를 더블클릭하면 자재 입고 상세내역이 나타남
 istGrid.on('dblclick', (e) => {
 	// materialOrderDetailGrid
 	let rscCdRowKey = '';

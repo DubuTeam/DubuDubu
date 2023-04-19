@@ -26,7 +26,10 @@
 	<!-- 생산지시 디테일 코드, 공정명, 공정코드, 공정순서, 자재코드, 자재소모량, 지시량 , 작업일자, 생산완료여부, 제품명  --> 
 	<!-- 한 제품의 생산 공정 흐름 -->
 	<select id="getProcessFlow" resultType="PerformproVO">
-		SELECT pp.prod_order_detail_cd, pr.prcs_nm, pp.prcs_cd , pp.prcs_pr, pp.prcs_stock, pp.rpcs_cnt ,vi.rsc_cd, vi.oust_cnt,id.indica_cnt, id.wk_fr_dt, pp.complete, b.PRDT_NM, b.bom_cd
+		SELECT pp.prod_order_detail_cd, pr.prcs_nm, pp.prcs_cd , 
+       		   pp.prcs_pr, pp.prcs_stock, pp.rpcs_cnt ,vi.rsc_cd, 
+       		   vi.oust_cnt,id.indica_cnt, id.wk_fr_dt, pp.complete, 
+       		   b.PRDT_NM, b.bom_cd, pp.prcs_error_cnt
 		FROM PRCS_PROG pp JOIN indica_dtl id
 		    ON pp.prod_order_detail_cd = id.prod_order_detail_cd
 		JOIN prcs pr
@@ -59,19 +62,30 @@
 		{ 
 			call work_result (
 				#{prodOrderDetailCd}, #{prcsCd}, #{fpWorker}, #{fpStart}, #{fpEnd}, #{fpErrorCnt}, 
-				#{fpWorkCnt}, #{prcsPr}, #{rscCd}, #{oustCnt}
+				#{fpWorkCnt}, #{prcsPr}, #{rscCd}, #{oustCnt}, #{eqmCd}
 			)
 		}
 	</insert>
 	
 	<!-- 생산이 끝난 리스트 -->
 	<select id="getEndProdList" resultType="PerformproVO">
-		SELECT id.prod_order_detail_cd, b.prdt_nm, id.BOM_CD ,i.indica_cd, id.edcts_cd, id.indica_cnt, id.wk_fr_dt, id.indica_dtl_complete
+		SELECT id.prod_order_detail_cd, b.prdt_nm, id.BOM_CD ,i.indica_cd, id.edcts_cd, id.indica_cnt, id.wk_fr_dt, id.indica_dtl_complete, pp.RPCS_CNT
 		FROM INDICA i JOIN INDICA_DTL id
 		ON i.indica_cd = id.indica_cd
 		JOIN bom b
 		ON id.bom_cd = b.bom_cd
-		WHERE id.indica_cd = #{indicaCd} and id.indica_dtl_complete ='Y'
+        JOIN prcs_prog pp
+        ON pp.prod_order_detail_cd = id.prod_order_detail_cd
+		WHERE id.indica_cd = #{indicaCd}
+        and id.indica_dtl_complete ='Y'
+        and prcs_cd = 'PRCS1006'
+        
+		<!-- SELECT id.prod_order_detail_cd, b.prdt_nm, id.BOM_CD ,i.indica_cd, id.edcts_cd, id.indica_cnt, id.wk_fr_dt, id.indica_dtl_complete
+		FROM INDICA i JOIN INDICA_DTL id
+		ON i.indica_cd = id.indica_cd
+		JOIN bom b
+		ON id.bom_cd = b.bom_cd
+		WHERE id.indica_cd = #{indicaCd} and id.indica_dtl_complete ='Y' -->
 	</select>
 	
 </mapper>

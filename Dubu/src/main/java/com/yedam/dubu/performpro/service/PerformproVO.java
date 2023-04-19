@@ -68,6 +68,7 @@ public class PerformproVO {
 	private int indicaCnt; // 생산지시 수량
 	@DateTimeFormat(pattern="yyyy-MM--dd")
 	private Date wkFrDt; // 작업 시작일
+	private String indicaDtlComplete; // 지시 제품 생산 완료여부
 	
 	// BOM 테이블
 	private String prdtNm; // 완제품명
@@ -77,6 +78,8 @@ public class PerformproVO {
 	private String complete; // 생산완료여부
 	private int prcsStock; // 입고량(전공정에서 넘어오는 생산끝난 놈)
 	private int rpcsCnt; // 각공정마다 작업량(생산량)
+	private int prcsErrorCnt; // 각 공정마다의 불량량
+	
 	
 	// 설비 관리 테이블
 	private String eqmNm; // 설비명
