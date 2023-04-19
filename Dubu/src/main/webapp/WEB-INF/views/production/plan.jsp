@@ -175,6 +175,7 @@ let materialKey = '';
 let materialValue = '';
 let materialValue1 = '';
 let str = '';
+let str1 = '';
 let planCd='';
 let getData='';
 
@@ -212,6 +213,11 @@ let getData='';
         var grid = new tui.Grid({
              el: document.getElementById('orderGrid'),
              columns: [
+            	 {
+                     header: 'BOM코드',
+                     name: 'bomCd',
+                     hidden: true
+                 },
 
                  {
                      header: '주문번호',
@@ -272,9 +278,13 @@ let getData='';
   	   //console.log(ev);
   	   //console.log(equipKey);
   	   str = grid.getRow(ev.rowKey).orderNo;
+  	   str1 = grid.getRow(ev.rowKey).bomCd;
+  	   console.log(str);
+  	   console.log(str1);
   	   //console.log(equipValue);
   	   orderDetail();
-  	   planEquipMaterial();     
+  	   planEquip(str);     
+  	   planMaterial(str1);
 	  $('#exampleModal').modal('hide');
      $('.modal-backdrop').remove();
     }); 
@@ -381,7 +391,7 @@ let getData='';
        
    
        // 제품, 사용가능자재 그리드
-       function planEquipMaterial(){
+       function planEquip(str){
     	   
                $.ajax({
                    url: "selectPlanEquip",
@@ -395,11 +405,12 @@ let getData='';
                      console.log(reject);
                    }
                });
-               
+       }
+       function planMaterial(str1){
                $.ajax({
                    url: "selectPlanMaterial",
                    method: "post",
-                   data: { orderNo : str },
+                   data: { bomCd : str1 },
                    success: function(data) {
                 	   //console.log(data);
                 	  gridMaterial.resetData(data);  //그리드 적용
@@ -409,7 +420,7 @@ let getData='';
                    }
                });
                
-           } 
+               }
            		//그리드 선언
                    var gridEquip = new tui.Grid({
                         el: document.getElementById('gridEquip'),
@@ -425,13 +436,8 @@ let getData='';
                         		hidden: true
                         	},
                         	{
-                        		header: '라인코드',
-                        		name: 'lineCd',
-                        		hidden: true
-                        	},
-                        	{
                         		header: '지시코드',
-                        		name: 'planCd',
+                        		name: 'indicaCd',
                         		hidden: true
                         		
                         	},
@@ -446,12 +452,39 @@ let getData='';
                             },
                             {
                                 header: '지시수량',
-                                name: 'planCnt',
+                                name: 'indicaCnt',
                                 editor: 'text'
                             },
                             {
                                 header: '생산지시일자',
-                                name: 'planDt',
+                                name: 'indicaDt',
+                                align : 'center',         
+                                sortingType: 'asc',       
+                                 sortable: true,       
+                                 editor: {             
+                                 type: 'datePicker',              
+                                options: {                
+                                format: 'yyyy-MM-dd',                
+                                //selectableRanges: 
+                                //[[todayForgrid,threeMonthsLater ]]                
+                            	language: 'ko',     //한국기준               
+                                date : getToday()              
+                                }         
+                                 },         
+                                formatter: function (data) {            
+                                let dateVal = '';            
+                                if(data.value != null ){              
+                                 dateVal = dateFormat(data.value);            
+                                }else{               
+                                dateVal = getToday();          
+                                 }            
+                                data.value = dateVal;             
+                                return dateVal;           
+                                }
+                            },
+                            {
+                                header: '작업시작일자',
+                                name: 'wkFrDt',
                                 align : 'center',         
                                 sortingType: 'asc',       
                                  sortable: true,       
@@ -518,7 +551,8 @@ let getData='';
 
                             {
                                 header: '자재코드',
-                                name: 'rscCd'
+                                name: 'rscCd',
+                                hide: true
                             },
                             {
                                 header: '자재명',

@@ -59,15 +59,18 @@
 	</update>
 	<!-- 주문서 조회 -->
 	<select id="selectOrderList" resultType="ProductionVO">
-		SELECT ORDER_NO,
-		       PAPRD_DT,
-		       PRDT_NM,
-		       ORDER_CNT,
-		       PLAN_CD,
-		       EDCTS_CD
-		FROM  ORDER_SHEET
-		WHERE PLAN_CD = 'N'
-		ORDER BY PAPRD_DT
+		SELECT B.BOM_CD,
+               O.ORDER_NO,
+		       O.PAPRD_DT,
+		       O.PRDT_NM,
+		       O.ORDER_CNT,
+		       O.PLAN_CD,
+		       O.EDCTS_CD
+		FROM  ORDER_SHEET O 
+        INNER JOIN BOM B
+        ON O.EDCTS_CD = B.EDCTS_CD
+		WHERE O.PLAN_CD = 'N'
+		ORDER BY O.PAPRD_DT
 	</select>
 	<!-- 주문서 디테일 조회 -->
 	<select id="orderDetailGrid" resultType="ProductionVO">
@@ -78,17 +81,13 @@
 		FROM  ORDER_SHEET O  
 		WHERE ORDER_NO = #{orderNo}
 	</select>
-	<!-- 생산계획 제품명 추가 -->
-	<insert id="insertPlanNm" parameterType="ProductionVO">
-		
-	</insert>
 	<!-- 생산계획코드 업데이트, 인서트 -->
 	<select id="planCode" resultType="String">
 		SELECT 'IC' || INDICA_CODE_SEQ.NEXTVAL AS INDICA_CD FROM DUAL
 	</select>
 	<insert id="insertPlan" parameterType="ProductionVO">
-		INSERT INTO PLAN (PLAN_CD, INDICA_DT)
-		VALUES (#{planCd},
+		INSERT INTO INDICA (INDICA_CD, INDICA_DT)
+		VALUES ('IC' || INDICA_CODE_SEQ.NEXTVAL,
 			    sysdate)
 	</insert>
 	<update id="updatePlanCode" parameterType="ProductionVO">
@@ -97,29 +96,31 @@
 	</update>
 	<!-- 생산계획 제품 조회 -->
 	<select id="selectPlanEquip" resultType="ProductionVO">
-		 SELECT PLAN_CD,
-                ORDER_NO,
-                PRDT_NM,
-                SUM(ORDER_CNT) AS ORDER_CNT
-        FROM  ORDER_SHEET 
-        WHERE ORDER_NO = #{orderNo}
-        GROUP BY PLAN_CD,ORDER_NO,PRDT_NM
+		SELECT O.ORDER_NO,
+		       O.PRDT_NM,
+		       B.BOM_CD
+		FROM ORDER_SHEET O
+		INNER JOIN BOM B
+		ON O.EDCTS_CD = B.EDCTS_CD
+		WHERE ORDER_NO = #{orderNo}
 	</select>
 	<!-- 생산계획 사용가능자재 조회 -->
 	<select id="selectPlanMaterial" resultType="ProductionVO">
-	  SELECT R.RSC_CD,
-             R.RSC_NM,
-	         S.AVAL_STC,
-	         SUM(B.OUST_CNT) AS OUST_CNT
-	  FROM RSC R
-	 INNER JOIN RSC_STC S
-	    ON R.RSC_CD = S.RSC_CD
-	 INNER JOIN RS_BOM B
-	    ON R.RSC_CD = B.RSC_CD
-     INNER JOIN ORDER_SHEET O
-        ON R.VEND_CD = O.VEND_CD
-     WHERE O.ORDER_NO = #{orderNo}
-	GROUP BY R.RSC_CD, R.RSC_NM, S.AVAL_STC
+	SELECT R.RSC_CD,
+	       R.RSC_NM,
+		   RS.AVAL_STC,
+		   SUM(RB.OUST_CNT) AS OUST_CNT
+	FROM ORDER_SHEET O
+	INNER JOIN BOM B
+	ON O.EDCTS_CD = B.EDCTS_CD
+	INNER JOIN RS_BOM RB
+	ON B.BOM_CD = RB.BOM_CD
+	INNER JOIN RSC R 
+	ON R.RSC_CD = RB.RSC_CD
+	INNER JOIN RSC_STC RS
+	ON R.RSC_CD = RS.RSC_CD
+	WHERE B.BOM_CD = #{bomCd}
+	GROUP BY R.RSC_CD, R.RSC_NM, RS.AVAL_STC
 	</select>
 	<!-- 생산계획 제품공정확인 -->
 	<select id="planEquipCheck" resultType="ProductionVO">
@@ -148,7 +149,7 @@
 	</select -->
 	
 	<!-- 생산지시 계획 조회 -->
-	<select id="selectIndicaOrder" resultType="ProductionVO">
+	<!-- <select id="selectIndicaOrder" resultType="ProductionVO">
 		SELECT PD.PLAN_CD,
 		       MAX(PD.PLAN_CNT),
 		      (PD.PLAN_CNT-ID.INDICA_CNT) AS PLAN_NINDICA
@@ -159,9 +160,9 @@
 		ON I.INDICA_CD = ID.INDICA_CD
         WHERE PD.PLAN_CD IS NOT NULL
         GROUP BY PD.PLAN_CD, PD.PLAN_CNT-ID.INDICA_CNT
-	</select>
+	</select> -->
 	<!-- 생산지시 계획 디테일 조회 -->
-	<select id="selectIndicaOrderDetail" resultType="ProductionVO">
+	<!-- <select id="selectIndicaOrderDetail" resultType="ProductionVO">
 		SELECT PD.PLAN_CD,
 		       E.PRDT_NM,
 		      (PD.PLAN_CNT-ID.INDICA_CNT) AS PLAN_NINDICA,
@@ -175,5 +176,14 @@
 		    ON PD.EDCTS_CD = E.EDCTS_CD
 		WHERE PD.PLAN_CD = #{planCd}
 		GROUP BY PD.PLAN_CD, E.PRDT_NM, PD.PLAN_CNT-ID.INDICA_CNT, PD.LINE_CD
-	</select>
+	</select> -->
+	<!-- 생산지시 헤더 insert -->
+	<insert id="" parameterType="">
+	</insert>
+	<!-- 생산지시 디테일 insert -->
+	<insert id="" parameterType="">
+	</insert>
+	<!-- 생산지시 진행공정관리 insert -->
+	<insert id="" parameterType="">
+	</insert>
 </mapper>

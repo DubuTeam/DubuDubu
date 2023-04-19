@@ -40,7 +40,7 @@ public interface ProductionService {
 	public List<ProductionVO> selectPlanEquip(String orderNo);
 	
 	// 생산계획 사용가능자재 조회
-	public List<ProductionVO> selectPlanMaterial(String orderNo);
+	public List<ProductionVO> selectPlanMaterial(String bomCd);
 	
 	// 제품공정확인 조회
 	public List<ProductionVO> planEquipCheck(String prdtNm);
