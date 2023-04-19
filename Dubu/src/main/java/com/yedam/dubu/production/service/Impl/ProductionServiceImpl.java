@@ -121,15 +121,12 @@ public class ProductionServiceImpl implements ProductionService {
 	}
 
 	@Override
-	public int updatePlan(List<ProductionVO> insertPlan, List<ProductionVO> updatePlanCode) {	
+	public int updatePlan(List<ProductionVO> insertPlan) {	
 		int result = 0;
-		String plancd = productionMapper.planCode(); 
+		String plancd = productionMapper.planCode(); // 계획코드를 주문서 테이블에 업데이트 할 
 		for(ProductionVO vo : insertPlan) {
 			vo.setPlanCd(plancd);
 			result += productionMapper.insertPlan(vo);
-		}
-		for(ProductionVO vo : updatePlanCode) {
-			vo.setPlanCd(plancd);
 			result += productionMapper.updatePlanCode(vo);
 		}
 		return result;
