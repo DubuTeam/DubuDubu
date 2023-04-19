@@ -375,7 +375,8 @@ function salesIstList() {
 			console.log(prodOrderDetailCd);
 			if($("#edctsIstDtStart").val() == '') {
 				toastr.warning('날짜를 선택해 주세요');
-			}else{
+			}
+			else{
 				$.ajax({
 	    		url:"saveIst",
 	    		dataType:"json",
@@ -392,6 +393,7 @@ function salesIstList() {
 	    				data:{"prodOrderDetailCd":prodOrderDetailCd},
 	    				error:function(er) {
 	    					console.log('에러!');
+	    					
 	    				},
 	    				success:function(ordrList) {
 	    					salesIstList()
