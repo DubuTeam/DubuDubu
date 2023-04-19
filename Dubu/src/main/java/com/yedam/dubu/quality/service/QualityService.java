@@ -2,6 +2,8 @@ package com.yedam.dubu.quality.service;
 
 import java.util.List;
 
+import com.yedam.dubu.equipment.service.EquipmentVO;
+
 public interface QualityService {
 
 	// 조회
@@ -33,5 +35,8 @@ public interface QualityService {
 	public int upRscProg(List<RscInspVO> rscInspVO);
 	//삭제
 	void delRscInspHistAll(List<RscInspVO> rscInspVOS);
+	// 직원 목록 모달 내에서, 직원 목록 출력
+	public List<RscInfVO> selectAllEmpListInModal();
+	
 
 }

@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.yedam.dubu.quality.mapper.QualityMapper;
 import com.yedam.dubu.quality.service.QualityService;
 import com.yedam.dubu.quality.service.QualityVO;
+import com.yedam.dubu.quality.service.RscInfVO;
 import com.yedam.dubu.quality.service.RscInspVO;
 
 @Controller
@@ -124,5 +125,13 @@ public class QualityController {
 	public void delRscInspHist(@RequestBody List<RscInspVO> rscInspVOS) {
 		qualityService.delRscInspHistAll(rscInspVOS);
 	}
+	
+	// 테스트 - 담당자 모달 내 직원 목록 출력
+	@GetMapping("/empList")
+    public String getEmpList(Model model) {
+        List<RscInfVO> rscInfVOList = qualityService.selectAllEmpListInModal();
+        model.addAttribute("empListInModal", rscInfVOList);
+        return "quality/materialInsp";
+    }
 
 }

@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.yedam.dubu.equipment.service.EquipmentVO;
 import com.yedam.dubu.quality.mapper.QualityMapper;
 import com.yedam.dubu.quality.service.QualityService;
 import com.yedam.dubu.quality.service.QualityVO;
@@ -124,6 +125,11 @@ public class QualityServiceImpl implements QualityService {
 	    }
 		return cnt;
 	}
+	
+	@Override
+	public List<RscInfVO> selectAllEmpListInModal() {
+        return qualityMapper.selectAllEmpListInModal();
+    }
 }
 
 
