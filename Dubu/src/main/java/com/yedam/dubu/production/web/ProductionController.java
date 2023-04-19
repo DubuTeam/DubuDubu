@@ -91,6 +91,7 @@ public class ProductionController {
 	 @PostMapping("/updatePlan")
 	 @ResponseBody
 	 public int updatePlan(@RequestBody List<ProductionVO> insertPlan) {
+		 productionService.insertIndica(insertPlan);
 		 return productionService.updatePlan(insertPlan);
 	 }
 		
@@ -152,14 +153,14 @@ public class ProductionController {
 	public String getIndicaSearch(Model model){
 		return "production/indicaSearch";
 	}
-//	// 생산지시 지시헤더
-//	@PostMapping("/insetIcHeader")
-//	
-//	// 생산지시 지시디테일
-//	@PostMapping("/insertIcDetail")
-//	
-//	// 생산지시 진행공정관리
-//	@PostMapping("/insertIcPp")
+	// 생산지시 등록
+//	@PostMapping("/insertIc")
+//	@ResponseBody void getInsertIndica(@RequestBody ProductionVO productionVO) {
+//		
+//	};
+	
+	
+
 		
 	// 공정실적조회
 	@GetMapping("/prcsSearch")
