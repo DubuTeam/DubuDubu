@@ -313,6 +313,7 @@ $("#addBtn").click(ev => {
         success: function(result) {
             findOrder();
             toastr.success('출고등록되었습니다');
+            
         }
     }) 
 })

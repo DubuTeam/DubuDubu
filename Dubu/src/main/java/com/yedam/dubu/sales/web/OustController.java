@@ -62,4 +62,11 @@ public class OustController {
 		salesService.updateProg(vo);
 		return vo;
 	}
+	//입고등록 후 진행상황 입고완료로 변경
+		@PutMapping("modifyProg2")
+		@ResponseBody
+		public SalesVO modifyProg(SalesVO vo) {
+			salesService.modifyProg(vo);
+			return vo;
+		}
 }

@@ -331,7 +331,7 @@ $(function() {
 			header : '진행상황',
 			name : 'progAppe',
 			align : 'left',
-			defaultValue : 'InProgress'
+			defaultValue : '주문접수'
 		}, {
 			header : '거래처코드',
 			name : 'vendCd',
