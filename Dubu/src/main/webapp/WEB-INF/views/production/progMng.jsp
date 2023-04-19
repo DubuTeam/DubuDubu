@@ -138,7 +138,7 @@
     <!-- 공정실적부분 -->
     <div class="card mb-4">
       <div class="card-body">
-        <div class="linelist" style="float: right;">
+        <!-- <div class="linelist" style="float: right;">
           <button type="button" class="btn btn-primary addBtn">
             <i class="fas fa-plus"></i> 추가
           </button>
@@ -146,7 +146,7 @@
             <i class="fas fa-save"></i> 저장
           </button>
           <br> <br>
-        </div>
+        </div> -->
         <div><b>생산완료된 제품</b></div>
         <div id="endGrid"></div> <!-- 그리드 -->
       </div>
@@ -300,6 +300,7 @@
             	<input id="p_PRCS_PR" name="prcsPr" type="hidden">
             	<input id="p_RSC_CD" name="rscCd" type="hidden">
             	<input id="p_OUST_CNT" name="oustCnt" type="hidden">
+            	<input id="p_EQM_CD" name="eqmCd" type="hidden">
             </form>
               <table style="width: 100%;">
                 <tbody>
@@ -347,7 +348,7 @@
               </div>
               <div class="work count-wrap _count">
                 <span style="font-size: 20px;"><b>불량등록</b></span>
-                 <input type="text" class="inp" value="0" />
+                 <input id="errorValue" type="text" class="inp" value="0" />
                 <button type="button" class="plus">불량(+)</button>
                 <button type="button" class="minus">불량(-)</button>
               </div>
@@ -391,6 +392,7 @@ function today(){
 $('#insSearchBtn').on('click', function () {
   $('#insModal').modal('show');
   showModal();
+  
 })
 
 
@@ -469,8 +471,8 @@ function showModal() {
         sortable: true
       },
       {
-        header: '제품명',
-        name: 'prdtNm',
+        header: '지시코드',
+        name: 'indicaCd',
         align: 'center',
         sortable: true
       },
@@ -481,8 +483,8 @@ function showModal() {
         sortable: true
       },
       {
-        header: '지시코드',
-        name: 'indicaCd',
+        header: '제품명',
+        name: 'prdtNm',
         align: 'center',
         sortable: true
       },
@@ -493,7 +495,7 @@ function showModal() {
         sortable: true
       },
       {
-        header: '작업시작일',
+        header: '생산작업지시일',
         name: 'wkFrDt',
         align: 'center',
         sortable: true,
@@ -520,7 +522,8 @@ function showModal() {
 	 let rowKey = e.rowKey;
 	 indicaCd = insGrid.getValue(rowKey, 'indicaCd');
 	 prodList(indicaCd); // 생산 디테일 호출
-	 endList(indicaCd);
+	 endList(indicaCd); // 생산완료제품들 호출
+	 prodFlowGrid.clear(); // 진행공정 흐름 클리어
 	 $('#insModal').modal('hide'); // 모달창 닫힘
 	 $('.modal-backdrop').remove(); // 모달창 닫을때 생기는 background배경 제거
  })
@@ -558,6 +561,12 @@ const prodFlowGrid = new tui.Grid({
       sortable: true
     },
     {
+        header: '공정순서',
+        name: 'prcsPr',
+        align: 'center',
+        sortable: true
+    },
+    {
       header: '공정코드',
       name: 'prcsCd',
       align: 'center',
@@ -566,12 +575,6 @@ const prodFlowGrid = new tui.Grid({
     {
       header: '공정명',
       name: 'prcsNm',
-      align: 'center',
-      sortable: true
-    },
-    {
-      header: '공정순서',
-      name: 'prcsPr',
       align: 'center',
       sortable: true
     },
@@ -590,16 +593,22 @@ const prodFlowGrid = new tui.Grid({
        hidden : true
     },
     {
-        header: '작업량',
-        name: 'rpcsCnt',
+        header: '입고량',
+        name: 'prcsStock',
         align: 'center',
         sortable: true
     },
     {
-       header: '입고량',
-       name: 'prcsStock',
-       align: 'center',
-       sortable: true
+        header: '불량량',
+        name: 'prcsErrorCnt',
+        align: 'center',
+        sortable: true
+    },
+    {
+        header: '작업량',
+        name: 'rpcsCnt',
+        align: 'center',
+        sortable: true
     },
     {
         header: '생산지시수량',
@@ -609,7 +618,7 @@ const prodFlowGrid = new tui.Grid({
         hidden : true
      },
     {
-      header: '작업시작일',
+      header: '생산작업지시일',
       name: 'wkFrDt',
       align: 'center',
       sortable: true,
@@ -666,53 +675,68 @@ function processFlow(prodOrderDetailCd){
 
 // 공정흐름에서 한 공정을 클릭할시 나타나는 작업등록 모달창
 prodFlowGrid.on('dblclick', function(e){
-	$('#workModal').modal('show');
-	let rowKey = e.rowKey; 
 	
-	let prodName = prodFlowGrid.getValue(rowKey, 'prdtNm'); // 제품명
-	$('#prodName').val(prodName); // 제품명 
+	let rowKey = e.rowKey;
+	let complete = prodFlowGrid.getValue(rowKey, 'complete'); // 공정 완료여부
 	
-	let prcsNm = prodFlowGrid.getValue(rowKey, 'prcsNm'); // 공정명
-	$('#process').val(prcsNm); // 공정명
+	if(complete == 'Y'){
+		Swal.fire({
+            icon: 'error',
+            title: '이미 작업등록이 완료되어있습니다.'
+        });
+		return;
+	}else{
 	
-	let prcsCd = prodFlowGrid.getValue(rowKey, 'prcsCd'); // 공정코드
-	
-	let bom = prodFlowGrid.getValue(rowKey, 'bomCd'); // 공정코드
-	
-	let prcsStock = prodFlowGrid.getValue(rowKey, 'prcsStock'); // 입고량(전공정에서 넘어오는 생산끝난 놈)
-	$('#workCnt').val(prcsStock); // 작업량 설정
-	
-	getEquiGrid(prcsCd); // 해당 공정의 설비 그리드
-	getRscGrid(prcsCd,bom); // 해당 공정의 자재 그리드
-	
-	
-	//////////////// 작업모달창의 form ///////////////////////
-	
-	$('#p_PROD_ORDER_DETAIL_CD').val(prodFlowGrid.getValue(rowKey, 'prodOrderDetailCd')); // 지시 디테일 테이블
-	$('#p_PRCS_CD').val(prodFlowGrid.getValue(rowKey, 'prcsCd')); // 공정코드
-	$('#p_FP_WORK_CNT').val(prodFlowGrid.getValue(rowKey, 'prcsStock')); // 입고량 = 투입량
-	$('#p_PRCS_PR').val(prodFlowGrid.getValue(rowKey, 'prcsPr')); // 공정순서
-	$('#p_RSC_CD').val(prodFlowGrid.getValue(rowKey, 'rscCd')); // 자재코드
-	$('#p_OUST_CNT').val(prodFlowGrid.getValue(rowKey, 'oustCnt')); // 자재소모수량
-	
-	
-	console.log('p_PROD_ORDER_DETAIL_CD : ' + $('#p_PROD_ORDER_DETAIL_CD').val());
-	console.log('p_PRCS_CD : ' + $('#p_PRCS_CD').val());
-	console.log('p_FP_WORK_CNT : ' + $('#p_FP_WORK_CNT').val());
-	console.log('p_PRCS_PR : ' + $('#p_PRCS_PR').val());
-	console.log('p_RSC_CD : ' + $('#p_RSC_CD').val());
-	console.log('p_OUST_CNT : ' + $('#p_OUST_CNT').val());
-	
-	
-	$('#eqmName').val(''); // 설비명 초기화
-	$("#worker option:eq(0)").prop("selected", true); // select 첫번째값 초기화
-	$('#startTime').val(''); // 작업 시작시간 초기화
-	$('#endTime').val(''); // 작업 종료시간 초기화
-	
-	// form 초기화
-	$('#p_FP_WORKER').val(''); // 담당자 초기화
-	$('#p_FP_START').val(''); // 작업 시작시간 초기화
-	$('#p_FP_END').val(''); // 작업 종료시간 초기화
+		$('#workModal').modal('show');
+		
+		let prodName = prodFlowGrid.getValue(rowKey, 'prdtNm'); // 제품명
+		$('#prodName').val(prodName); // 제품명 
+		
+		let prcsNm = prodFlowGrid.getValue(rowKey, 'prcsNm'); // 공정명
+		$('#process').val(prcsNm); // 공정명
+		
+		let prcsCd = prodFlowGrid.getValue(rowKey, 'prcsCd'); // 공정코드
+		
+		let bom = prodFlowGrid.getValue(rowKey, 'bomCd'); // 공정코드
+		
+		let prcsStock = prodFlowGrid.getValue(rowKey, 'prcsStock'); // 입고량(전공정에서 넘어오는 생산끝난 놈)
+		$('#workCnt').val(prcsStock); // 작업량 설정
+		
+		getEquiGrid(prcsCd); // 해당 공정의 설비 그리드
+		getRscGrid(prcsCd,bom); // 해당 공정의 자재 그리드
+		
+		
+		//////////////// 작업모달창의 form ///////////////////////
+		
+		$('#p_PROD_ORDER_DETAIL_CD').val(prodFlowGrid.getValue(rowKey, 'prodOrderDetailCd')); // 지시 디테일 테이블
+		$('#p_PRCS_CD').val(prodFlowGrid.getValue(rowKey, 'prcsCd')); // 공정코드
+		$('#p_FP_WORK_CNT').val(prodFlowGrid.getValue(rowKey, 'prcsStock')); // 입고량 = 투입량
+		$('#p_PRCS_PR').val(prodFlowGrid.getValue(rowKey, 'prcsPr')); // 공정순서
+		$('#p_RSC_CD').val(prodFlowGrid.getValue(rowKey, 'rscCd')); // 자재코드
+		$('#p_OUST_CNT').val(prodFlowGrid.getValue(rowKey, 'oustCnt')); // 자재소모수량
+		
+		
+		console.log('p_PROD_ORDER_DETAIL_CD : ' + $('#p_PROD_ORDER_DETAIL_CD').val());
+		console.log('p_PRCS_CD : ' + $('#p_PRCS_CD').val());
+		console.log('p_FP_WORK_CNT : ' + $('#p_FP_WORK_CNT').val());
+		console.log('p_PRCS_PR : ' + $('#p_PRCS_PR').val());
+		console.log('p_RSC_CD : ' + $('#p_RSC_CD').val());
+		console.log('p_OUST_CNT : ' + $('#p_OUST_CNT').val());
+		
+		
+		$('#eqmName').val(''); // 설비명 초기화
+		$("#worker option:eq(0)").prop("selected", true); // select 첫번째값 초기화
+		$('#startTime').val(''); // 작업 시작시간 초기화
+		$('#endTime').val(''); // 작업 종료시간 초기화
+		$('#errorValue').val('0'); // 불량수량 초기화
+		console.log('불량수량 : ' + $('#errorValue').val()); // 불량수량
+		
+		// form 초기화
+		$('#p_EQM_CD').val(''); // 설비코드 초기화
+		$('#p_FP_WORKER').val(''); // 담당자 초기화
+		$('#p_FP_START').val(''); // 작업 시작시간 초기화
+		$('#p_FP_END').val(''); // 작업 종료시간 초기화
+	}
 
 })
   
@@ -783,7 +807,11 @@ function getEquiGrid(prcsCd){
 equiGrid.on('dblclick', function(e){
 	let rowKey = e.rowKey;
 	let eqmNm = equiGrid.getValue(rowKey, 'eqmNm'); // 설비명
-	$('#eqmName').val(eqmNm);
+	$('#eqmName').val(eqmNm); // 설비명
+	
+	let eqmCd = equiGrid.getValue(rowKey, 'eqmCd'); // 설비코드
+	$('#p_EQM_CD').val(eqmCd); // 설비코드
+	
 });
 
 
@@ -923,7 +951,7 @@ $('._count :button').on({ 'click' : function(e){
         }
         
         $('#p_FP_ERROR_CNT').val($count.val());
-        console.log('p_FP_ERROR_CNT : ' + $('#p_FP_ERROR_CNT').val());
+        //console.log('p_FP_ERROR_CNT : ' + $('#p_FP_ERROR_CNT').val());
     }
 });
 
@@ -943,7 +971,7 @@ $('#regBtn').on('click', function(){
  			
  			Swal.fire({
                 icon: 'success',
-                title: '작업등록이 완료되었습니다.'
+                title: '작업등록이 이미 완료되어있습니다.'
             });
  			
  			$('#workModal').modal('hide'); // 모달창 닫힘
@@ -978,8 +1006,8 @@ const endGrid = new tui.Grid({
       sortable: true
     },
     {
-      header: '제품명',
-      name: 'prdtNm',
+      header: '지시코드',
+      name: 'indicaCd',
       align: 'center',
       sortable: true
     },
@@ -990,8 +1018,8 @@ const endGrid = new tui.Grid({
       sortable: true
     },
     {
-      header: '지시코드',
-      name: 'indicaCd',
+      header: '제품명',
+      name: 'prdtNm',
       align: 'center',
       sortable: true
     },
@@ -999,16 +1027,29 @@ const endGrid = new tui.Grid({
       header: '생산지시수량',
       name: 'indicaCnt',
       align: 'center',
-      sortable: true
+      sortable: true,
+      hidden : true
     },
     {
-      header: '작업시작일',
+      header: '생산작업지시일',
       name: 'wkFrDt',
       align: 'center',
       sortable: true,
       formatter : function(data){ // 날짜형식 바꿔주는것
           return dateFormat(data.value); 
      	}
+    },
+    {
+      header: '생산완료여부',
+      name: 'indicaDtlComplete',
+      align: 'center',
+      sortable: true
+    },
+    {
+      header: '총생산량',
+      name: 'rpcsCnt',
+      align: 'center',
+      sortable: true
     }
   ]
 });

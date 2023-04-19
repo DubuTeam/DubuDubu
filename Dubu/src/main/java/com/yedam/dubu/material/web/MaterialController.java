@@ -220,7 +220,7 @@ public class MaterialController {
 	}
 	
 	
-	// 더블 클릭시 실행되는 입고 상세 테이블 리스트
+	// 더블 클릭시 실행되는 자재 입고 상세 테이블 리스트
 	@PostMapping("/materialIstDetail")
 	@ResponseBody
 	public List<MaterialVO> getMaterialIstDetail(MaterialVO materialVO){
