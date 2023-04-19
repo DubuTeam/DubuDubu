@@ -291,5 +291,6 @@
 		JOIN rsc_stc rs ON r.rsc_cd = rs.rsc_cd
 		ORDER BY r.rsc_cd
 	</select>
+	
 
 </mapper>
