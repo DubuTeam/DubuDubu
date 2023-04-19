@@ -143,4 +143,11 @@ public class SalesServiceImpl implements SalesService {
 	public void updateProg(SalesVO vo) {
 		salesMapper.updateProg(vo);
 	}
+	// 출고등록 후 주문서 완료로 변경
+	@Override
+	public void modifyProg2(SalesVO vo) {
+		// TODO Auto-generated method stub
+		salesMapper.modifyProg2(vo);
+
+	}
 }

@@ -65,7 +65,7 @@
 		INSERT (o.ORDER_NO, o.EDCTS_CD, o.VEND_CD, o.VEND_NM,
 		o.ORDER_DT,
 		o.PROG_APPE, o.PAPRD_DT, o.PRDT_NM, o.ORDER_CNT)
-		VALUES(#{orderNo},#{edctsCd},#{vendCd},#{vendNm},#{orderDt},'InProgress',#{paprdDt},#{prdtNm},#{orderCnt})
+		VALUES(#{orderNo},#{edctsCd},#{vendCd},#{vendNm},#{orderDt},'주문접수',#{paprdDt},#{prdtNm},#{orderCnt})
 	</update>
 
 
@@ -171,12 +171,15 @@
 		FROM EDCTS E
 		JOIN edcts_Ist S ON E.EDCTS_CD = S.EDCTS_CD
 		JOIN (
-		SELECT EDCTS_CD, SUM(EDCTS_IST_CNT) AS total
+		SELECT EDCTS_CD,
+		SUM(EDCTS_IST_CNT) AS total
 		FROM edcts_Ist
 		GROUP BY EDCTS_CD
-		) total_cnt ON E.EDCTS_CD = total_cnt.EDCTS_CD
+		) total_cnt
+		ON E.EDCTS_CD = total_cnt.EDCTS_CD
 		LEFT JOIN (
-		SELECT EDCTS_CD, SUM(EDCTS_OUST_CNT) AS EDCTS_OUST_CNT
+		SELECT EDCTS_CD,
+		SUM(EDCTS_OUST_CNT) AS EDCTS_OUST_CNT
 		FROM EDCTS_OUST
 		GROUP BY EDCTS_CD
 		) O ON E.EDCTS_CD = O.EDCTS_CD
@@ -193,5 +196,11 @@
 		statementType="CALLABLE">
  		<![CDATA[call proc_edctsOust_save(#{edctsOustNo}, #{edctsOustCnt}, #{edctsCd}, #{edctsLotNo},#{orderNo})]]>
 	</insert>
+
+	<update id="updateProg" parameterType="SalesVO">
+		UPDATE ORDER_SHEET
+		SET PROG_APPE = '출고완료'
+		WHERE ORDER_NO = #{orderNo}
+	</update>
 
 </mapper>

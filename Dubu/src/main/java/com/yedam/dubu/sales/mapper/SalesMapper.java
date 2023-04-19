@@ -71,4 +71,6 @@ public interface SalesMapper {
 
 	// 출고등록 후 출고완료로 변경
 	public void updateProg(SalesVO vo);
+	// 제품 입고후 상태 완료 로 변경
+	public void modifyProg2(SalesVO vo);
 }
