@@ -85,6 +85,7 @@ public class QualityController {
 	@RequestMapping("setRscInspList")
 	@ResponseBody
 	public void setRscInspList(@RequestBody List<RscInspVO> rscInspVOS) {
+		
 		qualityService.setRscInspList(rscInspVOS);
 		
 		
@@ -109,12 +110,14 @@ public class QualityController {
 	 * rscInspVO) { qualityService.upRscProg(rscInspVO); }
 	 */
 
-    @PostMapping("/upRscProg")
-    @ResponseBody
-    public int upRscProg(RscInspVO rscInspVO) {
-        return qualityService.upRscProg(rscInspVO);
-    }
-	    
+	 @PostMapping("/upRscProg")
+	    @ResponseBody
+	    public int upRscProg(@RequestBody List<RscInspVO> rscInspVO) {
+	        return qualityService.upRscProg(rscInspVO);
+	    }
+	   
+    
+    
 	//삭제
 	@RequestMapping("delRscInspHist")
 	@ResponseBody

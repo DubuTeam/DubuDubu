@@ -54,8 +54,8 @@ public class QualityServiceImpl implements QualityService {
 	public void setRscInspList(List<RscInspVO> rscInspVOS) {
 		// rsc_insp insert
 		String rscInspCd = qualityMapper.genRscInspCd(); // 검사코드부여
-		RscInspVO vo = rscInspVOS.get(0);
-		rscInspVOS.remove(0);
+		RscInspVO vo = rscInspVOS.get(0); // 검사 테이블 헤더
+		rscInspVOS.remove(0); // remove 
 		vo.setRscInspCd(rscInspCd);
 		qualityMapper.setRscInsp(vo);
 
@@ -114,11 +114,16 @@ public class QualityServiceImpl implements QualityService {
 		}
 		qualityMapper.delRscInspHist(rscInspVOS.get(0));
 	}
-
 	@Override
-	public int upRscProg(RscInspVO rscInspVO) {
-        return qualityMapper.upRscProg(rscInspVO);
-		}
+	@Transactional
+	public int upRscProg(List<RscInspVO> rscInspVO) {
+		int cnt = 0;
+	    for(RscInspVO vo : rscInspVO) {
+	    	if(vo.getOrdrCd() == null) continue;
+	    	cnt += qualityMapper.upRscProg(vo);
+	    }
+		return cnt;
+	}
 }
 
 

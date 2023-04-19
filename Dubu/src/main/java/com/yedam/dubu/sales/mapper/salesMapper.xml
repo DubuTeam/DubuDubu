@@ -101,7 +101,9 @@
 	</update>
 
 	<!-- 입고 목록 날짜 기준 조회(첫페이지) -->
-	<!--<select id="salesIstList" resultType="SalesIstVO"> SELECT * FROM EDCTS_IST 
+	<!--
+	<select id="salesIstList" resultType="SalesIstVO"> 
+	SELECT * FROM EDCTS_IST 
 		WHERE EDCTS_IST_DT BETWEEN #{edctsIstDtStart} AND #{edctsIstDtEnd} </select> -->
 	<select id="salesIstList" resultType="SalesIstVO">
 		SELECT i.edcts_ist_no,
