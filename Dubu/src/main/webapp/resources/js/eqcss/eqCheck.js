@@ -253,18 +253,6 @@ $(document).ready(function () {
         var chckPsch = $('#chckPsch').val();
         var chckDt = $('#chckDt').val()
 
-        // 출력 테스트
-        console.log(currentCd);
-        console.log(eqmCd);
-        console.log(eqmNm);
-        console.log(jdgmnt);
-        console.log(dispoMatter);
-        console.log(chckPsch);
-        console.log(chckDt);
-        console.log("-------------")
-        console.log(chckFg);
-        console.log(dispoCtnt);
-
 
         // 기존에 존재하는 점검코드를 담을 가변 배열
         var cdArr = [];

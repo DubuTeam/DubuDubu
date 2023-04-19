@@ -3,6 +3,10 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt_rt" %>
 <%@ page session="false" %>
 
+<!-- Toast 사용(알람 꾸미기) -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css" integrity="sha512-3pIirOrwegjM6erE5gPSwkUzO+3cTjpnV9lexlNZqvupR64iZBnOOTiiLPb9M36zpMScbmUNIcHUqKD47M719g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js" integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
 <link href="${pageContext.request.contextPath}/resources/css/eqcss/eq.css" rel="stylesheet" type="text/css">
 
 <!-- Jquery -->
@@ -259,9 +263,8 @@
 											<!-- 테스트 -->
 											<th>담당자 *</th>
 											<td>
-												<input class="form-control" name="eqmPsch" id="eqmPsch"
-													style="width: 250px" readonly>
-																						<!-- Button trigger modal (4.6버젼) -->
+												<input class="form-control" name="eqmPsch" id="eqmPsch" style="width: 250px" readonly>
+												<!-- Button trigger modal (4.6버젼) -->
 												<button type="button" style="margin-left: 3px"
 													class="btn btn-primary" data-toggle="modal"
 													data-target="#exampleModal222" id="searchBtn"
