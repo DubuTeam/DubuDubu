@@ -104,10 +104,10 @@ public class ProductionServiceImpl implements ProductionService {
 	}
 
 	@Override
-	public List<ProductionVO> selectPlanMaterial(String orderNo) {
+	public List<ProductionVO> selectPlanMaterial(String bomCd) {
 		 
 		ProductionVO productionVO = new ProductionVO();
-		productionVO.setOrderNo(orderNo);
+		productionVO.setBomCd(bomCd);
 		
 		List<ProductionVO> list = new ArrayList<>();
 		list = productionMapper.selectPlanMaterial(productionVO);

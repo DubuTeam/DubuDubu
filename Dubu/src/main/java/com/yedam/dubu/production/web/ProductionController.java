@@ -110,8 +110,8 @@ public class ProductionController {
 	// 생산계획 사용가능자재 조회
 	 @PostMapping("/selectPlanMaterial")
 	 @ResponseBody List<ProductionVO> getPlanMaterial(ProductionVO productionVO){
-		 System.out.println(productionVO.getOrderNo());
-		 return productionService.selectPlanMaterial(productionVO.getOrderNo());
+		 System.out.println(productionVO.getBomCd());
+		 return productionService.selectPlanMaterial(productionVO.getBomCd());
 	 } 
 	 
 	// 생산계획 제품공정확인 조회
@@ -152,11 +152,19 @@ public class ProductionController {
 	public String getIndicaSearch(Model model){
 		return "production/indicaSearch";
 	}
-	
+//	// 생산지시 지시헤더
+//	@PostMapping("/insetIcHeader")
+//	
+//	// 생산지시 지시디테일
+//	@PostMapping("/insertIcDetail")
+//	
+//	// 생산지시 진행공정관리
+//	@PostMapping("/insertIcPp")
+		
 	// 공정실적조회
 	@GetMapping("/prcsSearch")
 	public String getPrcsSearch(Model model){
 		return "production/prcsSearch";
 	}
-
+	
 }
