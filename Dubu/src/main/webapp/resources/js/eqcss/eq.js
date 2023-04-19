@@ -3,7 +3,6 @@ $(document).ready(function () {
     console.log("다음 설비코드 => " + $('#eqmCd').val())
 
 
-
     // . 초기화 버튼 눌렀을 때..
     $('#initBtn').on("click", function (e) {
         $("#dataForm")[0].reset();      // id 가 dataForm 인 form 태그 전체 초기화
@@ -66,6 +65,7 @@ $(document).ready(function () {
             if (eqmFgSelectBox.selectedIndex === 0 || lineNmSelectBox.selectedIndex === 0 || prcsNmSelectBox.selectedIndex === 0 || eqmNm.value == '' || chckPerd.value == '' || eqmIstDt.value == '' || $('input[name=useYN]:checked').val() == undefined) {
             // if (eqmFgSelectBox.selectedIndex === 0 || lineNmSelectBox.selectedIndex === 0 || eqmNm.value == '' || chckPerd.value == '' || eqmIstDt.value == '' || $('input[name=useYN]:checked').val() == undefined) {
                 console.log('필수항목들을 전부 입력해라!')
+                toastr.error('필수 항목들을 모두 입력하세요');
 
                 $('#eqmFg').css('border', 'solid 2px red')
                 $('#lineNm').css('border', 'solid 2px red')
@@ -75,6 +75,7 @@ $(document).ready(function () {
                 $('#eqmIstDt').css('border', 'solid 2px red')
                 $('#useYNSet').css('border', 'solid 2px red')
                 $('#eqmPsch').css('border', 'solid 2px red')
+
             }
             else {  // 모두 다 작성이 잘 됐다면, 이제 등록
                 let eqmCd = $('#eqmCd').val()
@@ -121,6 +122,7 @@ $(document).ready(function () {
                     success: function (result) {
                         console.log('데이터 잘 보냄! -> ' + result);
                         location.replace('eq');     // 등록 후, 다시 eq 페이지 (메인 페이지로)
+                        toastr.success('작업이 완료되었습니다.');
                     },
                     error: function (err) {
                         console.log(err);
@@ -136,6 +138,9 @@ $(document).ready(function () {
 
             if (eqmFgSelectBox.selectedIndex === 0 || lineNmSelectBox.selectedIndex === 0 || prcsNmSelectBox.selectedIndex === 0 || eqmNm.value == '' || chckPerd.value == '' || eqmIstDt.value == '' || $('input[name=useYN]:checked').val() == undefined) {
             // if (eqmFgSelectBox.selectedIndex === 0 || lineNmSelectBox.selectedIndex === 0 || eqmNm.value == '' || chckPerd.value == '' || eqmIstDt.value == '' || $('input[name=useYN]:checked').val() == undefined) {
+
+                toastr.error('필수 항목들을 모두 입력하세요');
+
                 console.log('필수항목들을 전부 입력해라!');
 
                 $('#eqmFg').css('border', 'solid 2px red')
@@ -190,6 +195,7 @@ $(document).ready(function () {
                     success: function (result) {
                         console.log('데이터 잘 보냄! -> ' + result);
                         location.replace('eq');     // 등록 후, 다시 eq 페이지 (메인 페이지로)
+                        toastr.success('작업이 완료되었습니다.');
                     },
                     error: function (err) {
                         console.log(err);
@@ -261,72 +267,6 @@ $(document).ready(function () {
     //////////////////////////////////////////////////////////////////////////
 
 
-    // 6. row 하나 클릭 후, 데이터 수정 후 수정 버튼 눌렀을 때
-    // $('#modBtn').on("click", function () {
-    //     // 설비명, 점검주기,입고일자, 가동여부 중 하나라도 입력 안하면 에러!
-    //     if ($('#eqmCd').val() == '' || $('#lineCd').val() == '' || $('#prcsCd').val() == '' || eqmNm.value == '' || chckPerd.value == '' || eqmIstDt.value == '' || $('input[name=useYN]:checked').val() == undefined) {
-    //         console.log('필수항목들을 전부 입력해라!')
-
-    //         $('#eqmFg').css('border', 'solid 2px red')
-    //         $('#lineNm').css('border', 'solid 2px red')
-    //         $('#prcsNm').css('border', 'solid 2px red')
-    //         $('#eqmNm').css('border', 'solid 2px red')
-    //         $('#chckPerd').css('border', 'solid 2px red')
-    //         $('#eqmIstDt').css('border', 'solid 2px red')
-    //         $('#useYNSet').css('border', 'solid 2px red')
-    //     }
-    //     else {  // 모두 다 작성이 잘 됐다면, 이제 등록
-    //         let eqmCd = $('#eqmCd').val()
-    //         let lineCd = $('#lineCd').val()
-    //         let prcsCd = $('#prcsCd').val()
-
-    //         // select 태그 내에서 선택된 option 태그의 value 가 아닌 text 추출
-    //         let prcsNm = $("#prcsNm option:checked").text()
-    //         let eqmNm = $('#eqmNm').val()
-    //         let chckPerd = $('#chckPerd').val()
-    //         let minTemp = $('#minTemp').val()
-    //         let maxTemp = $('#maxTemp').val()
-    //         let eqmYn = $('input[name=useYN]:checked').val()
-    //         let eqmIstDt = $('#eqmIstDt').val()
-
-    //         // 출력 테스트
-    //         console.log(eqmCd)
-    //         console.log(eqmNm)
-    //         console.log(prcsCd)
-    //         console.log(prcsNm)
-
-
-    //         $.ajax({
-    //             url: 'updateEq',
-    //             method: 'post',
-    //             data: {
-    //                 // VO 클래스에 있는 eqmCd 에다가,   여기서 값을 받아온 eqmCd 를 넘긴다~
-    //                 eqmCd: eqmCd,
-    //                 lineCd: lineCd,
-    //                 prcsCd: prcsCd,
-    //                 prcsNm: prcsNm,
-    //                 eqmNm: eqmNm,
-    //                 chckPerd: chckPerd,
-    //                 minTemp: minTemp,
-    //                 maxTemp: maxTemp,
-    //                 eqmYn: eqmYn,
-    //                 eqmIstDt: eqmIstDt
-    //             },
-    //             success: function (result) {
-    //                 console.log('데이터 잘 보냄! -> ' + result);
-    //                 location.replace('eq');     // 등록 후, 다시 eq 페이지 (메인 페이지로)
-    //             },
-    //             error: function (err) {
-    //                 console.log(err);
-    //             }
-    //         })
-    //     }
-    // })
-
-
-    //////////////////////////////////////////////////////////////////////////
-
-
     // 7. row 하나 클릭 후, 삭제 버튼 눌렀을 때
     $('#delBtn').on("click", function () {
 
@@ -346,7 +286,10 @@ $(document).ready(function () {
             },
             success: function (result) {
                 console.log('데이터 잘 보냄! -> ' + result);
+                toastr.success('작업이 완료되었습니다.');
+
                 $('#exampleModal').click();         // 모달창 닫기,  .click() 혹은 .hide() ..?
+
                 location.replace('eq');     // 등록 후, 다시 eq 페이지 (메인 페이지로)
             },
             error: function (err) {
@@ -383,6 +326,7 @@ $(document).ready(function () {
                     $('#keyword').val("");
                     $("#list").find("tr").remove();
 
+                    toastr.success('작업이 완료되었습니다.');
                     console.log("성공!")
 
 
