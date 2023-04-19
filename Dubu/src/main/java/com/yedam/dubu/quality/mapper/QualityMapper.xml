@@ -227,5 +227,22 @@
 		from RSC_INSP
 		where INSP_CD = #{inspCd}
 	</delete>
+	
+	<!-- 테스트 - 직원 모달 내 직원 목록 출력 -->
+	<!-- <select id="selectAllEmpListInModal" resultType="RscInfVO">
+		SELECT
+			ROWNUM AS idx,
+			emp_cd,
+			emp_nm
+		FROM emp
+		ORDER BY emp_cd
+	</select> -->
+	<select id="selectAllEmpListInModal" resultType="RscInfVO">
+    SELECT ROWNUM AS idx, emp_cd, emp_nm
+    FROM emp
+    ORDER BY emp_cd
+	</select>
+
+	
 
 </mapper>

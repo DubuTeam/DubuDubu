@@ -126,7 +126,7 @@ tr {
 										style="width: 168px;"></td> -->
 										<th>검사자 *</th>
 											<td style="width: 340px; display:inline-block; display:flex;">
-												<input class="form-control" name="eqmPsch" id="eqmPsch"
+												<input class="form-control" name="eqmPsch" id="inspTstr"
 													style="width: 250px" readonly>
 																						<!-- Button trigger modal (4.6버젼) -->
 												<button type="button" style="margin-left: 3px"

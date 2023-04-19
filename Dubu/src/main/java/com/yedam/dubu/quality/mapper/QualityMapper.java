@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 
+import com.yedam.dubu.equipment.service.EquipmentVO;
 import com.yedam.dubu.quality.service.QualityVO;
 import com.yedam.dubu.quality.service.RscInfVO;
 import com.yedam.dubu.quality.service.RscInspVO;
@@ -45,7 +46,9 @@ public interface QualityMapper {
 	    // 삭제
 	    void delRscInspHist(RscInspVO rscInspVO);
 	    void delRscInspHistSingle(RscInspVO rscInspVO);
-		
+	    
+	    // 직원 목록 모달 내에서, 직원 목록 출력
+	 	public List<RscInfVO> selectAllEmpListInModal();
 	   
 	    
 }
