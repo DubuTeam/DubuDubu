@@ -53,6 +53,7 @@ public class SalesVO {
 	private Date wkFrDt;
 	
 	private int indicaCnt;
+	
 
 	// getters and setters for each field
 

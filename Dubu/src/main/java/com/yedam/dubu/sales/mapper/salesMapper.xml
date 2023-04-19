@@ -71,6 +71,9 @@
 
 	<!-- ////////////////////////////////////////////////////////////// -->
 	<!-- saleslst.jsp -->
+
+
+
 	<!-- 입고 목록 조건별 조회 -->
 	<select id="istOptionList" resultType="SalesIstVO">
 		SELECT i.edcts_ist_no, i.edcts_ist_dt, i.edcts_ist_cnt, i.edcts_cd,
@@ -83,15 +86,20 @@
 		<if test="edctsIstDtEnd != null"><![CDATA[and EDCTS_IST_DT <= #{edctsIstDtEnd}]]></if>
 		ORDER BY edcts_ist_no
 	</select>
-	<!-- 모델창에 PROG_APPE = 'Completed' 인 내용만 출력 -->
+	<!-- 모델창에 id.indica_dtl_complete ='Y' 인 내용만 출력 -->
 	<select id="getLotList" resultType="PrdtInspVO">
-		SELECT DISTINCT p.order_no,
-		p.edcts_lot_no, p.edcts_cd, o.prdt_nm,
-		p.insp_cnt
-		FROM PRDT_INSP p JOIN
-		ORDER_SHEET o
-		ON p.order_no = o.order_no
-		WHERE o.PROG_APPE = 'Completed'
+		SELECT id.prod_order_detail_cd, b.prdt_nm, id.edcts_cd, id.indica_cnt,
+		pp.RPCS_CNT
+		FROM INDICA i JOIN INDICA_DTL id
+		ON i.indica_cd = id.indica_cd
+		JOIN bom b
+		ON id.bom_cd = b.bom_cd
+		JOIN prcs_prog pp
+		ON pp.prod_order_detail_cd = id.prod_order_detail_cd
+		WHERE
+		id.indica_dtl_complete ='Y'
+		AND id.PROG_APPE = 'Y'
+		AND prcs_cd = 'PRCS1006'
 	</select>
 
 	<!-- 제품 입고 등록,수정 -->
@@ -107,26 +115,27 @@
 		WHERE EDCTS_IST_DT BETWEEN #{edctsIstDtStart} AND #{edctsIstDtEnd} </select> -->
 	<select id="salesIstList" resultType="SalesIstVO">
 		SELECT i.edcts_ist_no,
-		i.edcts_ist_dt, i.edcts_ist_cnt, i.edcts_cd, i.edcts_lot_no, e.prdt_nm
+		i.edcts_ist_dt, i.edcts_ist_cnt, i.edcts_cd,
+		i.edcts_lot_no, e.prdt_nm
 		FROM edcts_ist i JOIN edcts e
-		ON i.edcts_cd = e.edcts_cd
-		WHERE
-		i.edcts_ist_dt BETWEEN #{edctsIstDtStart} AND #{edctsIstDtEnd}
+		ON i.edcts_cd =
+		e.edcts_cd
 	</select>
 
 	<!-- 입고등록 후 completed 로 변경 -->
 	<update id="modifyProg" parameterType="SalesVO">
-		UPDATE ORDER_SHEET
+		UPDATE indica_dtl
 		SET
-		PROG_APPE = 'Completed'
-		WHERE ORDER_NO = #{orderNo}
+		PROG_APPE = 'D'
+		WHERE PROD_ORDER_DETAIL_CD =
+		#{prodOrderDetailCd}
 	</update>
 
 	<select id="getlstNo" resultType="SalesVO">
 		SELECT
 		NVL(LPAD(MAX(SUBSTR(EDCTS_IST_NO, 4)+1),4,'0'), '001') AS "index"
 		FROM
-		edcts_ist;
+		edcts_ist
 	</select>
 
 
