@@ -74,6 +74,7 @@ $(document).ready(function () {
                 $('#chckPerd').css('border', 'solid 2px red')
                 $('#eqmIstDt').css('border', 'solid 2px red')
                 $('#useYNSet').css('border', 'solid 2px red')
+                $('#eqmPsch').css('border', 'solid 2px red')
             }
             else {  // 모두 다 작성이 잘 됐다면, 이제 등록
                 let eqmCd = $('#eqmCd').val()
@@ -89,6 +90,8 @@ $(document).ready(function () {
                 let maxTemp = $('#maxTemp').val()
                 let eqmYn = $('input[name=useYN]:checked').val()
                 let eqmIstDt = $('#eqmIstDt').val()
+                let eqmPsch = $('#eqmPsch').val()
+
 
                 // 출력 테스트
                 console.log(eqmCd)
@@ -112,7 +115,8 @@ $(document).ready(function () {
                         minTemp: minTemp,
                         maxTemp: maxTemp,
                         eqmYn: eqmYn,
-                        eqmIstDt: eqmIstDt
+                        eqmIstDt: eqmIstDt,
+                        eqmPsch: eqmPsch
                     },
                     success: function (result) {
                         console.log('데이터 잘 보냄! -> ' + result);
@@ -141,6 +145,7 @@ $(document).ready(function () {
                 $('#chckPerd').css('border', 'solid 2px red')
                 $('#eqmIstDt').css('border', 'solid 2px red')
                 $('#useYNSet').css('border', 'solid 2px red')
+                $('#eqmPsch').css('border', 'solid 2px red')
             }
             else {  // 모두 다 작성이 잘 됐다면, 이제 등록
                 let eqmCd = $('#eqmCd').val()
@@ -156,6 +161,8 @@ $(document).ready(function () {
                 let maxTemp = $('#maxTemp').val()
                 let eqmYn = $('input[name=useYN]:checked').val()
                 let eqmIstDt = $('#eqmIstDt').val()
+                let eqmPsch = $('#eqmPsch').val()
+
 
                 // 출력 테스트
                 console.log("공정명 " + prcsNm)
@@ -177,7 +184,8 @@ $(document).ready(function () {
                         minTemp: minTemp,
                         maxTemp: maxTemp,
                         eqmYn: eqmYn,
-                        eqmIstDt: eqmIstDt
+                        eqmIstDt: eqmIstDt,
+                        eqmPsch: eqmPsch
                     },
                     success: function (result) {
                         console.log('데이터 잘 보냄! -> ' + result);
@@ -210,6 +218,8 @@ $(document).ready(function () {
         let chckPerd = $(this).closest("tr").children().eq(9).text();
         let lineCd = $(this).closest("tr").children().eq(10).text();
         let eqmIstDt = $(this).closest("tr").children().eq(11).text();
+        let eqmPsch = $(this).closest("tr").children().eq(12).text();
+
         console.log(eqmFg);
         console.log(prcsNm);
 
@@ -242,6 +252,9 @@ $(document).ready(function () {
         // 입고일자
         // $('#eqmIstDt').val(eqmIstDt);
         $('input[name=eqmIstDt]').attr('value', eqmIstDt);
+
+        // 담당자
+        $('#eqmPsch').val(eqmPsch);
     })
 
 
@@ -406,6 +419,7 @@ $(document).ready(function () {
                         tr.append($('<td />').text(item.chckPerd))
                         tr.append($('<td />').text(item.lineCd))
                         tr.append($('<td />').text(convertToyyyyMMdd(item.eqmIstDt)))    // item.eqmIstDt => 밀리세컨드
+                        tr.append($('<td />').text(item.eqmPsch))
 
                         $('#list').append(tr)
                         $('tr').attr("class", "selectedRows");
@@ -429,6 +443,8 @@ $(document).ready(function () {
                             let chckPerd = $(this).closest("tr").children().eq(9).text();
                             let lineCd = $(this).closest("tr").children().eq(10).text();
                             let eqmIstDt = $(this).closest("tr").children().eq(11).text();
+                            let eqmPsch = $(this).closest("tr").children().eq(12).text();
+
                             console.log(eqmFg);
                             console.log(prcsNm);
 
@@ -461,6 +477,9 @@ $(document).ready(function () {
                             // 입고일자
                             // $('#eqmIstDt').val(eqmIstDt);
                             $('input[name=eqmIstDt]').attr('value', eqmIstDt);
+
+                            // 담당자
+                            $('#eqmPsch').val(eqmPsch);
                         })
                         // ↑↑↑ 검색한 리스트 중 하나 클릭했을 때, 상세 정보 나옴 (이거 리팩토링 필요할듯 - 함수로 따로 만들어서)
 
@@ -472,4 +491,34 @@ $(document).ready(function () {
             })
         }
     })
+
+
+    //////////////////////////////////////////////////////////////////////////////
+
+
+    /*
+        // let eqmNm = $(this).closest("tr").children().eq(1).text();
+        // $('#eqmNm').val(eqmNm);
+        ↑↑↑ '모달 창 내' 의 특정 행 정보 추출해서, input 에 넣는 기능.  위의 코드 안 됨.
+        모달이 열린 후에 동적으로 DOM이 변경되어 데이터를 불러오는 로직이 작동하지 않을 수 있습니다.
+        이 경우에는 이벤트 위임(event delegation)을 사용하여 동적으로 생성된 요소에도 이벤트 핸들러가 적용될 수 있도록 코드를 수정해야 합니다.
+        아래는 $(document)에서 이벤트 위임을 사용하는 예시 코드입니다.
+        이 코드는 #myTable 내부의 모든 행(tr) 요소에서 클릭 이벤트를 감지하고,
+        클릭된 행의 첫 번째와 두 번째 셀의 값을 추출합니다.
+    */
+
+    // 즉, 모달창 내에서 특정 행(tr) 을 클릭했을 때, 그 행의 n번째 td 태그(cell) 을 추출해서, 외부 input 에 넣는 코드
+        // 모달창 안에 있는 tr 태그의 class명은 eachRowInModal  이다!
+        // 모달창 밖에 있는 목록의 tr 태그 클래스명인,  eachRow 랑 똑같이 하면, 점검코드에서 출력 이상하게 됨.
+        $(document).on("click", "#modal-eqList tr", function() {
+            let empNm = $(this).find("td").eq(1).text();
+            console.log(empNm)
+
+            $('#eqmPsch').val(empNm);
+            
+            $('#exampleModal222').click();          // 모달 창 닫기
+        });
+    
+    
+    //////////////////////////////////////////////////////////////////////////////
 })

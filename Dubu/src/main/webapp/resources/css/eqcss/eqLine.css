@@ -41,10 +41,28 @@
 }
 
 
+/* 스크롤 */
+.table {
+	height: 250px;
+	overflow: auto;
+}
+
 .table table {
     width: 100%;
 }
 
-.eachRow:hover {
+
+/* .eachRow:hover, #listInModal > .selectedRows:hover, .eachRowInModal:hover, #list > .selectedRows:hover {
 	background-color: rgb(233, 233, 233);
+} */
+
+.eachRow:hover, .eachRowInModal:hover {
+	background-color: rgb(233, 233, 233);
+}
+
+#empSearch {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-bottom: 5px;
 }

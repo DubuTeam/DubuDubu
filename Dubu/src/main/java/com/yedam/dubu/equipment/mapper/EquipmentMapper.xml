@@ -66,6 +66,17 @@
 	</delete>
 	
 	
+	<!-- 테스트 - 직원 모달 내 직원 목록 출력 -->
+	<select id="selectAllEmpListInModal" resultType="EquipmentVO">
+		SELECT
+			ROWNUM AS "idx",
+			emp_cd,
+			emp_nm
+		FROM emp
+		ORDER BY emp_cd
+	</select>
+	
+	
 	<!-- ↑↑↑ 설비 라인 페이지 -->
 	<!-- ↓↓↓ 설비 관리 페이지 -->
 	
@@ -106,7 +117,8 @@
 			max_temp,
 			chck_perd,
 			line_cd,
-			eqm_ist_dt
+			eqm_ist_dt,
+			eqm_psch
 		FROM eqm
 		ORDER BY eqm_cd
 	</select>
@@ -125,7 +137,8 @@
 		                 chck_perd,
 		                 min_temp,
 		                 max_temp,
-		                 eqm_ist_dt
+		                 eqm_ist_dt,
+		                 eqm_psch
 		                )
 		        VALUES (
 		        		#{eqmCd},
@@ -138,7 +151,8 @@
 		                #{chckPerd},
 		                #{minTemp},
 		                #{maxTemp},
-		                #{eqmIstDt}
+		                #{eqmIstDt},
+		                #{eqmPsch}
 		                )
 	</insert>
 	
@@ -155,7 +169,8 @@
             chck_perd = #{chckPerd},
             min_temp = #{minTemp},
             max_temp = #{maxTemp},
-            eqm_ist_dt = #{eqmIstDt}
+            eqm_ist_dt = #{eqmIstDt},
+            eqm_psch = #{eqmPsch}
 		WHERE eqm_cd = #{eqmCd}
 	</update>
 	
@@ -185,7 +200,8 @@
 		max_temp,
 		chck_perd,
 		line_cd,
-		eqm_ist_dt
+		eqm_ist_dt,
+		eqm_psch
 	  FROM eqm
 	  WHERE
 	  <choose>
@@ -357,7 +373,7 @@
 			eqm_nm,
 			fr_dt,
 			to_dt,
-			eqm_psch,
+			opert_psch,
 			opert_ctnt
 		FROM eqm_opr
 		ORDER BY nopr_cd
@@ -402,7 +418,7 @@
 							fr_dt,
 							to_dt,
 							opert_ctnt,
-							eqm_psch,
+							opert_psch,
 							eqm_nm
 		                )
 		        VALUES (
@@ -411,7 +427,7 @@
 			                #{frDt},
 			                #{toDt},
 			                #{opertCtnt},
-			                #{eqmPsch},
+			                #{opertPsch},
 			                #{eqmNm}
 		                )
 	</insert>
@@ -425,7 +441,7 @@
 			fr_dt = #{frDt},
 			to_dt = #{toDt},
 			opert_ctnt = #{opertCtnt},
-			eqm_psch = #{eqmPsch},
+			opert_psch = #{opertPsch},
 			eqm_nm = #{eqmNm}
 		WHERE nopr_cd = #{noprCd}
 	</update>
@@ -445,7 +461,7 @@
 			eqm_nm,
 			fr_dt,
 			to_dt,
-			eqm_psch,
+			opert_psch,
 			opert_ctnt
 		FROM eqm_opr
 		WHERE 1=1

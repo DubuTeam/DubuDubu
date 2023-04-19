@@ -9,7 +9,7 @@ $(document).ready(function () {
         // 2. 해당 행에 입력된 데이터를 받아옴.     (가장 가까운 tr태그의 각 셀들)
         let lineCode = $(this).closest("tr").children().eq(0).text();
         let lineName = $(this).closest("tr").children().eq(1).text();
-        let staff = $(this).closest("tr").children().eq(2).text();
+        let emp = $(this).closest("tr").children().eq(2).text();
         let uph = $(this).closest("tr").children().eq(3).text();
         let yn = $(this).closest("tr").children().eq(4).text();
 
@@ -17,7 +17,7 @@ $(document).ready(function () {
         // 3-1. 그리고 jsp 파일의 input 태그에다가 위 데이터를 집어넣는다.
         $('#lineCd').val(lineCode);
         $('#lineNm').val(lineName);
-        $('#staff').val(staff);
+        $('#emp').val(emp);
         $('#uph').val(uph);
 
         // 3-2. Yes or No 의 경우, radio 버튼 바꿔가면서 선택되도록!
@@ -46,14 +46,14 @@ $(document).ready(function () {
         var currentCd = $('#lineCd').val();
         var lineNm = $('#lineNm').val();
         var uph = $('#uph').val();
-        var staff = $('#staff').val();
+        var emp = $('#emp').val();
         var use = $('input[name=yn]:checked').val();        // 선택된 라디오 값 밸류?
 
         // 출력 테스트
         console.log(currentCd);
         console.log(lineNm);
         console.log(uph);
-        console.log(staff);
+        console.log(emp);
         console.log(use);
 
 
@@ -83,7 +83,7 @@ $(document).ready(function () {
                 data: {
                     lineCd: currentCd,
                     lineNm: lineNm,
-                    linePsch: staff,
+                    linePsch: emp,
                     uphCnt: uph,
                     useYn: use
                 },
@@ -102,7 +102,7 @@ $(document).ready(function () {
                 data: {
                     lineCd: currentCd,
                     lineNm: lineNm,
-                    linePsch: staff,
+                    linePsch: emp,
                     uphCnt: uph,
                     useYn: use
                 },
@@ -162,4 +162,34 @@ $(document).ready(function () {
             }
         })
     })
+
+
+    //////////////////////////////////////////////////////////////////////////////
+
+
+    /*
+        // let eqmNm = $(this).closest("tr").children().eq(1).text();
+        // $('#eqmNm').val(eqmNm);
+        ↑↑↑ '모달 창 내' 의 특정 행 정보 추출해서, input 에 넣는 기능.  위의 코드 안 됨.
+        모달이 열린 후에 동적으로 DOM이 변경되어 데이터를 불러오는 로직이 작동하지 않을 수 있습니다.
+        이 경우에는 이벤트 위임(event delegation)을 사용하여 동적으로 생성된 요소에도 이벤트 핸들러가 적용될 수 있도록 코드를 수정해야 합니다.
+        아래는 $(document)에서 이벤트 위임을 사용하는 예시 코드입니다.
+        이 코드는 #myTable 내부의 모든 행(tr) 요소에서 클릭 이벤트를 감지하고,
+        클릭된 행의 첫 번째와 두 번째 셀의 값을 추출합니다.
+    */
+
+    // 즉, 모달창 내에서 특정 행(tr) 을 클릭했을 때, 그 행의 n번째 td 태그(cell) 을 추출해서, 외부 input 에 넣는 코드
+        // 모달창 안에 있는 tr 태그의 class명은 eachRowInModal  이다!
+        // 모달창 밖에 있는 목록의 tr 태그 클래스명인,  eachRow 랑 똑같이 하면, 점검코드에서 출력 이상하게 됨.
+        $(document).on("click", "#modal-eqList tr", function() {
+            let empNm = $(this).find("td").eq(1).text();
+            console.log(empNm)
+
+            $('#emp').val(empNm);
+            
+            $('#exampleModal222').click();          // 모달 창 닫기
+        });
+    
+    
+    //////////////////////////////////////////////////////////////////////////////
 });
