@@ -88,18 +88,22 @@
 	</select>
 	<!-- 모델창에 id.indica_dtl_complete ='Y' 인 내용만 출력 -->
 	<select id="getLotList" resultType="PrdtInspVO">
-		SELECT id.prod_order_detail_cd, b.prdt_nm, id.edcts_cd, id.indica_cnt,
+		SELECT
+		id.prod_order_detail_cd, b.prdt_nm, id.edcts_cd, id.indica_cnt,
 		pp.RPCS_CNT
 		FROM INDICA i JOIN INDICA_DTL id
-		ON i.indica_cd = id.indica_cd
+		ON i.indica_cd =
+		id.indica_cd
 		JOIN bom b
 		ON id.bom_cd = b.bom_cd
 		JOIN prcs_prog pp
-		ON pp.prod_order_detail_cd = id.prod_order_detail_cd
+		ON
+		pp.prod_order_detail_cd = id.prod_order_detail_cd
 		WHERE
 		id.indica_dtl_complete ='Y'
 		AND id.PROG_APPE = 'Y'
-		AND prcs_cd = 'PRCS1006'
+		AND prcs_cd =
+		'PRCS1006'
 	</select>
 
 	<!-- 제품 입고 등록,수정 -->
@@ -109,9 +113,7 @@
 	</update>
 
 	<!-- 입고 목록 날짜 기준 조회(첫페이지) -->
-	<!--
-	<select id="salesIstList" resultType="SalesIstVO"> 
-	SELECT * FROM EDCTS_IST 
+	<!-- <select id="salesIstList" resultType="SalesIstVO"> SELECT * FROM EDCTS_IST 
 		WHERE EDCTS_IST_DT BETWEEN #{edctsIstDtStart} AND #{edctsIstDtEnd} </select> -->
 	<select id="salesIstList" resultType="SalesIstVO">
 		SELECT i.edcts_ist_no,
@@ -122,7 +124,7 @@
 		e.edcts_cd
 	</select>
 
-	<!-- 입고등록 후 completed 로 변경 -->
+	<!-- 입고등록 후 D 로 변경 -->
 	<update id="modifyProg" parameterType="SalesVO">
 		UPDATE indica_dtl
 		SET
@@ -147,7 +149,7 @@
 		FROM
 		ORDER_SHEET
 		WHERE PROG_APPE =
-		'Completed'
+		'주문접수'
 	</select>
 	<!-- 출고 목록조회 -->
 	<select id="getOustList" resultType="OustVO">
@@ -161,12 +163,24 @@
 	<!-- 완제품 재고 현황 모달로 조회(주문서에 해당하는 제품의 재고만 조회하도록 함) -->
 	<select id="getmodalList" resultType="OustVO">
 		SELECT E.EDCTS_CD,
-		S.EDCTS_LOT_NO, E.PRDT_NM, S.LOT_CNT
-		FROM EDCTS E JOIN EDCTS_STC S
-		ON
-		E.EDCTS_CD = S.EDCTS_CD
-		WHERE E.EDCTS_CD = #{edctsCd} AND S.LOT_CNT !=
-		0
+		S.EDCTS_LOT_NO,
+		E.PRDT_NM,
+		S.EDCTS_IST_CNT,
+		total_cnt.total AS TOTAL1 ,
+		(total_cnt.total - COALESCE(O.EDCTS_OUST_CNT, 0)) AS TOTAL
+		FROM EDCTS E
+		JOIN edcts_Ist S ON E.EDCTS_CD = S.EDCTS_CD
+		JOIN (
+		SELECT EDCTS_CD, SUM(EDCTS_IST_CNT) AS total
+		FROM edcts_Ist
+		GROUP BY EDCTS_CD
+		) total_cnt ON E.EDCTS_CD = total_cnt.EDCTS_CD
+		LEFT JOIN (
+		SELECT EDCTS_CD, SUM(EDCTS_OUST_CNT) AS EDCTS_OUST_CNT
+		FROM EDCTS_OUST
+		GROUP BY EDCTS_CD
+		) O ON E.EDCTS_CD = O.EDCTS_CD
+		WHERE E.EDCTS_CD = #{edctsCd}
 
 	</select>
 	<!-- 출고현황 조회 -->
