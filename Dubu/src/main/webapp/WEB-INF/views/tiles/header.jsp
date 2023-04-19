@@ -69,7 +69,7 @@
         <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
             	<%-- <a class="collapse-item" href="${pageContext.request.contextPath}/prcProcess">제품공정흐름관리</a>--%>
-                <a class="collapse-item" href="${pageContext.request.contextPath}/prcs">공정관리</a>
+                <%-- <a class="collapse-item" href="${pageContext.request.contextPath}/prcs">공정관리</a> --%>
                 <a class="collapse-item" href="${pageContext.request.contextPath}/plan">생산계획</a>
                 <%-- <a class="collapse-item" href="${pageContext.request.contextPath}/planSearch">생산계획조회XXX</a> --%>
                 <a class="collapse-item" href="${pageContext.request.contextPath}/indica">생산지시</a>

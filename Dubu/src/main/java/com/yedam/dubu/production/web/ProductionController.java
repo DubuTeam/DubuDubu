@@ -90,8 +90,8 @@ public class ProductionController {
 	 // 생산계획 계획코드 부여
 	 @PostMapping("/updatePlan")
 	 @ResponseBody
-	 public int updatePlan(@RequestBody List<ProductionVO> insertPlan, List<ProductionVO> updatePlan) {
-		 return productionService.updatePlan(insertPlan, updatePlan);
+	 public int updatePlan(@RequestBody List<ProductionVO> insertPlan) {
+		 return productionService.updatePlan(insertPlan);
 	 }
 		
 		 // 생산계획 새로운 계획
