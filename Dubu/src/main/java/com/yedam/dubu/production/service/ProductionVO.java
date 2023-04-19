@@ -63,7 +63,7 @@ public class ProductionVO {
 	public String indicaDt;
 	public String prodOrderDetailCd;
 	public String indicaCd;
-	
+	public String prcsProgCd;
 	
 	
 	

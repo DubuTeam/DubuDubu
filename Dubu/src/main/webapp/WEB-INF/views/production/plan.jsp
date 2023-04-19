@@ -426,6 +426,21 @@ let getData='';
                         el: document.getElementById('gridEquip'),
                         columns: [
                         	{
+                        		header: '진행공정관리코드',
+                        		name: 'prcsProgCd',
+                        		hidden: true
+                        	},
+                        	{
+                        		header: '공정코드',
+                        		name: 'prcsCd',
+                        		hidden: true
+                        	},
+                        	{
+                        		header: '생산지시디테일코드',
+                        		name: 'prodOrderDetailCd',
+                        		hidden: true
+                        	},
+                        	{
                         		header: '완제품코드',
                         		name: 'edctsCd',
                         		hidden: true
