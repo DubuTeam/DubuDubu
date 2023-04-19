@@ -217,6 +217,7 @@
 			}
 		})
 	}
+	
 	// 출고등록 현황조회
 	function findOustList() {
 		$.ajax({
@@ -275,48 +276,45 @@
 	   		}
 	   	})
 	  //완제품 재고 목록 모달에서 출고량 입력하여 완제품 출고 테이블에 저장
-$("#addBtn").click(ev => {
-    if (StcGrid.getCheckedRows().length == 0) {
-        toastr.warning('출고할 제품을 선택해주세요');
-    } else if ($("#edctsOustCntOut").val() == '') {
-        toastr.warning('출고수량을 선택해주세요');
-    } else {
-        console.log(edctsCd);
-        var edctsOustCnt = $("#edctsOustCntOut").val();
-        console.log(edctsOustCnt);
-        var edctsRow = StcGrid.getCheckedRows();
-        console.log(edctsRow);
-        var edctsLotNo = edctsRow[0].edctsLotNo;
-        console.log(edctsLotNo);
-        $.ajax({
-            url: "saveSalesOust",
-            method: "post",
-            data: {
-                "edctsOustCnt": edctsOustCnt,
-                "edctsCd": edctsRow[0].edctsCd,
-                "edctsLotNo": edctsLotNo,
-                "orderNo": edctsRow[0].orderNo
-            },
-            success: function(list) {
-                grid2.resetData(list);
-                findOustList()
-                $("#StcGridModal").modal('hide');
-            }
-        })
-    }
-
-   $.ajax({
-        url: "updateProg",
-        method: "put",
-        dataType: "json",
-        data: { "orderNo": orderNo },
-        success: function(result) {
-            findOrder();
-            toastr.success('출고등록되었습니다');
-            
-        }
-    }) 
-})
+	
+		$("#addBtn").click(ev => {
+			if( StcGrid.getCheckedRows().length == 0){
+				toastr.warning('출고할 제품을 선택해주세요');
+			}else if($("#edctsOustCntOut").val() == '' ||  Number($("#orderCntOut").val()) <Number($("#edctsOustCntOut").val())) {
+				toastr.warning('출고수량이 잘못되었습니다');
+			} else{
+				//var edctsLotNo = StcGrid[0].edctsLotNo;
+				//console.log(edctsLotNo);
+				//var edctsOustCnt = StcGrid[0].edctsOustCnt;
+				//console.log(edctsOustCnt);
+				console.log(edctsCd)
+				var edctsOustCnt = $("#edctsOustCntOut").val();
+				console.log(edctsOustCnt);
+				var edctsRow = StcGrid.getCheckedRows();
+				console.log(edctsRow);
+				var edctsLotNo = edctsRow[0].edctsLotNo;
+				console.log(edctsLotNo);
+						$.ajax({
+					url:"saveSalesOust",
+					method:"post",
+					data:{"edctsCd":edctsCd,"edctsLotNo":edctsLotNo,"edctsOustCnt":edctsOustCnt,"orderNo":orderNo},
+					success:function(list) {
+						grid2.resetData(list);
+						$("#StcGridModal").modal('hide');
+					}
+				})
+				$.ajax({
+				url:"updateProg",
+				method:"post",
+				dataType:"json",
+				data:{"orderNo":orderNo},
+				success:function(result) {
+					findOrder();
+					toastr.success('출고등록되었습니다');
+					}
+				})
+			}
+		})
 	  
 
 </script>

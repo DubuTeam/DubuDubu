@@ -460,6 +460,43 @@ $(function() {
 			align : 'center'
 		} ]
 	});
+	//다중체크 안됨 
+	vendGrid.on('check', function(ev) {
+	    const { rowKey, checked } = ev;
+	    const rows = vendGrid.getCheckedRows();
+	    rows.forEach(function(row) {
+	        if (row.rowKey !== rowKey) {
+	        	vendGrid.uncheck(row.rowKey);
+	        }
+	    });
+	});
+	comGrid.on('check', function(ev) {
+	    const { rowKey, checked } = ev;
+	    const rows = comGrid.getCheckedRows();
+	    rows.forEach(function(row) {
+	        if (row.rowKey !== rowKey) {
+	        	comGrid.uncheck(row.rowKey);
+	        }
+	    });
+	});
+	CdModal.on('check', function(ev) {
+	    const { rowKey, checked } = ev;
+	    const rows = CdModal.getCheckedRows();
+	    rows.forEach(function(row) {
+	        if (row.rowKey !== rowKey) {
+	        	CdModal.uncheck(row.rowKey);
+	        }
+	    });
+	});
+	proGrid.on('check', function(ev) {
+	    const { rowKey, checked } = ev;
+	    const rows = proGrid.getCheckedRows();
+	    rows.forEach(function(row) {
+	        if (row.rowKey !== rowKey) {
+	        	proGrid.uncheck(row.rowKey);
+	        }
+	    });
+	});
 
 	//주문서 삭제
 	let delBtn = document.getElementById("delBtn");
