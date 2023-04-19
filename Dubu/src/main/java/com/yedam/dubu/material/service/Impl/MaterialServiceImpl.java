@@ -119,7 +119,7 @@ public class MaterialServiceImpl implements MaterialService{
 
 	// 자재 재고 조회
 	@Override
-	public List<MaterialVO> getMaterialStocklList() {
-		return materialMapper.getMaterialStocklList();
+	public List<MaterialVO> getMaterialStocklList(MaterialVO materialVO) {
+		return materialMapper.getMaterialStocklList(materialVO);
 	}
 }

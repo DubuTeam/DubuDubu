@@ -243,8 +243,7 @@
 		    ON rid.ORDR_DTL_CD = rl.ORDR_DTL_CD
 		WHERE rid.IST_CHECK='Y' AND rl.IST_CD = #{istCd}
 		ORDER BY PRC_LOT_CD
-	
-	
+	</select>
 	
 		<!-- SELECT rid.INSP_CD,
 		rid.ORDR_DTL_CD, rid.ORDR_CD, r.RSC_CD, r.RSC_NM, r.RSC_SPEC,
@@ -261,11 +260,22 @@
 		WHERE rid.IST_CHECK='Y' AND rl.IST_CD = #{istCd}
 		ORDER BY INSP_CD -->
 
-	</select>
+	
 
 	<!-- 자재 재고 조회 리스트 -->
 	<select id="getMaterialStocklList" resultType="MaterialVO">
-		SELECT
+		SELECT r.rsc_cd, r.rsc_nm, r.rsc_typ, r.rsc_spec, r.mng_unit, r.saf_stc, rsh.rsc_stc, rsh.ist_cnt, rsh.oust_cnt, rsh.cls_yymm
+		FROM RSC r JOIN RSC_STC_HIST rsh
+		ON r.rsc_cd = rsh.rsc_cd
+		<where>
+			<if test="rscNm != null and !rscNm.equals('')">
+				r.RSC_NM LIKE '%' || #{rscNm} || '%'
+			</if>
+		</where>
+		ORDER BY rsh.cls_yymm DESC
+	</select>
+	
+		<!-- SELECT
 		r.rsc_cd,
 		r.rsc_nm,
 		r.rsc_typ,
@@ -289,8 +299,8 @@
 		) AS oust_cnt
 		FROM rsc r
 		JOIN rsc_stc rs ON r.rsc_cd = rs.rsc_cd
-		ORDER BY r.rsc_cd
-	</select>
+		ORDER BY r.rsc_cd -->
+
 	
 
 </mapper>
