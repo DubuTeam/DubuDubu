@@ -100,8 +100,7 @@
 							<tr>
 								<th>제품 입고번호</th>
 								<td><input type="text" class="form-control" id="edctsIstNo"
-									name="edctsIstNo"
-									style="width: 150px; margin-left: 6px;"
+									name="edctsIstNo" style="width: 150px; margin-left: 6px;"
 									readonly></td>
 								<th>완제품</th>
 								<td style="width: 175px;">
@@ -127,12 +126,15 @@
 							</tr>
 							<tr>
 								<th>검사수량</th>
-								<td><input type="text" class="form-control" id="inspCnt"
-									name="inspCnt" style="width: 150px; margin-left: 3px;" readonly></td>
+								<td><input type="text" class="form-control" id="indicaCnt"
+									name="indicaCnt" style="width: 150px; margin-left: 3px;"
+									readonly></td>
 								<th>제품 입고수량</th>
 								<td><input type="text" class="form-control"
 									id="edctsIstCnt" name="edctsIstCnt"
-									style="width: 150px; margin-left: 0px;"></td>
+									style="width: 150px; margin-left: 0px;" readonly></td>
+								<th></th>
+
 								<th></th>
 								<td></td>
 								<th></th>
@@ -223,26 +225,57 @@
 
 	// 완제품LOT번호 모달 그리드(조회)    
 	const lotNoGrid = new tui.Grid({
-		el : document.getElementById('lotNoGrid'),
-		scrollX : false,
-		scrollY : false,
-		rowHeaders : [ 'checkbox' ],
-		columns : [ {
-			header : '제품코드',
-			name : 'edctsCd',
-			align : 'center'
-		}, {
-			header : '제품명',
-			name : 'prdtNm',
-			align : 'left'
-		}, {
-			header : '검사수량',
-			name : 'inspCnt',
-			align : 'right'
-		} ]
-	});
+    el : document.getElementById('lotNoGrid'),
+    scrollX : false,
+    scrollY : false,
+    rowHeaders : [ { type: 'checkbox', columnName: '',checkedAll: false }, ],
+    columns : [ {
+        header : '제품코드',
+        name : 'prodOrderDetailCd',
+        align : 'center',
+        hidden : true
+    },{
+        header : '제품코드',
+        name : 'edctsCd',
+        align : 'center'
+    }, {
+        header : '제품명',
+        name : 'prdtNm',
+        align : 'left'
+    }, {
+        header : '검사수량',
+        name : 'indicaCnt',
+        align : 'right'
+    }, {
+        header : '입고수량',
+        name : 'rpcsCnt',
+        align : 'right'
+    } ]
+});
 
-	
+lotNoGrid.on('check', function(ev) {
+    const { rowKey, checked } = ev;
+    const rows = lotNoGrid.getCheckedRows();
+    rows.forEach(function(row) {
+        if (row.rowKey !== rowKey) {
+            lotNoGrid.uncheck(row.rowKey);
+        }
+    });
+});
+
+//제품 입고 전체 목록 
+function salesIstList() {
+		var IstData = $("#IstSearchFrm").serialize();
+	$.ajax({
+		url:"salesIstList",
+		dataType:"json",
+		method:"post",
+		data:IstData,
+		success:function(list) {
+			grid.resetData(list);
+		}
+	})
+}
 
 	
 	//제품 입고 목록 조건별 조회
@@ -267,7 +300,7 @@
 			const {columnName} = e;			
 			IstNoRowKey = e.rowKey;
 			let edctsIstNoResult = grid.getValue(IstNoRowKey ,'edctsIstNo');
-			let edctsLotNoResult = grid.getValue(IstNoRowKey, 'edctsLotNo');
+			let edctsLotNoResult = grid.getValue(IstNoRowKey, 'prdtNm');
 			let edctsIstCntResult = grid.getValue(IstNoRowKey, 'edctsIstCnt');
 			if(columnName == 'edctsIstNo') {
 	
@@ -296,16 +329,21 @@
 		lotNoGrid.on("click", e => {
 			let rowInfo = lotNoGrid.getCheckedRows(e);
 		
-			inspCnt.value = rowInfo[0].inspCnt;
+			indicaCnt.value = rowInfo[0].indicaCnt;
+			edctsLotNo.value = rowInfo[0].prdtNm;
+			edctsIstCnt.value = rowInfo[0].rpcsCnt;
 		})
 		//모달 그리드 더블클릭시 완제품LOT번호 가져오기
 		  lotNoGrid.on('dblclick', (ev) => {
+			
     					var rowKey = ev.rowKey;
     					console.log(rowKey);
     					lotNoGrid.check(rowKey);
     					var rowKeyData = lotNoGrid.getCheckedRows(ev);
     					console.log(rowKeyData);
-    					
+    					indicaCnt.value = rowKeyData[0].indicaCnt;
+    					edctsLotNo.value = rowKeyData[0].prdtNm;
+    					edctsIstCnt.value = rowKeyData[0].rpcsCnt;
     					
     					$("#lotModal").modal('hide');
 					});
@@ -332,11 +370,11 @@
 	    	var edctsIstCnt = $("#edctsIstCnt").val();
 	    	console.log(edctsIstCnt);
 	    	var edctsIstNo = $("#edctsIstNo").val();
-	    	var orderNo = lotNoGrid.getValue(inspData[0].rowKey,'orderNo');
+	    	var prodOrderDetailCd = lotNoGrid.getValue(inspData[0].rowKey,'prodOrderDetailCd');
 	    	//var orderNo = inspData[0].orderNo;
-			console.log(orderNo);
-			if($("#edctsIstCnt").val() == '') {
-				toastr.warning('입고수량을 입력해주세요');
+			console.log(prodOrderDetailCd);
+			if($("#edctsIstDtStart").val() == '') {
+				toastr.warning('날짜를 선택해 주세요');
 			}else{
 				$.ajax({
 	    		url:"saveIst",
@@ -349,14 +387,14 @@
 	    			//입고등록 후 진행상황 입고완료로 수정
 	    			$.ajax({
 	    				url:"modifyProg",
-	    				method:"put",
+	    				method:"post",
 	    				dataType:"json",
-	    				data:{"orderNo":orderNo},
+	    				data:{"prodOrderDetailCd":prodOrderDetailCd},
 	    				error:function(er) {
 	    					console.log('에러!');
 	    				},
 	    				success:function(ordrList) {
-	    					istOptionList()
+	    					salesIstList()
 	    					
 	    				}
 	    			})
@@ -382,6 +420,8 @@
 			⠀⠀⠀⠀⠡⠃⠂⠀⠀⠀⢻⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠃⠀⠀⠀⠀⠀⠀
 			⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠙⠿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠛⠃⠀⠀⠀⠀⠀⠀⠀
 `);
+		
+		
 
 </script>
 </div>

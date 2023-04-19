@@ -34,7 +34,9 @@ public class SalesController {
 	public List<SalesIstVO> salesIstList(SalesIstVO vo) {
 		return salesService.salesIstList(vo);
 	}
+
 	
+
 	// 제품 입고 목록 조건별 조회
 	@PostMapping("istOptionList")
 	@ResponseBody
@@ -58,9 +60,10 @@ public class SalesController {
 	}
 
 	// 입고등록 후 진행상황 입고완료로 변경
-	@PutMapping("modifyProg")
+	@PostMapping("modifyProg")
 	@ResponseBody
 	public SalesVO modifyProg(SalesVO vo) {
+		System.out.println(vo.getProdOrderDetailCd());
 		salesService.modifyProg(vo);
 		return vo;
 	}
@@ -96,6 +99,4 @@ public class SalesController {
 		return "sales/salesStc";
 	}
 
-	
-	
 }
