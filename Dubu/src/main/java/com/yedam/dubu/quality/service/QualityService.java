@@ -30,7 +30,7 @@ public interface QualityService {
 	List<RscInspVO> schRscInspHist(RscInspVO rscInspVO);
 
 	// 업데이트
-	int upRscProg(RscInspVO rscInspVO);
+	public int upRscProg(List<RscInspVO> rscInspVO);
 	//삭제
 	void delRscInspHistAll(List<RscInspVO> rscInspVOS);
 
