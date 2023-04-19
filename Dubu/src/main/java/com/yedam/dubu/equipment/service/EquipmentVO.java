@@ -53,6 +53,10 @@ public class EquipmentVO {
 	private String keyword;				// 검색창에 입력한 값
 	
 	
+	// 2-6. 설비 담당자
+	private String eqmPsch;
+	
+	
 	///////////////////////////////////////////////
 	
 	
@@ -87,6 +91,14 @@ public class EquipmentVO {
 	@DateTimeFormat(pattern="yyyy-MM-dd")
 	private Date toDt;						// 비가동 종료 일자
 	
-	private String eqmPsch;					// 비가동 담당자
+	private String opertPsch;					// 비가동 담당자
 	private String opertCtnt;				// 작업내용.   비가동 사유?
+	
+
+	///////////////////////////////////////////////
+	
+	
+	// 테스트 - 직원 테이블
+	private String empCd;
+	private String empNm;
 }

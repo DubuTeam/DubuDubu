@@ -195,4 +195,13 @@ public class EquipmentServiceImpl implements EquipmentService{
 	public List<EquipmentVO> selectSpecificEqIpoprList(EquipmentVO equipmentVO) {
 		return equipmentMapper.selectSpecificEqIpoprList(equipmentVO);
 	}
+
+	
+	/////////////////////////////////////////////////////////////////////////
+	
+	
+	@Override
+	public List<EquipmentVO> selectAllEmpListInModal() {
+		return equipmentMapper.selectAllEmpListInModal();
+	}
 }

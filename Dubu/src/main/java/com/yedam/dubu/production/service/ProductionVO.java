@@ -39,10 +39,10 @@ public class ProductionVO {
 	
 	// 생산계획 조회
 	public String lineCd;
-	@DateTimeFormat(pattern="yyyy-MM-dd")
-	public Date wkToDt;
-	@DateTimeFormat(pattern="yyyy-MM-dd")
-	public Date wkFrDt; // 작업 시작일
+	//@DateTimeFormat(pattern="yyyy-MM-dd")
+	public String wkToDt;
+	//@DateTimeFormat(pattern="yyyy-MM-dd")
+	public String wkFrDt; // 작업 시작일
 	public int indicaCnt; // 생산지시 수량
 	public int prefRank;
 	public String rscNm;
@@ -53,13 +53,16 @@ public class ProductionVO {
 	public String rscCd;
 	public String oustcnt;
 	public int eqSq;
+	public String bomCd;
 	
 	
 	// 생산지시
 	public int planCnt;     // 계획수량
 	public int planNindica; // 미지시수량
-	@DateTimeFormat(pattern="yyyy-MM-dd")
-	public Date indicaDt;
+	//@DateTimeFormat(pattern="yyyy-MM-dd")
+	public String indicaDt;
+	public String prodOrderDetailCd;
+	public String indicaCd;
 	
 	
 	

@@ -76,12 +76,6 @@ html {
 }
 
 /* 검색 기능이 아닌, 전체 목록들에서 커서를 올렸을 때 */
-.eachRow:hover {
-	background-color: rgb(233, 233, 233);
-}
-
-
-/* 검색 기능으로 찾은 목록들 위에다가 커서 올렸을 때 */
-#list > .selectedRows:hover {
+.eachRow:hover, #list > .selectedRows:hover, .eachRowInModal:hover {
 	background-color: rgb(233, 233, 233);
 }

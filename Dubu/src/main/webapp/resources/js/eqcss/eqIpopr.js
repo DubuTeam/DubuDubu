@@ -58,7 +58,7 @@ $(document).ready(function () {
                         // 날짜를 yyyy-MM-dd 형식으로 변환하여 새로운 td 엘리먼트에 추가합니다.
                         tr.append($('<td />').text(convertToyyyyMMdd(item.frDt)))
                         tr.append($('<td />').text(convertToyyyyMMdd(item.toDt)))
-                        tr.append($('<td />').text(item.eqmPsch))
+                        tr.append($('<td />').text(item.opertPsch))
                         // tr.append($('<td />').text(item.opertCtnt))
 
                         // opertCtnt 값을 가지는 hidden input 엘리먼트를 생성하여 새로운 td 엘리먼트에 추가합니다.
@@ -86,7 +86,7 @@ $(document).ready(function () {
                             let eqmNm = $(this).closest("tr").children().eq(2).text();
                             let frDt = $(this).closest("tr").children().eq(3).text();
                             let toDt = $(this).closest("tr").children().eq(4).text();
-                            let eqmPsch = $(this).closest("tr").children().eq(5).text();
+                            let opertPsch = $(this).closest("tr").children().eq(5).text();
                             let opertCtnt = $(this).closest("tr").find("input[name='opertCtnt']").val();
 
                             // 5-2. 그리고 jsp 파일의 input 태그에다가 위 데이터를 집어넣는다.
@@ -107,7 +107,7 @@ $(document).ready(function () {
                             // 종료일자
                             $('input[name=toDt]').attr('value', toDt);
 
-                            $('#eqmPsch').val(eqmPsch);
+                            $('#opertPsch').val(opertPsch);
 
                             // 작업내역
                             $('#opertCtnt').val(opertCtnt);
@@ -228,7 +228,7 @@ $(document).ready(function () {
             let eqmNmSelectBox = document.getElementById("eqmNm");
 
 
-            if (eqmNmSelectBox.selectedIndex === 0 || frDt.value == '' || toDt.value == '' || opertCtnt.value == '' || eqmPsch.value == '') {
+            if (eqmNmSelectBox.selectedIndex === 0 || frDt.value == '' || toDt.value == '' || opertCtnt.value == '' || opertPsch.value == '') {
 
                 alert('모든 항목들을 입력해 주세요')
             }
@@ -239,7 +239,7 @@ $(document).ready(function () {
                 let frDt = $('#frDt').val()
                 let toDt = $('#toDt').val()
                 let opertCtnt = $('#opertCtnt').val()
-                let eqmPsch = $('#eqmPsch').val()
+                let opertPsch = $('#opertPsch').val()
 
 
                 $.ajax({
@@ -253,7 +253,7 @@ $(document).ready(function () {
                         frDt: frDt,
                         toDt: toDt,
                         opertCtnt: opertCtnt,
-                        eqmPsch: eqmPsch
+                        opertPsch: opertPsch
                     },
                     success: function (result) {
                         console.log('데이터 잘 보냄! -> ' + result);
@@ -272,7 +272,7 @@ $(document).ready(function () {
             let frDt = $('#frDt').val()
             let toDt = $('#toDt').val()
             let opertCtnt = $('#opertCtnt').val()
-            let eqmPsch = $('#eqmPsch').val()
+            let opertPsch = $('#opertPsch').val()
 
 
             $.ajax({
@@ -286,7 +286,7 @@ $(document).ready(function () {
                     frDt: frDt,
                     toDt: toDt,
                     opertCtnt: opertCtnt,
-                    eqmPsch: eqmPsch
+                    opertPsch: opertPsch
                 },
                 success: function (result) {
                     console.log('데이터 잘 보냄! -> ' + result);
@@ -311,7 +311,7 @@ $(document).ready(function () {
         let eqmNm = $(this).closest("tr").children().eq(2).text();
         let frDt = $(this).closest("tr").children().eq(3).text();
         let toDt = $(this).closest("tr").children().eq(4).text();
-        let eqmPsch = $(this).closest("tr").children().eq(5).text();
+        let opertPsch = $(this).closest("tr").children().eq(5).text();
         let opertCtnt = $(this).closest("tr").find("input[name='opertCtnt']").val();
 
         // 5-2. 그리고 jsp 파일의 input 태그에다가 위 데이터를 집어넣는다.
@@ -332,7 +332,7 @@ $(document).ready(function () {
         // 종료일자
         $('input[name=toDt]').attr('value', toDt);
 
-        $('#eqmPsch').val(eqmPsch);
+        $('#opertPsch').val(opertPsch);
 
         // 작업내역
         $('#opertCtnt').val(opertCtnt);
@@ -369,4 +369,34 @@ $(document).ready(function () {
             }
         })
     })
+
+
+    //////////////////////////////////////////////////////////////////////////////
+
+
+    /*
+        // let eqmNm = $(this).closest("tr").children().eq(1).text();
+        // $('#eqmNm').val(eqmNm);
+        ↑↑↑ '모달 창 내' 의 특정 행 정보 추출해서, input 에 넣는 기능.  위의 코드 안 됨.
+        모달이 열린 후에 동적으로 DOM이 변경되어 데이터를 불러오는 로직이 작동하지 않을 수 있습니다.
+        이 경우에는 이벤트 위임(event delegation)을 사용하여 동적으로 생성된 요소에도 이벤트 핸들러가 적용될 수 있도록 코드를 수정해야 합니다.
+        아래는 $(document)에서 이벤트 위임을 사용하는 예시 코드입니다.
+        이 코드는 #myTable 내부의 모든 행(tr) 요소에서 클릭 이벤트를 감지하고,
+        클릭된 행의 첫 번째와 두 번째 셀의 값을 추출합니다.
+    */
+
+    // 즉, 모달창 내에서 특정 행(tr) 을 클릭했을 때, 그 행의 n번째 td 태그(cell) 을 추출해서, 외부 input 에 넣는 코드
+        // 모달창 안에 있는 tr 태그의 class명은 eachRowInModal  이다!
+        // 모달창 밖에 있는 목록의 tr 태그 클래스명인,  eachRow 랑 똑같이 하면, 점검코드에서 출력 이상하게 됨.
+        $(document).on("click", "#modal-empList tr", function() {
+            let empNm = $(this).find("td").eq(1).text();
+            console.log(empNm)
+
+            $('#opertPsch').val(empNm);
+            
+            $('#exampleModal222').click();          // 모달 창 닫기
+        });
+    
+    
+    //////////////////////////////////////////////////////////////////////////////
 })

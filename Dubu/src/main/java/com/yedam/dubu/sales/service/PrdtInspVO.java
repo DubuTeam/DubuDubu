@@ -54,5 +54,5 @@ public class PrdtInspVO {
 	private Date wkFrDt;
 	
 	private int indicaCnt;
-
+	private int rpcsCnt;
 }

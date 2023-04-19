@@ -65,6 +65,7 @@
 												<th>점검주기(일)</th>
 												<th>라인코드</th>
 												<th>입고일자</th>
+												<th>담당자</th>
 											</tr>
 										</thead>
 
@@ -84,6 +85,7 @@
 												<td>${eqm.chckPerd }</td>
 												<td>${eqm.lineCd }</td>
 												<td><fmt:formatDate value="${eqm.eqmIstDt }" pattern="yyyy-MM-dd" /></td>
+												<td>${eqm.eqmPsch }</td>
 											</tr>
 										</c:forEach>
 										</tbody>
@@ -252,6 +254,93 @@
 											<td id="useYNSet">
 												<input type="radio" name="useYN" id="ynY" value="Y"> 가동&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 												<input type="radio" name="useYN" id="ynN" value="N"> 미가동
+											</td>
+
+											<!-- 테스트 -->
+											<th>담당자 *</th>
+											<td>
+												<input class="form-control" name="eqmPsch" id="eqmPsch"
+													style="width: 250px" readonly>
+																						<!-- Button trigger modal (4.6버젼) -->
+												<button type="button" style="margin-left: 3px"
+													class="btn btn-primary" data-toggle="modal"
+													data-target="#exampleModal222" id="searchBtn"
+													name="searchBtn">
+														<i class="fas fa-search"> 검색</i>
+												</button>
+
+												<!-- Modal -->
+												<div class="modal fade" id="exampleModal222"
+												tabindex="-1" aria-labelledby="exampleModalLabel"
+												aria-hidden="true">
+												<!-- <div class="modal-dialog"> -->
+													<div
+														class="modal-dialog modal-dialog-centered modal-lg">
+														<!-- 모달창 화면 중앙에  modal-dialog-centered, 모달 사이즈 변경 직접 불가해서 modal-lg 추가 -->
+														<div class="modal-content">
+															<div class="modal-header">
+																<h5 class="modal-title"
+																	id="exampleModalLabel">담당자 검색</h5>
+																<button type="button" class="close"
+																	data-dismiss="modal"
+																	aria-label="Close">
+																	<span
+																		aria-hidden="true">&times;</span>
+																</button>
+															</div>
+															<div class="modal-body"
+																style="text-align: center;" id="modal-test">
+																<div
+																	style="display: flex; margin-bottom: 10px;">
+																	<span
+																		style="display: flex; align-items: center;">담당자</span>
+																	<input type="text"
+																		style="margin: 0px 5px;"
+																		id="modal-keyword"
+																		name="eqpName" placeholder="이름 입력"
+																		style="width: 180px"></input>
+
+																	<button type="button" id="modal-searchBtn"
+																		class="btn btn-primary"
+																		style="margin-bottom: 3px">
+																		<i class="fas fa-search"></i> 검색
+																	</button>
+																</div>
+
+																<!-- 조회 시 나타나는 테이블 -->
+																<div id="list-body" class="table">
+																	<table id="modal-eqList">
+																		<thead>
+																			<tr>
+																				<th>No.</th>
+																				<th>직원명</th>
+																				<th>직원코드</th>
+																			</tr>
+																		</thead>
+
+																		<!-- ↓↓↓여기에 조회된 결과 출력 (테스트용 더미 넣었음) -->
+																		<tbody id="listInModal">
+																			<c:forEach items="${empListInModal }" var="emp">
+																				<tr class="eachRowInModal">
+																					<td>${emp.idx }</td>
+																					<td>${emp.empNm }</td>
+																					<td>${emp.empCd }</td>
+																				</tr>
+																			</c:forEach>
+																		</tbody>
+																	</table>
+																</div>
+															</div>
+															<div class="modal-footer">
+																<button type="button"
+																	class="btn btn-secondary"
+																	data-dismiss="modal">취소
+																</button>
+															</div>
+														</div>
+													</div>
+												</div>
+											<!-- 테스트 -->
 											</td>
 										</tr>
 									</tbody>

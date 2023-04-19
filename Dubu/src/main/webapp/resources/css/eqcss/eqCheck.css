@@ -17,7 +17,7 @@
 
 .linelist {
 	display: inline-block;
-	float: right;
+	/* float: right; */
 	margin-top: 0px;
 }
 

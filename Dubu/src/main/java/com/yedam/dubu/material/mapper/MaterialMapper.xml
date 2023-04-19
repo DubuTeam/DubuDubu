@@ -112,7 +112,8 @@
 		rd.PAPRD_CMND_DT
 		FROM RSC_ORDR ro JOIN RSC_ORDR_DTL rd
 		ON ro.ORDR_CD = rd.ORDR_CD
-		JOIN RSC rs
+		JOIN
+		RSC rs
 		ON rd.RSC_CD = rs.RSC_CD
 		JOIN VEND v
 		ON v.VEND_CD = ro.VEND_CD
@@ -125,8 +126,10 @@
 	<update id="getMaterialOrderListDetailModify"
 		parameterType="MaterialVO">
 		UPDATE RSC_ORDR_DTL
-		SET RMN_CNT = #{rmnCnt}, PAPRD_CMND_DT =
-		TO_DATE(#{paprdCmndDt2},'YYYY-MM-DD'), ORDR_CNT = #{ordrCnt}
+		SET RMN_CNT = #{rmnCnt},
+		PAPRD_CMND_DT =
+		TO_DATE(#{paprdCmndDt2},'YYYY-MM-DD'), ORDR_CNT =
+		#{ordrCnt}
 		WHERE
 		ORDR_CD = #{ordrCd} AND RSC_CD = #{rscCd}
 	</update>
@@ -134,7 +137,8 @@
 	<!-- 자재발주 삭제 -->
 	<delete id="getMaterialOrderDelete" parameterType="String">
 		DELETE
-		FROM RSC_ORDR
+		FROM
+		RSC_ORDR
 		WHERE ORDR_CD = #{ordrCd}
 	</delete>
 
@@ -146,8 +150,10 @@
 	<delete id="getDeleteProcedure" statementType="CALLABLE"
 		parameterType="MaterialVO">
 		{ call delete_material_order (
-		#{ordrCd, mode=IN, jdbcType=VARCHAR, javaType=String},
-		#{rscCd, mode=IN, jdbcType=VARCHAR, javaType=String}
+		#{ordrCd, mode=IN,
+		jdbcType=VARCHAR, javaType=String},
+		#{rscCd, mode=IN, jdbcType=VARCHAR,
+		javaType=String}
 		)
 		}
 	</delete>
@@ -160,13 +166,16 @@
 		SELECT rid.INSP_CD, rid.ORDR_DTL_CD, rid.ORDR_CD, r.RSC_CD, r.RSC_NM,
 		r.RSC_SPEC,
 		r.MNG_UNIT, r.RSC_TYP ,v.VEND_CD, v.VEND_NM,
-		rid.IST_CHECK, rid.INSP_PASS_CNT
+		rid.IST_CHECK,
+		rid.INSP_PASS_CNT
 		FROM RSC_INSP_DTL rid JOIN RSC r
-		ON r.RSC_CD = rid.RSC_CD
+		ON r.RSC_CD =
+		rid.RSC_CD
 		JOIN vend v
 		ON r.VEND_CD = v.VEND_CD
 		WHERE
-		rid.INSP_CD IS NOT NULL AND rid.IST_CHECK='N'
+		rid.INSP_CD IS NOT
+		NULL AND rid.IST_CHECK='N'
 		<if test="vendNm != null and !vendNm.equals('')">
 			AND UPPER(v.VEND_NM) LIKE '%' || UPPER(#{vendNm}) || '%'
 		</if>
@@ -175,7 +184,8 @@
 
 	<!-- 입고 코드 부여 -->
 	<select id="getMaterialIstCode" resultType="MaterialVO">
-		SELECT 'IST' || RSC_IST_SEQ.NEXTVAL as istCd
+		SELECT 'IST' ||
+		RSC_IST_SEQ.NEXTVAL as istCd
 		FROM DUAL
 	</select>
 
@@ -190,7 +200,8 @@
 	<insert id="getIstInsertProcedure" statementType="CALLABLE"
 		parameterType="MaterialVO">
 		{ call material_Ist_Insert (
-		#{istCd}, #{ordrDtlCd}, #{ordrCd}, #{rscCd},#{inspCd},#{inspPassCnt},#{expDt2}
+		#{istCd}, #{ordrDtlCd},
+		#{ordrCd}, #{rscCd},#{inspCd},#{inspPassCnt},#{expDt2}
 		)
 		}
 	</insert>
@@ -238,15 +249,18 @@
 		<!-- SELECT rid.INSP_CD,
 		rid.ORDR_DTL_CD, rid.ORDR_CD, r.RSC_CD, r.RSC_NM, r.RSC_SPEC,
 		r.MNG_UNIT, r.RSC_TYP ,v.VEND_CD, v.VEND_NM,
-		rid.IST_CHECK, rid.INSP_PASS_CNT, rl.IST_CD
+		rid.IST_CHECK,
+		rid.INSP_PASS_CNT, rl.IST_CD
 		FROM RSC_INSP_DTL rid JOIN RSC r
-		ON r.RSC_CD = rid.RSC_CD
+		ON
+		r.RSC_CD = rid.RSC_CD
 		JOIN vend v
 		ON r.VEND_CD = v.VEND_CD
 		JOIN RSC_LOT rl
 		ON rid.ORDR_DTL_CD = rl.ORDR_DTL_CD
 		WHERE rid.IST_CHECK='Y' AND rl.IST_CD = #{istCd}
 		ORDER BY INSP_CD -->
+
 	</select>
 
 	<!-- 자재 재고 조회 리스트 -->
@@ -257,18 +271,24 @@
 		r.rsc_typ,
 		r.rsc_spec,
 		r.mng_unit,
-		rs.rsc_stc - COALESCE((
-		SELECT SUM(ist_cnt)
-		FROM rsc_stc_hist
-		WHERE rsc_cd = r.rsc_cd
+		rs.rsc_stc + COALESCE((
+		SELECT SUM(rsh.ist_cnt)
+		FROM rsc_stc_hist rsh
+		WHERE rsh.rsc_cd = r.rsc_cd
 		), 0) AS rsc_stc,
 		r.saf_stc,
-		rsh.ist_cnt,
-		rsh.oust_cnt
-		FROM
-		rsc r
+		(
+		SELECT SUM(rsh.ist_cnt)
+		FROM rsc_stc_hist rsh
+		WHERE rsh.rsc_cd = r.rsc_cd
+		) AS ist_cnt,
+		(
+		SELECT SUM(rsh.oust_cnt)
+		FROM rsc_stc_hist rsh
+		WHERE rsh.rsc_cd = r.rsc_cd
+		) AS oust_cnt
+		FROM rsc r
 		JOIN rsc_stc rs ON r.rsc_cd = rs.rsc_cd
-		JOIN rsc_stc_hist rsh ON rs.rsc_cd = rsh.rsc_cd
 		ORDER BY r.rsc_cd
 	</select>
 
