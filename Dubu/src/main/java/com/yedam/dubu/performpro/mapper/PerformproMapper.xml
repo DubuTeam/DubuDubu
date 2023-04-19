@@ -11,6 +11,7 @@
 		ON i.indica_cd = id.indica_cd
 		WHERE i.indica_complete = 'N'
 		GROUP BY i.INDICA_CD, i.INDICA_DT
+		ORDER BY INDICA_CD
 	</select>
 	
 	<!-- 생산해야할 목록 리스트 -->

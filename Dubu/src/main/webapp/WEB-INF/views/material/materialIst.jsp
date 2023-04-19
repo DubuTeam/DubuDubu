@@ -689,12 +689,32 @@ const detailGrid = new tui.Grid({
 	    {
 	      header: '입고수량',
 	      name: 'inspPassCnt',
-	      align : 'center'
+	      align : 'center',
+	      editor : 'text'
 	    },
 	    {
 	      header: '유통기한',
 	      name: 'expDt',
-	      align : 'center'
+	      align : 'center',
+	      editor: {
+              type: 'datePicker',
+              options: {
+                format: 'yyyy-MM-dd',
+                //selectableRanges: [[todayForgrid,threeMonthsLater ]]
+                language: 'ko',   //한국기준
+               date : getToday()
+              }
+          },
+	      formatter: function (data) {
+            let dateVal = '';
+            if(data.value != null ){
+               dateVal = dateFormat(data.value);
+            }else{
+               dateVal = getToday();
+            }
+            data.value = dateVal;
+             return dateVal;
+           }
 	    }
 	 ]
 });
