@@ -178,12 +178,12 @@
 		GROUP BY PD.PLAN_CD, E.PRDT_NM, PD.PLAN_CNT-ID.INDICA_CNT, PD.LINE_CD
 	</select> -->
 	<!-- 생산지시 헤더 insert -->
-	<insert id="" parameterType="">
-	</insert>
+	<!-- <insert id="" parameterType="">
+	</insert> -->
 	<!-- 생산지시 디테일 insert -->
-	<insert id="" parameterType="">
-	</insert>
+	<!-- <insert id="" parameterType="">
+	</insert> -->
 	<!-- 생산지시 진행공정관리 insert -->
-	<insert id="" parameterType="">
-	</insert>
+<!-- 	<insert id="" parameterType="">
+	</insert> -->
 </mapper>
