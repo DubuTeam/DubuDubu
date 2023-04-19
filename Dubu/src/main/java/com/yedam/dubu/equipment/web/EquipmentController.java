@@ -27,6 +27,9 @@ public class EquipmentController {
 		model.addAttribute("eqLineList", equipmentService.selectAllEquipmentLineList());
 		model.addAttribute("getLineCode", equipmentService.getLineCode());				// 다음 라인 코드를 input 태그에 미리 적어줌
 
+		// 테스트 - 담당자 모달 내 직원 목록 출력
+		model.addAttribute("empListInModal", equipmentService.selectAllEmpListInModal());
+		
 		return "equip/eqLine";
 	}
 	
@@ -75,6 +78,9 @@ public class EquipmentController {
 		
 		// 설비 목록을 전체 출력하기 위해서 보냄
 		model.addAttribute("eqList", equipmentService.selectAllEquipmentList());
+		
+		// 테스트 - 담당자 모달 내 직원 목록 출력
+		model.addAttribute("empListInModal", equipmentService.selectAllEmpListInModal());
 		
 		return "equip/eq";
 	}
@@ -129,6 +135,11 @@ public class EquipmentController {
 		
 		// 자동 점검코드
 		model.addAttribute("getCheckCode", equipmentService.getCheckCode());
+		
+		// 테스트 - 담당자 모달 내 직원 목록 출력
+		model.addAttribute("empListInModal", equipmentService.selectAllEmpListInModal());
+		
+		
 		return "equip/eqCheck";
 	}
 
@@ -200,6 +211,9 @@ public class EquipmentController {
 		
 		// 다음 비가동 코드를 input 태그에 미리 적어줌
 		model.addAttribute("getNoprCode", equipmentService.getNoprCode());
+		
+		// 테스트 - 담당자 모달 내 직원 목록 출력
+		model.addAttribute("empListInModal", equipmentService.selectAllEmpListInModal());
 		
 		return "equip/eqIpopr";
 	}

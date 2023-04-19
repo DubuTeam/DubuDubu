@@ -122,4 +122,11 @@ public interface EquipmentService {
 	
 	// 비가동 검색하기
 	public List<EquipmentVO> selectSpecificEqIpoprList(EquipmentVO equipmentVO);
+	
+	
+	/////////////////////////////////////////////////////////////////////////
+	
+	
+	// 직원 목록 모달 내에서, 직원 목록 출력
+	public List<EquipmentVO> selectAllEmpListInModal();
 }
