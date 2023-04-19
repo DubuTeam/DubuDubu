@@ -188,6 +188,8 @@ $(document).ready(function () {
         $("#dataForm")[0].reset();      // id 가 dataForm 인 form 태그 전체 초기화
         $('#frDt').val(null);       // 달력도 초기화
         $('#toDt').val(null);       // 달력도 초기화
+
+        $('#noprCd').val($('#noprCd').data('original-value'));
     })
 
 

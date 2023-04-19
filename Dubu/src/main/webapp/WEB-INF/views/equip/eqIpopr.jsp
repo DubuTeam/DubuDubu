@@ -79,8 +79,7 @@ src="${pageContext.request.contextPath}/resources/js/eqcss/eqIpopr.js"></script>
                                     <!-- <th>비가동코드</th> -->
                                     <td>
                                         <input class="form-control" type="hidden" id="noprCd"
-                                            name="noprCd" style="width: 250px" readonly
-                                            value="${getNoprCode }" />
+                                            name="noprCd" style="width: 250px" value="${getNoprCode }" data-original-value="${getNoprCode}" readonly />
                                     </td>
                                 </tr>
 

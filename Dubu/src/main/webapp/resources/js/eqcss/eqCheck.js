@@ -232,6 +232,8 @@ $(document).ready(function () {
     $('#initBtn').on("click", function (e) {
         $("#dataForm")[0].reset();      // id 가 dataForm 인 form 태그 전체 초기화
         $('#chckDt').val(null);       // 달력도 초기화
+
+        $('#chckCd').val($('#chckCd').data('original-value'));
     })
 
 
@@ -252,6 +254,23 @@ $(document).ready(function () {
         var dispoCtnt = $('#dispoCtnt').val();
         var chckPsch = $('#chckPsch').val();
         var chckDt = $('#chckDt').val()
+
+
+        if($('input[name=jdgmnt]:checked').val() == undefined || $('input[name=dispoMatter]:checked').val() == undefined || $('input[name=chckFg]:checked').val() == undefined || chckDt.value == '') {
+            toastr.error('필수 항목들을 모두 입력하세요');
+
+            $('input[name=eqmCd]').css('border', 'solid 2px red')
+            $('input[name=eqmNm]').css('border', 'solid 2px red')
+            $('input[name=emp]').css('border', 'solid 2px red')
+            $('#chckFgSet').css('border', 'solid 2px red')
+            $('#dispoMatterSet').css('border', 'solid 2px red')
+            $('#jdgmntSet').css('border', 'solid 2px red')
+            $('#chckDt').css('border', 'solid 2px red')
+            $('#dispoCtnt').css('border', 'solid 2px red')
+            $('#chckPsch').css('border', 'solid 2px red')
+
+            return ;
+        }
 
 
         // 기존에 존재하는 점검코드를 담을 가변 배열

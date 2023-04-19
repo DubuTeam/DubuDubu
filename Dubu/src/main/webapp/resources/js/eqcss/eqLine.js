@@ -32,6 +32,7 @@ $(document).ready(function () {
     // 2. 초기화 버튼 눌렀을 때..
     $('#initBtn').on("click", function (e) {
         $("#dataForm")[0].reset();      // id 가 dataForm 인 form 태그 전체 초기화
+        $('#lineCd').val($('#lineCd').data('original-value'));
     })
 
 
@@ -49,12 +50,14 @@ $(document).ready(function () {
         var emp = $('#emp').val();
         var use = $('input[name=yn]:checked').val();        // 선택된 라디오 값 밸류?
 
-        // 출력 테스트
-        console.log(currentCd);
-        console.log(lineNm);
-        console.log(uph);
-        console.log(emp);
-        console.log(use);
+        if(lineNm.value == '' || uph.value == '' || $('input[name=yn]:checked').val() == undefined) {
+            toastr.error('필수 항목들을 모두 입력하세요');
+
+            $('input[name=lineNm]').css('border', 'solid 2px red')
+            $('input[name=uph]').css('border', 'solid 2px red')
+            $('input[name=emp]').css('border', 'solid 2px red')
+            $('#ynSet').css('border', 'solid 2px red')
+        }
 
 
         // 기존에 존재하는 라인코드를 담을 가변 배열

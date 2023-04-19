@@ -44,11 +44,15 @@ html {
 	display: flex;
 }
 
+#chckPsch {
+    display: inline;
+}
+
 #searchEqmSet {
 	display: flex;
 }
 
-#keyword3, #stDt, #toDt, #delBtn {
+#keyword3, #searchFrDt, #searchToDt, #delBtn {
 	margin: 0px 10px;
 }
 
