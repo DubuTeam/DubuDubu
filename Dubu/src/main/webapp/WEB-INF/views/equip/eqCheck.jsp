@@ -160,7 +160,7 @@
 												<!-- <th>점검코드</th> -->
 												<td>
 													<input class="form-control" type="hidden" id="chckCd"
-														name="chckCd" style="width: 250px" readonly value="${getCheckCode }" />
+														name="chckCd" style="width: 250px" value="${getCheckCode }" data-original-value="${getCheckCode}" readonly />
 												</td>
 											</tr>
 

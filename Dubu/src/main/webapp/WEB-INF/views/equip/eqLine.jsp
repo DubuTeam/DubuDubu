@@ -111,7 +111,7 @@
 						<form id="dataForm" action="#">
 							<div class="mb-3">
 								<!-- <label for="lineCd" class="form-label">라인코드</label> -->
-								<input type="hidden" class="form-control" id="lineCd" name="lineCd" value="${getLineCode }" readonly>
+								<input type="hidden" class="form-control" id="lineCd" name="lineCd" value="${getLineCode }" data-original-value="${getLineCode}" readonly>
 							</div>
 
 							<div class="mb-3"></div>
@@ -219,9 +219,11 @@
 
 							<div class="mb-4">
 								<label for="yn" class="form-label">사용여부</label><br>
-								<input type="radio" id="ynY" name="yn" value="Y">
-								사용&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-								<input type="radio" id="ynN" name="yn" value="N"> 미사용
+                                <div id="ynSet">
+                                    <input type="radio" id="ynY" name="yn" value="Y">
+                                    사용&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <input type="radio" id="ynN" name="yn" value="N"> 미사용
+                                </div>
 							</div>
 						</form>
 					</div>
