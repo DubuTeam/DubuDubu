@@ -151,9 +151,18 @@ public class ProductionServiceImpl implements ProductionService {
 
 	@Override
 	public void insertIndica(List<ProductionVO> insertList) {
+		String indicaDetailCd = productionMapper.indicaDetailCd(); // 생산 지시 디테일 코드
+		//String prcsProgCd = productionMapper.prcsProgCd(); // 진행 공정 코드
 		for(ProductionVO vo : insertList) {
+			vo.setProdOrderDetailCd(indicaDetailCd);
+			// vo.setPrcsProgCd(prcsProgCd);
 			productionMapper.insertIndica(vo);
+			productionMapper.insertPrcsProg(vo);
+			productionMapper.updatePrcsProg(vo);
 		}
+		
+		
+		
 		
 	}
 

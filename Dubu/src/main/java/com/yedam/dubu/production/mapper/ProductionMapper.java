@@ -43,6 +43,15 @@ public interface ProductionMapper {
 	public int insertPlan(ProductionVO productionVO);
 	public int updatePlanCode(ProductionVO productionVO);
 	public int insertIndica(ProductionVO productionVO);
+	// 진행공정코드
+	public String prcsProgCd();
+	// 생산지시 디테일 코드
+	public String indicaDetailCd();
+	
+	// 진행공정 insert프로시저
+	public int insertPrcsProg(ProductionVO productionVO);
+	
+	public int updatePrcsProg(ProductionVO productionVO);
 	
 	// 계획코드
 	public String planCode();

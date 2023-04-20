@@ -61,9 +61,9 @@ public class ProductionVO {
 	public int planNindica; // 미지시수량
 	//@DateTimeFormat(pattern="yyyy-MM-dd")
 	public String indicaDt;
-	public String prodOrderDetailCd;
+	public String prodOrderDetailCd; // 지시 디테일 코드
 	public String indicaCd;
-	public String prcsProgCd;
+	public String prcsProgCd; // 진행공정코드
 	
 	
 	

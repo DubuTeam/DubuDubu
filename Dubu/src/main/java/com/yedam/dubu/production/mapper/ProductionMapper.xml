@@ -186,10 +186,38 @@
 		WHERE PD.PLAN_CD = #{planCd}
 		GROUP BY PD.PLAN_CD, E.PRDT_NM, PD.PLAN_CNT-ID.INDICA_CNT, PD.LINE_CD
 	</select> -->
+	<!-- 진행공정코드 -->
+	<select id="prcsProgCd" resultType="String">
+		SELECT 'PPC' ||PRCS_PROG_CD_SEQ.NEXTVAL AS PRCS_PROG_CD 
+    	FROM DUAL
+	</select>
+	<!-- 지시 디테일 코드 -->
+	<select id="indicaDetailCd" resultType="String">
+		SELECT 'PRD' || INDICA_DETAIL_CODE_SEQ.NEXTVAL AS PROD_ORDER_DETAIL_CD
+	    FROM DUAL
+    </select>
 	<!-- 생산지시 insert -->
      <insert id="insertIndica" parameterType="ProductionVO" statementType="CALLABLE">
-    <![CDATA[{call INSERT_INDICA(sysdate,#{bomCd},sysdate,#{edctsCd},#{indicaCnt},
-    		#{prcsCd},#{prcsProgCd},#{indicaCnt})]]>
+    <![CDATA[{
+    			call INSERT_INDICA(
+    				#{prodOrderDetailCd},sysdate,#{bomCd},sysdate,#{edctsCd},#{indicaCnt},
+    				#{prcsCd},#{prcsProgCd},#{indicaCnt}
+    			)
+    		}]]>
     </insert>
+    
+    <!-- 진행공정 INSERT -->
+    <insert id="insertPrcsProg" parameterType="ProductionVO" statementType="CALLABLE">
+    <![CDATA[{
+    			call insert_prcs_prog(
+    				#{prodOrderDetailCd},#{bomCd}
+    			)
+    		}]]>
+    </insert>
+    
+    <!-- 진행공정 UPDATE -->
+    <update id="updatePrcsProg" parameterType="ProductionVO">
+    	update prcs_prog set prcs_stock = #{indicaCnt} WHERE prcs_pr = 1 AND prod_order_detail_cd = #{prodOrderDetailCd}
+    </update>
 	
 </mapper>
