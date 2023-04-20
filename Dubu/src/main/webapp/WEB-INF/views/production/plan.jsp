@@ -379,7 +379,7 @@ let getData='';
        	    success: function(data) {
        	    	Swal.fire({
 	        		      icon: 'success',
-	        		      title: '생산계획이 등록되었습니다.'
+	        		      title: '생산지시가 등록되었습니다.'
 	        		 });
        	        	search();
        	    },
