@@ -126,7 +126,8 @@ public class ProductionServiceImpl implements ProductionService {
 		String plancd = productionMapper.planCode(); // 계획코드를 주문서 테이블에 업데이트 할 
 		for(ProductionVO vo : insertPlan) {
 			vo.setPlanCd(plancd);
-			result += productionMapper.insertPlan(vo);
+			
+			//result += productionMapper.insertPlan(vo);
 			result += productionMapper.updatePlanCode(vo);
 		}
 		return result;
@@ -146,6 +147,14 @@ public class ProductionServiceImpl implements ProductionService {
 	@Override
 	public List<ProductionVO> selectIndicaOrderDetail(String planCd) {
 		return productionMapper.selectIndicaOrderDetail(planCd);
+	}
+
+	@Override
+	public void insertIndica(List<ProductionVO> insertList) {
+		for(ProductionVO vo : insertList) {
+			productionMapper.insertIndica(vo);
+		}
+		
 	}
 
 	/*

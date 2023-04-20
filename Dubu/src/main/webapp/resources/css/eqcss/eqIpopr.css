@@ -33,8 +33,12 @@ label {
 	display: flex;
 }
 
-#SEqmNm, #STrDt, #SToDt, #modalBtn {
-    margin: 0px 10px;
+#keyword3, #searchFrDt, #searchToDt, #delBtn {
+	margin: 0px 10px;
+}
+
+#opertPsch {
+    display: inline;
 }
 
 /* 검색 기능으로 찾은 목록들 위에다가 커서 올렸을 때 */

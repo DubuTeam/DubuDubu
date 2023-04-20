@@ -83,26 +83,35 @@
 	</select>
 	<!-- 생산계획코드 업데이트, 인서트 -->
 	<select id="planCode" resultType="String">
-		SELECT 'IC' || INDICA_CODE_SEQ.NEXTVAL AS INDICA_CD FROM DUAL
+		SELECT 'PLC' || PLAN_CODE_SEQ.NEXTVAL AS PLAN_CD FROM DUAL
 	</select>
-	<insert id="insertPlan" parameterType="ProductionVO">
+	<!-- <insert id="insertPlan" parameterType="ProductionVO">
 		INSERT INTO INDICA (INDICA_CD, INDICA_DT)
 		VALUES ('IC' || INDICA_CODE_SEQ.NEXTVAL,
 			    sysdate)
-	</insert>
+	</insert> -->
 	<update id="updatePlanCode" parameterType="ProductionVO">
 		UPDATE ORDER_SHEET SET PLAN_CD = #{planCd}
         WHERE ORDER_NO = #{orderNo}
 	</update>
 	<!-- 생산계획 제품 조회 -->
 	<select id="selectPlanEquip" resultType="ProductionVO">
-		SELECT O.ORDER_NO,
+		SELECT O.EDCTS_CD,
+               O.ORDER_NO,
 		       O.PRDT_NM,
-		       B.BOM_CD
+		       B.BOM_CD,
+               MAX(P.PRCS_PROG_CD) AS PRCS_PROG_CD,
+               MAX(P.PRCS_CD) AS PRCS_CD,
+               MAX(P.PROD_ORDER_DETAIL_CD) AS PROD_ORDER_DETAIL_CD
 		FROM ORDER_SHEET O
 		INNER JOIN BOM B
 		ON O.EDCTS_CD = B.EDCTS_CD
+        INNER JOIN RS_BOM RB
+        ON B.BOM_CD = RB.BOM_CD
+        INNER JOIN PRCS_RSC P
+        ON RB.RSC_CD = P.RSC_CD
 		WHERE ORDER_NO = #{orderNo}
+		GROUP BY O.EDCTS_CD, O.ORDER_NO, O.PRDT_NM, B.BOM_CD
 	</select>
 	<!-- 생산계획 사용가능자재 조회 -->
 	<select id="selectPlanMaterial" resultType="ProductionVO">
@@ -177,13 +186,10 @@
 		WHERE PD.PLAN_CD = #{planCd}
 		GROUP BY PD.PLAN_CD, E.PRDT_NM, PD.PLAN_CNT-ID.INDICA_CNT, PD.LINE_CD
 	</select> -->
-	<!-- 생산지시 헤더 insert -->
-	<!-- <insert id="" parameterType="">
-	</insert> -->
-	<!-- 생산지시 디테일 insert -->
-	<!-- <insert id="" parameterType="">
-	</insert> -->
-	<!-- 생산지시 진행공정관리 insert -->
-<!-- 	<insert id="" parameterType="">
-	</insert> -->
+	<!-- 생산지시 insert -->
+     <insert id="insertIndica" parameterType="ProductionVO" statementType="CALLABLE">
+    <![CDATA[{call INSERT_INDICA(sysdate,#{bomCd},sysdate,#{edctsCd},#{indicaCnt},
+    		#{prcsCd},#{prcsProgCd},#{indicaCnt})]]>
+    </insert>
+	
 </mapper>

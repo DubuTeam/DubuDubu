@@ -70,9 +70,9 @@
             <div class="bg-white py-2 collapse-inner rounded">
             	<%-- <a class="collapse-item" href="${pageContext.request.contextPath}/prcProcess">제품공정흐름관리</a>--%>
                 <%-- <a class="collapse-item" href="${pageContext.request.contextPath}/prcs">공정관리</a> --%>
-                <a class="collapse-item" href="${pageContext.request.contextPath}/plan">생산계획</a>
+                <a class="collapse-item" href="${pageContext.request.contextPath}/plan">생산지시</a>
                 <%-- <a class="collapse-item" href="${pageContext.request.contextPath}/planSearch">생산계획조회XXX</a> --%>
-                <a class="collapse-item" href="${pageContext.request.contextPath}/indica">생산지시</a>
+                <%-- <a class="collapse-item" href="${pageContext.request.contextPath}/indica">생산지시</a> --%>
                 <%-- <a class="collapse-item" href="${pageContext.request.contextPath}/indicaSearch">생산지시조회XXX</a> --%>
                 <a class="collapse-item" href="${pageContext.request.contextPath}/progMng">공정실적관리</a>
                 <%-- <a class="collapse-item" href="${pageContext.request.contextPath}/prcsSearch">생산실적조회XXX</a> --%>
@@ -138,7 +138,7 @@
         </a>
         <div id="ccc" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
-                <a class="collapse-item" href="${pageContext.request.contextPath}/prdtInsp">제품검사관리</a>
+                <%-- <a class="collapse-item" href="${pageContext.request.contextPath}/prdtInsp">제품검사관리</a> --%>
                 <a class="collapse-item" href="${pageContext.request.contextPath}/materialInsp">자재입고검사관리</a>
                 <%-- <a class="collapse-item" href="${pageContext.request.contextPath}/materialInspList">자재입고검사조회</a> --%>
             </div>
@@ -169,7 +169,7 @@
        <form
            class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
            <div class="input-group">
-               <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..."
+               <input type="text" class="form-control bg-light border-0 small" placeholder="검색어를입력하세요."
                    aria-label="Search" aria-describedby="basic-addon2">
                <div class="input-group-append">
                    <button class="btn btn-primary" type="button">

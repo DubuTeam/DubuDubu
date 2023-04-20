@@ -52,4 +52,7 @@ public interface ProductionService {
 	
 	// 생산지시 계획 디테일 조회
 	public List<ProductionVO> selectIndicaOrderDetail(String planCd);
+	
+	// 생산지시 등록
+	public void insertIndica(List<ProductionVO> insertList);
 }	

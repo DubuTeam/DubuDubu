@@ -7,6 +7,8 @@ $(document).ready(function () {
     $('#initBtn').on("click", function (e) {
         $("#dataForm")[0].reset();      // id 가 dataForm 인 form 태그 전체 초기화
         $('#eqmIstDt').val(null);       // 달력도 초기화
+
+        $('#eqmCd').val($('#eqmCd').data('original-value'));
     })
 
 
@@ -326,7 +328,6 @@ $(document).ready(function () {
                     $('#keyword').val("");
                     $("#list").find("tr").remove();
 
-                    toastr.success('작업이 완료되었습니다.');
                     console.log("성공!")
 
 

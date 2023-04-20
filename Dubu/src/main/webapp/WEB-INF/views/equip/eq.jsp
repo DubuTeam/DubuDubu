@@ -186,7 +186,7 @@
                                             <!-- <th>설비코드</th> -->
 											<td>
 												<input type="hidden" class="form-control" name="eqmCd" id="eqmCd"
-													style="width: 250px" readonly value="${getEqCode}">
+													style="width: 250px" value="${getEqCode}" data-original-value="${getEqCode}" readonly>
 											</td>
 										</tr>
 

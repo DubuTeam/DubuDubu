@@ -79,3 +79,15 @@ html {
 .eachRow:hover, #list > .selectedRows:hover, .eachRowInModal:hover {
 	background-color: rgb(233, 233, 233);
 }
+
+#keyword {
+    margin: 0px 10px;
+}
+
+#eqmPsch {
+    display: inline;
+}
+
+#minTemp, #maxTemp {
+    display: inline;
+}

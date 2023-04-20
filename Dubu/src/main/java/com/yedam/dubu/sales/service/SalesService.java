@@ -64,4 +64,6 @@ public interface SalesService {
 
 	// 출고등록 후 출고완료로 변경
 	public void updateProg(SalesVO vo);
+	
+	public void modifyProg2(SalesVO vo);
 }

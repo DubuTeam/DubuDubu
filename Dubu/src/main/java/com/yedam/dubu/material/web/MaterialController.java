@@ -189,9 +189,10 @@ public class MaterialController {
 	@ResponseBody
 	public int getMaterialIstInsert(@RequestBody List<MaterialVO> materialVO) {
 		
+		System.out.println(materialVO);
 		MaterialVO material = new MaterialVO();
 		int istCnt = materialVO.size(); // 입고 건수
-		System.out.println("건수" + istCnt);
+		System.out.println("건수 : " + istCnt);
 		int r = 0;
 		
 		material.setIstCd(materialService.getMaterialIstCode().getIstCd()); // 입고 코드
@@ -228,6 +229,19 @@ public class MaterialController {
 		return materialService.getMaterialIstDetail(istCd);
 	}
 	
+	// 자재재고조회
+	@GetMapping("/materialStcList")
+	public String getMaterialStcList(Model model) {
+		model.addAttribute("materialModalList",materialService.getMaterialModal()); // 자재명 모달창
+		return "material/materialStcList";
+	}
+	
+	@PostMapping("/materialCountHist")
+	@ResponseBody
+	public List<MaterialVO> getMaterialCountHist(MaterialVO materialVO){
+		return materialService.getMaterialStocklList(materialVO);
+	}
+	
 	
 	//////////////////////////////////////////////////////////////
 
@@ -247,13 +261,6 @@ public class MaterialController {
 	@GetMapping("/materialOustList")
 	public String getMaterialOustList(Model model) {
 		return "material/materialOustList";
-	}
-
-	// 자재재고조회
-	@GetMapping("/materialStcList")
-	public String getMaterialStcList(Model model) {
-		model.addAttribute("materialStocklList", materialService.getMaterialStocklList());
-		return "material/materialStcList";
 	}
 
 	// 자재LOT재고조회

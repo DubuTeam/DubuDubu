@@ -72,5 +72,6 @@ public class MaterialVO {
 	
 	// 자재 재고 이력 테이블
 	private int oustCnt;	// 출고수량
-	
+	@DateTimeFormat(pattern="yyyy-MM-dd")
+	private Date clsYymm; // 이력날짜
 }
