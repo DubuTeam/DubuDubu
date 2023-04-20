@@ -121,10 +121,10 @@ tr {
 										<div id="wrapper" style="margin-top: -1px;"></div>
 									</td>
 									<td></td>
-									<!-- <th><b>검사자</b></th>
+									<th><b>검사자</b></th>
 									<td><input type="text" id="inspTstr" class="form-control"
-										style="width: 168px;"></td> -->
-										<th>검사자 *</th>
+										style="width: 168px;"></td>
+										<%-- <th>검사자 *</th>
 											<td style="width: 340px; display:inline-block; display:flex;">
 												<input class="form-control" name="eqmPsch" id="inspTstr"
 													style="width: 250px" readonly>
@@ -208,7 +208,7 @@ tr {
 													</div>
 												</div>
 											<!-- 테스트 -->
-											</td>
+											</td> --%>
 								</tr>
 
 							</tbody>
