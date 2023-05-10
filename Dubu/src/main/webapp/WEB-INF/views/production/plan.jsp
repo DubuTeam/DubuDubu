@@ -75,16 +75,15 @@
 							<!-- 모달창 화면 중앙에  modal-dialog-centered, 모달 사이즈 변경 직접 불가해서 modal-lg 추가 -->
 							<div class="modal-content">
 								<div class="modal-header">
-									<h5 class="modal-title" id="exampleModalLabel">주문서 조회</h5>
 									<button type="button" class="close" data-dismiss="modal"
 										aria-label="Close">
 										<span aria-hidden="true">&times;</span>
 									</button>
 								</div>
 								<div class="modal-body" style="text-align: center;">
-
+									<!-- 모달창 뜨면 바로 조회 -->
 									<!-- 조회 시 나타나는 테이블 -->
-									<div id="orderGrid"></div>
+									<div id="recruitGrid"></div>
 								</div>
 								<div class="modal-footer">
 									<!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button> -->
